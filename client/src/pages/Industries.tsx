@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import IndustryCard from "@/components/IndustryCard";
 import EstimateForm from "@/components/EstimateForm";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
 import medicalImage from "@assets/generated_images/Medical_groups_industry_image_a154fa6b.png";
 import banksImage from "@assets/generated_images/Banks_industry_image_bcb98d1a.png";
 import schoolsImage from "@assets/generated_images/Schools_industry_image_fe90ee17.png";
@@ -28,31 +29,53 @@ export default function Industries() {
     <div>
       <Hero
         title="We offer services for a wide range of industries"
-        subtitle="Schools, banks, retail stores, medical groups, offices, restaurants, and much more."
+        subtitle="The industries we serve include schools, banks, retail stores, medical groups, offices, restaurants, government facilities, transportation, auto dealerships, theaters, and much more."
         imageSrc={heroImage}
         height="medium"
       />
 
+      <section className="py-16 md:py-24 bg-muted">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" data-testid="heading-request-proposal">
+              REQUEST PROPOSAL
+            </h2>
+            <Card>
+              <CardContent className="pt-6">
+                <EstimateForm />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Industries We Serve</h2>
-            <p className="text-lg text-muted-foreground mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" data-testid="heading-industries">Industries</h2>
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-industries-intro">
               At Excel Facility Services Group, we recognize that each industry has its own unique
               cleaning requirements and standards. That's why we customize our services to meet the
               specific needs of our diverse clientele. Our well-trained staff takes pride in
               delivering high-quality cleaning solutions tailored to the environment you operate in.
             </p>
-            <p className="text-lg text-muted-foreground mb-6">
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-industries-details">
               In educational settings, we ensure that classrooms are sanitized and ready for
               learning, while in medical facilities, we prioritize safe, disinfected spaces that
               protect both patients and staff. For retail stores and restaurants, we maintain a clean
               and inviting atmosphere that enhances customer experience.
             </p>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-industries-specialization">
               We also specialize in cleaning government facilities and transportation hubs, ensuring
               compliance with strict regulations. Regardless of your industry, our commitment to
               excellence and consistency remains the same.
+            </p>
+            <p className="text-lg text-muted-foreground" data-testid="text-industries-cta">
+              Our goal is to build long-lasting partnerships based on trust and satisfaction.{" "}
+              <Link href="/contact" className="text-primary hover:underline font-semibold" data-testid="link-contact-cta">
+                Reach out to us today
+              </Link>{" "}
+              to discuss how we can optimize your cleaning strategy, enhance your business's image, and create a healthy environment for everyone who walks through your doors. Your success is our priority.
             </p>
           </div>
 
@@ -60,21 +83,6 @@ export default function Industries() {
             {industries.map((industry) => (
               <IndustryCard key={industry.title} {...industry} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-              Request An Estimate
-            </h2>
-            <Card>
-              <CardContent className="pt-6">
-                <EstimateForm />
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
