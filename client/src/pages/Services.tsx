@@ -57,14 +57,14 @@ export default function Services() {
       icon: Layers,
       title: "Floor Care",
       description:
-        "Far too often, business owners overlook the importance of floor care and neglect their facility floors' obvious stains and dullness. This can send a wrong message about the company's carelessness in providing customers with a positive experience.",
+        "Far too often, business owners overlook the importance of floor care and neglect their facility floors' obvious stains and dullness. This can send a wrong message about the company's carelessness in providing customers with a positive experience. For this reason, it is imperative to maintain clean and polished floors to uphold a great and lasting impression.",
       href: "/services/floor-care",
     },
     {
       icon: Brush,
       title: "Window Washing",
       description:
-        "Window washing is a necessary service to keep a commercial building looking its best. It not only improves the appearance of the building but also extends the life of the windows by removing dirt, dust, and debris.",
+        "Window washing is a necessary service to keep a commercial building looking its best. It not only improves the appearance of the building but also extends the life of the windows by removing dirt, dust, and debris. Our window-washing methods will ensure that light travels effortlessly into your facility and enable your building's interior to shine!",
       href: "/services/window-washing",
     },
     {
@@ -78,7 +78,7 @@ export default function Services() {
       icon: Warehouse,
       title: "Carpet Extraction",
       description:
-        "Carpet extraction can be challenging to manage and maintain within a commercial building. The right equipment and expertise are crucial for safe, effective work that meets all health regulations.",
+        "Carpet extraction can be challenging to manage and maintain within a commercial building. The right equipment and expertise are crucial for safe, effective work that meets all health regulations while minimizing disruption to your business continuity plan. It also prevents any negative impact on daily operations and customer care.",
       href: "/services/carpet-extraction",
     },
     {
@@ -92,7 +92,7 @@ export default function Services() {
       icon: SprayCan,
       title: "Power Washing",
       description:
-        "Power washing is a popular method of cleaning that uses high-pressure water to remove dirt, grime, and other surface deposits. Power washing effectively cleans many surfaces, including driveways, sidewalks, decks, and entrances.",
+        "Power washing is a popular method of cleaning that uses high-pressure water to remove dirt, grime, and other surface deposits. Power washing effectively cleans many surfaces, including driveways, sidewalks, decks, and entrances. It can also remove mildew, mold, and other growths from siding and stone walls. As a result, power washing is a fast and convenient way to keep your business looking its best.",
       href: "/services/power-washing",
     },
     {
@@ -108,16 +108,16 @@ export default function Services() {
     <div>
       <Hero
         title="We specialize in expert cleaning and disinfection services"
-        subtitle="Dedicated to providing facility solutions that help businesses run smoothly and efficiently."
+        subtitle="We are dedicated to providing facility solutions that help businesses run smoothly and efficiently."
         imageSrc={heroImage}
         height="medium"
-        primaryCta={{ text: "Request Estimate", href: "/contact" }}
+        primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
       />
 
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our services</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               From janitorial services to specialized cleaning, we provide comprehensive solutions
               for all your facility needs.
