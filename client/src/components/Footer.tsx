@@ -29,7 +29,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-sm text-muted-foreground mb-4">
-              Professional commercial cleaning services with 20+ years of experience across 20+ states.
+              Professional commercial cleaning services with 20+ years of experience across 28 states nationwide.
             </p>
             <div className="flex gap-3">
               <a
