@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function EstimateForm() {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
+    inquiryType: "",
     name: "",
     email: "",
     phone: "",
@@ -36,10 +37,11 @@ export default function EstimateForm() {
     // todo: remove mock functionality
     console.log("Form submitted:", formData);
     toast({
-      title: "Estimate Request Received",
+      title: "Proposal Request Received",
       description: "We'll contact you within 24 hours to discuss your needs.",
     });
     setFormData({
+      inquiryType: "",
       name: "",
       email: "",
       phone: "",
@@ -51,6 +53,25 @@ export default function EstimateForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label htmlFor="inquiryType" className="block text-sm font-medium mb-2">
+          Inquiry Type *
+        </label>
+        <Select
+          required
+          value={formData.inquiryType}
+          onValueChange={(value) => setFormData({ ...formData, inquiryType: value })}
+        >
+          <SelectTrigger data-testid="select-inquiry-type">
+            <SelectValue placeholder="Select inquiry type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="sales">Sales Inquiries</SelectItem>
+            <SelectItem value="general">General Inquiries</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -142,7 +163,7 @@ export default function EstimateForm() {
       </div>
 
       <Button type="submit" size="lg" className="w-full" data-testid="button-submit">
-        Request Estimate
+        REQUEST PROPOSAL
       </Button>
     </form>
   );
