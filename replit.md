@@ -33,6 +33,13 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - "REQUEST PROPOSAL" CTA (not "Request Estimate")
 - Enterprise stats: 28 states nationwide, 400M sq ft serviced daily
 
+**Services Page Rebuild (Complete)**
+- Replicated original efsgnj.com/services/ structure exactly
+- Hero: "We specialize in expert cleaning and disinfection services"
+- All 12 service offerings with complete descriptions
+- "REQUEST PROPOSAL" CTA for enterprise consistency
+- Services: Janitorial, Day Porters, LevelUp Clean®, Disinfection, COVID-19 Cleaning, Floor Care, Window Washing, Air Duct & HVAC, Carpet Extraction, Concrete Polishing, Power Washing, Commercial Cleaning
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
