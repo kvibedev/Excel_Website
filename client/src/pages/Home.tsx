@@ -2,7 +2,8 @@ import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
 import IndustryCard from "@/components/IndustryCard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import {
   Sparkles,
@@ -13,6 +14,10 @@ import {
   GraduationCap,
   Cpu,
   Heart,
+  CheckCircle2,
+  TrendingUp,
+  Building2,
+  Globe,
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
@@ -46,6 +51,38 @@ export default function Home() {
       icon: Heart,
       title: "A healthier space for businesses and people to thrive!",
       href: "/services",
+    },
+  ];
+
+  const enterpriseStats = [
+    { value: "28", label: "States Served", icon: Globe },
+    { value: "400M", label: "Sq Ft Managed Daily", icon: Building2 },
+    { value: "20+", label: "Years of Excellence", icon: Award },
+    { value: "$250K-$5M", label: "Annual Contract Range", icon: TrendingUp },
+  ];
+
+  const credentials = [
+    { name: "Inc. 5000", description: "Recognized Growth Leader" },
+    { name: "MBE Certified", description: "Minority Business Enterprise" },
+    { name: "Green Seal GS-42", description: "Environmental Excellence" },
+  ];
+
+  const whyChooseUs = [
+    {
+      title: "Enterprise-Scale Infrastructure",
+      description: "Multi-state operations with the resources to handle contracts from $250K to $5M annually. Proven track record managing 400 million square feet daily.",
+    },
+    {
+      title: "Regional Accountability",
+      description: "Unlike national chains, you get direct access to decision-makers and personalized strategies that transform facilities from cost centers into strategic assets.",
+    },
+    {
+      title: "Data-Driven Performance",
+      description: "Technology-enabled reporting provides transparency and actionable intelligence to optimize facility performance and demonstrate ROI.",
+    },
+    {
+      title: "Operational Excellence",
+      description: "20+ years of refinement across 28 states has perfected our systems, delivering consistent results that nationals cannot match.",
     },
   ];
 
@@ -95,14 +132,51 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <Hero
-        title="Excel Facility Services Group | Commercial Cleaning Service"
-        subtitle="With more than 20 years of experience in over 20 states, Excel Facility Services Group has become one of the most reliable commercial cleaning companies in the United States."
+        title="Enterprise Facility Management Across 28 States"
+        subtitle="With more than 20 years of excellence managing 400 million square feet daily, Excel Facility Services Group delivers enterprise-scale commercial cleaning solutions for contracts ranging from $250K to $5M annually."
         imageSrc={heroImage}
-        primaryCta={{ text: "ABOUT US", href: "/about" }}
+        primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
+        secondaryCta={{ text: "LEARN MORE", href: "/about" }}
       />
 
+      {/* Enterprise Stats Bar */}
+      <section className="py-12 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {enterpriseStats.map((stat, index) => (
+              <div key={index} className="text-center" data-testid={`stat-${stat.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <div className="flex justify-center mb-3">
+                  <stat.icon className="h-8 w-8" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold mb-2">
+                  <span className="text-[#97CC06]">{stat.value}</span>
+                </div>
+                <div className="text-sm md:text-base opacity-90">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Credentials Bar */}
+      <section className="py-8 bg-muted/50 border-b">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-12 items-center">
+            <p className="text-sm font-semibold text-muted-foreground">TRUSTED & CERTIFIED:</p>
+            {credentials.map((credential, index) => (
+              <div key={index} className="text-center" data-testid={`credential-${index}`}>
+                <Badge variant="outline" className="text-sm px-4 py-1">
+                  <Award className="h-3 w-3 mr-1 text-[#97CC06]" />
+                  {credential.name}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Trust Indicators Banner */}
-      <section className="py-12 bg-muted/50">
+      <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {trustIndicators.map((indicator, index) => (
@@ -124,7 +198,7 @@ export default function Home() {
       </section>
 
       {/* Tagline and Intro */}
-      <section className="py-12 bg-background">
+      <section className="py-12 bg-muted/30">
         <div className="container mx-auto px-4 text-center">
           <p className="text-xl md:text-2xl font-semibold italic mb-4">
             We are Committed to Cleaning Excellence!
@@ -140,10 +214,18 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-lg text-muted-foreground mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                The Intelligent Regional Alternative
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
                 People matter. That is why we strive to deliver the best commercial cleaning services. 
                 Our goal is to use our services to boost your customers' confidence, knowing that their 
                 well-being is your priority.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                Excel delivers enterprise-scale facility management with the agility, innovation, and accountability 
+                that nationals cannot match. We transform facilities from cost centers into strategic assets through 
+                operational excellence and data-driven insights.
               </p>
               <Link href="/about">
                 <Button size="lg" data-testid="button-about-us">
@@ -162,8 +244,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Industries Section */}
+      {/* Why Choose EFSG Over Nationals */}
       <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Why Choose EFSG Over National Providers
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Enterprise capabilities with regional responsiveness—the perfect combination for $250K+ contracts.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {whyChooseUs.map((item, index) => (
+              <Card key={index} className="h-full" data-testid={`value-prop-${index}`}>
+                <CardHeader>
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#97CC06]/10 flex-shrink-0 mt-1">
+                      <CheckCircle2 className="h-5 w-5 text-[#97CC06]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
+                      <p className="text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Industries Section */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase">
@@ -186,7 +299,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -202,6 +315,31 @@ export default function Home() {
             <Link href="/services">
               <Button size="lg" variant="outline" data-testid="button-view-all-services">
                 VIEW ALL SERVICES
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready for Enterprise-Grade Facility Management?
+          </h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+            Join leading enterprises across 28 states who trust EFSG to deliver operational excellence 
+            and strategic value through our proven facility management solutions.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact">
+              <Button size="lg" variant="secondary" data-testid="button-cta-estimate">
+                Request Enterprise Proposal
+              </Button>
+            </Link>
+            <Link href="/about">
+              <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10" data-testid="button-cta-learn-more">
+                Learn More About EFSG
               </Button>
             </Link>
           </div>
