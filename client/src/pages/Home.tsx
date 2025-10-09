@@ -93,6 +93,14 @@ export default function Home() {
 
   return (
     <div>
+      {/* Hero Section */}
+      <Hero
+        title="Excel Facility Services Group | Commercial Cleaning Service"
+        subtitle="With more than 20 years of experience in over 20 states, Excel Facility Services Group has become one of the most reliable commercial cleaning companies in the United States."
+        imageSrc={heroImage}
+        primaryCta={{ text: "ABOUT US", href: "/about" }}
+      />
+
       {/* Trust Indicators Banner */}
       <section className="py-12 bg-muted/50">
         <div className="container mx-auto px-4">
@@ -114,14 +122,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Hero Section */}
-      <Hero
-        title="Excel Facility Services Group | Commercial Cleaning Service"
-        subtitle="With more than 20 years of experience in over 20 states, Excel Facility Services Group has become one of the most reliable commercial cleaning companies in the United States."
-        imageSrc={heroImage}
-        primaryCta={{ text: "ABOUT US", href: "/about" }}
-      />
 
       {/* Tagline and Intro */}
       <section className="py-12 bg-background">
