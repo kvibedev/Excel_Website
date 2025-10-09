@@ -48,6 +48,17 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - Final CTA paragraph with link to contact page
 - 8 industry cards: Office Building, Retailer, Distribution Centers, Restaurants, Medical Groups, Banks, Schools, Auto Dealerships
 
+**Individual Service & Industry Pages (Complete - October 2025)**
+- Built 20 individual detail pages (12 services + 8 industries) with content from efsgnj.com
+- All pages use Hero component with appropriate imagery from attached_assets
+- Consistent template structure: Hero → Main Content → CTA Section
+- All CTAs use "REQUEST PROPOSAL" for enterprise positioning
+- Zero 404 errors - comprehensive QC passed with all links functional
+- All interactive elements have data-testid attributes for testing
+- Service pages: janitorial, day-porters, levelup-clean, disinfection, covid-19-cleaning, floor-care, window-washing, air-duct-hvac, carpet-extraction, concrete-polishing, power-washing, commercial-cleaning
+- Industry pages: office-building, retailer, distribution-centers, restaurants, medical-groups, banks, schools, auto-dealerships
+- Updated Footer messaging to reflect 28 states for enterprise consistency
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
