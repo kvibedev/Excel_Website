@@ -23,6 +23,16 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - Updated StatsBar to show 28 states and 400M sq ft
 - Final CTA: "REQUEST PROPOSAL" aligned with enterprise messaging
 
+**Contact Page Rebuild (Complete)**
+- Replicated original efsgnj.com/contact/ structure
+- "Get in touch" hero with enterprise positioning
+- Enhanced form with Inquiry Type dropdown (Sales/General Inquiries)
+- Real contact details: (800) 593-2414 and info@efsgnj.com
+- Social media integration (Facebook, Instagram, LinkedIn)
+- Vendor/Contractor and Careers sections added
+- "REQUEST PROPOSAL" CTA (not "Request Estimate")
+- Enterprise stats: 28 states nationwide, 400M sq ft serviced daily
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
