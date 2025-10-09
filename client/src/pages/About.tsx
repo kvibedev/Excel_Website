@@ -67,8 +67,8 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value) => (
               <div key={value.title} className="text-center" data-testid={`card-value-${value.title.toLowerCase().replace(/\s/g, '-')}`}>
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-md bg-primary/10 mx-auto">
-                  <value.icon className="h-8 w-8 text-primary" />
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-md bg-[#97CC06]/10 mx-auto">
+                  <value.icon className="h-8 w-8 text-[#97CC06]" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
                 <p className="text-muted-foreground">{value.description}</p>

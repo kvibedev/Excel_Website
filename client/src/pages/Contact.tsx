@@ -53,8 +53,8 @@ export default function Contact() {
               <div className="space-y-8">
                 {contactInfo.map((info) => (
                   <div key={info.title} className="flex gap-4" data-testid={`contact-${info.title.toLowerCase().replace(/\s/g, '-')}`}>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
-                      <info.icon className="h-6 w-6 text-primary" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06]/10 flex-shrink-0">
+                      <info.icon className="h-6 w-6 text-[#97CC06]" />
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">{info.title}</h4>
@@ -72,23 +72,23 @@ export default function Contact() {
                 <h3 className="text-2xl font-bold mb-4">Why Choose EFSG?</h3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
-                    <span className="text-primary font-bold">•</span>
+                    <span className="text-[#97CC06] font-bold">✓</span>
                     <span className="text-muted-foreground">20+ years of commercial cleaning experience</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary font-bold">•</span>
+                    <span className="text-[#97CC06] font-bold">✓</span>
                     <span className="text-muted-foreground">Serving 20+ states nationwide</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary font-bold">•</span>
+                    <span className="text-[#97CC06] font-bold">✓</span>
                     <span className="text-muted-foreground">30M+ square feet serviced daily</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary font-bold">•</span>
+                    <span className="text-[#97CC06] font-bold">✓</span>
                     <span className="text-muted-foreground">Customized cleaning solutions for your industry</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary font-bold">•</span>
+                    <span className="text-[#97CC06] font-bold">✓</span>
                     <span className="text-muted-foreground">Certified disinfection and health-focused cleaning</span>
                   </li>
                 </ul>

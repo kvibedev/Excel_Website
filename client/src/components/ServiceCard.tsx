@@ -14,8 +14,8 @@ export default function ServiceCard({ icon: Icon, title, description, href }: Se
   return (
     <Card className="hover-elevate transition-shadow h-full flex flex-col" data-testid={`card-service-${title.toLowerCase().replace(/[®\s]/g, '-')}`}>
       <CardHeader className="flex-grow">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-primary/10">
-          <Icon className="h-6 w-6 text-primary" />
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06]/10">
+          <Icon className="h-6 w-6 text-[#97CC06]" />
         </div>
         <CardTitle className="text-xl">{title}</CardTitle>
         <CardDescription className="line-clamp-3">{description}</CardDescription>

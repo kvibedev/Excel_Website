@@ -6,8 +6,8 @@ interface StatItemProps {
 function StatItem({ value, label }: StatItemProps) {
   return (
     <div className="text-center">
-      <div className="text-4xl md:text-5xl font-bold text-primary mb-2" data-testid={`text-stat-${label.toLowerCase().replace(/\s/g, '-')}`}>
-        {value}
+      <div className="text-4xl md:text-5xl font-bold mb-2" data-testid={`text-stat-${label.toLowerCase().replace(/\s/g, '-')}`}>
+        <span className="text-[#97CC06]">{value}</span>
       </div>
       <div className="text-sm md:text-base text-muted-foreground">{label}</div>
     </div>
