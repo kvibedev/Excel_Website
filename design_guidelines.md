@@ -15,17 +15,16 @@
 
 ## Color Palette
 
-**Primary Brand Colors:**
-- Primary Blue: `210 85% 45%` (Deep professional blue for headers, CTAs, trust elements)
-- Primary Blue Light: `210 70% 92%` (Backgrounds, subtle sections)
-- Accent Navy: `215 90% 30%` (Navigation, footer, emphasis)
+**Official Excel Brand Colors (from Brand Book 2025):**
+- Primary Blue: `#063970` / `210 90% 23%` (Main brand color for buttons, headers, trust elements)
+- Light Blue: `#0A5EB9` / `211 90% 38%` (Accent color for interactive elements, links)
+- Accent Green: `#97CC06` / `76 94% 41%` (Success indicators, certifications, accents)
+- Brand Grey: `#777D82` / `207 4% 49%` (Muted text, secondary information)
 
 **Supporting Colors:**
-- Success Green: `145 65% 45%` (Trust indicators, certifications, completion states)
 - Neutral Gray Scale: 
-  - Text: `215 25% 20%` (primary text)
-  - Secondary Text: `215 15% 45%`
-  - Borders: `215 20% 85%`
+  - Text: `210 90% 15%` (primary text, dark blue-tinted)
+  - Borders: `207 10% 85%`
   - Backgrounds: `0 0% 98%`
 - White: Pure white for content cards and primary backgrounds
 
@@ -38,10 +37,10 @@
 
 ## Typography
 
-**Font Families:**
-- **Primary (Headings):** Inter (via Google Fonts CDN) - weights 600, 700, 800
-- **Secondary (Body):** Inter - weights 400, 500, 600
-- **Accent (Numbers/Stats):** Inter - weight 700
+**Font Families (from Brand Book 2025):**
+- **Primary (Headings):** Barlow Bold, Medium - weights 500, 600, 700, 800
+- **Secondary (Body):** Cabin - weights 400, 500, 600
+- **Accent (Numbers/Stats):** Barlow Bold - weight 700
 
 **Type Scale:**
 - Hero Headline: text-5xl md:text-6xl lg:text-7xl, font-bold

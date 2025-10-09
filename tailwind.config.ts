@@ -83,9 +83,11 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
+        sans: ["Barlow", "system-ui", "-apple-system", "sans-serif"],
+        serif: ["Cabin", "Georgia", "serif"],
         mono: ["var(--font-mono)"],
+        barlow: ["Barlow", "sans-serif"],
+        cabin: ["Cabin", "serif"],
       },
       keyframes: {
         "accordion-down": {
