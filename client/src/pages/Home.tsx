@@ -1,18 +1,18 @@
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
 import IndustryCard from "@/components/IndustryCard";
-import StatsBar from "@/components/StatsBar";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import {
   Sparkles,
   Users,
   Shield,
   Droplets,
-  Wind,
-  Layers,
-  SprayCan,
-  Brush,
+  Award,
+  GraduationCap,
+  Cpu,
+  Heart,
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
@@ -26,105 +26,128 @@ import distributionImage from "@assets/generated_images/Distribution_center_indu
 import restaurantImage from "@assets/generated_images/Restaurant_industry_image_41a06d21.png";
 
 export default function Home() {
+  const trustIndicators = [
+    {
+      icon: Award,
+      title: "Customer satisfaction guarantee",
+      href: "/about",
+    },
+    {
+      icon: GraduationCap,
+      title: "Management and employee training",
+      href: "/about",
+    },
+    {
+      icon: Cpu,
+      title: "Innovative technology and understanding of building needs",
+      href: "/about",
+    },
+    {
+      icon: Heart,
+      title: "A healthier space for businesses and people to thrive!",
+      href: "/services",
+    },
+  ];
+
   const featuredServices = [
     {
       icon: Sparkles,
-      title: "Janitorial Services",
+      title: "Janitorial",
       description:
-        "Professional janitorial services that keep your workplace clean, safe, and presentable for employees and customers.",
-      href: "/services/janitorial",
+        "Janitorial services are essential for businesses of all sizes. It not only keeps the workplace looking clean and professional, but they also help to ensure a safe and healthy environment for customers and employees.",
+      href: "/services",
     },
     {
       icon: Users,
       title: "Day Porters",
       description:
-        "Professional day porters maintain cleanliness and order during business hours, ensuring a pristine environment.",
-      href: "/services/day-porters",
+        "A day porter is a professional who helps to maintain the cleanliness and order of a business or corporate building. Day porters typically work during regular business hours, ensuring that the building is clean and presentable for employees and visitors.",
+      href: "/services",
     },
     {
       icon: Shield,
-      title: "LevelUp Clean®",
+      title: "LevelUp Clean ®",
       description:
-        "A healthier space for businesses and people to thrive! Certified disinfection through our three-step approach.",
-      href: "/services/levelup-clean",
+        "A healthier space for businesses and people to thrive! LEVEL UP CLEAN ® helps clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers sanitized spaces with certified disinfection.",
+      href: "/services",
     },
     {
       icon: Droplets,
       title: "Disinfection",
       description:
-        "Applying antimicrobial agents to destroy or inhibit the growth of potentially harmful microorganisms.",
-      href: "/services/disinfection",
-    },
-    {
-      icon: Wind,
-      title: "Air Duct & HVAC",
-      description:
-        "Regular maintenance of air duct and HVAC systems ensures smooth air quality throughout the workplace.",
-      href: "/services/air-duct-hvac",
-    },
-    {
-      icon: Layers,
-      title: "Floor Care",
-      description:
-        "Maintain clean and polished floors to uphold a great and lasting impression for your business.",
-      href: "/services/floor-care",
-    },
-    {
-      icon: SprayCan,
-      title: "Power Washing",
-      description:
-        "High-pressure water cleaning to remove dirt, grime, and surface deposits from various surfaces.",
-      href: "/services/power-washing",
-    },
-    {
-      icon: Brush,
-      title: "Window Washing",
-      description:
-        "Professional window washing improves building appearance and extends window life by removing debris.",
-      href: "/services/window-washing",
+        "In commercial cleaning, disinfection is a process of applying an antimicrobial agent on all surfaces to destroy or inhibit the growth of potentially harmful microorganisms.",
+      href: "/services",
     },
   ];
 
   const industries = [
-    { title: "Office Buildings", imageSrc: officeImage, href: "/industries/office-building" },
-    { title: "Retailers", imageSrc: retailImage, href: "/industries/retailer" },
-    { title: "Distribution Centers", imageSrc: distributionImage, href: "/industries/distribution-centers" },
-    { title: "Restaurants", imageSrc: restaurantImage, href: "/industries/restaurants" },
-    { title: "Medical Groups", imageSrc: medicalImage, href: "/industries/medical-groups" },
-    { title: "Banks", imageSrc: banksImage, href: "/industries/banks" },
-    { title: "Schools", imageSrc: schoolsImage, href: "/industries/schools" },
-    { title: "Auto Dealerships", imageSrc: autoImage, href: "/industries/auto-dealerships" },
+    { title: "Medical Groups", imageSrc: medicalImage, href: "/industries" },
+    { title: "Banks", imageSrc: banksImage, href: "/industries" },
+    { title: "Schools", imageSrc: schoolsImage, href: "/industries" },
+    { title: "Auto Dealerships", imageSrc: autoImage, href: "/industries" },
+    { title: "Office Building", imageSrc: officeImage, href: "/industries" },
+    { title: "Retailer", imageSrc: retailImage, href: "/industries" },
+    { title: "Distribution Centers", imageSrc: distributionImage, href: "/industries" },
+    { title: "Restaurants", imageSrc: restaurantImage, href: "/industries" },
   ];
 
   return (
     <div>
+      {/* Trust Indicators Banner */}
+      <section className="py-12 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {trustIndicators.map((indicator, index) => (
+              <Link key={index} href={indicator.href}>
+                <Card className="hover-elevate transition-all h-full cursor-pointer" data-testid={`card-trust-${index}`}>
+                  <CardContent className="p-6 text-center">
+                    <div className="flex justify-center mb-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06]/10">
+                        <indicator.icon className="h-6 w-6 text-[#97CC06]" />
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium leading-tight">{indicator.title}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Hero Section */}
       <Hero
-        title="Professional Commercial Cleaning Services"
-        subtitle="Creating healthier workplaces with 20+ years of experience"
+        title="Excel Facility Services Group | Commercial Cleaning Service"
+        subtitle="With more than 20 years of experience in over 20 states, Excel Facility Services Group has become one of the most reliable commercial cleaning companies in the United States."
         imageSrc={heroImage}
-        primaryCta={{ text: "Get Estimate", href: "/contact" }}
-        secondaryCta={{ text: "View Services", href: "/services" }}
+        primaryCta={{ text: "ABOUT US", href: "/about" }}
       />
 
+      {/* Tagline and Intro */}
+      <section className="py-12 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-xl md:text-2xl font-semibold italic mb-4">
+            We are Committed to Cleaning Excellence!
+          </p>
+          <p className="text-lg md:text-xl font-semibold max-w-4xl mx-auto">
+            EFSG provides an array of cleaning services that allow workplaces to run smoothly and efficiently.
+          </p>
+        </div>
+      </section>
+
+      {/* About Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                At Excel, we understand that people matter.
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Excel Facility Services Group has provided high-quality janitorial services since
-                2001. As an established company, we take pride in the partnerships our customers
-                have formed with us over time.
-              </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Through these partnerships, Excel Facility Services Group ensures their satisfaction
-                and trust as they deliver excellent services at all times through customized plans.
+                People matter. That is why we strive to deliver the best commercial cleaning services. 
+                Our goal is to use our services to boost your customers' confidence, knowing that their 
+                well-being is your priority.
               </p>
               <Link href="/about">
                 <Button size="lg" data-testid="button-about-us">
-                  About Us
+                  ABOUT US
                 </Button>
               </Link>
             </div>
@@ -139,17 +162,13 @@ export default function Home() {
         </div>
       </section>
 
-      <StatsBar />
-
-      <section className="py-16 md:py-24 bg-background">
+      {/* Industries Section */}
+      <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase">
               EFSG Helps Different Industries and All Types of Facilities Across the Country!
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              From offices to classrooms, we have the commercial cleaning experience you need.
-            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {industries.map((industry) => (
@@ -157,22 +176,21 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Link href="/industries">
-              <Button size="lg" variant="outline" data-testid="button-view-all-industries">
-                View All Industries
+            <Link href="/contact">
+              <Button size="lg" data-testid="button-request-estimate">
+                Request an Estimate
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
+      {/* Services Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              We specialize in expert cleaning and disinfection services that help businesses run
-              smoothly and efficiently.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+              From offices to classrooms, we have the commercial cleaning experience you need.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -183,27 +201,10 @@ export default function Home() {
           <div className="text-center">
             <Link href="/services">
               <Button size="lg" variant="outline" data-testid="button-view-all-services">
-                View All Services
+                VIEW ALL SERVICES
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Create a Healthier Workplace?
-          </h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
-            If you are looking for a commercial cleaning company you can trust to get the job done
-            right, look no further than Excel Facility Services Group.
-          </p>
-          <Link href="/contact">
-            <Button size="lg" variant="secondary" data-testid="button-cta-estimate">
-              Request an Estimate Today
-            </Button>
-          </Link>
         </div>
       </section>
     </div>
