@@ -40,6 +40,14 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - "REQUEST PROPOSAL" CTA for enterprise consistency
 - Services: Janitorial, Day Porters, LevelUp Clean®, Disinfection, COVID-19 Cleaning, Floor Care, Window Washing, Air Duct & HVAC, Carpet Extraction, Concrete Polishing, Power Washing, Commercial Cleaning
 
+**Industries Page Rebuild (Complete)**
+- Replicated original efsgnj.com/industries/ structure exactly
+- Hero subtitle includes full industry list (government facilities, transportation, theaters)
+- Page structure: Hero → REQUEST PROPOSAL form → Industries description → Industry cards
+- "Industries" section with 3 descriptive paragraphs
+- Final CTA paragraph with link to contact page
+- 8 industry cards: Office Building, Retailer, Distribution Centers, Restaurants, Medical Groups, Banks, Schools, Auto Dealerships
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
