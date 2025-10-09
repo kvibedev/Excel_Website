@@ -2,7 +2,26 @@
 
 ## Overview
 
-This is a commercial cleaning services website for Excel Facility Services Group (EFSG), a B2B company with 20+ years of experience operating across 20+ states. The application is built as a full-stack web application using React for the frontend and Express for the backend, with a focus on professional presentation, trust-building, and lead generation through estimate requests.
+This is a commercial cleaning services website for Excel Facility Services Group (EFSG), an enterprise-focused B2B company with 20+ years of experience operating across 28 states. The application is built as a full-stack web application using React for the frontend and Express for the backend, with a focus on professional presentation, trust-building, and enterprise lead generation. The site replicates the exact structure and content of efsgnj.com with enhanced enterprise positioning.
+
+## Recent Changes (2024)
+
+**Homepage Rebuild (Complete)**
+- Replicated original efsgnj.com homepage structure
+- Applied exact brand colors from Excel Brand Book 2025
+- Enterprise positioning: 28 states, 400M sq ft managed daily, 20+ years excellence
+- Added enterprise stats bar and credentials strip (Inc. 5000, MBE Certified, Green Seal GS-42)
+- "Why Choose EFSG Over Nationals" section with 4 value propositions
+- Changed primary CTA to "REQUEST PROPOSAL" for enterprise buyers
+- Removed explicit contract amounts for sophisticated appeal
+
+**About Page Rebuild (Complete)**
+- Replicated original efsgnj.com/about-us/ structure
+- "At Excel, We Understand That People Matter" hero section
+- Company story: 2001 founding to 28-state nationwide operation
+- Enterprise value propositions: Scale, Professional Teams, Technology, Excellence
+- Updated StatsBar to show 28 states and 400M sq ft
+- Final CTA: "REQUEST PROPOSAL" aligned with enterprise messaging
 
 ## User Preferences
 

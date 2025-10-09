@@ -17,8 +17,8 @@ function StatItem({ value, label }: StatItemProps) {
 export default function StatsBar() {
   const stats = [
     { value: "20+", label: "Years of Experience" },
-    { value: "20+", label: "States" },
-    { value: "30M+", label: "Sq Ft Serviced Daily" },
+    { value: "28", label: "States" },
+    { value: "400M", label: "Sq Ft Serviced Daily" },
   ];
 
   return (
