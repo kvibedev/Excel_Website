@@ -55,10 +55,10 @@ export default function Home() {
   ];
 
   const enterpriseStats = [
-    { value: "28", label: "States Served", icon: Globe },
+    { value: "28", label: "States Nationwide", icon: Globe },
     { value: "400M", label: "Sq Ft Managed Daily", icon: Building2 },
     { value: "20+", label: "Years of Excellence", icon: Award },
-    { value: "$250K-$5M", label: "Annual Contract Range", icon: TrendingUp },
+    { value: "Inc. 5000", label: "Recognized Growth", icon: TrendingUp },
   ];
 
   const credentials = [
@@ -70,7 +70,7 @@ export default function Home() {
   const whyChooseUs = [
     {
       title: "Enterprise-Scale Infrastructure",
-      description: "Multi-state operations with the resources to handle contracts from $250K to $5M annually. Proven track record managing 400 million square feet daily.",
+      description: "Multi-state operations with the resources to handle large-scale, multi-location contracts. Proven track record managing 400 million square feet daily across diverse industries.",
     },
     {
       title: "Regional Accountability",
@@ -133,7 +133,7 @@ export default function Home() {
       {/* Hero Section */}
       <Hero
         title="Enterprise Facility Management Across 28 States"
-        subtitle="With more than 20 years of excellence managing 400 million square feet daily, Excel Facility Services Group delivers enterprise-scale commercial cleaning solutions for contracts ranging from $250K to $5M annually."
+        subtitle="With more than 20 years of excellence managing 400 million square feet daily, Excel Facility Services Group delivers enterprise-scale commercial cleaning solutions with the agility and accountability that national providers cannot match."
         imageSrc={heroImage}
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "LEARN MORE", href: "/about" }}
@@ -252,7 +252,7 @@ export default function Home() {
               Why Choose EFSG Over National Providers
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Enterprise capabilities with regional responsiveness—the perfect combination for $250K+ contracts.
+              Enterprise capabilities with regional responsiveness—delivering results that matter to your business.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
