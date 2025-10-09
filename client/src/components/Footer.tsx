@@ -67,10 +67,8 @@ export default function Footer() {
             <ul className="space-y-2">
               {serviceLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}>
-                    <a className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.label.toLowerCase().replace(/[®\s]/g, '-')}`}>
-                      {link.label}
-                    </a>
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.label.toLowerCase().replace(/[®\s]/g, '-')}`}>
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -82,10 +80,8 @@ export default function Footer() {
             <ul className="space-y-2">
               {industryLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}>
-                    <a className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.label.toLowerCase().replace(/\s/g, '-')}`}>
-                      {link.label}
-                    </a>
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.label.toLowerCase().replace(/\s/g, '-')}`}>
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -99,10 +95,8 @@ export default function Footer() {
               <li>Nationwide Coverage</li>
               <li>20+ States</li>
               <li>
-                <Link href="/contact">
-                  <a className="text-primary hover:underline" data-testid="link-footer-contact">
-                    Request an Estimate
-                  </a>
+                <Link href="/contact" className="text-primary hover:underline" data-testid="link-footer-contact">
+                  Request an Estimate
                 </Link>
               </li>
             </ul>
