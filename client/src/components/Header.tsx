@@ -1,18 +1,48 @@
-import { Building2, Menu, X } from "lucide-react";
+import { Building2, Menu, X, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
 
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/about", label: "About Us" },
-    { path: "/services", label: "Services" },
-    { path: "/industries", label: "Industries" },
-    { path: "/contact", label: "Contact" },
+  const serviceLinks = [
+    { href: "/services/janitorial", label: "Janitorial" },
+    { href: "/services/day-porters", label: "Day Porters" },
+    { href: "/services/levelup-clean", label: "LevelUp Clean®" },
+    { href: "/services/disinfection", label: "Disinfection" },
+    { href: "/services/covid-19-cleaning", label: "COVID-19 Cleaning" },
+    { href: "/services/floor-care", label: "Floor Care" },
+    { href: "/services/window-washing", label: "Window Washing" },
+    { href: "/services/air-duct-hvac", label: "Air Duct & HVAC" },
+    { href: "/services/carpet-extraction", label: "Carpet Extraction" },
+    { href: "/services/concrete-polishing", label: "Concrete Polishing" },
+    { href: "/services/power-washing", label: "Power Washing" },
+    { href: "/services/commercial-cleaning", label: "Commercial Cleaning" },
+  ];
+
+  const industryLinks = [
+    { href: "/industries/office-building", label: "Office Buildings" },
+    { href: "/industries/retailer", label: "Retailers" },
+    { href: "/industries/distribution-centers", label: "Distribution Centers" },
+    { href: "/industries/restaurants", label: "Restaurants" },
+    { href: "/industries/medical-groups", label: "Medical Groups" },
+    { href: "/industries/banks", label: "Banks" },
+    { href: "/industries/schools", label: "Schools" },
+    { href: "/industries/auto-dealerships", label: "Auto Dealerships" },
   ];
 
   return (
@@ -28,16 +58,106 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link key={item.path} href={item.path}>
-                <Button
-                  variant={location === item.path ? "secondary" : "ghost"}
-                  data-testid={`link-${item.label.toLowerCase().replace(" ", "-")}`}
-                >
-                  {item.label}
-                </Button>
-              </Link>
-            ))}
+            <Link href="/">
+              <Button
+                variant={location === "/" ? "secondary" : "ghost"}
+                data-testid="link-home"
+              >
+                Home
+              </Button>
+            </Link>
+            
+            <Link href="/about">
+              <Button
+                variant={location === "/about" ? "secondary" : "ghost"}
+                data-testid="link-about-us"
+              >
+                About Us
+              </Button>
+            </Link>
+
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      location.startsWith("/services") ? "bg-secondary text-secondary-foreground" : ""
+                    )}
+                    data-testid="dropdown-services"
+                  >
+                    Services
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-1 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {serviceLinks.map((service) => (
+                        <li key={service.href}>
+                          <NavigationMenuLink asChild>
+                            <Link href={service.href}>
+                              <a
+                                className={cn(
+                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
+                                  location === service.href ? "bg-accent text-accent-foreground" : ""
+                                )}
+                                data-testid={`link-service-${service.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                              >
+                                <div className="text-sm font-medium leading-none">{service.label}</div>
+                              </a>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      location.startsWith("/industries") ? "bg-secondary text-secondary-foreground" : ""
+                    )}
+                    data-testid="dropdown-industries"
+                  >
+                    Industries
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-1 p-2 md:w-[500px] md:grid-cols-2">
+                      {industryLinks.map((industry) => (
+                        <li key={industry.href}>
+                          <NavigationMenuLink asChild>
+                            <Link href={industry.href}>
+                              <a
+                                className={cn(
+                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
+                                  location === industry.href ? "bg-accent text-accent-foreground" : ""
+                                )}
+                                data-testid={`link-industry-${industry.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                              >
+                                <div className="text-sm font-medium leading-none">{industry.label}</div>
+                              </a>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            <Link href="/contact">
+              <Button
+                variant={location === "/contact" ? "secondary" : "ghost"}
+                data-testid="link-contact"
+              >
+                Contact
+              </Button>
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center gap-2">
@@ -60,18 +180,95 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <nav className="flex flex-col gap-2">
-              {navItems.map((item) => (
-                <Link key={item.path} href={item.path}>
-                  <Button
-                    variant={location === item.path ? "secondary" : "ghost"}
-                    className="w-full justify-start"
-                    onClick={() => setMobileMenuOpen(false)}
-                    data-testid={`link-mobile-${item.label.toLowerCase().replace(" ", "-")}`}
-                  >
-                    {item.label}
-                  </Button>
-                </Link>
-              ))}
+              <Link href="/">
+                <Button
+                  variant={location === "/" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-home"
+                >
+                  Home
+                </Button>
+              </Link>
+
+              <Link href="/about">
+                <Button
+                  variant={location === "/about" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-about-us"
+                >
+                  About Us
+                </Button>
+              </Link>
+
+              <div>
+                <Button
+                  variant={location.startsWith("/services") ? "secondary" : "ghost"}
+                  className="w-full justify-between"
+                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  data-testid="button-mobile-services"
+                >
+                  Services
+                  <ChevronDown className={cn("h-4 w-4 transition-transform", mobileServicesOpen && "rotate-180")} />
+                </Button>
+                {mobileServicesOpen && (
+                  <div className="mt-2 ml-4 flex flex-col gap-1">
+                    {serviceLinks.map((service) => (
+                      <Link key={service.href} href={service.href}>
+                        <Button
+                          variant={location === service.href ? "secondary" : "ghost"}
+                          className="w-full justify-start text-sm"
+                          onClick={() => setMobileMenuOpen(false)}
+                          data-testid={`link-mobile-service-${service.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                        >
+                          {service.label}
+                        </Button>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <Button
+                  variant={location.startsWith("/industries") ? "secondary" : "ghost"}
+                  className="w-full justify-between"
+                  onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
+                  data-testid="button-mobile-industries"
+                >
+                  Industries
+                  <ChevronDown className={cn("h-4 w-4 transition-transform", mobileIndustriesOpen && "rotate-180")} />
+                </Button>
+                {mobileIndustriesOpen && (
+                  <div className="mt-2 ml-4 flex flex-col gap-1">
+                    {industryLinks.map((industry) => (
+                      <Link key={industry.href} href={industry.href}>
+                        <Button
+                          variant={location === industry.href ? "secondary" : "ghost"}
+                          className="w-full justify-start text-sm"
+                          onClick={() => setMobileMenuOpen(false)}
+                          data-testid={`link-mobile-industry-${industry.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                        >
+                          {industry.label}
+                        </Button>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Link href="/contact">
+                <Button
+                  variant={location === "/contact" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-contact"
+                >
+                  Contact
+                </Button>
+              </Link>
+
               <Link href="/contact">
                 <Button
                   variant="default"

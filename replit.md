@@ -59,6 +59,15 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - Industry pages: office-building, retailer, distribution-centers, restaurants, medical-groups, banks, schools, auto-dealerships
 - Updated Footer messaging to reflect 28 states for enterprise consistency
 
+**Header Navigation Dropdown Menus (Complete - October 2025)**
+- Added NavigationMenu dropdowns for Services and Industries in desktop header
+- Services dropdown displays all 12 service pages in 2-column grid layout
+- Industries dropdown displays all 8 industry pages in 2-column grid layout
+- Proper accessibility: keyboard navigation support (Tab, Enter, Arrow keys)
+- Mobile-responsive: accordion-style expandable sections for Services and Industries
+- Active state highlighting shows current page in dropdowns
+- All dropdown links use proper anchor tags for semantic HTML and accessibility
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
