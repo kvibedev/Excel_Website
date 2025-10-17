@@ -67,6 +67,7 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - Mobile-responsive: accordion-style expandable sections for Services and Industries
 - Active state highlighting shows current page in dropdowns
 - All dropdown links use proper anchor tags for semantic HTML and accessibility
+- Scroll-to-top behavior: All navigation links automatically scroll page to top on route change
 
 ## User Preferences
 
