@@ -50,6 +50,7 @@ export default function Header() {
     { href: "/", label: "Template 1" },
     { href: "/home-template-1", label: "Template 2" },
     { href: "/home-template-2", label: "Template 3" },
+    { href: "/home-template-3", label: "Template 4" },
   ];
 
   return (
@@ -71,7 +72,7 @@ export default function Header() {
                   <NavigationMenuTrigger 
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      (location === "/" || location === "/home-template-1" || location === "/home-template-2") ? "bg-secondary text-secondary-foreground" : ""
+                      (location === "/" || location === "/home-template-1" || location === "/home-template-2" || location === "/home-template-3") ? "bg-secondary text-secondary-foreground" : ""
                     )}
                     data-testid="dropdown-homepage"
                   >
@@ -217,7 +218,7 @@ export default function Header() {
             <nav className="flex flex-col gap-2">
               <div>
                 <Button
-                  variant={(location === "/" || location === "/home-template-1" || location === "/home-template-2") ? "secondary" : "ghost"}
+                  variant={(location === "/" || location === "/home-template-1" || location === "/home-template-2" || location === "/home-template-3") ? "secondary" : "ghost"}
                   className="w-full justify-between"
                   onClick={() => setMobileHomepageOpen(!mobileHomepageOpen)}
                   data-testid="button-mobile-homepage"
