@@ -83,16 +83,15 @@ export default function Header() {
                       {homepageTemplates.map((template) => (
                         <li key={template.href}>
                           <NavigationMenuLink asChild>
-                            <Link href={template.href}>
-                              <a
-                                className={cn(
-                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
-                                  location === template.href ? "bg-accent text-accent-foreground" : ""
-                                )}
-                                data-testid={`link-homepage-${template.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                              >
-                                <div className="text-sm font-medium leading-none">{template.label}</div>
-                              </a>
+                            <Link
+                              href={template.href}
+                              className={cn(
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
+                                location === template.href ? "bg-accent text-accent-foreground" : ""
+                              )}
+                              data-testid={`link-homepage-${template.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                            >
+                              <div className="text-sm font-medium leading-none">{template.label}</div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
@@ -129,16 +128,15 @@ export default function Header() {
                       {serviceLinks.map((service) => (
                         <li key={service.href}>
                           <NavigationMenuLink asChild>
-                            <Link href={service.href}>
-                              <a
-                                className={cn(
-                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
-                                  location === service.href ? "bg-accent text-accent-foreground" : ""
-                                )}
-                                data-testid={`link-service-${service.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                              >
-                                <div className="text-sm font-medium leading-none">{service.label}</div>
-                              </a>
+                            <Link
+                              href={service.href}
+                              className={cn(
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
+                                location === service.href ? "bg-accent text-accent-foreground" : ""
+                              )}
+                              data-testid={`link-service-${service.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                            >
+                              <div className="text-sm font-medium leading-none">{service.label}</div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
@@ -166,16 +164,15 @@ export default function Header() {
                       {industryLinks.map((industry) => (
                         <li key={industry.href}>
                           <NavigationMenuLink asChild>
-                            <Link href={industry.href}>
-                              <a
-                                className={cn(
-                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
-                                  location === industry.href ? "bg-accent text-accent-foreground" : ""
-                                )}
-                                data-testid={`link-industry-${industry.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                              >
-                                <div className="text-sm font-medium leading-none">{industry.label}</div>
-                              </a>
+                            <Link
+                              href={industry.href}
+                              className={cn(
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
+                                location === industry.href ? "bg-accent text-accent-foreground" : ""
+                              )}
+                              data-testid={`link-industry-${industry.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                            >
+                              <div className="text-sm font-medium leading-none">{industry.label}</div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
@@ -233,7 +230,10 @@ export default function Header() {
                         <Button
                           variant={location === template.href ? "secondary" : "ghost"}
                           className="w-full justify-start text-sm"
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={() => {
+                            setMobileHomepageOpen(false);
+                            setMobileMenuOpen(false);
+                          }}
                           data-testid={`link-mobile-homepage-${template.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                         >
                           {template.label}
@@ -272,7 +272,10 @@ export default function Header() {
                         <Button
                           variant={location === service.href ? "secondary" : "ghost"}
                           className="w-full justify-start text-sm"
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={() => {
+                            setMobileServicesOpen(false);
+                            setMobileMenuOpen(false);
+                          }}
                           data-testid={`link-mobile-service-${service.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                         >
                           {service.label}
@@ -300,7 +303,10 @@ export default function Header() {
                         <Button
                           variant={location === industry.href ? "secondary" : "ghost"}
                           className="w-full justify-start text-sm"
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={() => {
+                            setMobileIndustriesOpen(false);
+                            setMobileMenuOpen(false);
+                          }}
                           data-testid={`link-mobile-industry-${industry.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                         >
                           {industry.label}
