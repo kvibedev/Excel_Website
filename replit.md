@@ -69,6 +69,31 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - All dropdown links use proper anchor tags for semantic HTML and accessibility
 - Scroll-to-top behavior: All navigation links automatically scroll page to top on route change
 
+**Alternative Homepage Templates (Complete - November 2025)**
+- Created two additional homepage designs inspired by professional cleaning service templates
+- Homepage template selector dropdown in Header navigation (desktop and mobile)
+- All templates use EFSG content (28 states, 400M sq ft, 20+ years excellence)
+- All templates maintain brand colors and enterprise positioning
+- **Template 1 (Sanera Style)** - /home-template-1:
+  - Modern medical/sanitizing aesthetic
+  - Feature cards highlighting time/money savings, healthy environment, professional experts
+  - About section with company story and credentials
+  - 6-service grid with images linking to detail pages
+  - 4-step "How It Works" process flow
+  - Pricing tiers (Small Business / Enterprise)
+  - All interactive elements have data-testid attributes
+- **Template 2 (The Kleaner Style)** - /home-template-2:
+  - Bold industrial/professional look
+  - Stats banner with key metrics
+  - 4-step icon process flow with arrow connectors
+  - Services showcase with large images
+  - Industries section with 6 industry cards
+  - About company with positioned stats overlay
+  - All interactive elements have data-testid attributes
+- **Original Homepage** - / (unchanged):
+  - Enterprise-focused design
+  - Maintained as primary homepage option
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

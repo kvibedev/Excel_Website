@@ -162,7 +162,7 @@ export default function HomeTemplate2() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple Process, Outstanding Results</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-process">Simple Process, Outstanding Results</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Getting started with professional facility services is easy with our streamlined approach
             </p>
@@ -172,11 +172,11 @@ export default function HomeTemplate2() {
               <div key={index} className="relative" data-testid={`process-step-${index}`}>
                 <div className="text-center">
                   <div className="mb-4 flex justify-center">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#97CC06]/10 border-4 border-[#97CC06]">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#97CC06]/10 border-4 border-[#97CC06]" data-testid={`icon-step-${index}`}>
                       <step.icon className="h-10 w-10 text-[#97CC06]" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                  <h3 className="text-xl font-bold mb-3" data-testid={`heading-step-${index}`}>{step.title}</h3>
                   <p className="text-muted-foreground">{step.description}</p>
                 </div>
                 {index < processSteps.length - 1 && (
@@ -194,14 +194,14 @@ export default function HomeTemplate2() {
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Professional Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-professional-services">Our Professional Services</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Comprehensive facility management solutions tailored to your industry and business needs
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Link key={index} href={service.href}>
+              <Link key={index} href={service.href} data-testid={`link-service-${service.href.split('/').pop()}`}>
                 <Card className="overflow-hidden hover-elevate transition-shadow h-full cursor-pointer group" data-testid={`card-service-${index}`}>
                   <div className="relative h-48 overflow-hidden">
                     <div
@@ -217,11 +217,11 @@ export default function HomeTemplate2() {
                     </div>
                   </div>
                   <CardHeader>
-                    <CardTitle className="text-xl">{service.title}</CardTitle>
+                    <CardTitle className="text-xl" data-testid={`heading-service-${index}`}>{service.title}</CardTitle>
                     <CardDescription>{service.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-[#0A5EB9] font-medium flex items-center gap-2">
+                    <p className="text-sm text-[#0A5EB9] font-medium flex items-center gap-2" data-testid={`text-learn-more-${index}`}>
                       Learn More <ArrowRight className="h-4 w-4" />
                     </p>
                   </CardContent>
@@ -243,7 +243,7 @@ export default function HomeTemplate2() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Industries We Serve</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-industries">Industries We Serve</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Specialized cleaning solutions for diverse commercial and industrial facilities across America
             </p>
@@ -268,8 +268,8 @@ export default function HomeTemplate2() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-4 bg-[#97CC06] text-white">FOUNDED IN 2001</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <Badge className="mb-4 bg-[#97CC06] text-white" data-testid="badge-founded">FOUNDED IN 2001</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about-company">
                 About Our Company
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
@@ -286,7 +286,7 @@ export default function HomeTemplate2() {
               </p>
 
               <div className="mb-8">
-                <h3 className="text-xl font-bold mb-4">Our Credentials</h3>
+                <h3 className="text-xl font-bold mb-4" data-testid="heading-credentials">Our Credentials</h3>
                 <div className="space-y-4">
                   {credentials.map((credential, index) => (
                     <div key={index} className="flex items-start gap-3" data-testid={`credential-${index}`}>
@@ -315,9 +315,10 @@ export default function HomeTemplate2() {
                 src={aboutImage}
                 alt="Excel Facility Services Team"
                 className="rounded-md w-full h-auto"
+                data-testid="img-about-team"
               />
-              <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-6 rounded-md shadow-lg max-w-xs">
-                <p className="text-4xl font-bold text-[#97CC06] mb-2">20+</p>
+              <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-6 rounded-md shadow-lg max-w-xs" data-testid="badge-years-overlay">
+                <p className="text-4xl font-bold text-[#97CC06] mb-2" data-testid="text-years-overlay">20+</p>
                 <p className="text-sm">Years of cleaning excellence and trusted partnerships</p>
               </div>
             </div>
@@ -329,7 +330,7 @@ export default function HomeTemplate2() {
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6" data-testid="heading-cta-final">
               Looking for Professional Facility Services?
             </h2>
             <p className="text-lg md:text-xl mb-8 opacity-90">

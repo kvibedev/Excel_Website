@@ -166,7 +166,7 @@ export default function HomeTemplate1() {
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-cleaning-excellence">
               We are Committed to Cleaning Excellence
             </h2>
             <div className="max-w-3xl mx-auto">
@@ -190,10 +190,11 @@ export default function HomeTemplate1() {
                 src={aboutImage}
                 alt="Excel Facility Services Team"
                 className="rounded-md w-full h-auto"
+                data-testid="img-about-team"
               />
             </div>
             <div className="order-1 lg:order-2">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
+              <h3 className="text-2xl md:text-3xl font-bold mb-4" data-testid="heading-partner-excellence">
                 Your Partner in Facility Excellence
               </h3>
               <p className="text-lg text-muted-foreground mb-6">
@@ -233,24 +234,24 @@ export default function HomeTemplate1() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-core-services">Our Core Services</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Comprehensive facility management solutions tailored to your business needs
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-              <Link key={index} href={service.href}>
+              <Link key={index} href={service.href} data-testid={`link-service-${service.href.split('/').pop()}`}>
                 <Card className="hover-elevate transition-shadow h-full cursor-pointer" data-testid={`card-service-${index}`}>
                   <CardHeader>
                     <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06]/10">
                       <service.icon className="h-6 w-6 text-[#97CC06]" />
                     </div>
-                    <CardTitle className="text-xl mb-2">{service.title}</CardTitle>
+                    <CardTitle className="text-xl mb-2" data-testid={`heading-service-${index}`}>{service.title}</CardTitle>
                     <CardDescription>{service.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-[#0A5EB9] font-medium">Learn More →</p>
+                    <p className="text-sm text-[#0A5EB9] font-medium" data-testid={`text-learn-more-${index}`}>Learn More →</p>
                   </CardContent>
                 </Card>
               </Link>
@@ -270,7 +271,7 @@ export default function HomeTemplate1() {
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-how-it-works">How It Works</h2>
             <p className="text-lg opacity-90 max-w-3xl mx-auto">
               Our streamlined process makes it easy to get started with professional facility services
             </p>
@@ -279,11 +280,11 @@ export default function HomeTemplate1() {
             {howItWorks.map((step, index) => (
               <div key={index} className="text-center" data-testid={`step-${index}`}>
                 <div className="mb-4 flex justify-center">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#97CC06] text-primary text-2xl font-bold">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#97CC06] text-primary text-2xl font-bold" data-testid={`badge-step-number-${index}`}>
                     {step.number}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                <h3 className="text-xl font-bold mb-3" data-testid={`heading-step-${index}`}>{step.title}</h3>
                 <p className="opacity-90">{step.description}</p>
               </div>
             ))}
@@ -295,7 +296,7 @@ export default function HomeTemplate1() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Choose Your Service Level</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-service-level">Choose Your Service Level</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Flexible solutions designed to meet the needs of businesses at every scale
             </p>
@@ -309,9 +310,9 @@ export default function HomeTemplate1() {
               >
                 <CardHeader>
                   {tier.featured && (
-                    <Badge className="w-fit mb-2 bg-[#97CC06] text-white">MOST POPULAR</Badge>
+                    <Badge className="w-fit mb-2 bg-[#97CC06] text-white" data-testid={`badge-popular-${index}`}>MOST POPULAR</Badge>
                   )}
-                  <CardTitle className="text-2xl mb-2">{tier.name}</CardTitle>
+                  <CardTitle className="text-2xl mb-2" data-testid={`heading-pricing-${index}`}>{tier.name}</CardTitle>
                   <CardDescription className="text-base">{tier.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -343,7 +344,7 @@ export default function HomeTemplate1() {
       {/* Final CTA */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-cta-final">
             Ready to Experience the EFSG Difference?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
