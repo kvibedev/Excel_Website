@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Home from "@/pages/Home";
 import HomeTemplate1 from "@/pages/HomeTemplate1";
-import HomeTemplate2 from "@/pages/HomeTemplate2";
+import HomeTemplate3 from "@/pages/HomeTemplate3";
 import About from "@/pages/About";
 import Services from "@/pages/Services";
 import Industries from "@/pages/Industries";
@@ -54,7 +54,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/home-template-1" component={HomeTemplate1} />
-        <Route path="/home-template-2" component={HomeTemplate2} />
+        <Route path="/home-template-2" component={HomeTemplate3} />
         <Route path="/about" component={About} />
         <Route path="/services" component={Services} />
         <Route path="/industries" component={Industries} />

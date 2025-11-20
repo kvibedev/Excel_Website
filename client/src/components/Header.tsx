@@ -47,9 +47,9 @@ export default function Header() {
   ];
 
   const homepageTemplates = [
-    { href: "/", label: "Original Design" },
-    { href: "/home-template-1", label: "Template 1 - Sanera Style" },
-    { href: "/home-template-2", label: "Template 2 - The Kleaner Style" },
+    { href: "/", label: "Template 1" },
+    { href: "/home-template-1", label: "Template 2" },
+    { href: "/home-template-2", label: "Template 3" },
   ];
 
   return (
