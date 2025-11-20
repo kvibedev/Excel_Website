@@ -70,29 +70,37 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - Scroll-to-top behavior: All navigation links automatically scroll page to top on route change
 
 **Alternative Homepage Templates (Complete - November 2025)**
-- Created two additional homepage designs inspired by professional cleaning service templates
+- Created three distinct homepage designs offering varied aesthetics while maintaining EFSG branding
 - Homepage template selector dropdown in Header navigation (desktop and mobile)
+- Simplified naming: Template 1, Template 2, Template 3 (no descriptive labels)
 - All templates use EFSG content (28 states, 400M sq ft, 20+ years excellence)
-- All templates maintain brand colors and enterprise positioning
-- **Template 1 (Sanera Style)** - /home-template-1:
+- All templates maintain brand colors (#063970, #0A5EB9, #97CC06) and enterprise positioning
+- **Template 1 (Original Design)** - /:
+  - Enterprise-focused design with hero, services overview, industries showcase
+  - "Why Choose EFSG Over Nationals" value propositions
+  - Stats bar and credentials strip (Inc. 5000, MBE Certified, Green Seal GS-42)
+  - "REQUEST PROPOSAL" primary CTA
+  - All interactive elements have data-testid attributes
+- **Template 2 (Sanera-Inspired)** - /home-template-1:
   - Modern medical/sanitizing aesthetic
   - Feature cards highlighting time/money savings, healthy environment, professional experts
   - About section with company story and credentials
   - 6-service grid with images linking to detail pages
   - 4-step "How It Works" process flow
-  - Pricing tiers (Small Business / Enterprise)
+  - Pricing tiers (Small Business / Mid-Market / Enterprise)
   - All interactive elements have data-testid attributes
-- **Template 2 (The Kleaner Style)** - /home-template-2:
-  - Bold industrial/professional look
-  - Stats banner with key metrics
-  - 4-step icon process flow with arrow connectors
-  - Services showcase with large images
-  - Industries section with 6 industry cards
-  - About company with positioned stats overlay
+- **Template 3 (Fore Tech-Inspired)** - /home-template-2:
+  - Modern IT services design adapted for commercial cleaning
+  - Hero: "Professional Cleaning Excellence for Enterprise Facilities"
+  - Client trust section with 4 key stats (28 states, 400M sq ft, 20+ years, 100% satisfaction)
+  - About section: "Scalable Solutions for Every Facility"
+  - 4 featured services (Janitorial, Day Porters, LevelUp Clean®, Disinfection)
+  - Success Stories with 3 case study examples
+  - Expert Teams section with team roles
+  - Pricing plans (Small Business / Mid-Market / Enterprise) without explicit pricing
+  - Client testimonials with 5-star ratings
+  - FAQ section with 5 commercial cleaning questions
   - All interactive elements have data-testid attributes
-- **Original Homepage** - / (unchanged):
-  - Enterprise-focused design
-  - Maintained as primary homepage option
 
 ## User Preferences
 
