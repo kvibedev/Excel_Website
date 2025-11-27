@@ -176,27 +176,45 @@ export default function HomeOriginal() {
         </div>
       </section>
 
-      {/* Value Propositions - Template 3 stats banner style */}
-      <section className="py-16 md:py-20 bg-[#063970]">
+      {/* Value Propositions - 4-Step Workflow Style */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <Badge variant="outline" className="mb-4" data-testid="badge-process">
+              WHY CHOOSE EFSG
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4" data-testid="heading-process">
+              Our Commitment to Excellence
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Four pillars that define our approach to delivering exceptional commercial cleaning services
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {valueProps.map((prop, index) => (
-              <div
-                key={index}
-                className="text-center"
-                data-testid={`card-value-prop-${index}`}
-              >
-                <div className="flex justify-center mb-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-md bg-white/10 backdrop-blur-sm">
-                    <prop.icon className="h-8 w-8 text-[#97CC06]" />
+              <div key={index} className="relative" data-testid={`card-value-prop-${index}`}>
+                <Card className="h-full hover-elevate transition-all">
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-md bg-[#063970]">
+                        <prop.icon className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="text-6xl font-bold text-[#97CC06]/20">
+                        {String(index + 1).padStart(2, '0')}
+                      </div>
+                    </div>
+                    <CardTitle className="text-xl mb-3">{prop.title}</CardTitle>
+                    <CardDescription className="text-base">
+                      {prop.description}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+                {index < valueProps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                    <ArrowRight className="h-8 w-8 text-[#97CC06]" />
                   </div>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {prop.title}
-                </h3>
-                <p className="text-sm text-white/80">
-                  {prop.description}
-                </p>
+                )}
               </div>
             ))}
           </div>
