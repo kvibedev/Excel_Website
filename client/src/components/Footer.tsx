@@ -1,5 +1,6 @@
-import { Building2, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { Link } from "wouter";
+import footerLogo from "@assets/Excel - logo-footer-04_1764259763822.webp";
 
 export default function Footer() {
   const serviceLinks = [
@@ -21,12 +22,8 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <Building2 className="h-8 w-8 text-primary" />
-              <div className="flex flex-col">
-                <span className="text-lg font-bold leading-none">EFSG</span>
-                <span className="text-xs text-muted-foreground">Facility Services</span>
-              </div>
+            <Link href="/" className="flex items-center mb-4" data-testid="link-footer-logo">
+              <img src={footerLogo} alt="Excel Facility Services Group" className="h-12 w-auto" />
             </Link>
             <p className="text-sm text-muted-foreground mb-4">
               Professional commercial cleaning services with 20+ years of experience across 28 states nationwide.
