@@ -1,11 +1,17 @@
+import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import {
-  Play,
   Star,
   Users,
   Building2,
+  Lightbulb,
+  Sparkles,
+  Shield,
+  Droplets,
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -28,8 +34,6 @@ export default function HomeOriginal() {
     align: "start",
     slidesToScroll: 1,
   });
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(true);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -39,134 +43,164 @@ export default function HomeOriginal() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-  }, [emblaApi, onSelect]);
-
   const valueProps = [
     {
       icon: Star,
-      title: "CUSTOMER SATISFACTION GUARANTEE",
+      title: "Customer Satisfaction Guarantee",
+      description: "Our commitment to excellence ensures your complete satisfaction with every service we provide.",
     },
     {
       icon: Users,
-      title: "MANAGEMENT AND EMPLOYEE TRAINING",
+      title: "Management and Employee Training",
+      description: "Continuous professional development programs that elevate our team's expertise and service quality.",
     },
     {
-      icon: Building2,
-      title: "INNOVATIVE TECHNOLOGY AND UNDERSTANDING OF BUILDING NEEDS",
+      icon: Lightbulb,
+      title: "Innovative Technology",
+      description: "Understanding of building needs through cutting-edge technology and data-driven solutions.",
+    },
+    {
+      icon: Shield,
+      title: "LevelUp Clean®",
+      description: "A healthier space for businesses and people to thrive with certified disinfection protocols.",
     },
   ];
 
   const industries = [
-    { title: "OFFICE BUILDING", image: officeImage, href: "/industries/office-building" },
-    { title: "RETAILER", image: retailImage, href: "/industries/retailer" },
-    { title: "DISTRIBUTION CENTERS", image: distributionImage, href: "/industries/distribution-centers" },
-    { title: "RESTAURANTS", image: restaurantImage, href: "/industries/restaurants" },
-    { title: "MEDICAL GROUPS", image: medicalImage, href: "/industries/medical-groups" },
-    { title: "BANKS", image: banksImage, href: "/industries/banks" },
-    { title: "SCHOOLS", image: schoolsImage, href: "/industries/schools" },
-    { title: "AUTO DEALERSHIPS", image: autoImage, href: "/industries/auto-dealerships" },
+    { title: "Office Building", image: officeImage, href: "/industries/office-building" },
+    { title: "Retailer", image: retailImage, href: "/industries/retailer" },
+    { title: "Distribution Centers", image: distributionImage, href: "/industries/distribution-centers" },
+    { title: "Restaurants", image: restaurantImage, href: "/industries/restaurants" },
+    { title: "Medical Groups", image: medicalImage, href: "/industries/medical-groups" },
+    { title: "Banks", image: banksImage, href: "/industries/banks" },
+    { title: "Schools", image: schoolsImage, href: "/industries/schools" },
+    { title: "Auto Dealerships", image: autoImage, href: "/industries/auto-dealerships" },
   ];
 
   const services = [
     {
-      title: "JANITORIAL",
+      icon: Sparkles,
+      title: "Janitorial",
       description: "Janitorial services are essential for businesses of all sizes. It not only keeps the workplace looking clean and professional, but they also help to ensure a safe and healthy environment for customers and employees.",
+      image: officeImage,
       href: "/services/janitorial",
     },
     {
-      title: "DAY PORTERS",
-      description: "A day porter is a professional who helps to maintain the cleanliness and order of a business or corporate building. Day porters typically work during regular business hours, ensuring that the building is clean and presentable for employees and visitors.",
+      icon: Users,
+      title: "Day Porters",
+      description: "A day porter is a professional who helps to maintain the cleanliness and order of a business or corporate building. Day porters typically work during regular business hours, ensuring that the building is clean and presentable.",
+      image: retailImage,
       href: "/services/day-porters",
     },
     {
-      title: "LEVELUP CLEAN ®",
-      description: "A healthier space for businesses and people to thrive! LEVEL UP CLEAN ® helps clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers sanitized spaces with certified disinfection.",
+      icon: Shield,
+      title: "LevelUp Clean®",
+      description: "A healthier space for businesses and people to thrive! LEVEL UP CLEAN® helps clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach.",
+      image: medicalImage,
       href: "/services/levelup-clean",
     },
     {
-      title: "DISINFECTION",
+      icon: Droplets,
+      title: "Disinfection",
       description: "In commercial cleaning, disinfection is a process of applying an antimicrobial agent on all surfaces to destroy or inhibit the growth of potentially harmful microorganisms.",
+      image: distributionImage,
       href: "/services/disinfection",
     },
   ];
 
+  const companyStats = [
+    { label: "Years of Excellence", value: "20+" },
+    { label: "States Nationwide", value: "28" },
+    { label: "Sq Ft Serviced Daily", value: "400M+" },
+    { label: "Client Satisfaction", value: "100%" },
+  ];
+
   return (
     <div>
-      {/* Section 1: Hero with "CREATING HEALTHIER WORKPLACES" */}
-      <section className="relative min-h-[600px] md:min-h-[700px]">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
-          <div className="absolute inset-0 bg-[#063970]/80" />
-        </div>
-        
-        <div className="relative z-10 container mx-auto px-4 pt-16 pb-32 md:pt-24 md:pb-40">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center cursor-pointer hover-elevate" data-testid="button-play-video">
-                <Play className="h-10 w-10 text-[#97CC06] fill-[#97CC06]" />
-              </div>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="heading-hero">
-              CREATING <span className="font-black">HEALTHIER</span> WORKPLACES
-            </h1>
-            
-            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-              We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers healthy workplaces with certified disinfection.
-            </p>
-            
-            <Link href="/services">
-              <Button 
-                size="lg" 
-                className="bg-[#97CC06] hover:bg-[#97CC06]/90 text-white border-0 text-lg px-8 font-semibold"
-                data-testid="button-our-services"
+      {/* Hero Section - Template 3 style with original content */}
+      <Hero
+        title="Creating Healthier Workplaces"
+        subtitle="We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers healthy workplaces with certified disinfection."
+        imageSrc={heroImage}
+        primaryCta={{ text: "OUR SERVICES", href: "/services" }}
+        secondaryCta={{ text: "CONTACT US", href: "/contact" }}
+      />
+
+      {/* Value Propositions - Template 3 stats banner style */}
+      <section className="py-16 md:py-20 bg-[#063970]">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {valueProps.map((prop, index) => (
+              <div
+                key={index}
+                className="text-center"
+                data-testid={`card-value-prop-${index}`}
               >
-                OUR SERVICES
-              </Button>
-            </Link>
+                <div className="flex justify-center mb-4">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-md bg-white/10 backdrop-blur-sm">
+                    <prop.icon className="h-8 w-8 text-[#97CC06]" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {prop.title}
+                </h3>
+                <p className="text-sm text-white/80">
+                  {prop.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Value Propositions Cards */}
-        <div className="absolute bottom-0 left-0 right-0 translate-y-1/2 z-20">
-          <div className="container mx-auto px-4">
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-                {valueProps.map((prop, index) => (
-                  <div 
-                    key={index} 
-                    className="p-6 md:p-8 text-center"
-                    data-testid={`card-value-prop-${index}`}
-                  >
-                    <div className="flex justify-center mb-4">
-                      <prop.icon className="h-12 w-12 text-[#063970]" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-sm font-bold text-[#063970] uppercase tracking-wide">
-                      {prop.title}
-                    </h3>
-                  </div>
-                ))}
-                <div className="p-6 md:p-8 bg-[#063970] text-center flex flex-col justify-center">
-                  <p className="text-white text-sm font-medium mb-2 uppercase">
-                    A Healthier Space for Businesses and People to Thrive!
-                  </p>
-                  <div className="flex items-center justify-center gap-1">
-                    <span className="text-[#97CC06] font-bold text-xl">LEVELUP</span>
-                    <span className="text-white font-bold text-xl">CLEAN</span>
-                    <span className="text-[#97CC06] text-xs">®</span>
+      {/* Company Section - Template 3 two-column style with original content */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge variant="outline" className="mb-4" data-testid="badge-about">
+                WE ARE COMMITTED TO CLEANING EXCELLENCE!
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="heading-cleaning-excellence">
+                EFSG provides an array of cleaning services that allow workplaces to run smoothly and efficiently.
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                With more than <strong>20 years of experience</strong> in over 20 states, Excel Facility Services 
+                Group has become one of the most reliable commercial cleaning companies in the United States.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                People matter. That is why we strive to deliver the best commercial cleaning services. 
+                Our goal is to use our services to boost your customers' confidence, knowing that their 
+                well-being is your priority.
+              </p>
+              <Link href="/about">
+                <Button size="lg" data-testid="button-about-us">
+                  ABOUT US
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+
+            <div className="relative">
+              <img
+                src={aboutImage}
+                alt="Excel Facility Services Team"
+                className="rounded-md w-full h-auto"
+                data-testid="img-cleaning-worker"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#063970]/95 to-transparent rounded-md flex items-end">
+                <div className="p-8 w-full">
+                  <div className="grid grid-cols-2 gap-6">
+                    {companyStats.map((stat, index) => (
+                      <div key={index} className="text-center" data-testid={`stat-about-${index}`}>
+                        <div className="text-3xl md:text-4xl font-bold text-[#97CC06] mb-1">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm text-white/90 font-medium">
+                          {stat.label}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -175,120 +209,71 @@ export default function HomeOriginal() {
         </div>
       </section>
 
-      {/* Section 2: "WE ARE COMMITTED TO CLEANING EXCELLENCE!" */}
-      <section className="pt-40 pb-16 md:pt-48 md:pb-24 bg-background">
+      {/* Industries Banner + Carousel - Template 3 style with 8 industries */}
+      <section className="py-12 md:py-16 bg-[#063970]">
         <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <p className="text-[#0A5EB9] text-lg md:text-xl italic mb-2" data-testid="text-tagline">
-              WE ARE COMMITTED TO CLEANING EXCELLENCE!
-            </p>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#063970] mb-8" data-testid="heading-cleaning-excellence">
-              EFSG provides an array of cleaning services that allow workplaces to run smoothly and efficiently.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-[#0A5EB9] mb-4" data-testid="heading-company-title">
-                Excel Facility Services Group | Commercial Cleaning Service
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                With more than <strong>20 years of experience</strong> in over 20 states, Excel Facility Services Group has become one of the most reliable commercial cleaning companies in the United States.
-              </p>
-              <Link href="/about">
-                <Button 
-                  className="bg-[#063970] hover:bg-[#063970]/90 text-white"
-                  data-testid="button-about-us"
-                >
-                  ABOUT US
-                </Button>
-              </Link>
+              <Badge variant="outline" className="mb-4 border-white/30 text-white" data-testid="badge-industries">
+                INDUSTRIES WE SERVE
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-white" data-testid="heading-industries-banner">
+                EFSG Helps Different Industries and All Types of Facilities Across the Country!
+              </h2>
             </div>
-            <div className="relative">
-              <img 
-                src={aboutImage} 
-                alt="Professional cleaning service" 
-                className="rounded-lg w-full h-auto shadow-lg"
-                data-testid="img-cleaning-worker"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3: People Matter Quote + Industries Banner */}
-      <section className="py-12 md:py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <p className="text-center text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-0" data-testid="text-people-matter">
-            People matter. That is why we strive to deliver the best commercial cleaning services. Our goal is to use our services to boost your customers' confidence, knowing that their well-being is your priority.
-          </p>
-        </div>
-      </section>
-
-      <section className="py-8 md:py-12 bg-[#063970]">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-white uppercase" data-testid="heading-industries-banner">
-              EFSG Helps Different Industries and All Types of Facilities Across the Country!
-            </h2>
             <Link href="/contact">
-              <Button 
+              <Button
                 size="lg"
                 className="bg-[#97CC06] hover:bg-[#97CC06]/90 text-white border-0 font-semibold whitespace-nowrap"
                 data-testid="button-request-estimate"
               >
                 REQUEST AN ESTIMATE
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* Section 4: Industries Carousel */}
-      <section className="py-16 md:py-24 bg-[#063970]">
-        <div className="container mx-auto px-4">
+          {/* Industries Carousel */}
           <div className="relative">
             <button
               onClick={scrollPrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
               data-testid="button-carousel-prev"
               aria-label="Previous industries"
             >
-              <ChevronLeft className="h-8 w-8" />
+              <ChevronLeft className="h-6 w-6 md:h-8 md:w-8" />
             </button>
-            
-            <div className="overflow-hidden mx-8" ref={emblaRef}>
-              <div className="flex gap-6">
+
+            <div className="overflow-hidden mx-8 md:mx-12" ref={emblaRef}>
+              <div className="flex gap-4 md:gap-6">
                 {industries.map((industry, index) => (
-                  <div 
-                    key={index} 
-                    className="flex-none w-full sm:w-1/2 lg:w-1/4"
+                  <div
+                    key={index}
+                    className="flex-none w-[calc(100%-2rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1rem)]"
                   >
                     <Link href={industry.href}>
-                      <Card 
-                        className="overflow-hidden border-0 cursor-pointer group bg-gradient-to-b from-white/10 to-[#063970]/50 backdrop-blur-sm"
+                      <Card
+                        className="overflow-hidden hover-elevate transition-all cursor-pointer group border-0"
                         data-testid={`card-industry-${index}`}
                       >
-                        <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg m-3">
+                        <div className="relative h-56 overflow-hidden">
                           <img
                             src={industry.image}
                             alt={industry.title}
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                             data-testid={`img-industry-${index}`}
                           />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#063970]/90 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                            <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                              {industry.title}
+                            </h3>
+                            <div className="flex items-center text-white/90 text-sm">
+                              Read More
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </div>
+                          </div>
                         </div>
-                        <CardContent className="p-4 pt-2 text-center bg-gradient-to-b from-[#0A5EB9] to-[#063970]">
-                          <h3 className="text-lg font-bold text-white mb-3 uppercase">
-                            {industry.title}
-                          </h3>
-                          <Button 
-                            size="sm"
-                            className="bg-[#97CC06] hover:bg-[#97CC06]/90 text-[#063970] font-semibold border-0"
-                            data-testid={`button-read-more-${index}`}
-                          >
-                            READ MORE
-                          </Button>
-                        </CardContent>
                       </Card>
                     </Link>
                   </div>
@@ -298,57 +283,117 @@ export default function HomeOriginal() {
 
             <button
               onClick={scrollNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
               data-testid="button-carousel-next"
               aria-label="Next industries"
             >
-              <ChevronRight className="h-8 w-8" />
+              <ChevronRight className="h-6 w-6 md:h-8 md:w-8" />
             </button>
           </div>
         </div>
       </section>
 
-      {/* Section 5: Services Section */}
-      <section className="py-16 md:py-24 bg-background">
+      {/* Services Section - Template 3 style with original 4 services */}
+      <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground italic max-w-2xl" data-testid="heading-services">
+          <div className="text-center mb-16">
+            <Badge variant="outline" className="mb-4" data-testid="badge-services">
+              OUR SERVICES
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 italic" data-testid="heading-services">
               From offices to classrooms, we have the commercial cleaning experience you need.
             </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Comprehensive cleaning solutions designed for every type of commercial facility
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {services.map((service, index) => (
+              <Link key={index} href={service.href}>
+                <Card className="overflow-hidden hover-elevate transition-all cursor-pointer h-full" data-testid={`card-service-${index}`}>
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                      data-testid={`img-service-${index}`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                    <div className="absolute bottom-4 left-6">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06] mb-3">
+                        <service.icon className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-2xl mb-3">{service.title}</CardTitle>
+                    <CardDescription className="text-base mb-4">
+                      {service.description}
+                    </CardDescription>
+                    <div className="flex items-center text-[#0A5EB9] font-semibold">
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </div>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
             <Link href="/services">
-              <Button 
-                variant="outline"
+              <Button
                 size="lg"
+                variant="outline"
                 className="border-[#063970] text-[#063970] hover:bg-[#063970] hover:text-white font-semibold"
                 data-testid="button-view-all-services"
               >
                 VIEW ALL SERVICES
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
-              <Link key={index} href={service.href}>
-                <Card 
-                  className="overflow-hidden border-0 cursor-pointer group h-full"
-                  data-testid={`card-service-${index}`}
+      {/* Final CTA - Template 3 style */}
+      <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-[#97CC06] rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#0A5EB9] rounded-full blur-3xl" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="heading-cta">
+              Ready to Create a Healthier Workplace?
+            </h2>
+            <p className="text-xl md:text-2xl text-white/90 mb-10">
+              Join leading businesses across 28 states who trust Excel Facility Services Group 
+              for professional commercial cleaning excellence.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  className="bg-[#97CC06] hover:bg-[#97CC06]/90 text-white border-0 text-lg px-8"
+                  data-testid="button-cta-primary"
                 >
-                  <div className="relative h-48 overflow-hidden">
-                    <div className="absolute inset-0 bg-[#97CC06]" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#97CC06]/80 to-[#063970]/60" />
-                  </div>
-                  <CardContent className="p-6 bg-[#0A5EB9] text-white min-h-[200px]">
-                    <h3 className="text-lg font-bold mb-3 uppercase">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-white/90 leading-relaxed">
-                      {service.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  REQUEST PROPOSAL
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </Link>
-            ))}
+              <Link href="/services">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 text-lg px-8"
+                  data-testid="button-cta-secondary"
+                >
+                  EXPLORE SERVICES
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
