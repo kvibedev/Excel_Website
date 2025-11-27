@@ -18,7 +18,7 @@ import {
   TrendingUp,
   Star,
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import heroImage from "@assets/greensealimg1_1764255375424.webp";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
 import officeImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";

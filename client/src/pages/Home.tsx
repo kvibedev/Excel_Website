@@ -19,7 +19,7 @@ import {
   Building2,
   Globe,
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import heroImage from "@assets/greensealimg1_1764255375424.webp";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
 import medicalImage from "@assets/generated_images/Medical_groups_industry_image_a154fa6b.png";
 import banksImage from "@assets/generated_images/Banks_industry_image_bcb98d1a.png";

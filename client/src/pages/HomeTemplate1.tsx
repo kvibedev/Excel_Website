@@ -18,7 +18,7 @@ import {
   CheckCircle2,
   Award,
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import heroImage from "@assets/greensealimg1_1764255375424.webp";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
 
 export default function HomeTemplate1() {
