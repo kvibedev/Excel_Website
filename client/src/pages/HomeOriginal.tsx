@@ -14,6 +14,8 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
+  Globe,
+  TrendingUp,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
@@ -115,6 +117,29 @@ export default function HomeOriginal() {
     { label: "Client Satisfaction", value: "100%" },
   ];
 
+  const stats = [
+    {
+      value: "28",
+      label: "States Nationwide",
+      icon: Globe,
+    },
+    {
+      value: "400M",
+      label: "Sq Ft Serviced Daily",
+      icon: Building2,
+    },
+    {
+      value: "20+",
+      label: "Years of Excellence",
+      icon: TrendingUp,
+    },
+    {
+      value: "100%",
+      label: "Satisfaction Guaranteed",
+      icon: Star,
+    },
+  ];
+
   return (
     <div>
       {/* Hero Section - Template 3 style with original content */}
@@ -125,6 +150,31 @@ export default function HomeOriginal() {
         primaryCta={{ text: "OUR SERVICES", href: "/services" }}
         secondaryCta={{ text: "CONTACT US", href: "/contact" }}
       />
+
+      {/* Stats Banner */}
+      <section className="py-16 md:py-20 bg-[#063970]">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                className="text-center"
+                data-testid={`stat-${stat.label.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                <div className="flex justify-center mb-4">
+                  <stat.icon className="h-12 w-12 text-[#97CC06]" />
+                </div>
+                <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-lg text-white/90 font-medium">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Value Propositions - Template 3 stats banner style */}
       <section className="py-16 md:py-20 bg-[#063970]">
