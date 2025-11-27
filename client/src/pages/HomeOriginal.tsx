@@ -256,22 +256,6 @@ export default function HomeOriginal() {
                 className="rounded-md w-full h-auto"
                 data-testid="img-cleaning-worker"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#063970]/95 to-transparent rounded-md flex items-end">
-                <div className="p-8 w-full">
-                  <div className="grid grid-cols-2 gap-6">
-                    {companyStats.map((stat, index) => (
-                      <div key={index} className="text-center" data-testid={`stat-about-${index}`}>
-                        <div className="text-3xl md:text-4xl font-bold text-[#97CC06] mb-1">
-                          {stat.value}
-                        </div>
-                        <div className="text-sm text-white/90 font-medium">
-                          {stat.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
