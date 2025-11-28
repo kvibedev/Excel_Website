@@ -353,7 +353,8 @@ export default function Janitorial() {
           <div className="flex animate-scroll-left hover:[animation-play-state:paused]">
             {[...industries, ...industries, ...industries, ...industries].map((industry, index) => (
               <Link key={index} href={industry.href} data-testid={`link-industry-${index}`} className="flex-shrink-0 px-2">
-                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9]">
+                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9] overflow-hidden">
+                  <div className="h-1 bg-[#97CC06] w-full" />
                   <CardContent className="p-6 text-center">
                     <industry.icon className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
                     <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
