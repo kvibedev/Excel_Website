@@ -336,8 +336,8 @@ export default function Janitorial() {
       </section>
       {/* Industries We Serve - Auto-scrolling Slider */}
       <section className="py-16 md:py-24 overflow-hidden relative bg-[#97CC06]">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-[#063970] rounded-full blur-3xl" />
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-0 right-0 w-72 h-72 bg-[#0A5EB9] rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#0A5EB9] rounded-full blur-3xl" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
