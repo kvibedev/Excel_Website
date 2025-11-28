@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
-import { CheckCircle2, ArrowRight, Shield, Leaf, Users, Award } from "lucide-react";
+import { CheckCircle2, ArrowRight, Shield, Leaf, Users, Award, Clock, ThumbsUp, Building2 } from "lucide-react";
 import heroImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import greenSealImage from "@assets/greensealimg1_1764255375424.webp";
 import greenSealBadge from "@assets/GS-Provide-Service-dk_1764335201153.webp";
@@ -18,24 +18,29 @@ export default function OfficeBuilding() {
 
   const whyChooseUs = [
     {
-      icon: Shield,
-      title: "Employee Productivity",
-      description: "A clean office goes beyond aesthetics; it's essential for employee productivity and overall well-being.",
+      icon: Award,
+      title: "Customer satisfaction guarantee",
+      description: "We stand behind our work with a 100% satisfaction guarantee on all our cleaning services.",
     },
     {
-      icon: Leaf,
-      title: "Eco-Friendly Products",
-      description: "We utilize eco-friendly cleaning products, ensuring a safe space for your employees while being mindful of our planet.",
+      icon: Clock,
+      title: "Prompt response time",
+      description: "Quick and reliable response to all your facility service needs.",
+    },
+    {
+      icon: ThumbsUp,
+      title: "Transparency and professionalism",
+      description: "Clear communication and professional service you can count on.",
     },
     {
       icon: Users,
-      title: "Personalized Solutions",
-      description: "Every office space is unique, which is why we take the time to assess your specific needs and offer personalized cleaning solutions.",
+      title: "Management and employee training",
+      description: "Our staff undergoes rigorous training to stay updated with best practices and innovations.",
     },
     {
-      icon: Award,
-      title: "Rigorous Training",
-      description: "Our staff undergoes rigorous training to stay updated with best practices and innovations in the cleaning industry.",
+      icon: Building2,
+      title: "Innovative technology and understanding of building needs",
+      description: "Modern solutions tailored to each facility's unique requirements.",
     },
   ];
 
@@ -138,18 +143,15 @@ export default function OfficeBuilding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
             {whyChooseUs.map((item, index) => (
-              <Card key={index} className="h-full hover-elevate transition-all" data-testid={`card-why-choose-${index}`}>
-                <CardHeader>
-                  <div className="flex h-14 w-14 items-center justify-center rounded-md bg-[#063970] mb-4">
-                    <item.icon className="h-7 w-7 text-white" />
+              <Card key={index} className="h-full hover-elevate transition-all border-2 border-[#97CC06] bg-background text-center" data-testid={`card-why-choose-${index}`}>
+                <CardHeader className="pb-2">
+                  <div className="flex h-16 w-16 items-center justify-center mx-auto mb-4">
+                    <item.icon className="h-12 w-12 text-[#97CC06]" />
                   </div>
-                  <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
+                  <CardTitle className="text-base font-semibold text-[#063970]">{item.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{item.description}</p>
-                </CardContent>
               </Card>
             ))}
           </div>
