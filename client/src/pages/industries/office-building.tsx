@@ -16,31 +16,49 @@ export default function OfficeBuilding() {
     "Benefit from unparalleled expertise in commercial cleaning services and facility management",
   ];
 
-  const whyChooseUs = [
+  const whyChooseUsCards = [
+    {
+      icon: Shield,
+      title: "Employee Productivity",
+      description: "A clean office goes beyond aesthetics; it's essential for employee productivity and overall well-being.",
+    },
+    {
+      icon: Leaf,
+      title: "Eco-Friendly Products",
+      description: "We utilize eco-friendly cleaning products, ensuring a safe space for your employees while being mindful of our planet.",
+    },
+    {
+      icon: Users,
+      title: "Personalized Solutions",
+      description: "Every office space is unique, which is why we take the time to assess your specific needs and offer personalized cleaning solutions.",
+    },
+    {
+      icon: Award,
+      title: "Rigorous Training",
+      description: "Our staff undergoes rigorous training to stay updated with best practices and innovations in the cleaning industry.",
+    },
+  ];
+
+  const valuePropositions = [
     {
       icon: Award,
       title: "Customer satisfaction guarantee",
-      description: "We stand behind our work with a 100% satisfaction guarantee on all our cleaning services.",
     },
     {
       icon: Clock,
       title: "Prompt response time",
-      description: "Quick and reliable response to all your facility service needs.",
     },
     {
       icon: ThumbsUp,
       title: "Transparency and professionalism",
-      description: "Clear communication and professional service you can count on.",
     },
     {
       icon: Users,
       title: "Management and employee training",
-      description: "Our staff undergoes rigorous training to stay updated with best practices and innovations.",
     },
     {
       icon: Building2,
       title: "Innovative technology and understanding of building needs",
-      description: "Modern solutions tailored to each facility's unique requirements.",
     },
   ];
 
@@ -143,9 +161,27 @@ export default function OfficeBuilding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
-            {whyChooseUs.map((item, index) => (
-              <Card key={index} className="h-full hover-elevate transition-all border-2 border-[#97CC06] bg-background text-center" data-testid={`card-why-choose-${index}`}>
+          {/* Original 4 Cards with descriptions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-12">
+            {whyChooseUsCards.map((item, index) => (
+              <Card key={index} className="h-full hover-elevate transition-all" data-testid={`card-why-choose-${index}`}>
+                <CardHeader>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-md bg-[#063970] mb-4">
+                    <item.icon className="h-7 w-7 text-white" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* 5 Value Proposition Cards with green borders */}
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+            {valuePropositions.map((item, index) => (
+              <Card key={index} className="h-full hover-elevate transition-all border-2 border-[#97CC06] bg-background text-center" data-testid={`card-value-prop-${index}`}>
                 <CardHeader className="pb-2">
                   <div className="flex h-16 w-16 items-center justify-center mx-auto mb-4">
                     <item.icon className="h-12 w-12 text-[#97CC06]" />
