@@ -154,7 +154,7 @@ export default function Header() {
                   >
                     Industries
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="left-1/2 -translate-x-1/2">
+                  <NavigationMenuContent>
                     <ul className="grid w-[600px] gap-1 p-2 grid-cols-3">
                       {industryLinks.map((industry) => (
                         <li key={industry.href}>
