@@ -29,6 +29,14 @@ import {
   Car
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
+import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
+import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
+import restaurantImage from "@assets/generated_images/Restaurant_industry_image_41a06d21.png";
+import medicalImage from "@assets/generated_images/Medical_groups_industry_image_a154fa6b.png";
+import banksImage from "@assets/generated_images/Banks_industry_image_bcb98d1a.png";
+import schoolsImage from "@assets/generated_images/Schools_industry_image_fe90ee17.png";
+import autoImage from "@assets/generated_images/Auto_dealership_industry_image_7d795fe7.png";
 
 export default function Janitorial() {
   const keyBenefits = [
@@ -92,14 +100,14 @@ export default function Janitorial() {
   ];
 
   const industries = [
-    { title: "Office Building", href: "/industries/office-building", icon: Building2 },
-    { title: "Retail Stores", href: "/industries/retailer", icon: Store },
-    { title: "Distribution Centers", href: "/industries/distribution-centers", icon: Warehouse },
-    { title: "Restaurants", href: "/industries/restaurants", icon: UtensilsCrossed },
-    { title: "Medical Groups", href: "/industries/medical-groups", icon: Stethoscope },
-    { title: "Banks", href: "/industries/banks", icon: Landmark },
-    { title: "Schools", href: "/industries/schools", icon: GraduationCap },
-    { title: "Auto Dealerships", href: "/industries/auto-dealerships", icon: Car },
+    { title: "Office Building", href: "/industries/office-building", icon: Building2, image: officeBuildingImage },
+    { title: "Retail Stores", href: "/industries/retailer", icon: Store, image: retailImage },
+    { title: "Distribution Centers", href: "/industries/distribution-centers", icon: Warehouse, image: distributionImage },
+    { title: "Restaurants", href: "/industries/restaurants", icon: UtensilsCrossed, image: restaurantImage },
+    { title: "Medical Groups", href: "/industries/medical-groups", icon: Stethoscope, image: medicalImage },
+    { title: "Banks", href: "/industries/banks", icon: Landmark, image: banksImage },
+    { title: "Schools", href: "/industries/schools", icon: GraduationCap, image: schoolsImage },
+    { title: "Auto Dealerships", href: "/industries/auto-dealerships", icon: Car, image: autoImage },
   ];
 
   const whyChooseUs = [
@@ -355,8 +363,14 @@ export default function Janitorial() {
               <Link key={index} href={industry.href} data-testid={`link-industry-${index}`} className="flex-shrink-0 px-2">
                 <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 border-transparent hover:border-[#97CC06] overflow-hidden bg-white shadow-lg">
                   <div className="h-1 bg-[#063970] w-full" />
-                  <CardContent className="p-6 text-center">
-                    <industry.icon className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
+                  <div className="h-32 overflow-hidden">
+                    <img 
+                      src={industry.image} 
+                      alt={industry.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardContent className="p-4 text-center">
                     <h3 className="font-semibold text-sm md:text-base text-[#063970] group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
                   </CardContent>
                 </Card>
