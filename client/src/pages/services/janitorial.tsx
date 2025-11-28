@@ -192,7 +192,7 @@ export default function Janitorial() {
         </div>
       </section>
       {/* Key Benefits Section - 5 Icon Cards */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      <section className="py-16 md:py-24 bg-[#f8f9fa]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4" data-testid="badge-benefits">
