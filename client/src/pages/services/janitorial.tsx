@@ -333,16 +333,16 @@ export default function Janitorial() {
       </section>
 
       {/* Industries We Serve - Auto-scrolling Slider */}
-      <section className="py-16 md:py-24 bg-muted/30 overflow-hidden">
+      <section className="py-16 md:py-24 overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #4a7003 0%, #3d5c02 50%, #2d4502 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4" data-testid="badge-industries">
+            <Badge variant="outline" className="mb-4 border-[#97CC06] text-[#97CC06]" data-testid="badge-industries">
               INDUSTRIES WE SERVE
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-industries">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" data-testid="heading-industries">
               Find Your Industry
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-lg text-white/90 max-w-3xl mx-auto">
               EFSG is the perfect partner for your business. We provide tailored solutions that meet your specific needs.
             </p>
           </div>
@@ -353,11 +353,11 @@ export default function Janitorial() {
           <div className="flex animate-scroll-left hover:[animation-play-state:paused]">
             {[...industries, ...industries, ...industries, ...industries].map((industry, index) => (
               <Link key={index} href={industry.href} data-testid={`link-industry-${index}`} className="flex-shrink-0 px-2">
-                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9] overflow-hidden">
-                  <div className="h-1 bg-[#97CC06] w-full" />
+                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 border-transparent hover:border-[#97CC06] overflow-hidden bg-white shadow-lg">
+                  <div className="h-1 bg-[#063970] w-full" />
                   <CardContent className="p-6 text-center">
                     <industry.icon className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
-                    <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
+                    <h3 className="font-semibold text-sm md:text-base text-[#063970] group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
                   </CardContent>
                 </Card>
               </Link>
