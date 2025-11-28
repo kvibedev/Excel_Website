@@ -215,16 +215,16 @@ export default function Janitorial() {
       </section>
 
       {/* How We Work Section - 4 Step Process */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24 bg-[#063970]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4" data-testid="badge-process">
+            <Badge variant="outline" className="mb-4 border-white/30 text-white" data-testid="badge-process">
               OUR PROCESS
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-process">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" data-testid="heading-process">
               How We Deliver Excellence
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-lg text-white/80 max-w-3xl mx-auto">
               Our dedicated team works closely with you to guarantee your utmost satisfaction
             </p>
           </div>
@@ -232,12 +232,12 @@ export default function Janitorial() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {howWeWorkSteps.map((step, index) => (
               <div key={index} className="relative" data-testid={`step-${index}`}>
-                <div className="text-6xl md:text-7xl font-bold text-[#063970]/10 absolute -top-4 -left-2">
+                <div className="text-6xl md:text-7xl font-bold text-white/10 absolute -top-4 -left-2">
                   {step.step}
                 </div>
                 <div className="pt-8 pl-4">
-                  <h3 className="text-xl font-bold mb-3 text-[#063970]">{step.title}</h3>
-                  <p className="text-muted-foreground">{step.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-[#97CC06]">{step.title}</h3>
+                  <p className="text-white/80">{step.description}</p>
                 </div>
                 {index < howWeWorkSteps.length - 1 && (
                   <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
