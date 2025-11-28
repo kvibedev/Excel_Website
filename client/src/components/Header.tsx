@@ -37,14 +37,14 @@ export default function Header() {
   ];
 
   const industryLinks = [
-    { href: "/industries/office-building", label: "Office Buildings" },
-    { href: "/industries/retailer", label: "Retailers" },
+    { href: "/industries/office-building", label: "Office Building" },
+    { href: "/industries/retailer", label: "Retailer" },
     { href: "/industries/distribution-centers", label: "Distribution Centers" },
-    { href: "/industries/restaurants", label: "Restaurants" },
-    { href: "/industries/medical-groups", label: "Medical Groups" },
-    { href: "/industries/banks", label: "Banks" },
-    { href: "/industries/schools", label: "Schools" },
     { href: "/industries/auto-dealerships", label: "Auto Dealerships" },
+    { href: "/industries/restaurants", label: "Restaurants" },
+    { href: "/industries/banks", label: "Banks" },
+    { href: "/industries/medical-groups", label: "Medical Groups" },
+    { href: "/industries/schools", label: "Schools" },
   ];
 
   const homepageTemplates = [
@@ -155,7 +155,7 @@ export default function Header() {
                     Industries
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-1 p-2 md:w-[500px] md:grid-cols-2">
+                    <ul className="grid w-[600px] gap-1 p-2 grid-cols-3">
                       {industryLinks.map((industry) => (
                         <li key={industry.href}>
                           <NavigationMenuLink asChild>
