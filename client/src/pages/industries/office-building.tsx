@@ -6,6 +6,7 @@ import { Link } from "wouter";
 import { CheckCircle2, ArrowRight, Shield, Leaf, Users, Award } from "lucide-react";
 import heroImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import greenSealImage from "@assets/greensealimg1_1764255375424.webp";
+import greenSealBadge from "@assets/GS-Provide-Service-dk_1764335201153.webp";
 
 export default function OfficeBuilding() {
   const benefits = [
@@ -111,6 +112,12 @@ export default function OfficeBuilding() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-certification">
                 Excel Facility's Commercial Cleaning Service is certified by the <strong>Green Seal Standard for Commercial and Institutional Cleaning Services</strong>. This certification guarantees that your office has been cleaned to the highest standards in the industry. When you partner with EFSG, you can be confident that your office will always make a positive impression.
               </p>
+              <img
+                src={greenSealBadge}
+                alt="Green Seal - Proud providers of a Certified service"
+                className="h-24 w-auto"
+                data-testid="img-green-seal-badge"
+              />
             </div>
           </div>
         </div>
