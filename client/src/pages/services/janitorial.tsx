@@ -149,7 +149,6 @@ export default function Janitorial() {
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW ALL SERVICES", href: "/services" }}
       />
-
       {/* About Section - Split Layout */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -192,7 +191,6 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* Key Benefits Section - 5 Icon Cards */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -225,7 +223,6 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* How We Work Section - 4 Step Process */}
       <section className="py-16 md:py-24 bg-[#063970]">
         <div className="container mx-auto px-4">
@@ -261,7 +258,6 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* Cleaning Tasks Grid */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -298,7 +294,6 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* Tailored Content Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -339,9 +334,8 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* Industries We Serve - Auto-scrolling Slider */}
-      <section className="py-16 md:py-24 overflow-hidden relative bg-[#97CC06]">
+      <section className="py-16 md:py-24 overflow-hidden relative bg-[#b9eb34]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4 border-[#063970] text-[#063970]" data-testid="badge-industries">
@@ -379,7 +373,6 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* Why Choose Us Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -412,7 +405,6 @@ export default function Janitorial() {
           </div>
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
