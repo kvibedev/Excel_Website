@@ -5,8 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { CheckCircle2, ArrowRight, Shield, Leaf, Users, Award, Clock, ThumbsUp, Building2, Car, Sparkles } from "lucide-react";
 import heroImage from "@assets/generated_images/Auto_dealership_industry_image_7d795fe7.png";
-import greenSealImage from "@assets/greensealimg1_1764255375424.webp";
-import greenSealBadge from "@assets/GS-Provide-Service-dk_1764335201153.webp";
 
 export default function AutoDealerships() {
   const benefits = [
@@ -121,35 +119,47 @@ export default function AutoDealerships() {
         </div>
       </section>
 
-      {/* Green Seal Certification Section */}
-      <section className="py-16 md:py-24 bg-background">
+      {/* Tailored Services Section */}
+      <section className="py-16 md:py-24 bg-[#97CC06]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div className="relative">
-              <img
-                src={greenSealImage}
-                alt="Green Seal Certified Commercial Cleaning"
-                className="rounded-md w-full h-auto shadow-lg"
-                data-testid="img-green-seal"
-              />
-            </div>
-            <div>
-              <Badge variant="outline" className="mb-4 bg-[#97CC06]/10 text-[#97CC06] border-[#97CC06]" data-testid="badge-certified">
-                GREEN SEAL CERTIFIED
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-certification">
-                Certified Excellence in Commercial Cleaning
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-certification">
-                To maintain the appeal of your auto dealership, our tailored cleaning services are designed to meet your specific needs. We understand that a clean environment is essential not only for customer satisfaction but also for employee morale. Our experienced team uses advanced cleaning techniques and eco-friendly products to ensure every corner of your dealership sparkles.
-              </p>
-              <img
-                src={greenSealBadge}
-                alt="Green Seal - Proud providers of a Certified service"
-                className="h-24 w-auto"
-                data-testid="img-green-seal-badge"
-              />
-            </div>
+          <div className="max-w-5xl mx-auto text-center">
+            <p className="text-lg text-[#063970] mb-6" data-testid="text-tailored-1">
+              To maintain the appeal of your auto dealership, our tailored cleaning services are designed to meet your specific needs. We understand that a clean environment is essential not only for customer satisfaction but also for employee morale. Our experienced team uses advanced cleaning techniques and eco-friendly products to ensure every corner of your dealership sparkles.
+            </p>
+            
+            <p className="text-lg text-[#063970] mb-6" data-testid="text-tailored-2">
+              From detailing the showroom to sanitizing service areas, we prioritize delivering exceptional results that enhance your dealership's reputation. By establishing a regular cleaning schedule, you can focus on running your business while we handle the cleanliness of your facility.
+            </p>
+            
+            <p className="text-lg text-[#063970] mb-4" data-testid="text-tailored-3">
+              Your dealership's outlook affects how customers perceive your brand, and our services are aimed at elevating that perception. With our support, you can create an inviting atmosphere that encourages foot traffic and
+            </p>
+            
+            <Link href="/services/levelup-clean" data-testid="link-repeat-visits">
+              <Button className="bg-[#063970] hover:bg-[#063970]/90 text-white mb-6" data-testid="button-repeat-visits">
+                repeat visits
+              </Button>
+            </Link>
+            
+            <p className="text-lg text-[#063970] mb-4" data-testid="text-tailored-4">
+              . Our commitment to excellence ensures you can showcase your inventory in the best light, making each visit memorable for potential buyers. Trust us to help you project professionalism and maintain a healthy space, essential for a thriving dealership.
+            </p>
+            
+            <Link href="/contact" data-testid="link-reach-out">
+              <Button className="bg-[#063970] hover:bg-[#063970]/90 text-white mb-2" data-testid="button-reach-out">
+                Reach out to us today
+              </Button>
+            </Link>
+            
+            <p className="text-lg text-[#063970] mb-6" data-testid="text-get-started">
+              to get started!
+            </p>
+            
+            <Link href="/contact" data-testid="link-request-estimate-green">
+              <Button size="lg" className="bg-[#063970] hover:bg-[#063970]/90 text-white px-8" data-testid="button-request-estimate-green">
+                REQUEST AN ESTIMATE
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
