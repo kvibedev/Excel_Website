@@ -120,46 +120,36 @@ export default function AutoDealerships() {
       </section>
 
       {/* Tailored Services Section */}
-      <section className="py-16 md:py-24 bg-[#97CC06]">
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto text-center">
-            <p className="text-lg text-[#063970] mb-6" data-testid="text-tailored-1">
+          <div className="max-w-4xl mx-auto">
+            <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
+              TAILORED SERVICES
+            </Badge>
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
               To maintain the appeal of your auto dealership, our tailored cleaning services are designed to meet your specific needs. We understand that a clean environment is essential not only for customer satisfaction but also for employee morale. Our experienced team uses advanced cleaning techniques and eco-friendly products to ensure every corner of your dealership sparkles.
             </p>
             
-            <p className="text-lg text-[#063970] mb-6" data-testid="text-tailored-2">
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
               From detailing the showroom to sanitizing service areas, we prioritize delivering exceptional results that enhance your dealership's reputation. By establishing a regular cleaning schedule, you can focus on running your business while we handle the cleanliness of your facility.
             </p>
             
-            <p className="text-lg text-[#063970] mb-4" data-testid="text-tailored-3">
-              Your dealership's outlook affects how customers perceive your brand, and our services are aimed at elevating that perception. With our support, you can create an inviting atmosphere that encourages foot traffic and
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
+              Your dealership's outlook affects how customers perceive your brand, and our services are aimed at elevating that perception. With our support, you can create an inviting atmosphere that encourages foot traffic and <Link href="/services/levelup-clean" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-repeat-visits">repeat visits</Link>.
             </p>
             
-            <Link href="/services/levelup-clean" data-testid="link-repeat-visits">
-              <Button className="bg-[#063970] hover:bg-[#063970]/90 text-white mb-6" data-testid="button-repeat-visits">
-                repeat visits
-              </Button>
-            </Link>
-            
-            <p className="text-lg text-[#063970] mb-4" data-testid="text-tailored-4">
-              . Our commitment to excellence ensures you can showcase your inventory in the best light, making each visit memorable for potential buyers. Trust us to help you project professionalism and maintain a healthy space, essential for a thriving dealership.
+            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
+              Our commitment to excellence ensures you can showcase your inventory in the best light, making each visit memorable for potential buyers. Trust us to help you project professionalism and maintain a healthy space, essential for a thriving dealership. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-reach-out">Reach out to us today</Link> to get started!
             </p>
             
-            <Link href="/contact" data-testid="link-reach-out">
-              <Button className="bg-[#063970] hover:bg-[#063970]/90 text-white mb-2" data-testid="button-reach-out">
-                Reach out to us today
-              </Button>
-            </Link>
-            
-            <p className="text-lg text-[#063970] mb-6" data-testid="text-get-started">
-              to get started!
-            </p>
-            
-            <Link href="/contact" data-testid="link-request-estimate-green">
-              <Button size="lg" className="bg-[#063970] hover:bg-[#063970]/90 text-white px-8" data-testid="button-request-estimate-green">
-                REQUEST AN ESTIMATE
-              </Button>
-            </Link>
+            <div className="text-center">
+              <Link href="/contact" data-testid="link-request-estimate-tailored">
+                <Button size="lg" data-testid="button-request-estimate-tailored">
+                  REQUEST AN ESTIMATE
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
