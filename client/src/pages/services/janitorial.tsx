@@ -90,11 +90,14 @@ export default function Janitorial() {
     },
   ];
 
-  const industries = [
+  const industriesRow1 = [
     { title: "Office Building", href: "/industries/office-building" },
     { title: "Retail Stores", href: "/industries/retailer" },
     { title: "Distribution Centers", href: "/industries/distribution-centers" },
     { title: "Restaurants", href: "/industries/restaurants" },
+  ];
+
+  const industriesRow2 = [
     { title: "Medical Groups", href: "/industries/medical-groups" },
     { title: "Banks", href: "/industries/banks" },
     { title: "Schools", href: "/industries/schools" },
@@ -345,8 +348,8 @@ export default function Janitorial() {
         </div>
       </section>
 
-      {/* Industries We Serve */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      {/* Industries We Serve - Auto-scrolling Slider */}
+      <section className="py-16 md:py-24 bg-muted/30 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4" data-testid="badge-industries">
@@ -359,14 +362,33 @@ export default function Janitorial() {
               EFSG is the perfect partner for your business. We provide tailored solutions that meet your specific needs.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            {industries.map((industry, index) => (
-              <Link key={index} href={industry.href} data-testid={`link-industry-${index}`}>
-                <Card className="h-full hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9]">
+        {/* Row 1 - Scrolling Left */}
+        <div className="relative mb-4">
+          <div className="flex animate-scroll-left">
+            {[...industriesRow1, ...industriesRow1, ...industriesRow1, ...industriesRow1].map((industry, index) => (
+              <Link key={index} href={industry.href} data-testid={`link-industry-row1-${index}`} className="flex-shrink-0 px-2">
+                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9]">
                   <CardContent className="p-6 text-center">
                     <Building2 className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
-                    <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors">{industry.title}</h3>
+                    <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 2 - Scrolling Left (offset timing) */}
+        <div className="relative">
+          <div className="flex animate-scroll-left-slow">
+            {[...industriesRow2, ...industriesRow2, ...industriesRow2, ...industriesRow2].map((industry, index) => (
+              <Link key={index} href={industry.href} data-testid={`link-industry-row2-${index}`} className="flex-shrink-0 px-2">
+                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9]">
+                  <CardContent className="p-6 text-center">
+                    <Building2 className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
+                    <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
                   </CardContent>
                 </Card>
               </Link>

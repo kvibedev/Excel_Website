@@ -352,4 +352,27 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
+
+  /* Auto-scrolling carousel animations */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 20s linear infinite;
+  }
+
+  .animate-scroll-left-slow {
+    animation: scroll-left 25s linear infinite;
+  }
+
+  .animate-scroll-left:hover,
+  .animate-scroll-left-slow:hover {
+    animation-play-state: paused;
+  }
 }
