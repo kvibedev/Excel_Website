@@ -336,7 +336,7 @@ export default function Janitorial() {
       <section className="py-16 md:py-24 overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #4a7003 0%, #3d5c02 50%, #2d4502 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 border-[#97CC06] text-[#97CC06]" data-testid="badge-industries">
+            <Badge variant="outline" className="mb-4 border-white/50 text-white bg-white/10" data-testid="badge-industries">
               INDUSTRIES WE SERVE
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" data-testid="heading-industries">
