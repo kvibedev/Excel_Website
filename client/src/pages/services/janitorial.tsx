@@ -19,7 +19,14 @@ import {
   Leaf,
   Headphones,
   Settings,
-  Target
+  Target,
+  Store,
+  Warehouse,
+  UtensilsCrossed,
+  Stethoscope,
+  Landmark,
+  GraduationCap,
+  Car
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
@@ -84,18 +91,15 @@ export default function Janitorial() {
     },
   ];
 
-  const industriesRow1 = [
-    { title: "Office Building", href: "/industries/office-building" },
-    { title: "Retail Stores", href: "/industries/retailer" },
-    { title: "Distribution Centers", href: "/industries/distribution-centers" },
-    { title: "Restaurants", href: "/industries/restaurants" },
-  ];
-
-  const industriesRow2 = [
-    { title: "Medical Groups", href: "/industries/medical-groups" },
-    { title: "Banks", href: "/industries/banks" },
-    { title: "Schools", href: "/industries/schools" },
-    { title: "Auto Dealerships", href: "/industries/auto-dealerships" },
+  const industries = [
+    { title: "Office Building", href: "/industries/office-building", icon: Building2 },
+    { title: "Retail Stores", href: "/industries/retailer", icon: Store },
+    { title: "Distribution Centers", href: "/industries/distribution-centers", icon: Warehouse },
+    { title: "Restaurants", href: "/industries/restaurants", icon: UtensilsCrossed },
+    { title: "Medical Groups", href: "/industries/medical-groups", icon: Stethoscope },
+    { title: "Banks", href: "/industries/banks", icon: Landmark },
+    { title: "Schools", href: "/industries/schools", icon: GraduationCap },
+    { title: "Auto Dealerships", href: "/industries/auto-dealerships", icon: Car },
   ];
 
   const whyChooseUs = [
@@ -344,30 +348,14 @@ export default function Janitorial() {
           </div>
         </div>
 
-        {/* Row 1 - Scrolling Left */}
-        <div className="relative mb-4">
-          <div className="flex animate-scroll-left">
-            {[...industriesRow1, ...industriesRow1, ...industriesRow1, ...industriesRow1].map((industry, index) => (
-              <Link key={index} href={industry.href} data-testid={`link-industry-row1-${index}`} className="flex-shrink-0 px-2">
-                <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9]">
-                  <CardContent className="p-6 text-center">
-                    <Building2 className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
-                    <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Row 2 - Scrolling Left (offset timing) */}
+        {/* Single Row - Auto-scrolling */}
         <div className="relative">
-          <div className="flex animate-scroll-left-slow">
-            {[...industriesRow2, ...industriesRow2, ...industriesRow2, ...industriesRow2].map((industry, index) => (
-              <Link key={index} href={industry.href} data-testid={`link-industry-row2-${index}`} className="flex-shrink-0 px-2">
+          <div className="flex animate-scroll-left hover:[animation-play-state:paused]">
+            {[...industries, ...industries, ...industries, ...industries].map((industry, index) => (
+              <Link key={index} href={industry.href} data-testid={`link-industry-${index}`} className="flex-shrink-0 px-2">
                 <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 hover:border-[#0A5EB9]">
                   <CardContent className="p-6 text-center">
-                    <Building2 className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
+                    <industry.icon className="h-8 w-8 mx-auto mb-3 text-[#063970] group-hover:text-[#0A5EB9] transition-colors" />
                     <h3 className="font-semibold text-sm md:text-base group-hover:text-[#0A5EB9] transition-colors whitespace-nowrap">{industry.title}</h3>
                   </CardContent>
                 </Card>
