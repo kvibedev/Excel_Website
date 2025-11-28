@@ -33,7 +33,6 @@ export default function Header() {
     { href: "/services/carpet-extraction", label: "Carpet Extraction" },
     { href: "/services/concrete-polishing", label: "Concrete Polishing" },
     { href: "/services/power-washing", label: "Power Washing" },
-    { href: "/services/commercial-cleaning", label: "Commercial Cleaning" },
   ];
 
   const industryLinks = [
@@ -119,7 +118,7 @@ export default function Header() {
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-1 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ul className="grid w-[600px] gap-1 p-2 grid-cols-3">
                       {serviceLinks.map((service) => (
                         <li key={service.href}>
                           <NavigationMenuLink asChild>
