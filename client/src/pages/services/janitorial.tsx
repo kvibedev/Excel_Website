@@ -24,12 +24,6 @@ import {
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
 export default function Janitorial() {
-  const trustStats = [
-    { value: "20+", label: "Years of Excellence" },
-    { value: "28", label: "States Nationwide" },
-    { value: "400M", label: "Sq Ft Serviced Daily" },
-  ];
-
   const keyBenefits = [
     {
       icon: Sparkles,
@@ -143,20 +137,6 @@ export default function Janitorial() {
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW ALL SERVICES", href: "/services" }}
       />
-
-      {/* Trust Stats Strip */}
-      <section className="bg-[#063970] py-6">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {trustStats.map((stat, index) => (
-              <div key={index} className="text-center" data-testid={`stat-${index}`}>
-                <div className="text-4xl md:text-5xl font-bold text-[#97CC06]">{stat.value}</div>
-                <div className="text-white/90 text-sm md:text-base mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* About Section - Split Layout */}
       <section className="py-16 md:py-24 bg-background">
