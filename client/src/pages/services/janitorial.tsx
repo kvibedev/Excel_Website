@@ -341,16 +341,16 @@ export default function Janitorial() {
       </section>
 
       {/* Industries We Serve - Auto-scrolling Slider */}
-      <section className="py-16 md:py-24 overflow-hidden relative" style={{ background: 'linear-gradient(135deg, rgba(151,204,6,0.15) 0%, rgba(151,204,6,0.25) 50%, rgba(151,204,6,0.15) 100%)' }}>
+      <section className="py-16 md:py-24 overflow-hidden relative bg-[#97CC06]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 border-[#97CC06] text-[#97CC06]" data-testid="badge-industries">
+            <Badge variant="outline" className="mb-4 border-[#063970] text-[#063970]" data-testid="badge-industries">
               INDUSTRIES WE SERVE
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#063970]" data-testid="heading-industries">
               Find Your Industry
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-lg text-[#063970]/80 max-w-3xl mx-auto">
               EFSG is the perfect partner for your business. We provide tailored solutions that meet your specific needs.
             </p>
           </div>
