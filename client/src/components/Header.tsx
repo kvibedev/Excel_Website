@@ -48,7 +48,7 @@ export default function Header() {
   ];
 
   const aboutLinks = [
-    { href: "/about", label: "Our Team" },
+    { href: "/about/our-team", label: "Our Team" },
     { href: "/about/coverage-areas", label: "Coverage Areas" },
     { href: "/about/recognitions-certifications", label: "Recognitions & Certifications" },
     { href: "/about/green-seal", label: "Green Seal" },

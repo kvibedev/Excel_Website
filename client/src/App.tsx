@@ -8,12 +8,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HomeTemplate2 from "@/pages/HomeTemplate2";
 import HomeOriginal from "@/pages/HomeOriginal";
-import About from "@/pages/About";
+import AboutLanding from "@/pages/AboutLanding";
 import Services from "@/pages/Services";
 import Industries from "@/pages/Industries";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
 
+import OurTeam from "@/pages/about/OurTeam";
 import CoverageAreas from "@/pages/about/coverage-areas";
 import RecognitionsCertifications from "@/pages/about/recognitions-certifications";
 import GreenSeal from "@/pages/about/green-seal";
@@ -57,7 +58,8 @@ function Router() {
       <Switch>
         <Route path="/" component={HomeTemplate2} />
         <Route path="/home-original" component={HomeOriginal} />
-        <Route path="/about" component={About} />
+        <Route path="/about" component={AboutLanding} />
+        <Route path="/about/our-team" component={OurTeam} />
         <Route path="/about/coverage-areas" component={CoverageAreas} />
         <Route path="/about/recognitions-certifications" component={RecognitionsCertifications} />
         <Route path="/about/green-seal" component={GreenSeal} />
