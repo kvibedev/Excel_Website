@@ -152,8 +152,7 @@ export default function OurTeam() {
                     <img 
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-contain"
-                      style={{ borderRadius: '1.5rem' }}
+                      className="w-full h-full object-cover"
                       data-testid={`img-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                     />
                   </div>
