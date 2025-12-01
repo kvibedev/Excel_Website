@@ -14,6 +14,10 @@ import Industries from "@/pages/Industries";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
 
+import CoverageAreas from "@/pages/about/coverage-areas";
+import RecognitionsCertifications from "@/pages/about/recognitions-certifications";
+import GreenSeal from "@/pages/about/green-seal";
+
 import Janitorial from "@/pages/services/janitorial";
 import DayPorters from "@/pages/services/day-porters";
 import LevelUpClean from "@/pages/services/levelup-clean";
@@ -54,6 +58,9 @@ function Router() {
         <Route path="/" component={HomeTemplate2} />
         <Route path="/home-original" component={HomeOriginal} />
         <Route path="/about" component={About} />
+        <Route path="/about/coverage-areas" component={CoverageAreas} />
+        <Route path="/about/recognitions-certifications" component={RecognitionsCertifications} />
+        <Route path="/about/green-seal" component={GreenSeal} />
         <Route path="/services" component={Services} />
         <Route path="/industries" component={Industries} />
         <Route path="/contact" component={Contact} />

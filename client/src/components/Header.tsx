@@ -20,6 +20,7 @@ export default function Header() {
   const [mobileHomepageOpen, setMobileHomepageOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
 
   const serviceLinks = [
     { href: "/services/janitorial", label: "Janitorial" },
@@ -44,6 +45,13 @@ export default function Header() {
     { href: "/industries/banks", label: "Banks" },
     { href: "/industries/medical-groups", label: "Medical Groups" },
     { href: "/industries/schools", label: "Schools" },
+  ];
+
+  const aboutLinks = [
+    { href: "/about", label: "About Us" },
+    { href: "/about/coverage-areas", label: "Coverage Areas" },
+    { href: "/about/recognitions-certifications", label: "Recognitions & Certifications" },
+    { href: "/about/green-seal", label: "Green Seal" },
   ];
 
   const homepageTemplates = [
@@ -168,14 +176,41 @@ export default function Header() {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Link href="/about">
-              <Button
-                variant={location === "/about" ? "secondary" : "ghost"}
-                data-testid="link-about-us"
-              >
-                About Us
-              </Button>
-            </Link>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      location.startsWith("/about") ? "bg-secondary text-secondary-foreground" : ""
+                    )}
+                    data-testid="dropdown-about"
+                  >
+                    About Us
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[350px] gap-1 p-2">
+                      {aboutLinks.map((about) => (
+                        <li key={about.href}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href={about.href}
+                              className={cn(
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
+                                location === about.href ? "bg-accent text-accent-foreground" : ""
+                              )}
+                              data-testid={`link-about-${about.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                            >
+                              <div className="text-sm font-medium leading-none">{about.label}</div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
 
             <Link href="/contact">
               <Button
@@ -300,16 +335,36 @@ export default function Header() {
                 )}
               </div>
 
-              <Link href="/about">
+              <div>
                 <Button
-                  variant={location === "/about" ? "secondary" : "ghost"}
-                  className="w-full justify-start"
-                  onClick={() => setMobileMenuOpen(false)}
-                  data-testid="link-mobile-about-us"
+                  variant={location.startsWith("/about") ? "secondary" : "ghost"}
+                  className="w-full justify-between"
+                  onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                  data-testid="button-mobile-about"
                 >
                   About Us
+                  <ChevronDown className={cn("h-4 w-4 transition-transform", mobileAboutOpen && "rotate-180")} />
                 </Button>
-              </Link>
+                {mobileAboutOpen && (
+                  <div className="mt-2 ml-4 flex flex-col gap-1">
+                    {aboutLinks.map((about) => (
+                      <Link key={about.href} href={about.href}>
+                        <Button
+                          variant={location === about.href ? "secondary" : "ghost"}
+                          className="w-full justify-start text-sm"
+                          onClick={() => {
+                            setMobileAboutOpen(false);
+                            setMobileMenuOpen(false);
+                          }}
+                          data-testid={`link-mobile-about-${about.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                        >
+                          {about.label}
+                        </Button>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               <Link href="/contact">
                 <Button
