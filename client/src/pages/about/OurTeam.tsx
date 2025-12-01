@@ -148,11 +148,11 @@ export default function OurTeam() {
                 data-testid={`card-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
               >
                 <div className="flex flex-col items-center">
-                  <div className="w-full aspect-square mb-4">
+                  <div className="w-full aspect-square mb-4 bg-gray-50 rounded-2xl overflow-hidden">
                     <img 
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                       data-testid={`img-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                     />
                   </div>
