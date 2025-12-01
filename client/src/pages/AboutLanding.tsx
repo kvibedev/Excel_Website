@@ -186,7 +186,6 @@ export default function AboutLanding() {
                 <Link href={section.link}>
                   <Button 
                     variant="default"
-                    className="bg-[#0A5EB9]"
                     data-testid={`button-learn-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                   >
                     Learn More

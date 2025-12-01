@@ -123,7 +123,6 @@ export default function Contact() {
                       >
                         <Button 
                           variant="default"
-                          className="bg-[#0A5EB9]"
                           data-testid="button-vendor"
                         >
                           Vendor Registration Form
@@ -153,7 +152,6 @@ export default function Contact() {
                       >
                         <Button 
                           variant="default"
-                          className="bg-[#0A5EB9]"
                           data-testid="button-careers"
                         >
                           View Current Openings

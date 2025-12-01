@@ -190,7 +190,7 @@ export default function EstimateForm() {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full bg-[#0A5EB9]" data-testid="button-submit">
+      <Button type="submit" size="lg" className="w-full" data-testid="button-submit">
         SUBMIT
       </Button>
     </form>
