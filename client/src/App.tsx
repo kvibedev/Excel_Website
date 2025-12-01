@@ -56,8 +56,7 @@ function Router() {
     <>
       <ScrollToTop />
       <Switch>
-        <Route path="/" component={HomeTemplate2} />
-        <Route path="/home-original" component={HomeOriginal} />
+        <Route path="/" component={HomeOriginal} />
         <Route path="/about" component={AboutLanding} />
         <Route path="/about/our-team" component={OurTeam} />
         <Route path="/about/coverage-areas" component={CoverageAreas} />

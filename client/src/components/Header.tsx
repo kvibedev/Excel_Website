@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 export default function Header() {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileHomepageOpen, setMobileHomepageOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
@@ -54,11 +53,6 @@ export default function Header() {
     { href: "/about/green-seal", label: "Green Seal" },
   ];
 
-  const homepageTemplates = [
-    { href: "/", label: "Home" },
-    { href: "/home-original", label: "Home (Original)" },
-  ];
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
@@ -68,41 +62,17 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger 
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      (location === "/" || location === "/home-original") ? "bg-secondary text-secondary-foreground" : ""
-                    )}
-                    data-testid="dropdown-homepage"
-                  >
-                    Home
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[300px] gap-1 p-2">
-                      {homepageTemplates.map((template) => (
-                        <li key={template.href}>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href={template.href}
-                              className={cn(
-                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover-elevate active-elevate-2",
-                                location === template.href ? "bg-accent text-accent-foreground" : ""
-                              )}
-                              data-testid={`link-homepage-${template.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                            >
-                              <div className="text-sm font-medium leading-none">{template.label}</div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            <Link 
+              href="/" 
+              className={cn(
+                navigationMenuTriggerStyle(),
+                "cursor-pointer",
+                location === "/" ? "bg-secondary text-secondary-foreground" : ""
+              )}
+              data-testid="link-home"
+            >
+              Home
+            </Link>
 
             <NavigationMenu>
               <NavigationMenuList>
@@ -260,36 +230,16 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <nav className="flex flex-col gap-2">
-              <div>
+              <Link href="/">
                 <Button
-                  variant={(location === "/" || location === "/home-original") ? "secondary" : "ghost"}
-                  className="w-full justify-between"
-                  onClick={() => setMobileHomepageOpen(!mobileHomepageOpen)}
-                  data-testid="button-mobile-homepage"
+                  variant={location === "/" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="button-mobile-home"
                 >
                   Home
-                  <ChevronDown className={cn("h-4 w-4 transition-transform", mobileHomepageOpen && "rotate-180")} />
                 </Button>
-                {mobileHomepageOpen && (
-                  <div className="mt-2 ml-4 flex flex-col gap-1">
-                    {homepageTemplates.map((template) => (
-                      <Link key={template.href} href={template.href}>
-                        <Button
-                          variant={location === template.href ? "secondary" : "ghost"}
-                          className="w-full justify-start text-sm"
-                          onClick={() => {
-                            setMobileHomepageOpen(false);
-                            setMobileMenuOpen(false);
-                          }}
-                          data-testid={`link-mobile-homepage-${template.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                        >
-                          {template.label}
-                        </Button>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+              </Link>
 
               <div>
                 <Button
