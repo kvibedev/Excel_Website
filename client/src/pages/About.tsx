@@ -224,7 +224,7 @@ export default function About() {
               />
             </div>
             <div className="order-1 lg:order-2">
-              <Badge className="mb-4 bg-[#97CC06]/10 text-[#97CC06] hover:bg-[#97CC06]/20 border-[#97CC06]/20" data-testid="badge-our-mission">
+              <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-our-mission">
                 Our Mission
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-healthier-title">
