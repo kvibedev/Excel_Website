@@ -48,7 +48,7 @@ export default function Header() {
   ];
 
   const aboutLinks = [
-    { href: "/about", label: "About Us" },
+    { href: "/about", label: "Our Team" },
     { href: "/about/coverage-areas", label: "Coverage Areas" },
     { href: "/about/recognitions-certifications", label: "Recognitions & Certifications" },
     { href: "/about/green-seal", label: "Green Seal" },
@@ -179,15 +179,17 @@ export default function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger 
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      location.startsWith("/about") ? "bg-secondary text-secondary-foreground" : ""
-                    )}
-                    data-testid="dropdown-about"
-                  >
-                    About Us
-                  </NavigationMenuTrigger>
+                  <Link href="/about">
+                    <NavigationMenuTrigger 
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        location.startsWith("/about") ? "bg-secondary text-secondary-foreground" : ""
+                      )}
+                      data-testid="dropdown-about"
+                    >
+                      About Us
+                    </NavigationMenuTrigger>
+                  </Link>
                   <NavigationMenuContent>
                     <ul className="grid w-[350px] gap-1 p-2">
                       {aboutLinks.map((about) => (
