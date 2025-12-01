@@ -1,0 +1,451 @@
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { Briefcase } from "lucide-react";
+import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+
+export default function VendorRegistration() {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    companyName: "",
+    firstName: "",
+    lastName: "",
+    businessPhone: "",
+    companyEmail: "",
+    streetAddress: "",
+    streetAddress2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "United States",
+    referred: "no",
+    referredBy: "",
+    yearsInBusiness: "",
+    primaryService: "",
+    otherServices: "",
+    serviceEquipment: "",
+    serviceMileRadius: "",
+    usesSubcontractors: "no",
+    provides24HourService: "no",
+    emergencyResponseTime: "",
+    quoteWithin24Hours: "no",
+    relatedToExcelEmployee: "",
+    willingBackgroundCheck: "yes",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    toast({
+      title: "Form Submitted",
+      description: "Thank you for your interest. We'll contact you within 48 hours.",
+    });
+
+    setFormData({
+      companyName: "",
+      firstName: "",
+      lastName: "",
+      businessPhone: "",
+      companyEmail: "",
+      streetAddress: "",
+      streetAddress2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "United States",
+      referred: "no",
+      referredBy: "",
+      yearsInBusiness: "",
+      primaryService: "",
+      otherServices: "",
+      serviceEquipment: "",
+      serviceMileRadius: "",
+      usesSubcontractors: "no",
+      provides24HourService: "no",
+      emergencyResponseTime: "",
+      quoteWithin24Hours: "no",
+      relatedToExcelEmployee: "",
+      willingBackgroundCheck: "yes",
+    });
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <div>
+      {/* Hero Section */}
+      <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#063970]/95 via-[#063970]/90 to-[#063970]/85"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="text-vendor-hero-title">
+              Vendor Registration
+            </h1>
+            <p className="text-xl text-white/90" data-testid="text-vendor-hero-subtitle">
+              Excel Facility Services Group appreciates your interest in doing business with us
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="mb-12">
+            <p className="text-lg text-muted-foreground text-center" data-testid="text-vendor-message">
+              Please complete the form below and a company representative will contact you in the next 48 hours.
+            </p>
+          </div>
+
+          <Card className="p-8 border-t-4 border-t-[#97CC06]">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* General Information Section */}
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#97CC06]/10">
+                    <Briefcase className="h-5 w-5 text-[#97CC06]" />
+                  </div>
+                  <h2 className="text-2xl font-bold" data-testid="text-section-general">General Information</h2>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <Label htmlFor="companyName">Company Name *</Label>
+                    <Input
+                      id="companyName"
+                      required
+                      value={formData.companyName}
+                      onChange={(e) => handleChange("companyName", e.target.value)}
+                      data-testid="input-company-name"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="firstName">First Name *</Label>
+                      <Input
+                        id="firstName"
+                        required
+                        value={formData.firstName}
+                        onChange={(e) => handleChange("firstName", e.target.value)}
+                        data-testid="input-first-name"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="lastName">Last Name *</Label>
+                      <Input
+                        id="lastName"
+                        required
+                        value={formData.lastName}
+                        onChange={(e) => handleChange("lastName", e.target.value)}
+                        data-testid="input-last-name"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="businessPhone">Business Phone Number *</Label>
+                      <Input
+                        id="businessPhone"
+                        type="tel"
+                        required
+                        value={formData.businessPhone}
+                        onChange={(e) => handleChange("businessPhone", e.target.value)}
+                        data-testid="input-business-phone"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="companyEmail">Company Email Address *</Label>
+                      <Input
+                        id="companyEmail"
+                        type="email"
+                        required
+                        value={formData.companyEmail}
+                        onChange={(e) => handleChange("companyEmail", e.target.value)}
+                        data-testid="input-company-email"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="streetAddress">Street Address *</Label>
+                    <Input
+                      id="streetAddress"
+                      required
+                      value={formData.streetAddress}
+                      onChange={(e) => handleChange("streetAddress", e.target.value)}
+                      data-testid="input-street-address"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="streetAddress2">Street Address Line 2</Label>
+                    <Input
+                      id="streetAddress2"
+                      value={formData.streetAddress2}
+                      onChange={(e) => handleChange("streetAddress2", e.target.value)}
+                      data-testid="input-street-address-2"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                      <Label htmlFor="city">City *</Label>
+                      <Input
+                        id="city"
+                        required
+                        value={formData.city}
+                        onChange={(e) => handleChange("city", e.target.value)}
+                        data-testid="input-city"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="state">State/Province *</Label>
+                      <Input
+                        id="state"
+                        required
+                        value={formData.state}
+                        onChange={(e) => handleChange("state", e.target.value)}
+                        data-testid="input-state"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="postalCode">Postal/Zip Code *</Label>
+                      <Input
+                        id="postalCode"
+                        required
+                        value={formData.postalCode}
+                        onChange={(e) => handleChange("postalCode", e.target.value)}
+                        data-testid="input-postal-code"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="country">Country *</Label>
+                    <Input
+                      id="country"
+                      required
+                      value={formData.country}
+                      onChange={(e) => handleChange("country", e.target.value)}
+                      data-testid="input-country"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="mb-3 block">Were you referred by someone inside the company?</Label>
+                    <RadioGroup
+                      value={formData.referred}
+                      onValueChange={(value) => handleChange("referred", value)}
+                      data-testid="radio-referred"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="referred-yes" data-testid="radio-referred-yes" />
+                        <Label htmlFor="referred-yes" className="font-normal cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="referred-no" data-testid="radio-referred-no" />
+                        <Label htmlFor="referred-no" className="font-normal cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  {formData.referred === "yes" && (
+                    <div>
+                      <Label htmlFor="referredBy">Please provide the name of the person within our company who referred you to us</Label>
+                      <Input
+                        id="referredBy"
+                        value={formData.referredBy}
+                        onChange={(e) => handleChange("referredBy", e.target.value)}
+                        data-testid="input-referred-by"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Business History Section */}
+              <div className="pt-8 border-t">
+                <h2 className="text-2xl font-bold mb-6" data-testid="text-section-business">Business History</h2>
+
+                <div className="space-y-6">
+                  <div>
+                    <Label htmlFor="yearsInBusiness">How many years have you been in business? *</Label>
+                    <Input
+                      id="yearsInBusiness"
+                      required
+                      value={formData.yearsInBusiness}
+                      onChange={(e) => handleChange("yearsInBusiness", e.target.value)}
+                      data-testid="input-years-in-business"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="primaryService">What is the primary service your company provides? *</Label>
+                    <Input
+                      id="primaryService"
+                      required
+                      value={formData.primaryService}
+                      onChange={(e) => handleChange("primaryService", e.target.value)}
+                      data-testid="input-primary-service"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="otherServices">What other services does your company provide?</Label>
+                    <Textarea
+                      id="otherServices"
+                      value={formData.otherServices}
+                      onChange={(e) => handleChange("otherServices", e.target.value)}
+                      data-testid="input-other-services"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="serviceEquipment">Other Service Equipment:</Label>
+                    <Textarea
+                      id="serviceEquipment"
+                      value={formData.serviceEquipment}
+                      onChange={(e) => handleChange("serviceEquipment", e.target.value)}
+                      data-testid="input-service-equipment"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="serviceMileRadius">What is your service mile radius? *</Label>
+                    <Input
+                      id="serviceMileRadius"
+                      required
+                      value={formData.serviceMileRadius}
+                      onChange={(e) => handleChange("serviceMileRadius", e.target.value)}
+                      data-testid="input-service-mile-radius"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="mb-3 block">Does your company use subcontractors?</Label>
+                    <RadioGroup
+                      value={formData.usesSubcontractors}
+                      onValueChange={(value) => handleChange("usesSubcontractors", value)}
+                      data-testid="radio-subcontractors"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="subcontractors-yes" data-testid="radio-subcontractors-yes" />
+                        <Label htmlFor="subcontractors-yes" className="font-normal cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="subcontractors-no" data-testid="radio-subcontractors-no" />
+                        <Label htmlFor="subcontractors-no" className="font-normal cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div>
+                    <Label className="mb-3 block">Does your company provide 24-hour service?</Label>
+                    <RadioGroup
+                      value={formData.provides24HourService}
+                      onValueChange={(value) => handleChange("provides24HourService", value)}
+                      data-testid="radio-24hour-service"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="24hour-yes" data-testid="radio-24hour-yes" />
+                        <Label htmlFor="24hour-yes" className="font-normal cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="24hour-no" data-testid="radio-24hour-no" />
+                        <Label htmlFor="24hour-no" className="font-normal cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="emergencyResponseTime">What is your response time for emergency service? *</Label>
+                    <Input
+                      id="emergencyResponseTime"
+                      required
+                      value={formData.emergencyResponseTime}
+                      onChange={(e) => handleChange("emergencyResponseTime", e.target.value)}
+                      data-testid="input-emergency-response-time"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="mb-3 block">Can your company provide a quote within 24 hours?</Label>
+                    <RadioGroup
+                      value={formData.quoteWithin24Hours}
+                      onValueChange={(value) => handleChange("quoteWithin24Hours", value)}
+                      data-testid="radio-quote-24hours"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="quote-yes" data-testid="radio-quote-yes" />
+                        <Label htmlFor="quote-yes" className="font-normal cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="quote-no" data-testid="radio-quote-no" />
+                        <Label htmlFor="quote-no" className="font-normal cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="relatedToExcelEmployee">Are you related to someone working at Excel? If Yes, please provide complete name and State.</Label>
+                    <Input
+                      id="relatedToExcelEmployee"
+                      value={formData.relatedToExcelEmployee}
+                      onChange={(e) => handleChange("relatedToExcelEmployee", e.target.value)}
+                      data-testid="input-related-to-excel"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="mb-3 block">Are you willing to complete a Background check / Drug Screening?</Label>
+                    <RadioGroup
+                      value={formData.willingBackgroundCheck}
+                      onValueChange={(value) => handleChange("willingBackgroundCheck", value)}
+                      data-testid="radio-background-check"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="background-yes" data-testid="radio-background-yes" />
+                        <Label htmlFor="background-yes" className="font-normal cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="background-no" data-testid="radio-background-no" />
+                        <Label htmlFor="background-no" className="font-normal cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full md:w-auto"
+                  data-testid="button-submit-vendor"
+                >
+                  Submit Registration
+                </Button>
+              </div>
+            </form>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -200,6 +200,15 @@ export default function Header() {
               </Button>
             </a>
 
+            <Link href="/vendor-registration">
+              <Button
+                variant="default"
+                data-testid="link-vendor-registration"
+              >
+                Vendor Registration
+              </Button>
+            </Link>
+
             <Link href="/contact">
               <Button
                 variant="default"
@@ -348,6 +357,17 @@ export default function Header() {
                   Careers
                 </Button>
               </a>
+
+              <Link href="/vendor-registration">
+                <Button
+                  variant={location === "/vendor-registration" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-vendor-registration"
+                >
+                  Vendor Registration
+                </Button>
+              </Link>
 
               <Link href="/contact">
                 <Button
