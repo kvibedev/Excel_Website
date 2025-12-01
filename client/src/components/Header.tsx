@@ -194,7 +194,7 @@ export default function Header() {
                     About Us
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[350px] gap-1 p-2">
+                    <ul className="grid w-[500px] gap-1 p-2 grid-cols-2">
                       {aboutLinks.map((about) => (
                         <li key={about.href}>
                           <NavigationMenuLink asChild>
