@@ -153,7 +153,7 @@ export default function OurTeam() {
                       src={member.image}
                       alt={member.name}
                       className="w-full h-auto"
-                      style={{ clipPath: 'inset(0 round 1.5rem)' }}
+                      style={{ clipPath: 'inset(0 round 2.5rem)' }}
                       data-testid={`img-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                     />
                   </div>
