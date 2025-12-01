@@ -193,7 +193,7 @@ export default function Header() {
               rel="noopener noreferrer"
             >
               <Button
-                variant="ghost"
+                variant="default"
                 data-testid="link-careers"
               >
                 Careers
@@ -202,7 +202,7 @@ export default function Header() {
 
             <Link href="/contact">
               <Button
-                variant={location === "/contact" ? "secondary" : "ghost"}
+                variant="default"
                 data-testid="link-contact"
               >
                 Contact
