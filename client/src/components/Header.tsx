@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function Header() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileHomepageOpen, setMobileHomepageOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -179,17 +179,20 @@ export default function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <Link href="/about">
-                    <NavigationMenuTrigger 
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        location.startsWith("/about") ? "bg-secondary text-secondary-foreground" : ""
-                      )}
-                      data-testid="dropdown-about"
-                    >
-                      About Us
-                    </NavigationMenuTrigger>
-                  </Link>
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      location.startsWith("/about") ? "bg-secondary text-secondary-foreground" : ""
+                    )}
+                    onClick={(e) => {
+                      if (!e.defaultPrevented) {
+                        setLocation('/about');
+                      }
+                    }}
+                    data-testid="dropdown-about"
+                  >
+                    About Us
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[350px] gap-1 p-2">
                       {aboutLinks.map((about) => (
