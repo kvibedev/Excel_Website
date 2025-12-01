@@ -69,6 +69,16 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - All dropdown links use proper anchor tags for semantic HTML and accessibility
 - Scroll-to-top behavior: All navigation links automatically scroll page to top on route change
 
+**About Us Subpages (Complete - December 2025)**
+- Added NavigationMenu dropdown for About Us in desktop and mobile header
+- Created three About Us submenu pages using efsgnj.com content and Template 3 design:
+  - Coverage Areas (/about/coverage-areas): 22 states listing, service expansion message
+  - Recognitions & Certifications (/about/recognitions-certifications): Certifications, memberships, software technology
+  - Green Seal (/about/green-seal): GS-42 certification information, environmental practices
+- All pages use Template 3 design patterns with Excel brand colors
+- All interactive elements have data-testid attributes
+- Mobile dropdown accordion closes properly on navigation
+
 **Alternative Homepage Templates (Complete - November 2025)**
 - Created three distinct homepage designs offering varied aesthetics while maintaining EFSG branding
 - Homepage template selector dropdown in Header navigation (desktop and mobile)

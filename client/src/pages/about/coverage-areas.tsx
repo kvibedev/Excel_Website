@@ -6,7 +6,7 @@ import { MapPin, CheckCircle2, Building2 } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
 export default function CoverageAreas() {
-  const states = [
+  const statesColumn1 = [
     "Ohio",
     "Texas",
     "Florida",
@@ -17,7 +17,10 @@ export default function CoverageAreas() {
     "Virginia",
     "West Virginia",
     "Oklahoma",
-    "Montana",
+    "Montana"
+  ];
+
+  const statesColumn2 = [
     "Illinois",
     "Nevada",
     "Pennsylvania",
@@ -120,17 +123,31 @@ export default function CoverageAreas() {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            {states.map((state, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 p-4 rounded-lg hover-elevate active-elevate-2 border"
-                data-testid={`state-${state.toLowerCase().replace(/\s/g, "-")}`}
-              >
-                <CheckCircle2 className="w-5 h-5 text-[#97CC06] flex-shrink-0" />
-                <span className="text-lg font-medium">{state}</span>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+            <div className="space-y-3">
+              {statesColumn1.map((state, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-3"
+                  data-testid={`state-${state.toLowerCase().replace(/\s/g, "-")}`}
+                >
+                  <span className="text-muted-foreground">»</span>
+                  <span className="text-lg">{state}</span>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-3">
+              {statesColumn2.map((state, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-3"
+                  data-testid={`state-${state.toLowerCase().replace(/\s/g, "-")}`}
+                >
+                  <span className="text-muted-foreground">»</span>
+                  <span className="text-lg">{state}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
