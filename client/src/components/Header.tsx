@@ -95,15 +95,6 @@ export default function Header() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            
-            <Link href="/about">
-              <Button
-                variant={location === "/about" ? "secondary" : "ghost"}
-                data-testid="link-about-us"
-              >
-                About Us
-              </Button>
-            </Link>
 
             <NavigationMenu>
               <NavigationMenuList>
@@ -177,6 +168,15 @@ export default function Header() {
               </NavigationMenuList>
             </NavigationMenu>
 
+            <Link href="/about">
+              <Button
+                variant={location === "/about" ? "secondary" : "ghost"}
+                data-testid="link-about-us"
+              >
+                About Us
+              </Button>
+            </Link>
+
             <Link href="/contact">
               <Button
                 variant={location === "/contact" ? "secondary" : "ghost"}
@@ -237,17 +237,6 @@ export default function Header() {
                   </div>
                 )}
               </div>
-
-              <Link href="/about">
-                <Button
-                  variant={location === "/about" ? "secondary" : "ghost"}
-                  className="w-full justify-start"
-                  onClick={() => setMobileMenuOpen(false)}
-                  data-testid="link-mobile-about-us"
-                >
-                  About Us
-                </Button>
-              </Link>
 
               <div>
                 <Button
@@ -310,6 +299,17 @@ export default function Header() {
                   </div>
                 )}
               </div>
+
+              <Link href="/about">
+                <Button
+                  variant={location === "/about" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-about-us"
+                >
+                  About Us
+                </Button>
+              </Link>
 
               <Link href="/contact">
                 <Button
