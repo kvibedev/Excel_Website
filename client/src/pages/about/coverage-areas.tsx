@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
-import { MapPin, CheckCircle2, Building2 } from "lucide-react";
+import { MapPin } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
 export default function CoverageAreas() {
@@ -82,31 +82,13 @@ export default function CoverageAreas() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Experience Message Section */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="p-8 text-center border-t-4 border-t-[#97CC06]" data-testid="card-experience">
-              <div className="w-16 h-16 rounded-lg bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-4">
-                <Building2 className="w-8 h-8 text-[#97CC06]" />
-              </div>
-              <h3 className="text-4xl font-bold text-[#063970] mb-2">20+</h3>
-              <p className="text-muted-foreground">Years of Excellence</p>
-            </Card>
-            <Card className="p-8 text-center border-t-4 border-t-[#97CC06]" data-testid="card-states">
-              <div className="w-16 h-16 rounded-lg bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-[#97CC06]" />
-              </div>
-              <h3 className="text-4xl font-bold text-[#063970] mb-2">22+</h3>
-              <p className="text-muted-foreground">States Covered</p>
-            </Card>
-            <Card className="p-8 text-center border-t-4 border-t-[#97CC06]" data-testid="card-satisfaction">
-              <div className="w-16 h-16 rounded-lg bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-8 h-8 text-[#97CC06]" />
-              </div>
-              <h3 className="text-4xl font-bold text-[#063970] mb-2">100%</h3>
-              <p className="text-muted-foreground">Customer Satisfaction</p>
-            </Card>
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-lg text-muted-foreground" data-testid="text-experience">
+              With more than 20 years of experience in providing high-quality services to customers in over 22 states. We are proud to offer our services near you.
+            </p>
           </div>
         </div>
       </section>
