@@ -2,98 +2,116 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import heroImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
+import alvinImage from "@assets/Alvin-1_1764595596799.webp";
+import gumersindoImage from "@assets/Mesa-de-trabajo-6-80-1_1764595596799.webp";
+import yairaImage from "@assets/Mesa-de-trabajo-7-80_1764595596799.webp";
+import erinImage from "@assets/ERIN-MATSKO-CHIEF-OPERATING-OFFICER-edited_1764595596799.webp";
+import normaImage from "@assets/Norma-Tavarez-_1764595596798.webp";
+import ruthImage from "@assets/Ruth_1764595596798.jpg";
+import jacquelineImage from "@assets/JACQUELINE-JIMENEZ-ACCOUNT-MANAGER-edited-3_1764595596798.webp";
+import shaylaImage from "@assets/Shayla_1764595596798.webp";
+import stephanieImage from "@assets/Stephanie_1764595596798.webp";
+import wendyImage from "@assets/Wendy_1764595596798.webp";
+import zairaImage from "@assets/Zaira-Cruz_1764595596798.webp";
+import fernandoImage from "@assets/Fernando-Gonzalez_1764595596798.webp";
+import juanImage from "@assets/Juan-Huaman_1764595596798.webp";
+import joseImage from "@assets/Jose-Carrero-_1764595596798.webp";
+import cristianImage from "@assets/Cristian-Molina_1764595596798.webp";
+import jhoanaImage from "@assets/joana-vivas_1764595596798.webp";
+import anaImage from "@assets/Ana-Masis_1764595596798.webp";
+import myriamImage from "@assets/Myriam-Tandazo_1764595596798.webp";
 
 export default function OurTeam() {
   const teamMembers = [
     {
       name: "Alvin Romero",
       title: "President / CEO",
-      image: "https://efsgnj.com/wp-content/uploads/2022/11/Alvin-1.jpg"
+      image: alvinImage
     },
     {
       name: "Gumersindo Rivera",
       title: "Vice President",
-      image: "https://efsgnj.com/wp-content/uploads/2022/11/Mesa-de-trabajo-6-80-1.jpg"
+      image: gumersindoImage
     },
     {
       name: "Yaira Matos",
       title: "Executive Business Administrator",
-      image: "https://efsgnj.com/wp-content/uploads/2022/11/Mesa-de-trabajo-7-80.jpg"
+      image: yairaImage
     },
     {
       name: "Erin Matsko",
       title: "Chief Operating Officer",
-      image: "https://efsgnj.com/wp-content/uploads/2025/10/ERIN-MATSKO-CHIEF-OPERATING-OFFICER-edited.webp"
+      image: erinImage
     },
     {
       name: "Norma Benitez",
       title: "MBA Financial Controller",
-      image: "https://efsgnj.com/wp-content/uploads/2024/10/Norma-Tavarez-.jpg"
+      image: normaImage
     },
     {
       name: "Ruth Barreto",
       title: "Accounting Manager",
-      image: "https://efsgnj.com/wp-content/uploads/2023/11/Ruth.jpg"
+      image: ruthImage
     },
     {
       name: "Jacqueline Jimenez",
       title: "Account Manager",
-      image: "https://efsgnj.com/wp-content/uploads/2025/10/JACQUELINE-JIMENEZ-ACCOUNT-MANAGER-edited-3.webp"
+      image: jacquelineImage
     },
     {
       name: "Shayla Arce",
       title: "Executive Assistant",
-      image: "https://efsgnj.com/wp-content/uploads/2022/11/Mesa-de-trabajo-11-80.jpg"
+      image: shaylaImage
     },
     {
       name: "Stephanie Candelaria",
       title: "Certified Payroll Specialist",
-      image: "https://efsgnj.com/wp-content/uploads/2022/11/Mesa-de-trabajo-11-80-1.jpg"
+      image: stephanieImage
     },
     {
       name: "Wendy Espinosa",
       title: "CMMS Manager",
-      image: "https://efsgnj.com/wp-content/uploads/2022/11/Mesa-de-trabajo-12-80.jpg"
+      image: wendyImage
     },
     {
       name: "Zaira Cruz",
       title: "Recruiting Specialist",
-      image: "https://efsgnj.com/wp-content/uploads/2024/07/Zaira-Cruz.jpg"
+      image: zairaImage
     },
     {
       name: "Fernando Gonzalez",
       title: "Operations Administrative Assistant",
-      image: "https://efsgnj.com/wp-content/uploads/2024/07/Fernando-Gonzalez.jpg"
+      image: fernandoImage
     },
     {
       name: "Juan Huaman",
       title: "Senior Account Manager I",
-      image: "https://efsgnj.com/wp-content/uploads/2024/07/Juan-Huaman.jpg"
+      image: juanImage
     },
     {
       name: "Jose Carrero",
       title: "Senior Account Manager",
-      image: "https://efsgnj.com/wp-content/uploads/2024/08/Jose-Carrero-.jpg"
+      image: joseImage
     },
     {
       name: "Cristian Molina",
       title: "Senior Account Manager",
-      image: "https://efsgnj.com/wp-content/uploads/2024/07/Cristian-Molina.jpg"
+      image: cristianImage
     },
     {
       name: "Jhoana Vivas",
       title: "Field Operator",
-      image: "https://efsgnj.com/wp-content/uploads/2024/08/joana-vivas.jpg"
+      image: jhoanaImage
     },
     {
       name: "Ana Masis",
       title: "Field Operator",
-      image: "https://efsgnj.com/wp-content/uploads/2024/07/Ana-Masis.jpg"
+      image: anaImage
     },
     {
       name: "Myriam Tandazo",
       title: "Field Operator",
-      image: "https://efsgnj.com/wp-content/uploads/2024/07/Myriam-Tandazo.jpg"
+      image: myriamImage
     }
   ];
 
@@ -126,24 +144,26 @@ export default function OurTeam() {
             {teamMembers.map((member, index) => (
               <Card 
                 key={index}
-                className="overflow-hidden hover-elevate active-elevate-2"
+                className="hover-elevate active-elevate-2 border-0 shadow-lg bg-transparent"
                 data-testid={`card-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
               >
-                <div className="aspect-square overflow-hidden">
-                  <img 
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                    data-testid={`img-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                  />
-                </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-bold mb-2" data-testid={`text-name-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-                    {member.name}
-                  </h3>
-                  <p className="text-muted-foreground" data-testid={`text-title-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-                    {member.title}
-                  </p>
+                <div className="flex flex-col items-center">
+                  <div className="w-full aspect-square mb-4">
+                    <img 
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      data-testid={`img-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                    />
+                  </div>
+                  <div className="px-6 pb-6 text-center">
+                    <h3 className="text-xl font-bold mb-2" data-testid={`text-name-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                      {member.name}
+                    </h3>
+                    <p className="text-muted-foreground" data-testid={`text-title-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                      {member.title}
+                    </p>
+                  </div>
                 </div>
               </Card>
             ))}
