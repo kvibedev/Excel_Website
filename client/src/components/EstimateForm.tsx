@@ -14,6 +14,7 @@ export default function EstimateForm() {
     phone: "",
     company: "",
     service: "",
+    areaOfInquiry: "",
     message: "",
   });
 
@@ -28,17 +29,23 @@ export default function EstimateForm() {
     "Power Washing",
     "Window Washing",
     "Air Duct & HVAC",
-    "LevelUp Clean®",
-    "Commercial Cleaning",
+  ];
+
+  const areasOfInquiry = [
+    "Accounting",
+    "Billing",
+    "Hr",
+    "Recruiting",
+    "Procurement",
+    "Others"
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // todo: remove mock functionality
     console.log("Form submitted:", formData);
     toast({
-      title: "Proposal Request Received",
-      description: "We'll contact you within 24 hours to discuss your needs.",
+      title: "Message Received",
+      description: "We will gladly reach out to assist you with any further questions.",
     });
     setFormData({
       inquiryType: "",
@@ -47,6 +54,7 @@ export default function EstimateForm() {
       phone: "",
       company: "",
       service: "",
+      areaOfInquiry: "",
       message: "",
     });
   };
@@ -55,7 +63,7 @@ export default function EstimateForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="inquiryType" className="block text-sm font-medium mb-2">
-          Inquiry Type *
+          Choose type *
         </label>
         <Select
           required
@@ -63,11 +71,11 @@ export default function EstimateForm() {
           onValueChange={(value) => setFormData({ ...formData, inquiryType: value })}
         >
           <SelectTrigger data-testid="select-inquiry-type">
-            <SelectValue placeholder="Select inquiry type" />
+            <SelectValue placeholder="Select type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="sales">Sales Inquiries</SelectItem>
-            <SelectItem value="general">General Inquiries</SelectItem>
+            <SelectItem value="sales">Sales Inquires</SelectItem>
+            <SelectItem value="general">General Inquires</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -128,10 +136,9 @@ export default function EstimateForm() {
 
       <div>
         <label htmlFor="service" className="block text-sm font-medium mb-2">
-          Service Needed *
+          Choose service
         </label>
         <Select
-          required
           value={formData.service}
           onValueChange={(value) => setFormData({ ...formData, service: value })}
         >
@@ -142,6 +149,27 @@ export default function EstimateForm() {
             {services.map((service) => (
               <SelectItem key={service} value={service}>
                 {service}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <label htmlFor="areaOfInquiry" className="block text-sm font-medium mb-2">
+          Area of Inquiry
+        </label>
+        <Select
+          value={formData.areaOfInquiry}
+          onValueChange={(value) => setFormData({ ...formData, areaOfInquiry: value })}
+        >
+          <SelectTrigger data-testid="select-area-of-inquiry">
+            <SelectValue placeholder="Select area" />
+          </SelectTrigger>
+          <SelectContent>
+            {areasOfInquiry.map((area) => (
+              <SelectItem key={area} value={area}>
+                {area}
               </SelectItem>
             ))}
           </SelectContent>
@@ -162,8 +190,8 @@ export default function EstimateForm() {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full" data-testid="button-submit">
-        REQUEST PROPOSAL
+      <Button type="submit" size="lg" className="w-full bg-[#0A5EB9]" data-testid="button-submit">
+        SUBMIT
       </Button>
     </form>
   );
