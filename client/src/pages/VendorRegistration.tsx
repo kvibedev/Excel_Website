@@ -449,7 +449,9 @@ export default function VendorRegistration() {
                       <Label htmlFor="emergencyResponseTime">What is your response time for emergency service? *</Label>
                       <Input
                         id="emergencyResponseTime"
+                        type="number"
                         required
+                        placeholder="in minutes"
                         value={formData.emergencyResponseTime}
                         onChange={(e) => handleChange("emergencyResponseTime", e.target.value)}
                         data-testid="input-emergency-response-time"
