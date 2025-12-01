@@ -217,6 +217,19 @@ export default function Header() {
               </NavigationMenuList>
             </NavigationMenu>
 
+            <a
+              href="https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=2efccd9b-d01e-4fc0-a0bd-5735ec5ae45c&ccId=19000101_000001&lang=en_US"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="ghost"
+                data-testid="link-careers"
+              >
+                Careers
+              </Button>
+            </a>
+
             <Link href="/contact">
               <Button
                 variant={location === "/contact" ? "secondary" : "ghost"}
@@ -370,6 +383,21 @@ export default function Header() {
                   </div>
                 )}
               </div>
+
+              <a
+                href="https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=2efccd9b-d01e-4fc0-a0bd-5735ec5ae45c&ccId=19000101_000001&lang=en_US"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-careers"
+                >
+                  Careers
+                </Button>
+              </a>
 
               <Link href="/contact">
                 <Button
