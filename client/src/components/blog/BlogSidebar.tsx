@@ -35,13 +35,13 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
           {relatedArticles.map((article, index) => (
             <Link href={`/resources/${article.slug}`} key={index}>
               <div 
-                className="group hover-elevate active-elevate-2 p-4 rounded-lg border border-gray-200 bg-white"
+                className="group hover-elevate active-elevate-2 p-4 rounded-lg bg-[#063970]"
                 data-testid={`card-related-${index + 1}`}
               >
-                <h4 className="font-semibold text-[#063970] group-hover:text-[#0A5EB9] transition-colors mb-2 leading-snug" data-testid={`text-related-title-${index + 1}`}>
+                <h4 className="font-semibold text-white mb-2 leading-snug" data-testid={`text-related-title-${index + 1}`}>
                   {article.title}
                 </h4>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-white/80">
                   <Calendar className="w-3 h-3" />
                   <span data-testid={`text-related-date-${index + 1}`}>{article.date}</span>
                 </div>
