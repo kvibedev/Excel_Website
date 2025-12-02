@@ -13,6 +13,7 @@ import Services from "@/pages/Services";
 import Industries from "@/pages/Industries";
 import Contact from "@/pages/Contact";
 import VendorRegistration from "@/pages/VendorRegistration";
+import Resources from "@/pages/Resources";
 import NotFound from "@/pages/not-found";
 
 import OurTeam from "@/pages/about/OurTeam";
@@ -66,6 +67,7 @@ function Router() {
         <Route path="/services" component={Services} />
         <Route path="/industries" component={Industries} />
         <Route path="/contact" component={Contact} />
+        <Route path="/resources" component={Resources} />
         <Route path="/vendor-registration" component={VendorRegistration} />
         
         <Route path="/services/janitorial" component={Janitorial} />

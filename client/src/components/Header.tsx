@@ -200,6 +200,15 @@ export default function Header() {
               </Button>
             </a>
 
+            <Link href="/resources">
+              <Button
+                variant="default"
+                data-testid="link-resources"
+              >
+                Resources
+              </Button>
+            </Link>
+
             <Link href="/vendor-registration">
               <Button
                 variant="default"
@@ -357,6 +366,17 @@ export default function Header() {
                   Careers
                 </Button>
               </a>
+
+              <Link href="/resources">
+                <Button
+                  variant={location === "/resources" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="link-mobile-resources"
+                >
+                  Resources
+                </Button>
+              </Link>
 
               <Link href="/vendor-registration">
                 <Button
