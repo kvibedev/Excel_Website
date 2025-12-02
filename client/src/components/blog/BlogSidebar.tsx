@@ -31,11 +31,11 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
       {/* Related Articles */}
       <div className="bg-[#97CC06] rounded-xl shadow-md p-6">
         <h3 className="text-lg font-bold text-[#063970] mb-6" data-testid="text-related-title">Related Articles</h3>
-        <div className="space-y-8">
+        <div className="space-y-4">
           {relatedArticles.map((article, index) => (
             <Link href={`/resources/${article.slug}`} key={index}>
               <div 
-                className="group hover-elevate active-elevate-2 p-5 rounded-lg bg-white border border-gray-200"
+                className="group hover-elevate active-elevate-2 p-5 mb-4 rounded-lg bg-white border border-gray-200"
                 data-testid={`card-related-${index + 1}`}
               >
                 <h4 className="font-semibold text-[#063970] group-hover:text-[#0A5EB9] transition-colors mb-2 leading-snug" data-testid={`text-related-title-${index + 1}`}>
