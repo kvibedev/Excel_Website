@@ -20,7 +20,7 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
         <h3 className="text-lg font-bold text-[#063970] mb-4" data-testid="text-share-title">Share Article</h3>
         <Button 
           variant="outline" 
-          className="w-full border-2"
+          className="w-full border-2 bg-white"
           data-testid="button-share"
         >
           <Share2 className="w-4 h-4 mr-2" />
