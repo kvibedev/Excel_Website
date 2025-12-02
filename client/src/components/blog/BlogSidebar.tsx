@@ -31,7 +31,7 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
       {/* Related Articles */}
       <div className="bg-[#97CC06] rounded-xl shadow-md p-6">
         <h3 className="text-lg font-bold text-[#063970] mb-6" data-testid="text-related-title">Related Articles</h3>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {relatedArticles.map((article, index) => (
             <Link href={`/resources/${article.slug}`} key={index}>
               <div 
