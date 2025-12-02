@@ -16,7 +16,7 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
   return (
     <div className="sticky top-24">
       {/* Share */}
-      <div className="bg-[#97CC06]/30 rounded-xl shadow-md p-6 mb-6">
+      <div className="bg-[#97CC06] rounded-xl shadow-md p-6 mb-6">
         <h3 className="text-lg font-bold text-[#063970] mb-4" data-testid="text-share-title">Share Article</h3>
         <Button 
           variant="outline" 
@@ -29,7 +29,7 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
       </div>
 
       {/* Related Articles */}
-      <div className="bg-[#97CC06]/30 rounded-xl shadow-md p-6">
+      <div className="bg-[#97CC06] rounded-xl shadow-md p-6">
         <h3 className="text-lg font-bold text-[#063970] mb-6" data-testid="text-related-title">Related Articles</h3>
         <div className="space-y-4">
           {relatedArticles.map((article, index) => (
