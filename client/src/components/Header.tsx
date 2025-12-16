@@ -230,7 +230,7 @@ export default function Header() {
 
           <div className="hidden md:flex items-center gap-2">
             <Link href="/contact">
-              <Button variant="default" data-testid="button-get-estimate">
+              <Button variant="default" className="bg-[#97CC06] text-[#063970] hover:bg-[#063970] hover:text-white" data-testid="button-get-estimate">
                 Get Estimate
               </Button>
             </Link>
@@ -403,7 +403,7 @@ export default function Header() {
               <Link href="/contact">
                 <Button
                   variant="default"
-                  className="w-full"
+                  className="w-full bg-[#97CC06] text-[#063970] hover:bg-[#063970] hover:text-white"
                   onClick={() => setMobileMenuOpen(false)}
                   data-testid="button-mobile-get-estimate"
                 >
