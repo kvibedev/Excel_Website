@@ -50,6 +50,11 @@ import SmartTechnologyRevolutionizesFacilitySecurity from "@/pages/resources/Sma
 import AutomationRevolutionizesCommercialCleaningEfficiency from "@/pages/resources/AutomationRevolutionizesCommercialCleaningEfficiency";
 import UnlockingEnergyEfficiencyForFacilities from "@/pages/resources/UnlockingEnergyEfficiencyForFacilities";
 
+import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminContacts from "@/pages/admin/AdminContacts";
+import AdminVendors from "@/pages/admin/AdminVendors";
+
 function ScrollToTop() {
   const [location] = useLocation();
   
@@ -60,7 +65,7 @@ function ScrollToTop() {
   return null;
 }
 
-function Router() {
+function MainRouter() {
   return (
     <>
       <ScrollToTop />
@@ -112,17 +117,39 @@ function Router() {
   );
 }
 
+function AdminRouter() {
+  return (
+    <>
+      <ScrollToTop />
+      <Switch>
+        <Route path="/admin" component={AdminLogin} />
+        <Route path="/admin/dashboard" component={AdminDashboard} />
+        <Route path="/admin/contacts" component={AdminContacts} />
+        <Route path="/admin/vendors" component={AdminVendors} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
+  );
+}
+
 function App() {
+  const [location] = useLocation();
+  const isAdminRoute = location.startsWith("/admin");
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">
-            <Router />
-          </main>
-          <Footer />
-        </div>
+        {isAdminRoute ? (
+          <AdminRouter />
+        ) : (
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1">
+              <MainRouter />
+            </main>
+            <Footer />
+          </div>
+        )}
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
