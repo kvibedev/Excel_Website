@@ -1,6 +1,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import session from "express-session";
+import bcrypt from "bcrypt";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema } from "@shared/schema";
 import { z } from "zod";
@@ -38,7 +39,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { username, password } = req.body;
       const admin = await storage.getAdminByUsername(username);
       
-      if (!admin || admin.password !== password) {
+      if (!admin) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+      
+      const isValidPassword = await bcrypt.compare(password, admin.password);
+      if (!isValidPassword) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
       
