@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function EstimateForm() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     inquiryType: "",
     name: "",
@@ -40,23 +42,51 @@ export default function EstimateForm() {
     "Others"
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    toast({
-      title: "Message Received",
-      description: "We will gladly reach out to assist you with any further questions.",
-    });
-    setFormData({
-      inquiryType: "",
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      service: "",
-      areaOfInquiry: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+    
+    try {
+      const nameParts = formData.name.trim().split(" ");
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+      
+      await apiRequest("POST", "/api/contacts", {
+        firstName,
+        lastName,
+        email: formData.email,
+        phone: formData.phone || null,
+        company: formData.company || null,
+        inquiryType: formData.inquiryType || null,
+        serviceInterest: formData.service || null,
+        areaOfInquiry: formData.areaOfInquiry || null,
+        message: formData.message || null,
+      });
+      
+      toast({
+        title: "Message Received",
+        description: "We will gladly reach out to assist you with any further questions.",
+      });
+      
+      setFormData({
+        inquiryType: "",
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        areaOfInquiry: "",
+        message: "",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an issue submitting your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -190,8 +220,8 @@ export default function EstimateForm() {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full" data-testid="button-submit">
-        SUBMIT
+      <Button type="submit" size="lg" className="w-full" disabled={isSubmitting} data-testid="button-submit">
+        {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
       </Button>
     </form>
   );

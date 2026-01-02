@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Briefcase, Plus, ArrowLeft } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
 interface ReferenceContact {
@@ -63,48 +64,91 @@ export default function VendorRegistration() {
     window.scrollTo(0, 0);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    toast({
-      title: "Form Submitted",
-      description: "Thank you for your interest. We'll contact you within 48 hours.",
-    });
+    try {
+      const referencesText = references.map((ref, idx) => 
+        ref.contacts.map(c => `Reference ${idx + 1}: ${c.name} at ${c.companyName} - ${c.phoneNumber}`).join("; ")
+      ).filter(Boolean).join("\n");
+      
+      const additionalInfo = [
+        formData.usesSubcontractors === "yes" ? "Uses subcontractors" : null,
+        formData.provides24HourService === "yes" ? "Provides 24-hour service" : null,
+        formData.emergencyResponseTime ? `Emergency response: ${formData.emergencyResponseTime}` : null,
+        formData.quoteWithin24Hours === "yes" ? "Can quote within 24 hours" : null,
+        formData.relatedToExcelEmployee ? `Related to Excel employee: ${formData.relatedToExcelEmployee}` : null,
+        formData.willingBackgroundCheck === "yes" ? "Willing to do background check" : null,
+      ].filter(Boolean).join("; ");
 
-    setFormData({
-      companyName: "",
-      firstName: "",
-      lastName: "",
-      businessPhone: "",
-      companyEmail: "",
-      streetAddress: "",
-      streetAddress2: "",
-      city: "",
-      state: "",
-      postalCode: "",
-      country: "United States",
-      referred: "no",
-      referredBy: "",
-      yearsInBusiness: "",
-      primaryService: "",
-      otherServices: "",
-      serviceEquipment: "",
-      serviceMileRadius: "",
-      usesSubcontractors: "no",
-      provides24HourService: "no",
-      emergencyResponseTime: "",
-      quoteWithin24Hours: "no",
-      relatedToExcelEmployee: "",
-      willingBackgroundCheck: "yes",
-    });
+      await apiRequest("POST", "/api/vendors", {
+        companyName: formData.companyName,
+        contactName: `${formData.firstName} ${formData.lastName}`,
+        email: formData.companyEmail,
+        phone: formData.businessPhone,
+        address: formData.streetAddress + (formData.streetAddress2 ? ` ${formData.streetAddress2}` : ""),
+        city: formData.city || null,
+        state: formData.state || null,
+        zipCode: formData.postalCode || null,
+        servicesOffered: [formData.primaryService, formData.otherServices].filter(Boolean).join(", ") || null,
+        yearsInBusiness: formData.yearsInBusiness || null,
+        insuranceInfo: formData.serviceEquipment || null,
+        certifications: null,
+        references: referencesText || null,
+        additionalInfo: additionalInfo || null,
+      });
+      
+      toast({
+        title: "Form Submitted",
+        description: "Thank you for your interest. We'll contact you within 48 hours.",
+      });
 
-    setReferences([
-      { id: "ref1", contacts: [{ id: "ref1-contact1", name: "", companyName: "", phoneNumber: "" }] },
-      { id: "ref2", contacts: [{ id: "ref2-contact1", name: "", companyName: "", phoneNumber: "" }] },
-      { id: "ref3", contacts: [{ id: "ref3-contact1", name: "", companyName: "", phoneNumber: "" }] },
-    ]);
+      setFormData({
+        companyName: "",
+        firstName: "",
+        lastName: "",
+        businessPhone: "",
+        companyEmail: "",
+        streetAddress: "",
+        streetAddress2: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: "United States",
+        referred: "no",
+        referredBy: "",
+        yearsInBusiness: "",
+        primaryService: "",
+        otherServices: "",
+        serviceEquipment: "",
+        serviceMileRadius: "",
+        usesSubcontractors: "no",
+        provides24HourService: "no",
+        emergencyResponseTime: "",
+        quoteWithin24Hours: "no",
+        relatedToExcelEmployee: "",
+        willingBackgroundCheck: "yes",
+      });
 
-    setCurrentStep(1);
+      setReferences([
+        { id: "ref1", contacts: [{ id: "ref1-contact1", name: "", companyName: "", phoneNumber: "" }] },
+        { id: "ref2", contacts: [{ id: "ref2-contact1", name: "", companyName: "", phoneNumber: "" }] },
+        { id: "ref3", contacts: [{ id: "ref3-contact1", name: "", companyName: "", phoneNumber: "" }] },
+      ]);
+
+      setCurrentStep(1);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an issue submitting your registration. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (field: string, value: string) => {
@@ -602,9 +646,10 @@ export default function VendorRegistration() {
                   <Button 
                     type="submit" 
                     size="lg"
+                    disabled={isSubmitting}
                     data-testid="button-submit-vendor"
                   >
-                    Submit
+                    {isSubmitting ? "Submitting..." : "Submit"}
                   </Button>
                 </div>
               </form>
