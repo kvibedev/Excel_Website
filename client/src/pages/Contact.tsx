@@ -1,7 +1,7 @@
 import EstimateForm from "@/components/EstimateForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, Briefcase, Users } from "lucide-react";
+import { Phone, Mail, MapPin, Briefcase, Users } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
@@ -63,6 +63,18 @@ export default function Contact() {
                     <a href="mailto:info@efsgnj.com" className="text-lg text-foreground hover:text-[#0A5EB9] transition-colors" data-testid="link-email">
                       info@efsgnj.com
                     </a>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-start" data-testid="contact-address">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
+                    <MapPin className="h-6 w-6 text-[#0A5EB9]" />
+                  </div>
+                  <div>
+                    <p className="text-lg text-foreground" data-testid="text-address">
+                      200 Broadacres Dr., Suite 160<br />
+                      Bloomfield, NJ 07003
+                    </p>
                   </div>
                 </div>
               </div>
