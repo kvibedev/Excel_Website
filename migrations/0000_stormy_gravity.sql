@@ -1,4 +1,4 @@
-CREATE TABLE "admin_users" (
+CREATE TABLE IF NOT EXISTS "admin_users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"username" text NOT NULL,
 	"password" text NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE "admin_users" (
 	CONSTRAINT "admin_users_username_unique" UNIQUE("username")
 );
 --> statement-breakpoint
-CREATE TABLE "contact_notes" (
+CREATE TABLE IF NOT EXISTS "contact_notes" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"contact_id" integer NOT NULL,
 	"note" text NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE "contact_notes" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "contacts" (
+CREATE TABLE IF NOT EXISTS "contacts" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"first_name" text NOT NULL,
 	"last_name" text NOT NULL,
@@ -31,14 +31,14 @@ CREATE TABLE "contacts" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "users" (
+CREATE TABLE IF NOT EXISTS "users" (
 	"id" varchar PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"username" text NOT NULL,
 	"password" text NOT NULL,
 	CONSTRAINT "users_username_unique" UNIQUE("username")
 );
 --> statement-breakpoint
-CREATE TABLE "vendor_notes" (
+CREATE TABLE IF NOT EXISTS "vendor_notes" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"vendor_id" integer NOT NULL,
 	"note" text NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE "vendor_notes" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "vendor_registrations" (
+CREATE TABLE IF NOT EXISTS "vendor_registrations" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"company_name" text NOT NULL,
 	"contact_name" text NOT NULL,
@@ -67,5 +67,12 @@ CREATE TABLE "vendor_registrations" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-ALTER TABLE "contact_notes" ADD CONSTRAINT "contact_notes_contact_id_contacts_id_fk" FOREIGN KEY ("contact_id") REFERENCES "public"."contacts"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "vendor_notes" ADD CONSTRAINT "vendor_notes_vendor_id_vendor_registrations_id_fk" FOREIGN KEY ("vendor_id") REFERENCES "public"."vendor_registrations"("id") ON DELETE no action ON UPDATE no action;
+DO $$ BEGIN
+  ALTER TABLE "contact_notes" ADD CONSTRAINT "contact_notes_contact_id_contacts_id_fk" FOREIGN KEY ("contact_id") REFERENCES "public"."contacts"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+  ALTER TABLE "vendor_notes" ADD CONSTRAINT "vendor_notes_vendor_id_vendor_registrations_id_fk" FOREIGN KEY ("vendor_id") REFERENCES "public"."vendor_registrations"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION WHEN duplicate_object THEN null;
+END $$;
