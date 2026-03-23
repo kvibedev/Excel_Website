@@ -105,7 +105,7 @@ export default function Contact() {
                     <FaInstagram className="h-5 w-5 text-[#0A5EB9]" />
                   </a>
                   <a 
-                    href="https://www.linkedin.com/company/excel-facility-services-llc" 
+                    href="https://www.linkedin.com/company/excel-facility-services-llc/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#0A5EB9]/10 hover-elevate active-elevate-2"

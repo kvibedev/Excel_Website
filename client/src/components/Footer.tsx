@@ -30,7 +30,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/Excelfacilityservices/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover-elevate active-elevate-2 rounded-md p-2"
@@ -39,7 +39,7 @@ export default function Footer() {
                 <Facebook className="h-5 w-5 text-primary" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/excelfacilityservicesgroup/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover-elevate active-elevate-2 rounded-md p-2"
@@ -48,7 +48,7 @@ export default function Footer() {
                 <Instagram className="h-5 w-5 text-primary" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/excel-facility-services-llc/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover-elevate active-elevate-2 rounded-md p-2"
