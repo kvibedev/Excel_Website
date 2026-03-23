@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
 import {
@@ -106,6 +107,11 @@ export default function Services() {
 
   return (
     <div>
+      <SEO
+        title="Services"
+        description="Explore our full range of commercial cleaning services — janitorial, day porters, disinfection, floor care, window washing, air duct & HVAC, carpet extraction, and more."
+        path="/services"
+      />
       <Hero
         title="We specialize in expert cleaning and disinfection services"
         subtitle="We are dedicated to providing facility solutions that help businesses run smoothly and efficiently."

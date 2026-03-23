@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
@@ -117,6 +118,11 @@ export default function OurTeam() {
 
   return (
     <div>
+      <SEO
+        title="Our Team"
+        description="Meet the leadership team behind Excel Facility Services Group — dedicated professionals with decades of facility management experience."
+        path="/about/our-team"
+      />
       {/* Hero Section */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
         <div 

@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -141,6 +142,11 @@ export default function Covid19Cleaning() {
 
   return (
     <div>
+      <SEO
+        title="COVID-19 Cleaning"
+        description="Specialized COVID-19 cleaning and disinfection services from Excel Facility Services Group for safe, healthy facilities."
+        path="/services/covid-19-cleaning"
+      />
       {/* Hero Section */}
       <Hero
         title="COVID-19 Cleaning"

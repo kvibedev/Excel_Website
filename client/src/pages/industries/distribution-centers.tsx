@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -75,6 +76,11 @@ export default function DistributionCenters() {
 
   return (
     <div>
+      <SEO
+        title="Distribution Center Cleaning"
+        description="Professional cleaning for distribution centers from Excel Facility Services Group. Ensure safe, efficient operations."
+        path="/industries/distribution-centers"
+      />
       {/* Hero Section */}
       <Hero
         title="Distribution Centers"

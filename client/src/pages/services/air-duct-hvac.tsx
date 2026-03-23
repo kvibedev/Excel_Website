@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -141,6 +142,11 @@ export default function AirDuctHVAC() {
 
   return (
     <div>
+      <SEO
+        title="Air Duct & HVAC Cleaning"
+        description="Professional air duct and HVAC cleaning services from Excel Facility Services Group. Improve indoor air quality and energy efficiency."
+        path="/services/air-duct-hvac"
+      />
       {/* Hero Section */}
       <Hero
         title="Air Duct & HVAC"

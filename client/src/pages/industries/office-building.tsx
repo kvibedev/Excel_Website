@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,6 +65,11 @@ export default function OfficeBuilding() {
 
   return (
     <div>
+      <SEO
+        title="Office Building Cleaning"
+        description="Professional cleaning services for office buildings from Excel Facility Services Group. Create a healthier, more productive workspace."
+        path="/industries/office-building"
+      />
       <Hero
         title="Office Building"
         subtitle="EFSG provides reliable facility services to keep your office clean, comfortable, and safe."

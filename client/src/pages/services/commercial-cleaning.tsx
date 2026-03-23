@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
@@ -28,6 +29,11 @@ export default function CommercialCleaning() {
 
   return (
     <div>
+      <SEO
+        title="Commercial Cleaning"
+        description="Comprehensive commercial cleaning services from Excel Facility Services Group. Customized solutions for businesses of all sizes."
+        path="/services/commercial-cleaning"
+      />
       <Hero
         title="Leave the Commercial Cleaning to our Pro's"
         subtitle="Excel Facility Services is a Commercial Janitorial Service Company that can deliver exceptional services designed to ensure a clean, safe, and healthy environment for your staff and clients."

@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
@@ -30,6 +31,11 @@ export default function GreenCleaningTransformingFacilityManagement() {
 
   return (
     <div>
+      <SEO
+        title="Green Cleaning Transforming Facility Management"
+        description="Discover how green cleaning practices are revolutionizing facility management for healthier workplaces."
+        path="/resources/green-cleaning-transforming-facility-management"
+      />
       {/* Back Navigation */}
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">

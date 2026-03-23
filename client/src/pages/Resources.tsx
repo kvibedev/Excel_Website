@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, ArrowRight, Clock } from "lucide-react";
@@ -69,6 +70,11 @@ export default function Resources() {
 
   return (
     <div>
+      <SEO
+        title="Resources"
+        description="Insights and articles on commercial cleaning, green practices, facility management, and industry trends from Excel Facility Services Group."
+        path="/resources"
+      />
       {/* Hero Section with Enhanced Visual */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
         <div 

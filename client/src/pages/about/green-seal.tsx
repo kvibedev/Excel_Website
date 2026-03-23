@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +10,11 @@ export default function GreenSeal() {
 
   return (
     <div>
+      <SEO
+        title="Green Seal Certification"
+        description="Excel Facility Services Group is Green Seal GS-42 certified, delivering environmentally responsible commercial cleaning solutions."
+        path="/about/green-seal"
+      />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">

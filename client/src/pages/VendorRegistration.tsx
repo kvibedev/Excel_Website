@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -184,6 +185,11 @@ export default function VendorRegistration() {
 
   return (
     <div>
+      <SEO
+        title="Vendor Registration"
+        description="Register as a vendor or contractor with Excel Facility Services Group. Complete our registration form to partner with us."
+        path="/vendor-registration"
+      />
       {/* Hero Section */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
         <div 

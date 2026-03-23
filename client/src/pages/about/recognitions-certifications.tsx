@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,11 @@ export default function RecognitionsCertifications() {
 
   return (
     <div>
+      <SEO
+        title="Recognitions & Certifications"
+        description="View Excel Facility Services Group certifications, memberships, and industry recognitions including Green Seal GS-42 and MBE certification."
+        path="/about/recognitions-certifications"
+      />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">

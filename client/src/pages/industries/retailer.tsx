@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -75,6 +76,11 @@ export default function Retailer() {
 
   return (
     <div>
+      <SEO
+        title="Retail Cleaning"
+        description="Commercial cleaning services for retail stores from Excel Facility Services Group. Maintain a clean, inviting shopping environment."
+        path="/industries/retailer"
+      />
       {/* Hero Section */}
       <Hero
         title="Retail Stores"

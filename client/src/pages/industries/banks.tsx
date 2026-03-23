@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -75,6 +76,11 @@ export default function Banks() {
 
   return (
     <div>
+      <SEO
+        title="Bank & Financial Cleaning"
+        description="Professional cleaning services for banks and financial institutions from Excel Facility Services Group."
+        path="/industries/banks"
+      />
       {/* Hero Section */}
       <Hero
         title="Banks"

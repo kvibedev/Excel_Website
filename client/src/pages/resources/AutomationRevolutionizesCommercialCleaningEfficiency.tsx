@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
@@ -30,6 +31,11 @@ export default function AutomationRevolutionizesCommercialCleaningEfficiency() {
 
   return (
     <div>
+      <SEO
+        title="Automation Revolutionizes Commercial Cleaning"
+        description="How automation is revolutionizing commercial cleaning efficiency and transforming the industry."
+        path="/resources/automation-revolutionizes-commercial-cleaning-efficiency"
+      />
       {/* Back Navigation */}
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">

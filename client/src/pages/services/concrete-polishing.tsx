@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -140,6 +141,11 @@ export default function ConcretePolishing() {
 
   return (
     <div>
+      <SEO
+        title="Concrete Polishing"
+        description="Professional concrete polishing services from Excel Facility Services Group. Durable, attractive floors for commercial spaces."
+        path="/services/concrete-polishing"
+      />
       {/* Hero Section */}
       <Hero
         title="Concrete Polishing"

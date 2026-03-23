@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -71,6 +72,11 @@ export default function AboutLanding() {
 
   return (
     <div>
+      <SEO
+        title="About Us"
+        description="Learn about Excel Facility Services Group — 20+ years of commercial cleaning excellence across 20+ states. Our mission, values, and commitment to healthier workplaces."
+        path="/about"
+      />
       {/* Hero Section */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
         <div 

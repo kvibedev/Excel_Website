@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -81,6 +82,11 @@ export default function AutoDealerships() {
 
   return (
     <div>
+      <SEO
+        title="Auto Dealership Cleaning"
+        description="Professional cleaning services for auto dealerships from Excel Facility Services Group. Showroom-quality cleanliness."
+        path="/industries/auto-dealerships"
+      />
       {/* Hero Section */}
       <Hero
         title="Auto Dealership Cleaning"

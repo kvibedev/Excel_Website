@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -142,6 +143,11 @@ export default function HomeOriginal() {
 
   return (
     <div>
+      <SEO
+        title="Commercial Cleaning Services"
+        description="Excel Facility Services Group provides professional commercial cleaning services with 20+ years of experience across 20+ states. Janitorial, disinfection, floor care, and facility maintenance solutions."
+        path="/"
+      />
       {/* Hero Section - Template 3 style with original content */}
       <Hero
         title="Creating Healthier Workplaces"

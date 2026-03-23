@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -139,6 +140,11 @@ export default function PowerWashing() {
 
   return (
     <div>
+      <SEO
+        title="Power Washing"
+        description="Commercial power washing services from Excel Facility Services Group. Keep your building exterior clean and professional."
+        path="/services/power-washing"
+      />
       {/* Hero Section */}
       <Hero
         title="Power Washing"

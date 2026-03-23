@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { injectOGTags } from "./og-metadata";
 
 const app = express();
 app.use(express.json());
@@ -45,6 +46,40 @@ app.use((req, res, next) => {
 
     res.status(status).json({ message });
     throw err;
+  });
+
+  app.use((req, res, next) => {
+    const urlPath = req.originalUrl.split("?")[0];
+    if (urlPath.startsWith("/api") || urlPath.startsWith("/assets") || urlPath.startsWith("/@") || urlPath.startsWith("/src") || urlPath.startsWith("/node_modules") || (urlPath.includes(".") && !urlPath.endsWith("/"))) {
+      return next();
+    }
+
+    const originalEnd = res.end;
+    const chunks: Buffer[] = [];
+
+    res.end = function (chunk?: any, ...args: any[]) {
+      if (chunk) {
+        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+      }
+      const body = Buffer.concat(chunks).toString("utf-8");
+      if (body.includes("<!DOCTYPE html>") || body.includes("<html")) {
+        const host = req.get("host") || "localhost";
+        const modified = injectOGTags(body, urlPath, host);
+        res.setHeader("Content-Length", Buffer.byteLength(modified));
+        return originalEnd.call(res, modified, ...args);
+      }
+      return originalEnd.call(res, Buffer.concat(chunks), ...args);
+    } as any;
+
+    const originalWrite = res.write;
+    res.write = function (chunk: any, ...args: any[]) {
+      if (chunk) {
+        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+      }
+      return true;
+    } as any;
+
+    next();
   });
 
   // importantly only setup vite in development and after

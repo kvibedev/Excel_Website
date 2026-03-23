@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
@@ -30,6 +31,11 @@ export default function UnlockingEnergyEfficiencyForFacilities() {
 
   return (
     <div>
+      <SEO
+        title="Unlocking Energy Efficiency for Facilities"
+        description="Learn how to unlock energy efficiency in your facilities with modern management practices and technology."
+        path="/resources/unlocking-energy-efficiency-for-facilities"
+      />
       {/* Back Navigation */}
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">

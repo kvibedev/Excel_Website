@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -140,6 +141,11 @@ export default function Janitorial() {
 
   return (
     <div>
+      <SEO
+        title="Janitorial Services"
+        description="Professional janitorial cleaning services from Excel Facility Services Group. Customized cleaning programs for your facility."
+        path="/services/janitorial"
+      />
       {/* Hero Section */}
       <Hero
         title="Commercial Janitorial Services"

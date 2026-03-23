@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
@@ -30,6 +31,11 @@ export default function SmartTechnologyRevolutionizesFacilitySecurity() {
 
   return (
     <div>
+      <SEO
+        title="Smart Technology Revolutionizes Facility Security"
+        description="How smart technology and IoT are revolutionizing facility security and management."
+        path="/resources/smart-technology-revolutionizes-facility-security"
+      />
       {/* Back Navigation */}
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">

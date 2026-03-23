@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +37,11 @@ export default function CoverageAreas() {
 
   return (
     <div>
+      <SEO
+        title="Coverage Areas"
+        description="Excel Facility Services Group serves clients across 20+ states. View our nationwide coverage areas."
+        path="/about/coverage-areas"
+      />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">

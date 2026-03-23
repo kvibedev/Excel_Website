@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -140,6 +141,11 @@ export default function CarpetExtraction() {
 
   return (
     <div>
+      <SEO
+        title="Carpet Extraction"
+        description="Professional carpet extraction and deep cleaning services from Excel Facility Services Group. Restore and maintain your carpets."
+        path="/services/carpet-extraction"
+      />
       {/* Hero Section */}
       <Hero
         title="Carpet Extraction"

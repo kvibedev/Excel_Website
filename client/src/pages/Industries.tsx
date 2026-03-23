@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import IndustryCard from "@/components/IndustryCard";
 import EstimateForm from "@/components/EstimateForm";
@@ -27,6 +28,11 @@ export default function Industries() {
 
   return (
     <div>
+      <SEO
+        title="Industries We Serve"
+        description="Excel Facility Services Group provides cleaning solutions for offices, retail, distribution centers, restaurants, medical facilities, banks, schools, and auto dealerships."
+        path="/industries"
+      />
       <Hero
         title="We offer services for a wide range of industries"
         subtitle="The industries we serve include schools, banks, retail stores, medical groups, offices, restaurants, government facilities, transportation, auto dealerships, theaters, and much more."

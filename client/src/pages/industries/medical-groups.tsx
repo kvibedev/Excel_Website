@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -77,6 +78,11 @@ export default function MedicalGroups() {
 
   return (
     <div>
+      <SEO
+        title="Medical Facility Cleaning"
+        description="Specialized cleaning for medical groups from Excel Facility Services Group. Certified disinfection for healthcare environments."
+        path="/industries/medical-groups"
+      />
       {/* Hero Section */}
       <Hero
         title="Medical Groups"

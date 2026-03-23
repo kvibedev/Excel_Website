@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -141,6 +142,11 @@ export default function WindowWashing() {
 
   return (
     <div>
+      <SEO
+        title="Window Washing"
+        description="Commercial window washing services from Excel Facility Services Group. Keep your building looking professional and spotless."
+        path="/services/window-washing"
+      />
       <Hero
         title="Window Washing"
         subtitle="Window washing is a necessary service for keeping a commercial building looking its best."

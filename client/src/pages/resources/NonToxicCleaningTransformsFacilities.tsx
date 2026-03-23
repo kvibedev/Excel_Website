@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
@@ -30,6 +31,11 @@ export default function NonToxicCleaningTransformsFacilities() {
 
   return (
     <div>
+      <SEO
+        title="Non-Toxic Cleaning Transforms Facilities"
+        description="How non-toxic cleaning solutions are transforming facility management through sustainable, health-conscious practices."
+        path="/resources/non-toxic-cleaning-transforms-facilities"
+      />
       {/* Back Navigation */}
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">

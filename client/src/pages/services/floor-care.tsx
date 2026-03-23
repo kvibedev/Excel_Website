@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -142,6 +143,11 @@ export default function FloorCare() {
 
   return (
     <div>
+      <SEO
+        title="Floor Care Services"
+        description="Professional floor care services from Excel Facility Services Group — maintenance, restoration, and protection for all floor types."
+        path="/services/floor-care"
+      />
       {/* Hero Section */}
       <Hero
         title="Floor Care"

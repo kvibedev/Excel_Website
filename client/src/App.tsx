@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -137,22 +138,24 @@ function App() {
   const isAdminRoute = location.startsWith("/admin");
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        {isAdminRoute ? (
-          <AdminRouter />
-        ) : (
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1">
-              <MainRouter />
-            </main>
-            <Footer />
-          </div>
-        )}
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          {isAdminRoute ? (
+            <AdminRouter />
+          ) : (
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">
+                <MainRouter />
+              </main>
+              <Footer />
+            </div>
+          )}
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 

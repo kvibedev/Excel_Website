@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -141,6 +142,11 @@ export default function DayPorters() {
 
   return (
     <div>
+      <SEO
+        title="Day Porter Services"
+        description="Day porter services from Excel Facility Services Group. Keep your facility clean and presentable throughout the business day."
+        path="/services/day-porters"
+      />
       {/* Hero Section */}
       <Hero
         title="Day Porters"

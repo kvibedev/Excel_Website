@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -139,6 +140,11 @@ export default function LevelUpClean() {
 
   return (
     <div>
+      <SEO
+        title="LevelUp Clean®"
+        description="LevelUp Clean® by Excel Facility Services Group — advanced cleaning and disinfection with verified results and transparency."
+        path="/services/levelup-clean"
+      />
       {/* Hero Section */}
       <Hero
         title="LevelUp Clean®"

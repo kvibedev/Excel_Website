@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -75,6 +76,11 @@ export default function Restaurants() {
 
   return (
     <div>
+      <SEO
+        title="Restaurant Cleaning"
+        description="Professional cleaning services for restaurants from Excel Facility Services Group. Maintain health standards and customer satisfaction."
+        path="/industries/restaurants"
+      />
       {/* Hero Section */}
       <Hero
         title="Restaurants"
