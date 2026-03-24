@@ -17,6 +17,9 @@ import connexLogo from "@assets/connex_1774369371353.webp";
 import inc5000Logo from "@assets/Inc.-5000-logo_1774369371353.jpg";
 import avettaLogo from "@assets/avetta_1774369371352.webp";
 import somersetLogo from "@assets/somerset_1774369371353.webp";
+import cleantelligentLogo from "@assets/cleantelligent_1774369430851.webp";
+import corrigoLogo from "@assets/corrigo_1774369430852.webp";
+import fmPilotLogo from "@assets/fmpilot_1774369430852.webp";
 
 export default function RecognitionsCertifications() {
   const certifications = [
@@ -35,10 +38,10 @@ export default function RecognitionsCertifications() {
   ];
 
   const softwareTools = [
-    { name: "Cleantelligent", description: "Quality Assurance Platform" },
-    { name: "Corrigo", description: "Facilities Management Software" },
+    { name: "Cleantelligent", description: "Quality Assurance Platform", logo: cleantelligentLogo },
+    { name: "Corrigo", description: "Facilities Management Software", logo: corrigoLogo },
     { name: "ServiceChannel", description: "Facilities Management Platform" },
-    { name: "FMPilot", description: "Facility Management System" }
+    { name: "FMPilot", description: "Facility Management System", logo: fmPilotLogo }
   ];
 
   return (
@@ -149,8 +152,14 @@ export default function RecognitionsCertifications() {
                 className="p-6 hover-elevate active-elevate-2 text-center"
                 data-testid={`software-${tool.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
-                <div className="w-12 h-12 rounded-lg bg-[#063970]/10 flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-6 h-6 text-[#063970]" />
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  {tool.logo ? (
+                    <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg bg-[#063970]/10 flex items-center justify-center">
+                      <CheckCircle2 className="w-6 h-6 text-[#063970]" />
+                    </div>
+                  )}
                 </div>
                 <h3 className="font-bold text-lg mb-2">{tool.name}</h3>
                 <p className="text-sm text-muted-foreground">{tool.description}</p>
