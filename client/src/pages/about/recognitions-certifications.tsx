@@ -111,7 +111,7 @@ export default function RecognitionsCertifications() {
                 data-testid={`cert-${cert.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
                 {cert.logo ? (
-                  <img src={cert.logo} alt={cert.name} className="max-h-20 max-w-[160px] w-auto object-contain" />
+                  <img src={cert.logo} alt={cert.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
                 ) : (
                   <div className="flex flex-col items-center gap-2">
                     <Shield className="w-10 h-10 text-[#97CC06]" />
@@ -144,7 +144,7 @@ export default function RecognitionsCertifications() {
                 data-testid={`software-${tool.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
                 {tool.logo ? (
-                  <img src={tool.logo} alt={tool.name} className="max-h-20 max-w-[160px] w-auto object-contain" />
+                  <img src={tool.logo} alt={tool.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
                 ) : (
                   <div className="flex flex-col items-center gap-2">
                     <CheckCircle2 className="w-10 h-10 text-[#063970]" />
