@@ -6,13 +6,16 @@ import { Link } from "wouter";
 import { Award, Shield, CheckCircle2, Laptop } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 import shccnjLogo from "@assets/shccnj_1774369098854.webp";
+import sbeLogo from "@assets/sbe_1774369212032.webp";
+import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
+import nmsdcLogo from "@assets/nmsdc_1774369212031.webp";
 
 export default function RecognitionsCertifications() {
   const certifications = [
     { name: "SHCCNJ", description: "State of NJ Hispanic Chamber of Commerce", logo: shccnjLogo },
-    { name: "SBE", description: "Small Business Enterprise" },
-    { name: "Port Authority NY/NJ", description: "Port Authority Certified" },
-    { name: "NMSDC", description: "National Minority Supplier Development Council" },
+    { name: "SBE", description: "Small Business Enterprise", logo: sbeLogo },
+    { name: "Port Authority NY/NJ", description: "Port Authority Certified", logo: portAuthorityLogo },
+    { name: "NMSDC", description: "National Minority Supplier Development Council", logo: nmsdcLogo },
     { name: "MBE", description: "Minority Business Enterprise" },
     { name: "ISSA", description: "International Sanitary Supply Association" },
     { name: "IFMA", description: "International Facility Management Association" },
