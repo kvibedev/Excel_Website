@@ -217,7 +217,7 @@ export default function HomeOriginal() {
           </p>
         </div>
         <div className="relative overflow-hidden">
-          <div className="flex animate-scroll-left" style={{ width: "max-content" }}>
+          <div className="flex animate-scroll-left-slow" style={{ width: "max-content" }}>
             {[...certLogos, ...certLogos].map((cert, i) => (
               <div
                 key={i}
