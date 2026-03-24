@@ -21,6 +21,18 @@ import {
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
+import shccnjLogo from "@assets/shccnj_1774369098854.webp";
+import sbeLogo from "@assets/sbe_1774369212032.webp";
+import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
+import nmsdcLogo from "@assets/nmsdc_1774369212031.webp";
+import mbeLogo from "@assets/mbe_1774369297755.webp";
+import issaLogo from "@assets/issa_1774369297755.webp";
+import ifmaLogo from "@assets/ifma_1774369297755.webp";
+import greenSealLogo from "@assets/geensealbadge_1774369297754.webp";
+import connexLogo from "@assets/connex_1774369371353.webp";
+import inc5000Logo from "@assets/Inc.-5000-logo_1774369371353.jpg";
+import avettaLogo from "@assets/avetta_1774369371352.webp";
+import somersetLogo from "@assets/somerset_1774369371353.webp";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
 import officeImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
@@ -30,6 +42,21 @@ import medicalImage from "@assets/generated_images/Medical_groups_industry_image
 import banksImage from "@assets/generated_images/Banks_industry_image_bcb98d1a.png";
 import schoolsImage from "@assets/generated_images/Schools_industry_image_fe90ee17.png";
 import autoImage from "@assets/generated_images/Auto_dealership_industry_image_7d795fe7.png";
+
+const certLogos = [
+  { name: "SHCCNJ", logo: shccnjLogo },
+  { name: "SBE", logo: sbeLogo },
+  { name: "Port Authority NY/NJ", logo: portAuthorityLogo },
+  { name: "NMSDC", logo: nmsdcLogo },
+  { name: "MBE", logo: mbeLogo },
+  { name: "ISSA", logo: issaLogo },
+  { name: "IFMA", logo: ifmaLogo },
+  { name: "Green Seal", logo: greenSealLogo },
+  { name: "Connex", logo: connexLogo },
+  { name: "Inc. 5000", logo: inc5000Logo },
+  { name: "Avetta", logo: avettaLogo },
+  { name: "Somerset", logo: somersetLogo },
+];
 
 export default function HomeOriginal() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -176,6 +203,32 @@ export default function HomeOriginal() {
                 <div className="text-lg text-white/90 font-medium">
                   {stat.label}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Certification Logo Carousel */}
+      <section className="py-12 bg-white border-y border-border overflow-hidden">
+        <div className="container mx-auto px-4 mb-6 text-center">
+          <p className="text-sm font-semibold tracking-widest uppercase text-muted-foreground" data-testid="text-certifications-label">
+            Trusted &amp; Certified
+          </p>
+        </div>
+        <div className="relative overflow-hidden">
+          <div className="flex animate-scroll-left" style={{ width: "max-content" }}>
+            {[...certLogos, ...certLogos].map((cert, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-center mx-8 shrink-0"
+                data-testid={`img-cert-logo-${i}`}
+              >
+                <img
+                  src={cert.logo}
+                  alt={cert.name}
+                  className="max-h-16 max-w-[140px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                />
               </div>
             ))}
           </div>
