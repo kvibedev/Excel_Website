@@ -5,10 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { Award, Shield, CheckCircle2, Laptop } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import shccnjLogo from "@assets/shccnj_1774369098854.webp";
 
 export default function RecognitionsCertifications() {
   const certifications = [
-    { name: "SHCCNJ", description: "State of NJ Hispanic Chamber of Commerce" },
+    { name: "SHCCNJ", description: "State of NJ Hispanic Chamber of Commerce", logo: shccnjLogo },
     { name: "SBE", description: "Small Business Enterprise" },
     { name: "Port Authority NY/NJ", description: "Port Authority Certified" },
     { name: "NMSDC", description: "National Minority Supplier Development Council" },
@@ -98,8 +99,14 @@ export default function RecognitionsCertifications() {
                 className="p-6 hover-elevate active-elevate-2 text-center border-t-4 border-t-[#97CC06]"
                 data-testid={`cert-${cert.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
-                <div className="w-12 h-12 rounded-lg bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-6 h-6 text-[#97CC06]" />
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  {cert.logo ? (
+                    <img src={cert.logo} alt={cert.name} className="w-full h-full object-contain" />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg bg-[#97CC06]/10 flex items-center justify-center">
+                      <Shield className="w-6 h-6 text-[#97CC06]" />
+                    </div>
+                  )}
                 </div>
                 <h3 className="font-bold text-lg mb-2">{cert.name}</h3>
                 <p className="text-sm text-muted-foreground">{cert.description}</p>
