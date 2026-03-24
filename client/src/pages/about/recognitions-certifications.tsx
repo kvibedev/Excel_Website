@@ -95,9 +95,6 @@ export default function RecognitionsCertifications() {
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="w-20 h-20 rounded-full bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-6">
-              <Award className="w-10 h-10 text-[#97CC06]" />
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-certifications-title">
               Our Certifications & Memberships
             </h2>
@@ -106,25 +103,22 @@ export default function RecognitionsCertifications() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-10 max-w-5xl mx-auto items-center justify-items-center">
             {certifications.map((cert, index) => (
-              <Card 
+              <div
                 key={index}
-                className="p-6 hover-elevate active-elevate-2 text-center border-t-4 border-t-[#97CC06]"
+                className="flex items-center justify-center"
                 data-testid={`cert-${cert.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
-                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  {cert.logo ? (
-                    <img src={cert.logo} alt={cert.name} className="w-full h-full object-contain" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-lg bg-[#97CC06]/10 flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-[#97CC06]" />
-                    </div>
-                  )}
-                </div>
-                <h3 className="font-bold text-lg mb-2">{cert.name}</h3>
-                <p className="text-sm text-muted-foreground">{cert.description}</p>
-              </Card>
+                {cert.logo ? (
+                  <img src={cert.logo} alt={cert.name} className="max-h-20 max-w-[160px] w-auto object-contain" />
+                ) : (
+                  <div className="flex flex-col items-center gap-2">
+                    <Shield className="w-10 h-10 text-[#97CC06]" />
+                    <span className="text-sm font-semibold text-center">{cert.name}</span>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
@@ -134,9 +128,6 @@ export default function RecognitionsCertifications() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="w-20 h-20 rounded-full bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-6">
-              <Laptop className="w-10 h-10 text-[#97CC06]" />
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-software-title">
               Software Technology We Use
             </h2>
@@ -145,25 +136,22 @@ export default function RecognitionsCertifications() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-10 max-w-4xl mx-auto items-center justify-items-center">
             {softwareTools.map((tool, index) => (
-              <Card 
+              <div
                 key={index}
-                className="p-6 hover-elevate active-elevate-2 text-center"
+                className="flex items-center justify-center"
                 data-testid={`software-${tool.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
-                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  {tool.logo ? (
-                    <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-lg bg-[#063970]/10 flex items-center justify-center">
-                      <CheckCircle2 className="w-6 h-6 text-[#063970]" />
-                    </div>
-                  )}
-                </div>
-                <h3 className="font-bold text-lg mb-2">{tool.name}</h3>
-                <p className="text-sm text-muted-foreground">{tool.description}</p>
-              </Card>
+                {tool.logo ? (
+                  <img src={tool.logo} alt={tool.name} className="max-h-20 max-w-[160px] w-auto object-contain" />
+                ) : (
+                  <div className="flex flex-col items-center gap-2">
+                    <CheckCircle2 className="w-10 h-10 text-[#063970]" />
+                    <span className="text-sm font-semibold text-center">{tool.name}</span>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
