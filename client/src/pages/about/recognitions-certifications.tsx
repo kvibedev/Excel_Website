@@ -9,6 +9,10 @@ import shccnjLogo from "@assets/shccnj_1774369098854.webp";
 import sbeLogo from "@assets/sbe_1774369212032.webp";
 import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
 import nmsdcLogo from "@assets/nmsdc_1774369212031.webp";
+import mbeLogo from "@assets/mbe_1774369297755.webp";
+import issaLogo from "@assets/issa_1774369297755.webp";
+import ifmaLogo from "@assets/ifma_1774369297755.webp";
+import greenSealLogo from "@assets/geensealbadge_1774369297754.webp";
 
 export default function RecognitionsCertifications() {
   const certifications = [
@@ -16,10 +20,10 @@ export default function RecognitionsCertifications() {
     { name: "SBE", description: "Small Business Enterprise", logo: sbeLogo },
     { name: "Port Authority NY/NJ", description: "Port Authority Certified", logo: portAuthorityLogo },
     { name: "NMSDC", description: "National Minority Supplier Development Council", logo: nmsdcLogo },
-    { name: "MBE", description: "Minority Business Enterprise" },
-    { name: "ISSA", description: "International Sanitary Supply Association" },
-    { name: "IFMA", description: "International Facility Management Association" },
-    { name: "Green Seal GS-42", description: "Environmental Certification" },
+    { name: "MBE", description: "Minority Business Enterprise", logo: mbeLogo },
+    { name: "ISSA", description: "International Sanitary Supply Association", logo: issaLogo },
+    { name: "IFMA", description: "International Facility Management Association", logo: ifmaLogo },
+    { name: "Green Seal GS-42", description: "Environmental Certification", logo: greenSealLogo },
     { name: "Connex", description: "Business Network Member" },
     { name: "Inc. 5000", description: "Fastest Growing Companies" },
     { name: "Avetta", description: "Supply Chain Risk Management" },
