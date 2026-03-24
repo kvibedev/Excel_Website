@@ -13,6 +13,10 @@ import mbeLogo from "@assets/mbe_1774369297755.webp";
 import issaLogo from "@assets/issa_1774369297755.webp";
 import ifmaLogo from "@assets/ifma_1774369297755.webp";
 import greenSealLogo from "@assets/geensealbadge_1774369297754.webp";
+import connexLogo from "@assets/connex_1774369371353.webp";
+import inc5000Logo from "@assets/Inc.-5000-logo_1774369371353.jpg";
+import avettaLogo from "@assets/avetta_1774369371352.webp";
+import somersetLogo from "@assets/somerset_1774369371353.webp";
 
 export default function RecognitionsCertifications() {
   const certifications = [
@@ -24,10 +28,10 @@ export default function RecognitionsCertifications() {
     { name: "ISSA", description: "International Sanitary Supply Association", logo: issaLogo },
     { name: "IFMA", description: "International Facility Management Association", logo: ifmaLogo },
     { name: "Green Seal GS-42", description: "Environmental Certification", logo: greenSealLogo },
-    { name: "Connex", description: "Business Network Member" },
-    { name: "Inc. 5000", description: "Fastest Growing Companies" },
-    { name: "Avetta", description: "Supply Chain Risk Management" },
-    { name: "Somerset", description: "County Business Partnership" }
+    { name: "Connex", description: "Business Network Member", logo: connexLogo },
+    { name: "Inc. 5000", description: "Fastest Growing Companies", logo: inc5000Logo },
+    { name: "Avetta", description: "Supply Chain Risk Management", logo: avettaLogo },
+    { name: "Somerset", description: "County Business Partnership", logo: somersetLogo }
   ];
 
   const softwareTools = [
