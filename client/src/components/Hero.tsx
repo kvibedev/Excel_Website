@@ -29,7 +29,7 @@ export default function Hero({
     small: "h-[40vh] min-h-[300px]",
   };
 
-  const slides = images && images.length > 1 ? images : [imageSrc];
+  const slides = images && images.length > 0 ? images : [imageSrc];
 
   const [current, setCurrent] = useState(0);
   const [entering, setEntering] = useState<number | null>(null);

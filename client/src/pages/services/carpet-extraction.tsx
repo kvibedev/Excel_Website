@@ -151,6 +151,8 @@ export default function CarpetExtraction() {
         title="Carpet Extraction"
         subtitle="Commercial carpet extraction requires special equipment and techniques to ensure that the carpet is cleaned safely and effectively."
         imageSrc={heroImage}
+        images={[heroImage]}
+        imagePositions={["center 60%"]}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW ALL SERVICES", href: "/services" }}
