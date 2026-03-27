@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useEffect, useState } from "react";
 
 interface HeroProps {
   title: string;
   subtitle?: string;
   imageSrc: string;
+  images?: string[];
   primaryCta?: { text: string; href: string };
   secondaryCta?: { text: string; href: string };
   height?: "full" | "medium" | "small";
@@ -14,6 +16,7 @@ export default function Hero({
   title,
   subtitle,
   imageSrc,
+  images,
   primaryCta,
   secondaryCta,
   height = "full",
@@ -24,16 +27,40 @@ export default function Hero({
     small: "h-[40vh] min-h-[300px]",
   };
 
+  const slides = images && images.length > 1 ? images : [imageSrc];
+  const [current, setCurrent] = useState(0);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const interval = setInterval(() => {
+      setFading(true);
+      setTimeout(() => {
+        setCurrent((prev) => (prev + 1) % slides.length);
+        setFading(false);
+      }, 800);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
   return (
     <div className={`relative ${heightClasses[height]} w-full flex items-center justify-center overflow-hidden`}>
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${imageSrc})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" />
-      </div>
+      {slides.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${src})`,
+            opacity: i === current ? (fading ? 0 : 1) : 0,
+            transition: "opacity 800ms ease-in-out",
+            zIndex: i === current ? 1 : 0,
+          }}
+        />
+      ))}
 
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" style={{ zIndex: 2 }} />
+
+      <div className="relative container mx-auto px-4 text-center text-white" style={{ zIndex: 3 }}>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 max-w-4xl mx-auto" data-testid="text-hero-title">
           {title}
         </h1>
@@ -63,6 +90,20 @@ export default function Hero({
                 </Button>
               </Link>
             )}
+          </div>
+        )}
+
+        {slides.length > 1 && (
+          <div className="flex gap-2 justify-center mt-8" data-testid="hero-slide-indicators">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { setFading(false); setCurrent(i); }}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-8 bg-white" : "w-3 bg-white/50"}`}
+                data-testid={`button-hero-slide-${i}`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
           </div>
         )}
       </div>
