@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface HeroProps {
   title: string;
@@ -30,40 +30,90 @@ export default function Hero({
   };
 
   const slides = images && images.length > 1 ? images : [imageSrc];
+
   const [current, setCurrent] = useState(0);
-  const [fading, setFading] = useState(false);
+  const [entering, setEntering] = useState<number | null>(null);
+  const [enteringVisible, setEnteringVisible] = useState(false);
+  const currentRef = useRef(0);
+  const busyRef = useRef(false);
 
   useEffect(() => {
     if (slides.length <= 1) return;
+
     const interval = setInterval(() => {
-      setFading(true);
-      setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % slides.length);
-        setFading(false);
-      }, 800);
-    }, 5000);
+      if (busyRef.current) return;
+      busyRef.current = true;
+
+      const next = (currentRef.current + 1) % slides.length;
+
+      setEntering(next);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setEnteringVisible(true);
+          setTimeout(() => {
+            currentRef.current = next;
+            setCurrent(next);
+            setEntering(null);
+            setEnteringVisible(false);
+            busyRef.current = false;
+          }, 1000);
+        });
+      });
+    }, 5500);
+
     return () => clearInterval(interval);
   }, [slides.length]);
 
+  const goTo = (i: number) => {
+    if (busyRef.current || i === currentRef.current) return;
+    busyRef.current = true;
+    setEntering(i);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setEnteringVisible(true);
+        setTimeout(() => {
+          currentRef.current = i;
+          setCurrent(i);
+          setEntering(null);
+          setEnteringVisible(false);
+          busyRef.current = false;
+        }, 1000);
+      });
+    });
+  };
+
   return (
     <div className={`relative ${heightClasses[height]} w-full flex items-center justify-center overflow-hidden`}>
-      {slides.map((src, i) => (
-        <div
-          key={src}
-          className="absolute inset-0 bg-cover"
-          style={{
-            backgroundImage: `url(${src})`,
-            backgroundPosition: imagePositions?.[i] ?? "center center",
-            opacity: i === current ? (fading ? 0 : 1) : 0,
-            transition: "opacity 800ms ease-in-out",
-            zIndex: i === current ? 1 : 0,
-          }}
-        />
-      ))}
+      {slides.map((src, i) => {
+        const isCurrent = i === current;
+        const isEntering = i === entering;
+        let opacity = 0;
+        let zIndex = 0;
+        if (isEntering) {
+          opacity = enteringVisible ? 1 : 0;
+          zIndex = 2;
+        } else if (isCurrent) {
+          opacity = 1;
+          zIndex = 1;
+        }
+        return (
+          <div
+            key={src}
+            className="absolute inset-0 bg-cover"
+            style={{
+              backgroundImage: `url(${src})`,
+              backgroundPosition: imagePositions?.[i] ?? "center center",
+              opacity,
+              transition: "opacity 1000ms ease-in-out",
+              zIndex,
+            }}
+          />
+        );
+      })}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" style={{ zIndex: 2 }} />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" style={{ zIndex: 3 }} />
 
-      <div className="relative container mx-auto px-4 text-center text-white" style={{ zIndex: 3 }}>
+      <div className="relative container mx-auto px-4 text-center text-white" style={{ zIndex: 4 }}>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 max-w-4xl mx-auto" data-testid="text-hero-title">
           {title}
         </h1>
@@ -101,7 +151,7 @@ export default function Hero({
             {slides.map((_, i) => (
               <button
                 key={i}
-                onClick={() => { setFading(false); setCurrent(i); }}
+                onClick={() => goTo(i)}
                 className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-8 bg-white" : "w-3 bg-white/50"}`}
                 data-testid={`button-hero-slide-${i}`}
                 aria-label={`Go to slide ${i + 1}`}

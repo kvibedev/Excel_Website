@@ -21,8 +21,8 @@ import {
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
-import heroImage2 from "@assets/guangzhou-traffic-2026-01-08-07-20-17-utc_1774574667885.jpg";
-import heroImage3 from "@assets/professional-use-auto-advertising-backplate-2026-03-09-23-11-4_1774574667886.jpg";
+import heroImage2 from "@assets/Hero_building_image1_1774628077282.webp";
+import heroImage3 from "@assets/Hero_building_image2_1774628077283.webp";
 import shccnjLogo from "@assets/shccnj_1774369098854.webp";
 import sbeLogo from "@assets/sbe_1774369212032.webp";
 import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
@@ -183,7 +183,6 @@ export default function HomeOriginal() {
         subtitle="We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers healthy workplaces with certified disinfection."
         imageSrc={heroImage}
         images={[heroImage, heroImage2, heroImage3]}
-        imagePositions={["center center", "top center", "top center"]}
         primaryCta={{ text: "OUR SERVICES", href: "/services" }}
         secondaryCta={{ text: "CONTACT US", href: "/contact" }}
       />
