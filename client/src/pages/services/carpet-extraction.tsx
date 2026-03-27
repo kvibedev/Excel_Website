@@ -29,7 +29,8 @@ import {
   Heart,
   Trash2
 } from "lucide-react";
-import heroImage from "@assets/carpet_extraction_images_(3)_1774632671820.png";
+import heroImage from "@assets/carpet_bg_image_2_1774635807951.webp";
+import sectionImage from "@assets/carpet_extraction_images_(3)_1774632671820.png";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -151,8 +152,6 @@ export default function CarpetExtraction() {
         title="Carpet Extraction"
         subtitle="Commercial carpet extraction requires special equipment and techniques to ensure that the carpet is cleaned safely and effectively."
         imageSrc={heroImage}
-        images={[heroImage]}
-        imagePositions={["center 60%"]}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW ALL SERVICES", href: "/services" }}
@@ -186,7 +185,7 @@ export default function CarpetExtraction() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Carpet Extraction Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
@@ -308,7 +307,7 @@ export default function CarpetExtraction() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="order-2 lg:order-1 relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Tailored Carpet Extraction Solutions"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-tailored"
