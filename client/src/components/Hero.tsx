@@ -7,6 +7,7 @@ interface HeroProps {
   subtitle?: string;
   imageSrc: string;
   images?: string[];
+  imagePositions?: string[];
   primaryCta?: { text: string; href: string };
   secondaryCta?: { text: string; href: string };
   height?: "full" | "medium" | "small";
@@ -17,6 +18,7 @@ export default function Hero({
   subtitle,
   imageSrc,
   images,
+  imagePositions,
   primaryCta,
   secondaryCta,
   height = "full",
@@ -48,9 +50,10 @@ export default function Hero({
       {slides.map((src, i) => (
         <div
           key={src}
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover"
           style={{
             backgroundImage: `url(${src})`,
+            backgroundPosition: imagePositions?.[i] ?? "center center",
             opacity: i === current ? (fading ? 0 : 1) : 0,
             transition: "opacity 800ms ease-in-out",
             zIndex: i === current ? 1 : 0,

@@ -183,6 +183,7 @@ export default function HomeOriginal() {
         subtitle="We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers healthy workplaces with certified disinfection."
         imageSrc={heroImage}
         images={[heroImage, heroImage2, heroImage3]}
+        imagePositions={["center center", "top center", "top center"]}
         primaryCta={{ text: "OUR SERVICES", href: "/services" }}
         secondaryCta={{ text: "CONTACT US", href: "/contact" }}
       />
