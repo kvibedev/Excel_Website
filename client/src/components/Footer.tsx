@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import headerLogo from "@assets/Excel logo menu_1764259763822.webp";
 
@@ -87,14 +87,25 @@ export default function Footer() {
 
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Excel Facility Services Group</li>
-              <li>Nationwide Coverage</li>
-              <li>20+ States</li>
-              <li>
-                <Link href="/contact" className="text-primary hover:underline" data-testid="link-footer-contact">
-                  Request an Estimate
-                </Link>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4 shrink-0 text-primary" />
+                <a href="tel:8005932414" className="hover:text-foreground transition-colors" data-testid="link-footer-phone">
+                  (800) 593-2414
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="h-4 w-4 shrink-0 text-primary" />
+                <a href="mailto:info@efsgnj.com" className="hover:text-foreground transition-colors" data-testid="link-footer-email">
+                  info@efsgnj.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                <span data-testid="text-footer-address">
+                  200 Broadacres Dr., Suite 160<br />
+                  Bloomfield, NJ 07003
+                </span>
               </li>
             </ul>
           </div>
