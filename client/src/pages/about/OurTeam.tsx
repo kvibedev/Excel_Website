@@ -7,7 +7,7 @@ import alvinImage from "@assets/Alvin-1_1764595596799.webp";
 import gumersindoImage from "@assets/Mesa-de-trabajo-6-80-1_1764595596799.webp";
 import yairaImage from "@assets/Mesa-de-trabajo-7-80_1764595596799.webp";
 import erinImage from "@assets/Erin_(1)_1774895727872.png";
-import normaImage from "@assets/Norma-Tavarez-_1764595596798.webp";
+import normaImage from "@assets/Norma_(1)_1774895749603.png";
 import ruthImage from "@assets/Ruth_1764595596798.jpg";
 import jacquelineImage from "@assets/JACQUELINE-JIMENEZ-ACCOUNT-MANAGER-edited-3_1764595596798.webp";
 import shaylaImage from "@assets/Shayla_1764595596798.webp";
