@@ -19,6 +19,7 @@ import {
   ClipboardCheck
 } from "lucide-react";
 import heroImage from "@assets/restaurant_bg_1774868915681.webp";
+import sectionImage from "@assets/restaurant_1_1774868947379.webp";
 
 export default function Restaurants() {
   const services = [
@@ -97,7 +98,7 @@ export default function Restaurants() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Restaurant Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
