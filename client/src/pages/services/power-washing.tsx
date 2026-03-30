@@ -29,6 +29,7 @@ import {
   Factory
 } from "lucide-react";
 import heroImage from "@assets/Power_washing_bg_1774863229197.webp";
+import sectionImage from "@assets/Power_washing_1_1774863242827.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -183,7 +184,7 @@ export default function PowerWashing() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Power Washing Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
