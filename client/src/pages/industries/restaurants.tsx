@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/restaurant_bg_1774868915681.webp";
 import sectionImage from "@assets/restaurant_1_1774868947379.webp";
+import benefitsImage from "@assets/restaurant_22_1774868990348.webp";
 
 export default function Restaurants() {
   const services = [
@@ -202,7 +203,7 @@ export default function Restaurants() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={benefitsImage}
                 alt="Restaurant Cleaning Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
