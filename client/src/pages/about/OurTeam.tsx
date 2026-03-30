@@ -30,6 +30,11 @@ export default function OurTeam() {
       image: alvinImage
     },
     {
+      name: "Erin Matsko",
+      title: "Chief Operating Officer",
+      image: erinImage
+    },
+    {
       name: "Gumersindo Rivera",
       title: "Vice President",
       image: gumersindoImage
@@ -38,11 +43,6 @@ export default function OurTeam() {
       name: "Yaira Matos",
       title: "Executive Business Administrator",
       image: yairaImage
-    },
-    {
-      name: "Erin Matsko",
-      title: "Chief Operating Officer",
-      image: erinImage
     },
     {
       name: "Norma Benitez",
