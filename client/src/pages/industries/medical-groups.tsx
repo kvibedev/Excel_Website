@@ -20,7 +20,7 @@ import {
   HeartPulse,
   ClipboardCheck
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Medical_groups_industry_image_a154fa6b.png";
+import heroImage from "@assets/hospital_BG_1774869271235.webp";
 
 export default function MedicalGroups() {
   const services = [
