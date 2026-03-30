@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   TrendingUp,
+  Globe,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
@@ -171,7 +172,7 @@ export default function HomeOriginal() {
     {
       value: "28",
       label: "States Nationwide",
-      icon: UsaMapIcon,
+      icon: Globe,
     },
     {
       value: "25M",
