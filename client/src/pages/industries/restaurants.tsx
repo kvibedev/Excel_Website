@@ -18,7 +18,7 @@ import {
   Headphones,
   ClipboardCheck
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Restaurant_industry_image_41a06d21.png";
+import heroImage from "@assets/restaurant_bg_1774868915681.webp";
 
 export default function Restaurants() {
   const services = [
