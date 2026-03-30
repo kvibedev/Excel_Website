@@ -57,7 +57,8 @@ export default function OurTeam() {
     {
       name: "Jacqueline Jimenez",
       title: "Account Manager",
-      image: jacquelineImage
+      image: jacquelineImage,
+      hidden: true
     },
     {
       name: "Shayla Arce",
@@ -147,7 +148,7 @@ export default function OurTeam() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
+            {teamMembers.filter(m => !m.hidden).map((member, index) => (
               <Card 
                 key={index}
                 className="hover-elevate active-elevate-2 border-0 shadow-lg bg-transparent"
