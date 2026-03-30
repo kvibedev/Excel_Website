@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { MapPin } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import usaMapImage from "@assets/EXCEL_MAP_2025_(1)_1774873104677.png";
 
 export default function CoverageAreas() {
   const statesColumn1 = [
@@ -111,31 +112,13 @@ export default function CoverageAreas() {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            <div className="space-y-3">
-              {statesColumn1.map((state, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3"
-                  data-testid={`state-${state.toLowerCase().replace(/\s/g, "-")}`}
-                >
-                  <span className="text-muted-foreground">»</span>
-                  <span className="text-lg">{state}</span>
-                </div>
-              ))}
-            </div>
-            <div className="space-y-3">
-              {statesColumn2.map((state, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3"
-                  data-testid={`state-${state.toLowerCase().replace(/\s/g, "-")}`}
-                >
-                  <span className="text-muted-foreground">»</span>
-                  <span className="text-lg">{state}</span>
-                </div>
-              ))}
-            </div>
+          <div className="max-w-4xl mx-auto">
+            <img
+              src={usaMapImage}
+              alt="EFSG Coverage Areas Map"
+              className="w-full h-auto"
+              data-testid="img-usa-map"
+            />
           </div>
         </div>
       </section>
