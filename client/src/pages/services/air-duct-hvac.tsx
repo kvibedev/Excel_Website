@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/HVAC_bg_1774865693988.webp";
 import sectionImage from "@assets/Hvac_1_1774865714336.webp";
+import tailoredImage from "@assets/Hvac_2_1774865754934.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -308,7 +309,7 @@ export default function AirDuctHVAC() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="order-2 lg:order-1 relative">
               <img
-                src={heroImage}
+                src={tailoredImage}
                 alt="Tailored HVAC Solutions"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-tailored"
