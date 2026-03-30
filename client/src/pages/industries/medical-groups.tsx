@@ -21,6 +21,7 @@ import {
   ClipboardCheck
 } from "lucide-react";
 import heroImage from "@assets/hospital_BG_1774869271235.webp";
+import sectionImage from "@assets/Hospital_1_1774869304414.webp";
 
 export default function MedicalGroups() {
   const services = [
@@ -99,7 +100,7 @@ export default function MedicalGroups() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Medical Facility Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
