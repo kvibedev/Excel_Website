@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Banks_industry_image_bcb98d1a.png";
 import sectionImage from "@assets/bank_2_1774872982684.webp";
+import benefitsImage from "@assets/bank_1_1774872992246.webp";
 
 export default function Banks() {
   const services = [
@@ -199,7 +200,7 @@ export default function Banks() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={benefitsImage}
                 alt="Bank Facility Cleaning Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
