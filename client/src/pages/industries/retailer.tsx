@@ -19,6 +19,7 @@ import {
   Leaf
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
+import sectionImage from "@assets/retail_1_1774866657583.webp";
 
 export default function Retailer() {
   const services = [
@@ -201,7 +202,7 @@ export default function Retailer() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Retail Store Cleaning Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
