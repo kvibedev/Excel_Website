@@ -6,7 +6,7 @@ import heroImage from "@assets/generated_images/About_us_team_image_4c0b3785.png
 import alvinImage from "@assets/Alvin-1_1764595596799.webp";
 import gumersindoImage from "@assets/Mesa-de-trabajo-6-80-1_1764595596799.webp";
 import yairaImage from "@assets/Mesa-de-trabajo-7-80_1764595596799.webp";
-import erinImage from "@assets/ERIN-MATSKO-CHIEF-OPERATING-OFFICER-edited_1764595596799.webp";
+import erinImage from "@assets/Erin_(1)_1774895727872.png";
 import normaImage from "@assets/Norma-Tavarez-_1764595596798.webp";
 import ruthImage from "@assets/Ruth_1764595596798.jpg";
 import jacquelineImage from "@assets/JACQUELINE-JIMENEZ-ACCOUNT-MANAGER-edited-3_1764595596798.webp";
