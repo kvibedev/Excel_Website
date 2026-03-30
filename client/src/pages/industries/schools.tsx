@@ -19,6 +19,7 @@ import {
   BookOpen
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Schools_industry_image_fe90ee17.png";
+import sectionImage from "@assets/facade-of-red-brick-building-with-outdoor-iron-sta-2026-03-24-_1774866278191.jpg";
 
 export default function Schools() {
   const services = [
@@ -198,7 +199,7 @@ export default function Schools() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="School Facility Cleaning Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
