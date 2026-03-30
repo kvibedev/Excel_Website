@@ -25,6 +25,7 @@ import {
   ClipboardCheck
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Auto_dealership_industry_image_7d795fe7.png";
+import sectionImage from "@assets/car_dealership_1_1774872798522.webp";
 
 export default function AutoDealerships() {
   const services = [
@@ -103,7 +104,7 @@ export default function AutoDealerships() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Auto Dealership Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
