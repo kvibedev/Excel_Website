@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
 import sectionImage from "@assets/Distripution_1_1774869560668.webp";
+import benefitsImage from "@assets/Distribution_2_1774869599500.webp";
 
 export default function DistributionCenters() {
   const services = [
@@ -199,7 +200,7 @@ export default function DistributionCenters() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={benefitsImage}
                 alt="Distribution Center Cleaning Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
