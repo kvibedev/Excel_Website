@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import heroImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
+import heroImage from "@assets/Worker_group_shot_(2)_1774896517773.png";
 import alvinImage from "@assets/Alvin-1_1764595596799.webp";
 import gumersindoImage from "@assets/Mesa-de-trabajo-6-80-1_1764595596799.webp";
 import yairaImage from "@assets/Mesa-de-trabajo-7-80_1764595596799.webp";
