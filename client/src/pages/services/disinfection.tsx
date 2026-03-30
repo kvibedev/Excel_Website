@@ -31,6 +31,7 @@ import {
   CalendarClock
 } from "lucide-react";
 import heroImage from "@assets/janitorial-workforce-in-hazmat-suits-sanitizing-th-2026-03-10-_1774630416144.jpg";
+import sectionImage from "@assets/routine-disinfection-of-building-corridor-2026-03-13-05-51-54-_1774860690076.jpg";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -183,7 +184,7 @@ export default function Disinfection() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Disinfection Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
