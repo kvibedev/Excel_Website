@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/hospital_BG_1774869271235.webp";
 import sectionImage from "@assets/Hospital_1_1774869304414.webp";
+import benefitsImage from "@assets/hospital_2_1774869329778.webp";
 
 export default function MedicalGroups() {
   const services = [
@@ -201,7 +202,7 @@ export default function MedicalGroups() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={benefitsImage}
                 alt="Medical Facility Cleaning Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
