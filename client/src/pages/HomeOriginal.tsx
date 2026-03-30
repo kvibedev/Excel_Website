@@ -143,7 +143,7 @@ export default function HomeOriginal() {
   const companyStats = [
     { label: "Years of Excellence", value: "20+" },
     { label: "States Nationwide", value: "28" },
-    { label: "Sq Ft Serviced Daily", value: "400M+" },
+    { label: "Sq Ft Serviced Daily", value: "25M+" },
     { label: "Client Satisfaction", value: "100%" },
   ];
 
@@ -154,7 +154,7 @@ export default function HomeOriginal() {
       icon: Globe,
     },
     {
-      value: "400M",
+      value: "25M",
       label: "Sq Ft Serviced Daily",
       icon: Building2,
     },
