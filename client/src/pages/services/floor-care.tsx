@@ -32,7 +32,7 @@ import {
   ShieldCheck
 } from "lucide-react";
 import heroImage from "@assets/floor_care_1_1774863820156.webp";
-import sectionImage from "@assets/floor_care_2_1774863853791.webp";
+import sectionImage from "@assets/floor_care_3_1774863878995.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
