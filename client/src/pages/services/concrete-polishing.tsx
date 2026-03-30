@@ -30,6 +30,7 @@ import {
   RotateCcw
 } from "lucide-react";
 import heroImage from "@assets/concrete_bg_1774864652126.webp";
+import sectionImage from "@assets/concrete_1_1774864712468.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -184,7 +185,7 @@ export default function ConcretePolishing() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Concrete Polishing Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
