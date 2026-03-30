@@ -15,7 +15,6 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Globe,
   TrendingUp,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -59,6 +58,20 @@ const certLogos = [
   { name: "Avetta", logo: avettaLogo },
   { name: "Somerset", logo: somersetLogo },
 ];
+
+function UsaMapIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 960 600"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M120,150 L310,88 L440,68 L560,68 L660,68 L800,100 L860,132 L880,178 L860,236 L838,282 L820,328 L800,376 L780,418 L762,448 L748,480 L740,508 L734,524 L722,532 L706,532 L692,524 L682,508 L672,488 L658,468 L638,456 L612,454 L580,460 L548,468 L516,472 L486,468 L458,466 L428,474 L396,492 L368,510 L340,520 L312,520 L288,510 L264,494 L246,474 L232,454 L216,442 L196,438 L172,432 L148,422 L120,406 L98,386 L78,360 L68,330 L64,298 L66,266 L76,236 L90,208 L98,178 L100,148 L110,140 L120,150 Z" />
+    </svg>
+  );
+}
 
 export default function HomeOriginal() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -151,7 +164,7 @@ export default function HomeOriginal() {
     {
       value: "28",
       label: "States Nationwide",
-      icon: Globe,
+      icon: UsaMapIcon,
     },
     {
       value: "25M",
