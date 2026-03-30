@@ -37,6 +37,7 @@ import somersetLogo from "@assets/somerset_1774369371353.webp";
 import aboutImage from "@assets/Worker_group_shot_1774873159949.png";
 import officeImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
+import dayPorterCardImage from "@assets/Day_porter_bg_1774873396267.webp";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
 import restaurantImage from "@assets/generated_images/Restaurant_industry_image_41a06d21.png";
 import medicalImage from "@assets/generated_images/Medical_groups_industry_image_a154fa6b.png";
@@ -138,7 +139,7 @@ export default function HomeOriginal() {
       icon: Users,
       title: "Day Porters",
       description: "A day porter is a professional who helps to maintain the cleanliness and order of a business or corporate building. Day porters typically work during regular business hours, ensuring that the building is clean and presentable.",
-      image: retailImage,
+      image: dayPorterCardImage,
       href: "/services/day-porters",
     },
     {
