@@ -18,7 +18,7 @@ import {
   ShieldCheck,
   Leaf
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
+import heroImage from "@assets/Retail_bg_1774866729482.webp";
 import sectionImage from "@assets/retail_1_1774866657583.webp";
 
 export default function Retailer() {
