@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/high-rise-window-washers-seoul-korea-2026-03-24-07-16-35-utc_1774631783713.jpg";
 import sectionImage from "@assets/window_washing_1_1774862922074.webp";
-import tailoredImage from "@assets/glass-cleaning-with-special-chemicals-cleaning-se-2026-03-25-0_1774632037682.jpg";
+import tailoredImage from "@assets/window_washing_2_1774862955142.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
