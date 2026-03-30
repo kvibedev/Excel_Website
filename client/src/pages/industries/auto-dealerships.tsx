@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Auto_dealership_industry_image_7d795fe7.png";
 import sectionImage from "@assets/car_dealership_1_1774872798522.webp";
+import benefitsImage from "@assets/car_dealership_2_1774872828959.webp";
 
 export default function AutoDealerships() {
   const services = [
@@ -205,7 +206,7 @@ export default function AutoDealerships() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={benefitsImage}
                 alt="Clean Auto Dealership Benefits"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-benefits"
