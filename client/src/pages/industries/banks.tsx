@@ -19,6 +19,7 @@ import {
   ShieldCheck
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Banks_industry_image_bcb98d1a.png";
+import sectionImage from "@assets/bank_2_1774872982684.webp";
 
 export default function Banks() {
   const services = [
@@ -97,7 +98,7 @@ export default function Banks() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Bank Facility Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
