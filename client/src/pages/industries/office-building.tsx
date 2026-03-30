@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { CheckCircle2, ArrowRight, Shield, Leaf, Users, Award, Clock, ThumbsUp, Building2 } from "lucide-react";
-import heroImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
+import heroImage from "@assets/office_top_bg_1774871962308.webp";
 import greenSealImage from "@assets/Hero_building_image1_1774869765656.webp";
 import greenSealBadge from "@assets/GS-Provide-Service-dk_1764335201153.webp";
 
