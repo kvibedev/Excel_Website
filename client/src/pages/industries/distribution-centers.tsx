@@ -19,6 +19,7 @@ import {
   Leaf
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
+import sectionImage from "@assets/Distripution_1_1774869560668.webp";
 
 export default function DistributionCenters() {
   const services = [
@@ -97,7 +98,7 @@ export default function DistributionCenters() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Distribution Center Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
