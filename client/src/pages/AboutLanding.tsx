@@ -92,7 +92,6 @@ export default function AboutLanding() {
           </div>
         </div>
       </section>
-
       {/* Company Overview */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -128,13 +127,12 @@ export default function AboutLanding() {
           </div>
         </div>
       </section>
-
       {/* Stats Bar */}
       <section className="py-12 bg-[#063970] text-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div data-testid="stat-states">
-              <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">20+</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">28</div>
               <div className="text-xl">States</div>
             </div>
             <div data-testid="stat-sqft">
@@ -148,7 +146,6 @@ export default function AboutLanding() {
           </div>
         </div>
       </section>
-
       {/* About Sections Grid */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -195,7 +192,6 @@ export default function AboutLanding() {
           </div>
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-[#063970] via-[#0A5EB9] to-[#063970] text-white">
         <div className="container mx-auto px-4 text-center">
