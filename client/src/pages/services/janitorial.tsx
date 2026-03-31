@@ -30,6 +30,7 @@ import {
   Car
 } from "lucide-react";
 import heroImage from "@assets/Janitor_BG_1774969060493.webp";
+import sectionImage from "@assets/Janitorial_1_1774969292430.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -184,7 +185,7 @@ export default function Janitorial() {
             </div>
             <div className="relative">
               <img
-                src={heroImage}
+                src={sectionImage}
                 alt="Professional Janitorial Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
