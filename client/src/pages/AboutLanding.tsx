@@ -136,7 +136,7 @@ export default function AboutLanding() {
               <div className="text-xl">States Nationwide</div>
             </div>
             <div data-testid="stat-sqft">
-              <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">30M+</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">25M</div>
               <div className="text-xl">Square Feet Serviced Daily</div>
             </div>
             <div data-testid="stat-years">
