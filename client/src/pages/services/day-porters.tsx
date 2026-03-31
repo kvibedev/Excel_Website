@@ -31,7 +31,7 @@ import {
   Wrench
 } from "lucide-react";
 import heroImage from "@assets/Day_porter_bg_1774864310116.webp";
-import sectionImage from "@assets/Day_porter_2_1774864343565.webp";
+import sectionImage from "@assets/Janitorial_(3)_1774992045974.png";
 import tailoredImage from "@assets/Day_porter_1_1774864364081.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
