@@ -150,7 +150,7 @@ export default function PowerWashing() {
       {/* Hero Section */}
       <Hero
         title="Commercial Power Washing Services"
-        subtitle="Looking to get the outside of your business clean? Look no further than power washing! This quick and efficient method will have your building looking good as new in no time."
+        subtitle="Excel provides commercial power washing services that help organizations improve exterior appearance, remove buildup from high-traffic surfaces, and maintain cleaner, more professional property presentation."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
@@ -161,9 +161,7 @@ export default function PowerWashing() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
-              <Badge variant="outline" className="mb-4" data-testid="badge-about">
-                ABOUT OUR SERVICE
-              </Badge>
+              <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT POWER WASHING SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
                 The Quickest Way to Clean Your Building's Exterior
               </h2>
