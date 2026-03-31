@@ -166,9 +166,7 @@ export default function AirDuctHVAC() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT AIR DUCT AND HVAC SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Healthier Air and Better HVAC Performance for Commercial Facilities</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Air duct and HVAC services play an important role in supporting indoor air quality, system efficiency, and occupant comfort across commercial environments. Over time, dust, debris, and buildup can affect airflow, system performance, and the overall quality of the indoor environment.</p>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                Regularly cleaning your air ducts can help improve indoor air quality and prevent the spread of illnesses. In addition, regular HVAC maintenance can help extend your equipment's life and reduce energy costs.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides air duct and HVAC services for facilities that need cleaner airflow, better-maintained systems, and ongoing support for healthier, more comfortable spaces. Our services are designed to align with the operational needs of the building while helping reduce avoidable performance issues.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 At <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-efsg">EFSG</Link>, we pride ourselves on our team of experienced professionals who possess the skills and expertise required to handle all your air duct and HVAC cleaning requirements with the utmost precision and efficiency.
               </p>
