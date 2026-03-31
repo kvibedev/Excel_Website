@@ -122,7 +122,7 @@ export default function AutoDealerships() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Auto dealerships depend on presentation, cleanliness, and consistency to support customer confidence and protect brand perception. From showroom floors and front entrances to waiting areas and service departments, every part of the environment affects how the dealership is experienced.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides commercial cleaning and facility services for auto dealerships that need structured janitorial support, disinfection, floor care, and day-to-day upkeep aligned with customer traffic, vehicle displays, employee workflows, and service operations.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                Our professional cleaning service can ultimately help support your sales. We thoroughly <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfect</Link>, remove dust, remove the trash, and do <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">overall cleaning</Link>.
+                With more than 20 years of operational experience and multi-site capability, Excel supports auto dealerships with facility services designed to protect presentation, reinforce consistency, and maintain cleaner, safer environments across the property.
               </p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
