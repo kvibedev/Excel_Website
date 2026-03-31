@@ -1,11 +1,38 @@
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
-import { Shield, Sparkles } from "lucide-react";
-export default function GreenSeal() {
+import buildingImg from "@assets/Hero_building_image1_1774869765656.webp";
+import greenSealBadge from "@assets/geensealbadge_1774369297754.webp";
 
+const pillars = [
+  {
+    title: "Verification",
+    description:
+      "Audited compliance for quality, safety, and environmental impact practices and procedures",
+  },
+  {
+    title: "Effective Cleaning Operations",
+    description:
+      "Comprehensive cleaning plan and green cleaning practices and procedures for every building",
+  },
+  {
+    title: "Clear & Effective Communications",
+    description:
+      "Practices and procedures that ensure openness and integrity in communications between all parties",
+  },
+  {
+    title: "Better Equipment & Safer Products",
+    description:
+      "Safe and effective cleaning products and equipment that reduce environmental impacts",
+  },
+  {
+    title: "Superior Staff Training",
+    description:
+      "Extensive and ongoing staff training on cleaning products and procedures to create cleaner indoor environments and protect building occupants",
+  },
+];
+
+export default function GreenSeal() {
   return (
     <div>
       <SEO
@@ -13,53 +40,164 @@ export default function GreenSeal() {
         description="Excel Facility Services Group is Green Seal GS-42 certified, delivering environmentally responsible commercial cleaning solutions."
         path="/about/green-seal"
       />
+
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-hero-title">
+          <h1
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            data-testid="text-hero-title"
+          >
             Excel Facility Services Group is Green Seal Certified
           </h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto" data-testid="text-hero-subtitle">
-            Protecting our environment and embracing sustainable cleaning practices is just one of the many ways we offer quality services to our clients.
+          <p
+            className="text-xl md:text-2xl max-w-3xl mx-auto"
+            data-testid="text-hero-subtitle"
+          >
+            Protecting our environment and embracing sustainable cleaning
+            practices is just one of the many ways we offer quality services to
+            our clients.
           </p>
         </div>
       </section>
 
-      {/* Introduction Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-intro-description">
-              <strong>Excel Facility Services Group</strong> believes in protecting our planet and natural resources, and we are doing our part to ensure that we educate ourselves and our clients on green technologies and cleaning practices that benefit us all.
-            </p>
+      {/* YouTube Video Section */}
+      <section className="py-12 bg-gradient-to-b from-[#063970] to-[#0A5EB9]">
+        <div className="container mx-auto px-4 flex justify-center">
+          <div className="w-full max-w-2xl aspect-video rounded-md overflow-hidden shadow-lg">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/k6zvcGXnXKk"
+              title="Excel Sustainability"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              data-testid="video-sustainability"
+            />
           </div>
         </div>
       </section>
 
-      {/* GS-42 Standard Section */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      {/* Two-column About Section */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="w-24 h-24 rounded-full bg-[#97CC06]/10 flex items-center justify-center mx-auto mb-6">
-              <Shield className="w-12 h-12 text-[#97CC06]" />
+          <div className="grid md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+            <div>
+              <img
+                src={buildingImg}
+                alt="Excel Facility Services building"
+                className="w-full rounded-md object-cover"
+                data-testid="img-building"
+              />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6" data-testid="text-gs42-quote">
-              "The GS-42 Green Seal standard establishes requirements for cleaning service providers to ensure an environmentally safe cleaning solution for customers."
-            </h2>
+            <div>
+              <p
+                className="text-lg text-gray-700 leading-relaxed"
+                data-testid="text-about-description"
+              >
+                <strong>Excel Facility Services Group</strong> believes in
+                protecting our planet and natural resources, and we are doing
+                our part to ensure that we educate ourselves and our clients on
+                green technologies and cleaning practices that benefit us all.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Healthier Workplaces Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 text-center">
-          <div className="w-20 h-20 rounded-full bg-[#97CC06]/20 flex items-center justify-center mx-auto mb-6">
-            <Sparkles className="w-10 h-10 text-[#97CC06]" />
+      {/* Leader in Sustainability Section */}
+      <section className="py-16 md:py-24 bg-[#0d3d1a]">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h2
+            className="text-3xl md:text-4xl font-bold text-white text-center mb-10"
+            data-testid="text-sustainability-heading"
+          >
+            Leader in Sustainability
+          </h2>
+
+          {/* White Card */}
+          <div className="bg-white rounded-md overflow-hidden shadow-lg">
+            <div className="grid md:grid-cols-[auto_1fr]">
+              {/* Left panel */}
+              <div className="bg-[#0d3d1a] flex flex-col items-center justify-center p-8 md:min-w-[220px]">
+                <img
+                  src={greenSealBadge}
+                  alt="Green Seal Badge"
+                  className="w-36 mb-4"
+                  data-testid="img-green-seal-badge"
+                />
+                <p className="text-white text-sm text-center leading-snug">
+                  Independently Certified Under Green Seal's Commercial Cleaning
+                  Services Standard (GS-42)
+                </p>
+              </div>
+
+              {/* Right panel */}
+              <div className="p-8">
+                <h3
+                  className="text-xl font-semibold text-gray-800 mb-1"
+                  data-testid="text-commercial-cleaning-subtitle"
+                >
+                  Commercial Cleaning Service
+                </h3>
+                <hr className="mb-6 border-gray-200" />
+
+                <ul className="space-y-5">
+                  {pillars.map((pillar) => (
+                    <li key={pillar.title} data-testid={`text-pillar-${pillar.title.toLowerCase().replace(/\s+/g, "-")}`}>
+                      <span className="font-bold text-[#0d3d1a]">
+                        {pillar.title}
+                      </span>{" "}
+                      <span className="text-gray-700 text-sm">
+                        — {pillar.description}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="text-right text-sm text-gray-500 mt-6">
+                  greenseal.org/gs-42
+                </p>
+              </div>
+            </div>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-8" data-testid="text-healthier-title">
+        </div>
+      </section>
+
+      {/* Quote + CTA Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <blockquote
+            className="italic text-lg text-gray-600 mb-10 border-l-4 border-[#97CC06] pl-4 text-left"
+            data-testid="text-gs42-quote"
+          >
+            "The GS-42 Green Seal standard establishes requirements for cleaning
+            service providers to ensure an environmentally safe cleaning solution
+            for customers."
+          </blockquote>
+
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-6 text-[#0A5EB9]"
+            data-testid="text-healthier-title"
+          >
             Creating Healthier Workplaces!
           </h2>
+
+          <Link href="/contact">
+            <Button
+              className="bg-[#97CC06] text-white mb-4 text-base px-8"
+              data-testid="button-contact-us"
+            >
+              CONTACT US TODAY
+            </Button>
+          </Link>
+
+          <p className="text-gray-700" data-testid="text-cta-subtext">
+            to discuss how to{" "}
+            <span className="text-[#97CC06] font-medium">
+              make your facility Green with us!
+            </span>
+          </p>
         </div>
       </section>
 
