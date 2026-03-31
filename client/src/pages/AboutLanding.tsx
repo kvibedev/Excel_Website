@@ -133,7 +133,7 @@ export default function AboutLanding() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div data-testid="stat-states">
               <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">28</div>
-              <div className="text-xl">States</div>
+              <div className="text-xl">States Nationwide</div>
             </div>
             <div data-testid="stat-sqft">
               <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">30M+</div>
