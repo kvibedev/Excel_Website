@@ -30,7 +30,7 @@ import {
   ClipboardCheck,
   HeartPulse
 } from "lucide-react";
-import heroImage from "@assets/Covid_19_BG_image_1774968237543.webp";
+import heroImage from "@assets/Covid_19_BG_image_2_1774982230106.webp";
 import sectionImage from "@assets/Covid_19_image_1_1774968033025.webp";
 import tailoredImage from "@assets/Covid_19_image_2_1774968063486.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
