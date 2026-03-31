@@ -303,9 +303,7 @@ export default function HomeOriginal() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge variant="outline" className="mb-4" data-testid="badge-about">
-                WE ARE COMMITTED TO CLEANING EXCELLENCE!
-              </Badge>
+              <Badge variant="outline" className="mb-4" data-testid="badge-about">A Better Partner for Complex Facility Needs</Badge>
               <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="heading-cleaning-excellence">
                 EFSG provides an array of cleaning services that allow workplaces to run smoothly and efficiently.
               </h2>
