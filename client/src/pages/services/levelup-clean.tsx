@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 import sectionImage from "@assets/LevelUp_Clean_1_1774970015050.webp";
+import tailoredImage from "@assets/LevelUp_Clean_2_1774970030450.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -306,7 +307,7 @@ export default function LevelUpClean() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="order-2 lg:order-1 relative">
               <img
-                src={heroImage}
+                src={tailoredImage}
                 alt="LevelUp Clean Tailored Solutions"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-tailored"
