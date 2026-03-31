@@ -264,9 +264,7 @@ export default function LevelUpClean() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">
               The LevelUp Clean® Comprehensive Approach
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Our complete suite of services ensures your facility receives thorough, certified disinfection
-            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">LevelUp Clean® combines structured service delivery, trained teams, and targeted support to help facilities maintain stronger consistency, cleaner environments, and healthier daily operations.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
