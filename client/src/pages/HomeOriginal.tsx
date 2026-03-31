@@ -303,7 +303,6 @@ export default function HomeOriginal() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge variant="outline" className="mb-4" data-testid="badge-about">A Better Partner for Complex Facility Needs</Badge>
               <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="heading-cleaning-excellence">Facility Services That Support Workplace Performance</h2>
               <p className="text-lg text-muted-foreground mb-6">With more than 20 years of operational experience and coverage across 28 states, Excel Facility Services Group supports organizations that need consistent commercial cleaning and facility services delivered with accountability, responsiveness, and long-term reliability. We serve clients that require dependable support across multiple locations, complex environments, and day-to-day operations that cannot afford inconsistency.</p>
               <p className="text-lg text-muted-foreground mb-8">From janitorial services and day porter support to disinfection, floor care, and specialty facility solutions, Excel helps organizations maintain cleaner, safer, and more consistent environments. Our services are designed to reduce service gaps, improve workplace presentation, and support healthier workplaces across offices, healthcare facilities, educational settings, and other high-traffic commercial spaces.</p>
