@@ -304,9 +304,8 @@ export default function LevelUpClean() {
               <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
                 PEOPLE MATTER
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
-                At EFSG, We Understand That People Matter
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">A Methodology Built Around Real Facility Needs
+              three-step certified disinfection approach</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
                 For this reason, we dedicate ourselves to providing janitorial solutions that help businesses run smoothly and efficiently. Our LevelUp Clean® program is designed with your employees' health and safety as the top priority.
               </p>
