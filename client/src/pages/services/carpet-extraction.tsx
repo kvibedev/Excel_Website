@@ -265,9 +265,7 @@ export default function CarpetExtraction() {
             <Badge variant="outline" className="mb-4" data-testid="badge-tasks">
               WHAT WE DO
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">
-              Carpet Extraction Services
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">Comprehensive Carpet Extraction Services</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Our certified technicians use advanced extraction methods to restore your carpets to like-new condition
             </p>
