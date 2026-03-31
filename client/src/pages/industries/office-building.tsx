@@ -79,7 +79,6 @@ export default function OfficeBuilding() {
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
       />
-
       {/* Main Content Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -112,7 +111,6 @@ export default function OfficeBuilding() {
           </div>
         </div>
       </section>
-
       {/* Key Benefits Section */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -135,9 +133,8 @@ export default function OfficeBuilding() {
           </div>
         </div>
       </section>
-
       {/* Green Seal Certification Section */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24 bg-[#063a71]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="relative">
@@ -168,7 +165,6 @@ export default function OfficeBuilding() {
           </div>
         </div>
       </section>
-
       {/* Why Choose Us Section */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -222,7 +218,6 @@ export default function OfficeBuilding() {
           </div>
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
