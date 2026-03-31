@@ -162,9 +162,7 @@ export default function Janitorial() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
-              <Badge variant="outline" className="mb-4" data-testid="badge-about">
-                ABOUT OUR SERVICE
-              </Badge>
+              <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT JANITORIAL SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Commercial Janitorial Services That Support Workplace Performance</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 When it comes to maintaining a spotless and professional commercial space, janitorial services are crucial. Regardless of the type of business you run – an <Link href="/industries/office-building" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-office">office building</Link>, <Link href="/industries/retailer" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-retail">retail store</Link>, <Link href="/industries/distribution-centers" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-distribution">distribution center</Link>, or any other establishment – the importance of keeping your workplace tidy must be considered.
