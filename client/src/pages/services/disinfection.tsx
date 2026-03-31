@@ -165,9 +165,7 @@ export default function Disinfection() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">A Practical, Modern Approach to Disinfection</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Disinfection is now a standard part of facility care in many commercial environments. Whether the goal is routine hygiene support, high-touch surface attention, or added reassurance in shared spaces, disinfection helps reinforce cleaner, safer, and more confidence-inspiring workplaces.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides disinfection support for organizations that need stronger hygiene practices across high-use surfaces and shared environments. Our approach is designed to complement daily cleaning programs while helping reinforce workplace hygiene standards.</p>
-              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                Invest in a quality disinfection program if you own or manage a commercial building. It will pay off in the long run by protecting your employees and keeping your building in good condition.
-              </p>
+              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">With more than 20 years of operational experience and multi-site capability, Excel helps clients determine where disinfection adds the most value, how often it should occur, and how it should support the facility’s overall cleaning strategy.</p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
                   Get Started Today

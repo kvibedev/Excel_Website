@@ -13,7 +13,6 @@ import airDuctImg from "@assets/HVAC_bg_1774865693988.webp";
 import carpetImg from "@assets/carpet_bg_image_2_1774635807951.webp";
 import concreteImg from "@assets/concrete_bg_1774864652126.webp";
 import powerWashingImg from "@assets/Power_washing_bg_1774863229197.webp";
-import commercialCleaningImg from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 
 export default function Services() {
   const services = [
@@ -94,13 +93,6 @@ export default function Services() {
         "Power washing is a popular method of cleaning that uses high-pressure water to remove dirt, grime, and other surface deposits. Power washing effectively cleans many surfaces, including driveways, sidewalks, decks, and entrances. It can also remove mildew, mold, and other growths from siding and stone walls. As a result, power washing is a fast and convenient way to keep your business looking its best.",
       href: "/services/power-washing",
     },
-    {
-      image: commercialCleaningImg,
-      title: "Commercial Cleaning",
-      description:
-        "Comprehensive commercial cleaning solutions tailored to your business needs, ensuring a pristine and professional environment.",
-      href: "/services/commercial-cleaning",
-    },
   ];
 
   return (
@@ -127,9 +119,11 @@ export default function Services() {
               for all your facility needs.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {services.map((service) => (
-              <ServiceCard key={service.title} {...service} />
+              <div key={service.title} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]">
+                <ServiceCard {...service} />
+              </div>
             ))}
           </div>
         </div>
