@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/Retail_bg_1774866729482.webp";
 import sectionImage from "@assets/retail_1_1774866657583.webp";
+import aboutImage from "@assets/retailer_3_1774977280364.webp";
 
 export default function Retailer() {
   const services = [
@@ -98,7 +99,7 @@ export default function Retailer() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={sectionImage}
+                src={aboutImage}
                 alt="Professional Retail Store Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
