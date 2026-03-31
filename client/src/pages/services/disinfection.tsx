@@ -162,9 +162,7 @@ export default function Disinfection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT DISINFECTION SERVICES</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Disinfection is Essential for Your Building
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">A Practical, Modern Approach to Disinfection</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 Many people don't realize how important disinfection is for a commercial building. It is not just about making the place look clean: it is about protecting the people who work there and ensuring they can do their job in a safe and healthy environment.
               </p>

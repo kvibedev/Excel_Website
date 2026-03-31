@@ -119,11 +119,11 @@ export default function GreenSeal() {
           <div className="bg-white rounded-md overflow-hidden shadow-lg">
             <div className="grid md:grid-cols-[auto_1fr]">
               {/* Left panel */}
-              <div className="bg-[#0d3d1a] flex flex-col items-center justify-center p-8 md:min-w-[220px]">
+              <div className="bg-[#0d3d1a] flex flex-col items-center justify-center p-6 md:min-w-[160px]">
                 <img
                   src={greenSealBadge}
                   alt="Green Seal Badge"
-                  className="w-36 mb-4"
+                  className="w-28 mb-4"
                   data-testid="img-green-seal-badge"
                 />
                 <p className="text-white text-sm text-center leading-snug">
