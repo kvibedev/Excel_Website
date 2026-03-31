@@ -217,9 +217,7 @@ export default function AutoDealerships() {
               Maintaining the Appeal of Your Dealership
             </h2>
             <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">Auto dealerships depend on presentation, cleanliness, and consistency to support customer confidence and brand perception. Excel Facility Services Group provides cleaning and facility services designed to help dealerships maintain cleaner showrooms, service areas, customer lounges, restrooms, and high-traffic spaces throughout the property.</p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              From detailing the showroom to sanitizing service areas, we prioritize delivering exceptional results that enhance your dealership's reputation. By establishing a regular cleaning schedule, you can focus on running your business while we handle the cleanliness of your facility.
-            </p>
+            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">Our service programs are built around the realities of dealership operations, including customer flow, showroom presentation, employee work areas, and daily service activity. The result is a cleaner, safer, and more professional environment that supports both customer experience and day-to-day operations.</p>
             <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
               Your dealership's outlook affects how customers perceive your brand, and our services are aimed at elevating that perception. With our support, you can create an inviting atmosphere that encourages foot traffic and <Link href="/services/levelup-clean" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-repeat-visits">repeat visits</Link>.
             </p>
