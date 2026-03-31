@@ -166,9 +166,7 @@ export default function DayPorters() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT DAY PORTER SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Professional Day Porter Services for High-Traffic Facilities</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Day porter services help commercial buildings stay clean, stocked, and presentable throughout the day. In high-traffic environments, this visible support helps maintain workplace appearance, reinforce cleanliness standards, and create a better experience for employees, tenants, and visitors.</p>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                For example, day porters are responsible for regularly sanitizing high-traffic areas such as lobbies, elevators, and restrooms. They also collect and recycle items, empty ashtrays and waste bins, and sweep and mop floors.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides day porter services for facilities that require ongoing attention during business hours, including lobbies, elevators, restrooms, entry points, conference areas, and other shared spaces. Our services are designed to support daily operations without disrupting the flow of the workplace.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 In addition, day porters may also be responsible for setting up meeting rooms and event spaces while providing general maintenance and repair services. Day porters play a vital role in ensuring that commercial buildings are safe and welcoming environments for everyone.
               </p>
