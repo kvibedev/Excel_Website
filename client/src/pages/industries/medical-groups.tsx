@@ -121,9 +121,7 @@ export default function MedicalGroups() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for medical groups, outpatient practices, specialty clinics, and other healthcare environments that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, disinfection services, floor care, and structured cleaning programs aligned with patient flow and operational demands.
               </p>
-              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                From general cleaning and trash removal to deep cleaning and carpet shampooing, our team will work tirelessly to exceed your expectations.
-              </p>
+              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">With more than 20 years of operational experience and multi-site capability, Excel helps medical groups maintain cleaner, safer, and more professional environments through responsive communication, dependable service delivery, and standards built for consistency across patient-facing spaces.</p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
                   Learn More
