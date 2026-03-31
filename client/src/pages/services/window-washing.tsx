@@ -163,9 +163,15 @@ export default function WindowWashing() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT WINDOW WASHING SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Commercial Window Washing That Supports Building Presentation</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Window washing is an important part of maintaining a professional commercial environment. Clean windows improve curb appeal, support a brighter interior, and help reinforce a cleaner first impression for employees, visitors, tenants, and customers.</p>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides window washing services for commercial buildings that need reliable exterior and interior glass cleaning, frame and sill attention, and service programs aligned to the realities of the property.</p>
-              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">With more than 20 years of operational experience and multi-site capability, Excel helps organizations maintain cleaner, more presentable buildings through dependable service delivery and attention to detail.</p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
+                Window washing is an important part of any commercial building maintenance plan. Our services not only improve the appearance of the building but also help extend the life of window panes by removing dirt, debris, and other corrosive materials. Excel Facility Services Group's window washing service can help improve indoor air quality by reducing the dust and allergens that circulate inside the building.
+              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
+                Window washing makes your workplace look cleaner and inviting; it can help remove any build-up of dirt, pollen, and other allergens that can accumulate on windows over time.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
+                It can also help prolong your windows' life by preventing damage from the elements and help increase natural light levels in a room, making it more cheerful and inviting.
+              </p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
                   Get Started Today
@@ -259,7 +265,9 @@ export default function WindowWashing() {
             <Badge variant="outline" className="mb-4" data-testid="badge-tasks">
               WHAT WE DO
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">Comprehensive Window Washing Services for Commercial Buildings</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">
+              Comprehensive Window Washing Services
+            </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Our professional window washers are equipped to handle all your window cleaning needs
             </p>
