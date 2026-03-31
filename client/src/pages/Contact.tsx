@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import EstimateForm from "@/components/EstimateForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import { Phone, Mail, MapPin, Briefcase, Users } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
@@ -134,18 +135,14 @@ export default function Contact() {
                       <p className="text-muted-foreground mb-4">
                         Excel Facility Services Group appreciates your interest in doing business with us. Please complete the form below and a company representative will contact you in the next 48 hours.
                       </p>
-                      <a 
-                        href="https://efsgnj.com/vendor-registration/" 
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <Link href="/vendor-registration">
                         <Button 
                           variant="default"
                           data-testid="button-vendor"
                         >
                           Vendor Registration Form
                         </Button>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
