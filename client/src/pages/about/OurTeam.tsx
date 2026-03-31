@@ -149,7 +149,7 @@ export default function OurTeam() {
       {/* Team Grid Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
             {teamMembers.filter(m => !m.hidden).map((member, index) => (
               <Card 
                 key={index}
