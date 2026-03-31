@@ -11,10 +11,11 @@ import greenSealBadge from "@assets/GS-Provide-Service-dk_1764335201153.webp";
 
 export default function OfficeBuilding() {
   const benefits = [
-    "Save money and time with a customized program",
-    "Get reliable, local service that you can trust",
-    "Streamline your operations for sustainable maintenance",
-    "Benefit from unparalleled expertise in commercial cleaning services and facility management",
+    "Save time and reduce friction with a service program tailored to your office building",
+    "Maintain cleaner common areas, restrooms, lobbies, and shared workplace spaces",
+    "Support employee experience, visitor perception, and tenant confidence",
+    "Reduce service gaps through visible support, accountability, and structured communication",
+    "Work with a facility services partner that understands the operational realities of office environments.",
   ];
 
   const whyChooseUsCards = [
