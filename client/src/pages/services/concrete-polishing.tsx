@@ -164,9 +164,7 @@ export default function ConcretePolishing() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT CONCRETE POLISHING SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Concrete Polishing for Durability, Appearance, and Long-Term Performance</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                Concrete polishing is a process that uses specialized equipment to grind and smooth surfaces. The process can be used on both new and existing concrete, producing various benefits. Concrete polishing can improve the appearance of concrete, increase its durability, and make it easier to clean.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Concrete polishing helps commercial facilities improve the appearance, durability, and maintenance profile of their floors. In high-traffic environments, polished concrete can support a cleaner, more professional look while making routine upkeep more efficient.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 In addition, polished concrete is more slip-resistant than unsealed concrete, making it an ideal choice for high-traffic areas. Our polishing process begins with applying coarse diamond abrasives to the surface of the concrete. These abrasives remove imperfections and create a smooth base for the next step in the process.
               </p>
