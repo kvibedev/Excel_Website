@@ -123,7 +123,7 @@ export default function GreenSeal() {
                 <img
                   src={greenSealBadge}
                   alt="Green Seal Badge"
-                  className="w-16 mb-3"
+                  className="w-full max-w-[100px] mb-3"
                   data-testid="img-green-seal-badge"
                 />
                 <p className="text-white text-xs text-center leading-snug">
