@@ -165,9 +165,7 @@ export default function DayPorters() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT DAY PORTER SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Professional Day Porter Services for High-Traffic Facilities</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                A day porter is responsible for ensuring your building looks professional, clean, presentable, and inviting at all times, but especially during routine cleaning and maintenance activities. In the wake of the COVID-19 pandemic, their role has become even more critical in ensuring commercial buildings' health and safety standards.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Day porter services help commercial buildings stay clean, stocked, and presentable throughout the day. In high-traffic environments, this visible support helps maintain workplace appearance, reinforce cleanliness standards, and create a better experience for employees, tenants, and visitors.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 For example, day porters are responsible for regularly sanitizing high-traffic areas such as lobbies, elevators, and restrooms. They also collect and recycle items, empty ashtrays and waste bins, and sweep and mop floors.
               </p>
