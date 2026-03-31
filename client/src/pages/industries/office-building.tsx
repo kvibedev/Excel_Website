@@ -72,7 +72,7 @@ export default function OfficeBuilding() {
       />
       <Hero
         title="Office Building Cleaning and Facility Services"
-        subtitle="EFSG provides reliable facility services to keep your office clean, comfortable, and safe."
+        subtitle="Excel Facility Services Group helps office buildings maintain cleaner, safer, and more professional environments through accountable service delivery, responsive support, and programs built for daily operations."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
