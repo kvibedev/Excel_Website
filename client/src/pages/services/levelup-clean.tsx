@@ -165,9 +165,7 @@ export default function LevelUpClean() {
                 ABOUT LEVELUP CLEAN®
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">A Structured Approach to Healthier Workplaces</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                At Excel Facility Services Group, we pride ourselves on the high quality of our janitorial services and the long-standing relationships we form with our customers. We understand that the key to providing excellent service is through communication and collaboration: working closely with our customers to ensure their needs are being met and are happy with the results.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">LevelUp Clean® is Excel Facility Services Group’s service methodology for delivering commercial cleaning and facility services with greater consistency, accountability, and operational oversight. Built on more than 20 years of experience and multi-state capability, this approach helps clients maintain cleaner, safer, and more dependable environments across their facilities.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-efsg">EFSG</Link> is proud to be a fully insured and bonded company, so you can trust that your facility is in good hands. Our LevelUp Clean® program represents our commitment to delivering the highest standards of disinfection and cleanliness.
               </p>
