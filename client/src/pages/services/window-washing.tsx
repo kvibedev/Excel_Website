@@ -150,8 +150,8 @@ export default function WindowWashing() {
         path="/services/window-washing"
       />
       <Hero
-        title="Window Washing"
-        subtitle="Window washing is a necessary service for keeping a commercial building looking its best."
+        title="Commercial Window Washing Services"
+        subtitle="Excel provides commercial window washing services that help organizations maintain a cleaner exterior appearance, improve natural light, and support a more professional building presentation."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
@@ -163,9 +163,7 @@ export default function WindowWashing() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT WINDOW WASHING SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Commercial Window Washing That Supports Building Presentation</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                Window washing is an important part of any commercial building maintenance plan. Our services not only improve the appearance of the building but also help extend the life of window panes by removing dirt, debris, and other corrosive materials. Excel Facility Services Group's window washing service can help improve indoor air quality by reducing the dust and allergens that circulate inside the building.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Window washing is an important part of maintaining a professional commercial environment. Clean windows improve curb appeal, support a brighter interior, and help reinforce a cleaner first impression for employees, visitors, tenants, and customers.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 Window washing makes your workplace look cleaner and inviting; it can help remove any build-up of dirt, pollen, and other allergens that can accumulate on windows over time.
               </p>
