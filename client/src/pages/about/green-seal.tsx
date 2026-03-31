@@ -117,7 +117,7 @@ export default function GreenSeal() {
 
           {/* White Card */}
           <div className="bg-white rounded-md overflow-hidden shadow-lg">
-            <div className="grid md:grid-cols-[160px_1fr]">
+            <div className="grid md:grid-cols-[30%_70%]">
               {/* Left panel */}
               <div className="bg-[#0d3d1a] flex flex-col items-center justify-center p-4">
                 <img
