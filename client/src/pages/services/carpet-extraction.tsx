@@ -151,7 +151,7 @@ export default function CarpetExtraction() {
       {/* Hero Section */}
       <Hero
         title="Commercial Carpet Extraction Services"
-        subtitle="Commercial carpet extraction requires special equipment and techniques to ensure that the carpet is cleaned safely and effectively."
+        subtitle="Excel provides commercial carpet extraction services that help organizations remove deep-set dirt, improve carpet appearance, and maintain cleaner, healthier interior environments."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
@@ -162,9 +162,7 @@ export default function CarpetExtraction() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
-              <Badge variant="outline" className="mb-4" data-testid="badge-about">
-                ABOUT OUR SERVICE
-              </Badge>
+              <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT CARPET EXTRACTION SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
                 Expert Carpet Extraction for Commercial Spaces
               </h2>
