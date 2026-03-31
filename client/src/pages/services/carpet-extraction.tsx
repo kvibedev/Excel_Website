@@ -164,9 +164,7 @@ export default function CarpetExtraction() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT CARPET EXTRACTION SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Deep Carpet Cleaning for Commercial Spaces</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                Carpet extraction can be challenging to manage and maintain within a commercial building. The right equipment and expertise are crucial for safe, effective work that meets all health regulations while minimizing disruption to your business continuity plan. It also prevents any negative impact on daily operations and customer care.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Carpet extraction helps commercial facilities remove embedded dirt, allergens, and buildup that routine vacuuming cannot fully address. In high-traffic environments, this deeper cleaning supports a cleaner appearance, healthier indoor conditions, and a more professional overall presentation.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 Carpet extraction requires special equipment and techniques to ensure that the carpet is cleaned safely and effectively. This method is often used in commercial carpet cleaning because it removes carpet dirt, dust, and other allergens. It is also relatively gentle on carpet fibers, making it ideal for sensitive carpets.
               </p>
