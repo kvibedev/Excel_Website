@@ -166,9 +166,7 @@ export default function FloorCare() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT FLOOR CARE SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Floor Care That Supports Appearance, Safety, and Long-Term Performance</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                The condition of the floor tells you everything about how well a business is being run. First impressions are essential; if potential or existing customers see stained or dirty floors, they will likely go elsewhere for their purchase rather than with your company again because it could negatively affect customer loyalty.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Floor care plays an important role in how a facility looks, feels, and performs every day. Clean, well-maintained floors help reinforce a more professional environment while supporting safer conditions in high-traffic commercial spaces.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 Our Floor care professionals have the expertise to thoroughly clean and protect your floors, keeping them looking their best and extending their lifespan. Not to mention, a healthy floor is safer; slips and falls are less likely on a smooth, clean surface.
               </p>
