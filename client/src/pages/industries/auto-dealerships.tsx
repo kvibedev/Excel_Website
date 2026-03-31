@@ -209,20 +209,59 @@ export default function AutoDealerships() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
-              TAILORED APPROACH
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              Maintaining the Appeal of Your Dealership
-            </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">Auto dealerships depend on presentation, cleanliness, and consistency to support customer confidence and brand perception. Excel Facility Services Group provides cleaning and facility services designed to help dealerships maintain cleaner showrooms, service areas, customer lounges, restrooms, and high-traffic spaces throughout the property.</p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">Our service programs are built around the realities of dealership operations, including customer flow, showroom presentation, employee work areas, and daily service activity. The result is a cleaner, safer, and more professional environment that supports both customer experience and day-to-day operations.</p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              Your dealership's outlook affects how customers perceive your brand, and our services are aimed at elevating that perception. With our support, you can create an inviting atmosphere that encourages foot traffic and <Link href="/services/levelup-clean" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-repeat-visits">repeat visits</Link>.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              Our commitment to excellence ensures you can showcase your inventory in the best light, making each visit memorable for potential buyers. Trust us to help you project professionalism and maintain a healthy space, essential for a thriving dealership. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-reach-out">Reach out to us today</Link> to get started!
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
+                TAILORED APPROACH
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+                Maintaining the Appeal of Your Dealership
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-tailored-intro">
+                Auto dealerships depend on presentation, cleanliness, and consistency to support customer confidence and protect brand perception. Excel Facility Services Group provides cleaning and facility services designed to help maintain cleaner showrooms, service areas, customer lounges, and other high-traffic spaces throughout the property.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+              <Card className="h-full hover-elevate transition-all" data-testid="card-tailored-0">
+                <CardHeader>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#97CC06]/10 mb-4">
+                    <Sparkles className="h-7 w-7 text-[#97CC06]" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">Showroom Presentation</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Help keep display areas, glass, floors, and customer-facing spaces clean, polished, and ready to reinforce a stronger first impression.</p>
+                </CardContent>
+              </Card>
+
+              <Card className="h-full hover-elevate transition-all" data-testid="card-tailored-1">
+                <CardHeader>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#97CC06]/10 mb-4">
+                    <Users className="h-7 w-7 text-[#97CC06]" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">Customer-Ready Spaces</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Maintain cleaner waiting areas, restrooms, entrances, and shared spaces that shape how customers experience the dealership.</p>
+                </CardContent>
+              </Card>
+
+              <Card className="h-full hover-elevate transition-all" data-testid="card-tailored-2">
+                <CardHeader>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#97CC06]/10 mb-4">
+                    <Wrench className="h-7 w-7 text-[#97CC06]" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">Service Area Support</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Support cleaner service bays, advisor desks, employee areas, and high-traffic operational spaces with programs built around daily workflow.</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <p className="text-lg text-muted-foreground text-center" data-testid="text-tailored-closing">
+              Built around dealership traffic, showroom standards, and day-to-day operations, our approach helps create a cleaner, safer, and more professional environment across the property.
             </p>
           </div>
         </div>
