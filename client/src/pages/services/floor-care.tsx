@@ -152,7 +152,7 @@ export default function FloorCare() {
       />
       {/* Hero Section */}
       <Hero
-        title="Floor Care"
+        title="Commercial Floor Care Services"
         subtitle="First impressions are crucial in nearly every industry, so it is essential to take the time to clean and polish your floors regularly."
         imageSrc={heroImage}
         height="medium"
