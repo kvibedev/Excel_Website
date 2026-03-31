@@ -150,7 +150,7 @@ export default function Disinfection() {
         path="/services/disinfection"
       />
       <Hero
-        title="Disinfection Services"
+        title="Commercial Disinfection Services"
         subtitle="In a workplace, disinfection is the process that helps to reduce the risk of cross-contamination and provides a clean and safe environment for employees, customers, and visitors."
         imageSrc={heroImage}
         height="medium"
