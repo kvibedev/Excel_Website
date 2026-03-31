@@ -151,7 +151,7 @@ export default function ConcretePolishing() {
       {/* Hero Section */}
       <Hero
         title="Concrete Polishing"
-        subtitle="Polished concrete floors are a great option for businesses because they are cost-effective, easy to clean, and resistant to allergens."
+        subtitle="Excel provides commercial concrete polishing services that help organizations improve floor appearance, support durability, and maintain cleaner, more professional environments in high-traffic spaces."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
