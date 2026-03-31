@@ -203,9 +203,7 @@ export default function FloorCare() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-benefits">
               Why Professional Floor Care Matters
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              First impressions matter and well-maintained floors will help your business project a professional image while ensuring safety.
-            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Professional floor care helps commercial facilities maintain stronger appearance, support safer conditions, and extend the life of flooring in high-traffic environments.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
