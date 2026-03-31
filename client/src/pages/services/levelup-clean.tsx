@@ -169,9 +169,7 @@ export default function LevelUpClean() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 From janitorial services and day porter support to disinfection and specialty facility solutions, LevelUp Clean® is designed to strengthen day-to-day execution through communication, quality control, and responsive service management. The result is a cleaner, healthier workplace experience for employees, tenants, visitors, and customers.
               </p>
-              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through our proven three-step approach that delivers healthy workplaces with certified disinfection.
-              </p>
+              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">Excel Facility Services Group is fully insured and bonded, giving clients added confidence that their facilities are supported by a professional team committed to reliable service delivery and long-term accountability.</p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
                   Get Started Today
