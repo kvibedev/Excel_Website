@@ -49,10 +49,11 @@ export default function MedicalGroups() {
   ];
 
   const benefits = [
-    "Improve patient safety",
-    "Comply with regulations",
-    "Increase satisfaction",
-    "Feel confident that you're providing the safest environment possible for your employees, patients, and visitors",
+    "Support cleaner patient-facing spaces and common areas",
+    "Reinforce hygiene standards across high-touch and high-traffic environments",
+    "Help maintain a more professional and confidence-inspiring patient experience",
+    "Reduce service gaps through structured communication and dependable execution",
+    "Work with a facility services partner that understands the demands of healthcare settings",
   ];
 
   const valuePropositions = [
@@ -173,10 +174,10 @@ export default function MedicalGroups() {
                 KEY BENEFITS
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-benefits">
-                Why Healthcare Facilities Trust EFSG
+                Why Healthcare Environments Need Stronger Facility Support
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                <strong>Our specialized team is trained to follow infection control protocols.</strong> This helps to ensure that all areas of the facility are adequately cleaned and disinfected. As a result, medical groups can feel confident that their environment is safe and clean.
+                Cleanliness in medical environments supports more than appearance. It helps reinforce patient confidence, support staff workflows, and maintain a cleaner, more consistent experience across clinical and administrative spaces.
               </p>
               <ul className="space-y-4 mb-8">
                 {benefits.map((benefit, index) => (
