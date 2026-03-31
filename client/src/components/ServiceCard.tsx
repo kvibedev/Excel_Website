@@ -1,22 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { LucideIcon } from "lucide-react";
 
 interface ServiceCardProps {
-  icon: LucideIcon;
+  image: string;
   title: string;
   description: string;
   href: string;
 }
 
-export default function ServiceCard({ icon: Icon, title, description, href }: ServiceCardProps) {
+export default function ServiceCard({ image, title, description, href }: ServiceCardProps) {
   return (
-    <Card className="hover-elevate transition-shadow h-full flex flex-col" data-testid={`card-service-${title.toLowerCase().replace(/[®\s]/g, '-')}`}>
+    <Card className="hover-elevate transition-shadow h-full flex flex-col overflow-hidden" data-testid={`card-service-${title.toLowerCase().replace(/[®\s]/g, '-')}`}>
+      <div className="relative h-40 overflow-hidden">
+        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
       <CardHeader className="flex-grow">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06]/10">
-          <Icon className="h-6 w-6 text-[#97CC06]" />
-        </div>
         <CardTitle className="text-xl">{title}</CardTitle>
         <CardDescription className="line-clamp-3">{description}</CardDescription>
       </CardHeader>
