@@ -74,7 +74,7 @@ export default function LevelUpClean() {
     { icon: Users, title: "Day Porter Services", description: "Ongoing cleanliness throughout the day to maintain pristine conditions." },
     { icon: Shield, title: "Disinfecting Services", description: "Added to routine cleaning protocols for enhanced protection." },
     { icon: Zap, title: "Electrostatic Technology", description: "Advanced cleaning technology used for thorough cleaning intervals." },
-    { icon: ClipboardCheck, title: "Trained Associates", description: "Certified Excel team members with specialized expertise." },
+    { icon: ClipboardCheck, title: "Trained Service Teams", description: "Certified Excel team members with specialized expertise." },
     { icon: FileCheck, title: "Government Aligned", description: "Following CDC, WHO, and OSHA guidelines for safety compliance." },
   ];
 
