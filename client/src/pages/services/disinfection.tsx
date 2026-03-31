@@ -30,7 +30,7 @@ import {
   Bug,
   CalendarClock
 } from "lucide-react";
-import heroImage from "@assets/janitorial-workforce-in-hazmat-suits-sanitizing-th-2026-03-10-_1774630416144.jpg";
+import heroImage from "@assets/Covid_19_BG_image_1774968019559.webp";
 import sectionImage from "@assets/routine-disinfection-of-building-corridor-2026-03-13-05-51-54-_1774860690076.jpg";
 import tailoredImage from "@assets/man-wearing-protective-suit-disinfecting-school-cl-2026-03-20-_1774860864222.jpg";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
