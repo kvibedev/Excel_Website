@@ -153,7 +153,7 @@ export default function OurTeam() {
             {teamMembers.filter(m => !m.hidden).map((member, index) => (
               <Card 
                 key={index}
-                className="hover-elevate active-elevate-2 border-0 shadow-lg bg-transparent w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] xl:w-[calc(25%-1.5rem)]"
+                className="hover-elevate active-elevate-2 border-0 shadow-lg bg-transparent w-full max-w-sm md:max-w-none md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] xl:w-[calc(25%-1.5rem)]"
                 data-testid={`card-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
               >
                 <div className="flex flex-col items-center">
