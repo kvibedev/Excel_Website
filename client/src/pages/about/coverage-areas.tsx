@@ -86,7 +86,7 @@ export default function CoverageAreas() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-lg text-muted-foreground" data-testid="text-experience">
-              With more than 20 years of experience in providing high-quality services to customers in over 22 states. We are proud to offer our services near you.
+              With more than 20 years of experience in providing high-quality services to customers in over 28 states. We are proud to offer our services near you.
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function CoverageAreas() {
             Ready to Experience 5-Star Service?
           </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto" data-testid="text-cta-subtitle">
-            With more than 20 years of experience providing high-quality services to customers in over 22 states, we are proud to offer our services near you.
+            With more than 20 years of experience providing high-quality services to customers in over 28 states, we are proud to offer our services near you.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/contact">

@@ -72,7 +72,7 @@ This is a commercial cleaning services website for Excel Facility Services Group
 **About Us Subpages (Complete - December 2025)**
 - Added NavigationMenu dropdown for About Us in desktop and mobile header
 - Created three About Us submenu pages using efsgnj.com content and Template 3 design:
-  - Coverage Areas (/about/coverage-areas): 22 states listing, service expansion message
+  - Coverage Areas (/about/coverage-areas): 28 states listing, service expansion message
   - Recognitions & Certifications (/about/recognitions-certifications): Certifications, memberships, software technology
   - Green Seal (/about/green-seal): GS-42 certification information, environmental practices
 - All pages use Template 3 design patterns with Excel brand colors
