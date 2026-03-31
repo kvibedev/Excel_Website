@@ -82,22 +82,17 @@ export default function LevelUpClean() {
     {
       step: "01",
       title: "Assessment",
-      description: "We evaluate your facility's specific needs and identify areas requiring certified disinfection protocols.",
+      description: "We evaluate the facility, traffic patterns, hygiene priorities, and service needs to define the right LevelUp Clean® scope.",
     },
     {
       step: "02",
-      title: "Custom Plan",
-      description: "Our team develops a tailored LevelUp Clean approach aligned with your operational requirements.",
+      title: "Program Design",
+      description: "Our team develops a service approach aligned with the building's operational realities, shared spaces, and client expectations.",
     },
     {
       step: "03",
-      title: "Execute",
-      description: "Trained Excel Associates execute our three-step disinfection process with precision and care.",
-    },
-    {
-      step: "04",
-      title: "Certification",
-      description: "We provide certified verification of disinfection to demonstrate trustworthy cleaning completion.",
+      title: "Execution and Oversight",
+      description: "Trained Excel service teams deliver the program with responsive support, quality checks, and ongoing oversight to help maintain cleaner, safer, and more consistent environments.",
     },
   ];
 
@@ -235,11 +230,11 @@ export default function LevelUpClean() {
               The LevelUp Clean® Three-Step Approach
             </h2>
             <p className="text-lg text-white/80 max-w-3xl mx-auto">
-              Our dedicated team works closely with you to guarantee certified disinfection and your utmost satisfaction
+              Excel follows a structured service process designed to support consistency, accountability, and healthier workplace outcomes across client facilities.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {howWeWorkSteps.map((step, index) => (
               <div key={index} className="relative" data-testid={`step-${index}`}>
                 <div className="text-6xl md:text-7xl font-bold text-white/10 absolute -top-4 -left-2">
