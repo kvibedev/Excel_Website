@@ -304,9 +304,7 @@ export default function HomeOriginal() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">A Better Partner for Complex Facility Needs</Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="heading-cleaning-excellence">
-                EFSG provides an array of cleaning services that allow workplaces to run smoothly and efficiently.
-              </h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="heading-cleaning-excellence">Facility Services That Support Workplace Performance</h2>
               <p className="text-lg text-muted-foreground mb-6">
                 With more than <strong>20 years of experience</strong> in over 20 states, Excel Facility Services 
                 Group has become one of the most reliable commercial cleaning companies in the United States.
