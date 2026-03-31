@@ -116,7 +116,7 @@ export default function MedicalGroups() {
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Supporting Cleaner, Safer Medical Environments</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                <strong>A clean environment helps prevent the spread of illness and infection</strong> and makes a good impression on anyone who enters the facility — visitors, patients, and staff alike.
+                Medical groups rely on cleanliness, consistency, and professional presentation to support patient confidence, staff efficiency, and day-to-day operations. In healthcare environments, facility services must help reinforce hygiene standards while maintaining a clean, welcoming experience across clinical and administrative spaces.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 At <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link>, we understand how important creating a positive and welcoming environment for your patients is. That's why we offer a full range of <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial services</Link> designed to keep your hospital or medical office looking its best.
