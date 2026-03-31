@@ -164,9 +164,7 @@ export default function LevelUpClean() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">
                 ABOUT LEVELUP CLEAN®
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                A Healthier Space for Businesses and People to Thrive
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">A Structured Approach to Healthier Workplaces</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 At Excel Facility Services Group, we pride ourselves on the high quality of our janitorial services and the long-standing relationships we form with our customers. We understand that the key to providing excellent service is through communication and collaboration: working closely with our customers to ensure their needs are being met and are happy with the results.
               </p>
