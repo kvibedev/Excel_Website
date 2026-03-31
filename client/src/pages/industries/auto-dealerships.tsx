@@ -98,7 +98,6 @@ export default function AutoDealerships() {
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW SERVICES", href: "/services" }}
       />
-
       {/* About Section - Split Layout */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -119,9 +118,7 @@ export default function AutoDealerships() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">
                 ABOUT OUR SERVICE
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Scalable Solutions for Your Dealership
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Facility Services Built for Auto Dealerships</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 A healthy and clean auto dealership plays a role in how customers view your business and the brands you sell. Everything should look shiny and new, from the cars to the service department.
               </p>
@@ -141,7 +138,6 @@ export default function AutoDealerships() {
           </div>
         </div>
       </section>
-
       {/* Services Grid - Fore Tech Style */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -174,7 +170,6 @@ export default function AutoDealerships() {
           </div>
         </div>
       </section>
-
       {/* Key Benefits Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -215,7 +210,6 @@ export default function AutoDealerships() {
           </div>
         </div>
       </section>
-
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -241,7 +235,6 @@ export default function AutoDealerships() {
           </div>
         </div>
       </section>
-
       {/* Value Propositions - 5 Cards with green borders */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -268,7 +261,6 @@ export default function AutoDealerships() {
           </div>
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
