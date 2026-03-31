@@ -164,9 +164,7 @@ export default function WindowWashing() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT WINDOW WASHING SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Commercial Window Washing That Supports Building Presentation</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Window washing is an important part of maintaining a professional commercial environment. Clean windows improve curb appeal, support a brighter interior, and help reinforce a cleaner first impression for employees, visitors, tenants, and customers.</p>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                Window washing makes your workplace look cleaner and inviting; it can help remove any build-up of dirt, pollen, and other allergens that can accumulate on windows over time.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides window washing services for commercial buildings that need reliable exterior and interior glass cleaning, frame and sill attention, and service programs aligned to the realities of the property.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 It can also help prolong your windows' life by preventing damage from the elements and help increase natural light levels in a room, making it more cheerful and inviting.
               </p>
