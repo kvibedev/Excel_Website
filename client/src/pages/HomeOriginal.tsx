@@ -305,9 +305,7 @@ export default function HomeOriginal() {
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">A Better Partner for Complex Facility Needs</Badge>
               <h2 className="text-4xl md:text-5xl font-bold mb-6" data-testid="heading-cleaning-excellence">Facility Services That Support Workplace Performance</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                With more than 20 years of operational experience and multi-state capability, Excel Facility Services Group serves organizations that require dependable commercial cleaning and facility services across locations, with a focus on consistency, accountability, and healthier workplaces.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6">With more than 20 years of operational experience and coverage across 28 states, Excel Facility Services Group supports organizations that need consistent commercial cleaning and facility services delivered with accountability, responsiveness, and long-term reliability. We serve clients that require dependable support across multiple locations, complex environments, and day-to-day operations that cannot afford inconsistency.</p>
               <p className="text-lg text-muted-foreground mb-8">
                 People matter. That is why we strive to deliver the best commercial cleaning services. 
                 Our goal is to use our services to boost your customers' confidence, knowing that their 
