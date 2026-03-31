@@ -126,7 +126,7 @@ export default function GreenSeal() {
                   className="w-full max-w-[200px] mb-3"
                   data-testid="img-green-seal-badge"
                 />
-                <p className="text-white text-xs text-center leading-snug">
+                <p className="text-white text-[13px] text-center leading-snug">
                   Independently Certified Under Green Seal's Commercial Cleaning
                   Services Standard (GS-42)
                 </p>
