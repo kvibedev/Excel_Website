@@ -167,7 +167,7 @@ export default function CarpetExtraction() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Carpet extraction helps commercial facilities remove embedded dirt, allergens, and buildup that routine vacuuming cannot fully address. In high-traffic environments, this deeper cleaning supports a cleaner appearance, healthier indoor conditions, and a more professional overall presentation.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides carpet extraction services for commercial spaces that need targeted deep cleaning, stain attention, deodorizing, and traffic-lane restoration. Our services are designed to help maintain carpet performance while supporting daily workplace cleanliness and occupant comfort.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-efsg">EFSG</Link> extraction carpet service can help prolong your carpet's life by removing dirt and debris damage over time.
+                With more than 20 years of operational experience and multi-site capability, Excel helps organizations maintain cleaner carpets through dependable service delivery, proper extraction methods, and attention to the needs of each facility.
               </p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
