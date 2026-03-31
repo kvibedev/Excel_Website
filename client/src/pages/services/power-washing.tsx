@@ -162,9 +162,7 @@ export default function PowerWashing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT POWER WASHING SERVICES</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                The Quickest Way to Clean Your Building's Exterior
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Exterior Cleaning That Supports Building Presentation</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 Power washing is the quickest, most efficient way to clean the outside of your commercial building. It is ideal for removing dirt, grime, salt, and other debris that can build up on your structure over time.
               </p>
