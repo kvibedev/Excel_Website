@@ -119,9 +119,7 @@ export default function AutoDealerships() {
                 ABOUT OUR SERVICE
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Facility Services Built for Auto Dealerships</h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                A healthy and clean auto dealership plays a role in how customers view your business and the brands you sell. Everything should look shiny and new, from the cars to the service department.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Auto dealerships depend on presentation, cleanliness, and consistency to support customer confidence and protect brand perception. From showroom floors and front entrances to waiting areas and service departments, every part of the environment affects how the dealership is experienced.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
                 Some high-profile areas are front entrances, glass doors, displays, and the showroom floor. The sales area should be clean, bright, and inviting.
               </p>
