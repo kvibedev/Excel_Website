@@ -149,7 +149,7 @@ export default function OfficeBuilding() {
               <Badge variant="outline" className="mb-4 bg-[#97CC06]/10 text-[#97CC06] border-[#97CC06]" data-testid="badge-certified">
                 GREEN SEAL CERTIFIED
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-certification">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#fafafa]" data-testid="heading-certification">
                 Certified Excellence in Commercial Cleaning
               </h2>
               <p className="text-lg mb-6 text-[#fafafa]" data-testid="text-certification">
