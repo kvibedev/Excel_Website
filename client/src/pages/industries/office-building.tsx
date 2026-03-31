@@ -152,7 +152,7 @@ export default function OfficeBuilding() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-certification">
                 Certified Excellence in Commercial Cleaning
               </h2>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-certification">
+              <p className="text-lg mb-6 text-[#fafafa]" data-testid="text-certification">
                 Excel Facility's Commercial Cleaning Service is certified by the <strong>Green Seal Standard for Commercial and Institutional Cleaning Services</strong>. This certification guarantees that your office has been cleaned to the highest standards in the industry. When you partner with EFSG, you can be confident that your office will always make a positive impression.
               </p>
               <img
