@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, ArrowRight, Clock } from "lucide-react";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
+import floorCareImage from "@assets/floor_care_1_1774863820156.webp";
+import greenCleaningImage from "@assets/GS-Provide-Service-dk_1764335201153.webp";
+import officeImage from "@assets/office_top_bg_1774871962308.webp";
+import automationImage from "@assets/glass-cleaning-with-special-chemicals-cleaning-se-2026-03-25-0_1774632037682.jpg";
+import buildingImage from "@assets/Hero_building_image1_1774628077282.webp";
 
 export default function Resources() {
   const blogArticles = [
@@ -23,7 +28,7 @@ export default function Resources() {
       readTime: "6 min read",
       category: "Floor Care",
       excerpt: "This blog explores sustainable floor care in industrial facilities, focusing on eco-friendly cleaning products, energy- and water-efficient equipment, and tailored maintenance routines that protect both worker health and the environment.",
-      image: heroImage,
+      image: floorCareImage,
       slug: "sustainable-floor-care-transforming-facilities"
     },
     {
@@ -33,7 +38,7 @@ export default function Resources() {
       readTime: "5 min read",
       category: "Sustainability",
       excerpt: "Discover how green cleaning is transforming facility management by replacing toxic chemicals with safer, eco-friendly products and technologies. This post explores trends, benefits, sector-specific strategies, and practical steps for leaders.",
-      image: heroImage,
+      image: greenCleaningImage,
       slug: "green-cleaning-transforming-facility-management"
     },
     {
@@ -43,7 +48,7 @@ export default function Resources() {
       readTime: "7 min read",
       category: "Technology",
       excerpt: "This blog post explores how smart technology is revolutionizing facility security in the U.S., highlighting tools like AI video analytics, mobile access, cloud platforms, and IoT sensors that enhance safety, efficiency, and control.",
-      image: heroImage,
+      image: officeImage,
       slug: "smart-technology-revolutionizes-facility-security"
     },
     {
@@ -53,7 +58,7 @@ export default function Resources() {
       readTime: "6 min read",
       category: "Technology",
       excerpt: "Discover how automation is revolutionizing commercial cleaning in the U.S., with robotics, AI, and smart sensors reshaping facility hygiene. This blog explores how these innovations boost efficiency, reduce costs, and enhance sustainability.",
-      image: heroImage,
+      image: automationImage,
       slug: "automation-revolutionizes-commercial-cleaning-efficiency"
     },
     {
@@ -63,7 +68,7 @@ export default function Resources() {
       readTime: "7 min read",
       category: "Sustainability",
       excerpt: "This blog post explores how US facility managers are driving sustainability through energy efficiency initiatives. It covers key trends like smart retrofits, IoT-based monitoring, and renewable energy adoption with AI and cloud platforms.",
-      image: heroImage,
+      image: buildingImage,
       slug: "unlocking-energy-efficiency-for-facilities"
     }
   ];
