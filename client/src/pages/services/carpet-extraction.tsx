@@ -150,7 +150,7 @@ export default function CarpetExtraction() {
       />
       {/* Hero Section */}
       <Hero
-        title="Carpet Extraction"
+        title="Commercial Carpet Extraction Services"
         subtitle="Commercial carpet extraction requires special equipment and techniques to ensure that the carpet is cleaned safely and effectively."
         imageSrc={heroImage}
         height="medium"
