@@ -164,9 +164,7 @@ export default function AirDuctHVAC() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT AIR DUCT AND HVAC SERVICES</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Healthy Air for Your Commercial Space
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Healthier Air and Better HVAC Performance for Commercial Facilities</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 To keep the air in your commercial building healthy and clean, it is important to regularly clean and maintain your air ducts and HVAC system. Dust, dirt, and other contaminants can build up in your air ducts over time, potentially causing respiratory problems for your employees or customers.
               </p>
