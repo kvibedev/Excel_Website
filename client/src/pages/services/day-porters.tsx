@@ -77,7 +77,7 @@ export default function DayPorters() {
     { icon: Trash2, title: "Trash & Recycling", description: "Collection and proper disposal of waste from all areas." },
     { icon: Presentation, title: "Meeting Room Setup", description: "Prepare spaces for meetings and events with professional attention." },
     { icon: Hand, title: "High-Traffic Sanitizing", description: "Regular disinfection of elevators, door handles, and common areas." },
-    { icon: Settings, title: "General Maintenance", description: "Minor repairs and facility upkeep to maintain building standards." },
+    { icon: Settings, title: "General Facility Support", description: "Minor repairs and facility upkeep to maintain building standards." },
   ];
 
   const howWeWorkSteps = [
