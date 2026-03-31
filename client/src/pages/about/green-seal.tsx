@@ -62,40 +62,32 @@ export default function GreenSeal() {
         </div>
       </section>
 
-      {/* YouTube Video Section */}
-      <section className="py-12 bg-gradient-to-b from-[#063970] to-[#0A5EB9]">
-        <div className="container mx-auto px-4 flex justify-center">
-          <div className="w-full max-w-2xl aspect-video rounded-md overflow-hidden shadow-lg">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/k6zvcGXnXKk"
-              title="Excel Sustainability"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              data-testid="video-sustainability"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Two-column About Section */}
-      <section className="py-16 md:py-24 bg-white">
+      {/* Video + About Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-[#063970] to-[#0A5EB9]">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
-            <div>
+          <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+            <div className="aspect-video rounded-md overflow-hidden shadow-lg">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/k6zvcGXnXKk"
+                title="Excel Sustainability"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                data-testid="video-sustainability"
+              />
+            </div>
+            <div className="flex flex-col gap-6">
               <img
                 src={buildingImg}
                 alt="Excel Facility Services building"
                 className="w-full rounded-md object-cover"
                 data-testid="img-building"
               />
-            </div>
-            <div>
               <p
-                className="text-lg text-gray-700 leading-relaxed"
+                className="text-lg text-white/90 leading-relaxed"
                 data-testid="text-about-description"
               >
-                <strong>Excel Facility Services Group</strong> believes in
+                <strong className="text-white">Excel Facility Services Group</strong> believes in
                 protecting our planet and natural resources, and we are doing
                 our part to ensure that we educate ourselves and our clients on
                 green technologies and cleaning practices that benefit us all.
