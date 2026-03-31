@@ -152,7 +152,7 @@ export default function DayPorters() {
       {/* Hero Section */}
       <Hero
         title="Commercial Day Porter Services"
-        subtitle="A day porter is a professional who helps to maintain the cleanliness and order of a business or corporate building."
+        subtitle="Excel provides day porter services that help organizations maintain cleaner, safer, and more presentable environments throughout the day in high-traffic commercial facilities."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
