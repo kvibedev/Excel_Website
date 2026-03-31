@@ -15,7 +15,7 @@ import {
   Cog,
   Building2,
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import heroImage from "@assets/our_services_bg_image_1774982925242.webp";
 
 export default function Services() {
   const services = [
