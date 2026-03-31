@@ -18,6 +18,17 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
+  const copyToClipboard = async (url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      toast({ title: "Link copied!", description: "The article link has been copied to your clipboard." });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({ title: "Unable to copy", description: "Please copy the URL from your browser's address bar.", variant: "destructive" });
+    }
+  };
+
   const handleShare = async () => {
     const url = window.location.href;
     const title = document.title;
@@ -25,17 +36,14 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
     if (navigator.share) {
       try {
         await navigator.share({ title, url });
-      } catch {
+      } catch (err: unknown) {
+        if (err instanceof DOMException && err.name === "AbortError") {
+          return;
+        }
+        await copyToClipboard(url);
       }
     } else {
-      try {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        toast({ title: "Link copied!", description: "The article link has been copied to your clipboard." });
-        setTimeout(() => setCopied(false), 2000);
-      } catch {
-        toast({ title: "Unable to copy", description: "Please copy the URL from your browser's address bar.", variant: "destructive" });
-      }
+      await copyToClipboard(url);
     }
   };
 
