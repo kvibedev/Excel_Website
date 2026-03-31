@@ -152,7 +152,7 @@ export default function AirDuctHVAC() {
       {/* Hero Section */}
       <Hero
         title="Commercial Air Duct and HVAC Services"
-        subtitle="Professional Air Duct and HVAC cleaning and maintenance services can create a healthier and more comfortable environment for your business."
+        subtitle="Excel provides air duct and HVAC cleaning and maintenance services that help commercial facilities support cleaner indoor air, improve system performance, and maintain more comfortable environments."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
