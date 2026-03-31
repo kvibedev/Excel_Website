@@ -28,7 +28,7 @@ import {
   FileCheck,
   PackageCheck
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import heroImage from "@assets/LevelUp_Clean_BG_1774970115114.webp";
 import sectionImage from "@assets/LevelUp_Clean_1_1774970015050.webp";
 import tailoredImage from "@assets/LevelUp_Clean_2_1774970030450.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
