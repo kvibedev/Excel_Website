@@ -153,7 +153,7 @@ export default function FloorCare() {
       {/* Hero Section */}
       <Hero
         title="Commercial Floor Care Services"
-        subtitle="First impressions are crucial in nearly every industry, so it is essential to take the time to clean and polish your floors regularly."
+        subtitle="Excel provides commercial floor care services that help organizations maintain cleaner, safer, and more professional-looking environments through structured maintenance, restoration, and surface-specific care."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
