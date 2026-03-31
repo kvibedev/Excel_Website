@@ -149,11 +149,11 @@ export default function OurTeam() {
       {/* Team Grid Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {teamMembers.filter(m => !m.hidden).map((member, index) => (
               <Card 
                 key={index}
-                className="hover-elevate active-elevate-2 border-0 shadow-lg bg-transparent"
+                className="hover-elevate active-elevate-2 border-0 shadow-lg bg-transparent w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] xl:w-[calc(25%-1.5rem)]"
                 data-testid={`card-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
               >
                 <div className="flex flex-col items-center">
