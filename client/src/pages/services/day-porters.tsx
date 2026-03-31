@@ -163,9 +163,7 @@ export default function DayPorters() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
-              <Badge variant="outline" className="mb-4" data-testid="badge-about">
-                ABOUT OUR SERVICE
-              </Badge>
+              <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT DAY PORTER SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
                 Professional Day Porter Services
               </h2>
