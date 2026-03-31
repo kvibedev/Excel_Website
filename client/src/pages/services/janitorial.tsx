@@ -151,7 +151,7 @@ export default function Janitorial() {
       {/* Hero Section */}
       <Hero
         title="Commercial Janitorial Services"
-        subtitle="We specialize in comprehensive commercial janitorial services tailored to meet the needs of businesses of all sizes."
+        subtitle="Excel provides commercial janitorial services designed to help organizations maintain cleaner, safer, and more consistent environments through accountable service delivery, trained teams, and responsive support."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
