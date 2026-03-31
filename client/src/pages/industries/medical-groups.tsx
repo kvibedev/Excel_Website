@@ -208,26 +208,48 @@ export default function MedicalGroups() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
               HEALTHCARE EXPERTISE
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              Navigating Change in Healthcare
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+              Supporting Safer, More Consistent Healthcare Environments
             </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
-              The healthcare industry has seen many changes in recent years, and Excel Facility Services Group has been at the forefront of innovation, providing a full range of services to meet the needs of our clients. From hospitals and clinics to long-term care facilities and outpatient services, we have the expertise and experience to ensure that your facilities are well-maintained and safe for patients, staff, and visitors.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              We help medical groups to navigate change, and provide them with assurance by demonstrating trustworthy cleaning through a <strong>three-step approach</strong> that delivers healthy spaces with certified disinfection. In the wake of COVID-19, we have redoubled our efforts to ensure that our client's facilities are clean and safe for everyone who enters them.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              Our trained professionals utilize <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">advanced disinfection techniques</Link> to mitigate the risk of infection, giving you peace of mind. Our comprehensive approach not only increases patient satisfaction but also helps you stay compliant with health regulations.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              Partnering with Excel Facility Services signals your commitment to exceptional care and safety. Choose us for a reliable cleaning solution that prioritizes the health of everyone who walks through your doors. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link>!
+            <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
+              Excel Facility Services Group helps medical groups, outpatient clinics, and healthcare environments maintain cleaner, safer, and more consistent spaces through structured service delivery, dependable communication, and support built around patient-facing operations.
             </p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="h-full" data-testid="card-tailored-1">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Patient-Facing Cleanliness</CardTitle>
+                <CardDescription className="text-base">
+                  Help maintain cleaner exam rooms, waiting areas, restrooms, and shared spaces that shape how patients experience the environment.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-2">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/disinfection" className="text-[#0A5EB9] hover:underline" data-testid="link-disinfection">Disinfection Support</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Targeted disinfection for high-touch surfaces and shared environments where hygiene assurance and patient confidence matter most.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-3">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Operational Consistency</CardTitle>
+                <CardDescription className="text-base">
+                  Service programs built around staff workflow, patient traffic, and daily facility needs to support a cleaner, more dependable healthcare environment.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto" data-testid="text-tailored-closing">
+            Our approach helps healthcare facilities maintain stronger hygiene standards, better day-to-day consistency, and a more confidence-inspiring experience for patients, staff, and visitors. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link>.
+          </p>
         </div>
       </section>
       {/* Value Propositions - 5 Cards with green borders */}
