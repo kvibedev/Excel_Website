@@ -266,9 +266,7 @@ export default function AirDuctHVAC() {
             <Badge variant="outline" className="mb-4" data-testid="badge-tasks">
               WHAT WE DO
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">
-              Air Duct & HVAC Tasks
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">Comprehensive Air Duct and HVAC Services</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Our certified technicians are well-versed in comprehensive air duct and HVAC services to keep your facility's air clean and systems running efficiently
             </p>
