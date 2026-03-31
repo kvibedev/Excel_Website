@@ -169,7 +169,7 @@ export default function FloorCare() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Floor care plays an important role in how a facility looks, feels, and performs every day. Clean, well-maintained floors help reinforce a more professional environment while supporting safer conditions in high-traffic commercial spaces.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides floor care services for commercial environments that need routine maintenance, restoration support, and surface-specific treatment programs. Our services are designed to help preserve appearance, extend floor life, and maintain a cleaner, more polished presentation across the facility.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                In short, investing in floor care is an investment in your business. Partner with <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-efsg">EFSG</Link> to ensure your floors always make the right impression.
+                With more than 20 years of operational experience and multi-site capability, Excel helps organizations maintain stronger floor performance through dependable service delivery, tailored care plans, and attention to the demands of each floor type.
               </p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
