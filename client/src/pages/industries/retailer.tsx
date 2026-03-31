@@ -98,7 +98,7 @@ export default function Retailer() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
               <img
-                src={sectionImage}
+                src={heroImage}
                 alt="Professional Retail Store Cleaning"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
