@@ -91,7 +91,7 @@ export default function AutoDealerships() {
       />
       {/* Hero Section */}
       <Hero
-        title="Auto Dealership Cleaning"
+        title="Auto Dealership Cleaning and Facility Services"
         subtitle="A dirty or cluttered dealership will give customers a bad impression and may cause them to go elsewhere. First impressions are important to customers."
         imageSrc={heroImage}
         height="medium"
