@@ -18,7 +18,7 @@ import {
   Headphones,
   ClipboardCheck
 } from "lucide-react";
-import heroImage from "@assets/restaurant_bg_1774868915681.webp";
+import heroImage from "@assets/Restaurent_BG_image_2_1774982528151.webp";
 import sectionImage from "@assets/restaurant_1_1774868947379.webp";
 import benefitsImage from "@assets/restaurant_22_1774868990348.webp";
 
