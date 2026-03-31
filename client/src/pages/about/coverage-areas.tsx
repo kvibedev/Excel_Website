@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { MapPin } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 import usaMapImage from "@assets/EXCEL_MAP_2025_(1)_1774873104677.png";
 
 export default function CoverageAreas() {
@@ -45,14 +44,7 @@ export default function CoverageAreas() {
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImage}
-            alt="EFSG Coverage Areas"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-coverage">
             Nationwide Service

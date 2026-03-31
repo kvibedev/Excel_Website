@@ -4,8 +4,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { Shield, Sparkles } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
-
 export default function GreenSeal() {
 
   return (
@@ -17,14 +15,7 @@ export default function GreenSeal() {
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImage}
-            alt="Green Seal Certification"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-hero-title">
             Excel Facility Services Group is Green Seal Certified

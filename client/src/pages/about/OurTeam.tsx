@@ -2,7 +2,6 @@ import SEO from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import heroImage from "@assets/Worker_group_shot_(2)_1774896517773.png";
 import alvinImage from "@assets/Alvin-1_1764595596799.webp";
 import gumersindoImage from "@assets/Mesa-de-trabajo-6-80-1_1764595596799.webp";
 import yairaImage from "@assets/Mesa-de-trabajo-7-80_1764595596799.webp";
@@ -128,12 +127,7 @@ export default function OurTeam() {
       />
       {/* Hero Section */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-[#063970]/95 via-[#063970]/90 to-[#063970]/85"></div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#063970]/95 via-[#063970]/90 to-[#063970]/85" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="text-our-team-title">

@@ -15,7 +15,6 @@ import {
   MapPin,
   SquareStack
 } from "lucide-react";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
 import aboutImage from "@assets/generated_images/About_us_team_image_4c0b3785.png";
 
 export default function About() {
@@ -74,12 +73,7 @@ export default function About() {
     <div>
       {/* Hero Section */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-[#063970]/95 via-[#063970]/90 to-[#063970]/85"></div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#063970]/95 via-[#063970]/90 to-[#063970]/85" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="text-about-title">
