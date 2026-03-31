@@ -87,7 +87,7 @@ export default function MedicalGroups() {
       />
       {/* Hero Section */}
       <Hero
-        title="Medical Groups"
+        title="Medical Group Cleaning and Facility Services"
         subtitle="It is crucial for medical groups to have a clean and healthy environment for their patients, staff, and visitors."
         imageSrc={heroImage}
         height="medium"
