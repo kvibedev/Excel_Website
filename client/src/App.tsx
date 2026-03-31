@@ -55,6 +55,8 @@ import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminContacts from "@/pages/admin/AdminContacts";
 import AdminVendors from "@/pages/admin/AdminVendors";
+import AdminBlog from "@/pages/admin/AdminBlog";
+import AdminBlogEditor from "@/pages/admin/AdminBlogEditor";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -123,10 +125,14 @@ function AdminRouter() {
     <>
       <ScrollToTop />
       <Switch>
-        <Route path="/admin" component={AdminLogin} />
+        <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/dashboard" component={AdminDashboard} />
         <Route path="/admin/contacts" component={AdminContacts} />
         <Route path="/admin/vendors" component={AdminVendors} />
+        <Route path="/admin/blog" component={AdminBlog} />
+        <Route path="/admin/blog/new" component={AdminBlogEditor} />
+        <Route path="/admin/blog/:id/edit" component={AdminBlogEditor} />
         <Route component={NotFound} />
       </Switch>
     </>

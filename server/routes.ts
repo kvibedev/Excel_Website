@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import { storage } from "./storage";
-import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema } from "@shared/schema";
+import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema } from "@shared/schema";
 import { z } from "zod";
 
 declare module "express-session" {
@@ -256,20 +256,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const contacts = await storage.getContacts();
       const vendors = await storage.getVendorRegistrations();
+      const posts = await storage.getBlogPosts();
       
       const newContacts = contacts.filter(c => c.status === "new").length;
       const newVendors = vendors.filter(v => v.status === "new").length;
+      const publishedPosts = posts.filter(p => p.status === "published").length;
       
       res.json({
         totalContacts: contacts.length,
         totalVendors: vendors.length,
         newContacts,
         newVendors,
+        publishedPosts,
+        totalPosts: posts.length,
         recentContacts: contacts.slice(0, 5),
         recentVendors: vendors.slice(0, 5),
       });
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch stats" });
+    }
+  });
+
+  app.get("/api/admin/blog", requireAdmin, async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.get("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const post = await storage.getBlogPost(id);
+      if (!post) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
+  app.post("/api/admin/blog", requireAdmin, async (req, res) => {
+    try {
+      const parsed = insertBlogPostSchema.parse(req.body);
+      const existing = await storage.getBlogPostBySlug(parsed.slug);
+      if (existing) {
+        return res.status(400).json({ error: "A post with this slug already exists" });
+      }
+      if (parsed.status === "published" && !parsed.publishedAt) {
+        parsed.publishedAt = new Date();
+      }
+      const post = await storage.createBlogPost(parsed);
+      res.json(post);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create blog post" });
+    }
+  });
+
+  app.patch("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateSchema = insertBlogPostSchema.partial();
+      let updates: Partial<typeof insertBlogPostSchema._type>;
+      try {
+        updates = updateSchema.parse(req.body);
+      } catch (validationError) {
+        if (validationError instanceof z.ZodError) {
+          return res.status(400).json({ error: validationError.errors });
+        }
+        throw validationError;
+      }
+
+      const existing = await storage.getBlogPost(id);
+      if (!existing) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+
+      if (updates.slug && updates.slug !== existing.slug) {
+        const slugConflict = await storage.getBlogPostBySlug(updates.slug);
+        if (slugConflict) {
+          return res.status(400).json({ error: "A post with this slug already exists" });
+        }
+      }
+
+      if (updates.status === "published" && !updates.publishedAt && existing.status !== "published") {
+        updates.publishedAt = new Date();
+      }
+
+      const post = await storage.updateBlogPost(id, updates);
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update blog post" });
+    }
+  });
+
+  app.delete("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteBlogPost(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete blog post" });
     }
   });
 

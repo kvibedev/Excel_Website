@@ -1,5 +1,4 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,27 +6,32 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Users, LogOut, ArrowLeft, Trash2, MessageSquare } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Users, Trash2, MessageSquare, Download } from "lucide-react";
+import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Contact, ContactNote } from "@shared/schema";
+import AdminLayout, { useAdminAuth } from "./AdminLayout";
+
+const statusColors: Record<string, string> = {
+  new: "bg-blue-500",
+  contacted: "bg-yellow-500",
+  "in-progress": "bg-orange-500",
+  "follow-up": "bg-purple-500",
+  closed: "bg-gray-500",
+};
 
 export default function AdminContacts() {
-  const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { authData, authLoading } = useAdminAuth();
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [newNote, setNewNote] = useState("");
 
-  const { data: authData, isLoading: authLoading } = useQuery({
-    queryKey: ["/api/admin/me"],
-  });
-
   const { data: contacts, isLoading: contactsLoading } = useQuery<Contact[]>({
     queryKey: ["/api/admin/contacts"],
-    enabled: !!(authData as any)?.authenticated,
+    enabled: !!authData?.authenticated,
   });
 
   const { data: notes } = useQuery<ContactNote[]>({
@@ -41,6 +45,7 @@ export default function AdminContacts() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/contacts"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
       toast({ title: "Status updated" });
     },
   });
@@ -51,6 +56,7 @@ export default function AdminContacts() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/contacts"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
       setSelectedContact(null);
       toast({ title: "Contact deleted" });
     },
@@ -67,17 +73,6 @@ export default function AdminContacts() {
     },
   });
 
-  useEffect(() => {
-    if (!authLoading && !(authData as any)?.authenticated) {
-      setLocation("/admin");
-    }
-  }, [authData, authLoading, setLocation]);
-
-  const handleLogout = async () => {
-    await apiRequest("POST", "/api/admin/logout");
-    setLocation("/admin");
-  };
-
   if (authLoading || contactsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -88,7 +83,7 @@ export default function AdminContacts() {
 
   const filteredContacts = contacts?.filter((contact) => {
     const matchesStatus = filterStatus === "all" || contact.status === filterStatus;
-    const matchesSearch = 
+    const matchesSearch =
       contact.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -96,100 +91,86 @@ export default function AdminContacts() {
     return matchesStatus && matchesSearch;
   });
 
-  const statusColors: Record<string, string> = {
-    new: "bg-blue-500",
-    contacted: "bg-yellow-500",
-    qualified: "bg-green-500",
-    closed: "bg-gray-500",
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-[#063970] text-white py-4 px-6">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold">Excel CRM - Contacts</h1>
-          <div className="flex items-center gap-4">
-            <span>Welcome, {(authData as any)?.username}</span>
-            <Button variant="outline" size="sm" onClick={handleLogout} data-testid="button-logout">
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <nav className="bg-white border-b px-6 py-3">
-        <div className="container mx-auto flex gap-4">
-          <Link href="/admin/dashboard">
-            <Button variant="ghost" data-testid="link-dashboard">Dashboard</Button>
-          </Link>
-          <Link href="/admin/contacts">
-            <Button variant="ghost" className="text-[#063970]" data-testid="link-contacts">Contacts</Button>
-          </Link>
-          <Link href="/admin/vendors">
-            <Button variant="ghost" data-testid="link-vendors">Vendors</Button>
-          </Link>
-        </div>
-      </nav>
-
-      <main className="container mx-auto px-6 py-8">
-        <Card>
-          <CardHeader>
+    <AdminLayout title="Excel CRM - Contacts" activeNav="contacts">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <CardTitle className="flex items-center gap-2">
               <Users className="w-5 h-5" />
               Contact Submissions ({filteredContacts?.length || 0})
             </CardTitle>
-            <div className="flex gap-4 mt-4">
-              <Input
-                placeholder="Search contacts..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm"
-                data-testid="input-search-contacts"
-              />
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="w-40" data-testid="select-filter-status">
-                  <SelectValue placeholder="Filter status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="contacted">Contacted</SelectItem>
-                  <SelectItem value="qualified">Qualified</SelectItem>
-                  <SelectItem value="closed">Closed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {filteredContacts?.map((contact) => (
-                <div
-                  key={contact.id}
-                  className="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover-elevate cursor-pointer"
-                  onClick={() => setSelectedContact(contact)}
-                  data-testid={`contact-row-${contact.id}`}
-                >
-                  <div className="flex-1">
-                    <p className="font-medium">{contact.firstName} {contact.lastName}</p>
-                    <p className="text-sm text-muted-foreground">{contact.email}</p>
-                    {contact.company && <p className="text-sm text-muted-foreground">{contact.company}</p>}
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(contact.createdAt).toLocaleDateString()}
-                    </p>
-                    <Badge className={statusColors[contact.status]}>{contact.status}</Badge>
-                  </div>
+            <a href="/api/admin/contacts/export/csv" download>
+              <Button size="sm" variant="outline" data-testid="button-export-contacts">
+                <Download className="w-4 h-4 mr-2" />
+                Export CSV
+              </Button>
+            </a>
+          </div>
+          <div className="flex gap-4 mt-4 flex-wrap">
+            <Input
+              placeholder="Search contacts..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="max-w-sm"
+              data-testid="input-search-contacts"
+            />
+            <Select value={filterStatus} onValueChange={setFilterStatus}>
+              <SelectTrigger className="w-44" data-testid="select-filter-status">
+                <SelectValue placeholder="Filter status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="new">New</SelectItem>
+                <SelectItem value="contacted">Contacted</SelectItem>
+                <SelectItem value="in-progress">In Progress</SelectItem>
+                <SelectItem value="follow-up">Follow Up</SelectItem>
+                <SelectItem value="closed">Closed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {filteredContacts?.map((contact) => (
+              <div
+                key={contact.id}
+                className="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover-elevate cursor-pointer"
+                onClick={() => setSelectedContact(contact)}
+                data-testid={`contact-row-${contact.id}`}
+              >
+                <div className="flex-1">
+                  <p className="font-medium">{contact.firstName} {contact.lastName}</p>
+                  <p className="text-sm text-muted-foreground">{contact.email}</p>
+                  {contact.company && <p className="text-sm text-muted-foreground">{contact.company}</p>}
                 </div>
-              ))}
-              {(!filteredContacts || filteredContacts.length === 0) && (
-                <p className="text-muted-foreground text-center py-8">No contacts found</p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </main>
+                <div className="flex items-center gap-4">
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(contact.createdAt).toLocaleDateString()}
+                  </p>
+                  <Badge className={statusColors[contact.status] || "bg-gray-400"}>{contact.status}</Badge>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm("Delete this contact?")) {
+                        deleteContactMutation.mutate(contact.id);
+                      }
+                    }}
+                    data-testid={`button-delete-contact-row-${contact.id}`}
+                  >
+                    <Trash2 className="w-4 h-4 text-destructive" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+            {(!filteredContacts || filteredContacts.length === 0) && (
+              <p className="text-muted-foreground text-center py-8">No contacts found</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
       <Dialog open={!!selectedContact} onOpenChange={() => setSelectedContact(null)}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -207,7 +188,7 @@ export default function AdminContacts() {
               </Button>
             </DialogTitle>
           </DialogHeader>
-          
+
           {selectedContact && (
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
@@ -248,15 +229,19 @@ export default function AdminContacts() {
                 <label className="text-sm font-medium text-muted-foreground">Status</label>
                 <Select
                   value={selectedContact.status}
-                  onValueChange={(status) => updateStatusMutation.mutate({ id: selectedContact.id, status })}
+                  onValueChange={(status) => {
+                    updateStatusMutation.mutate({ id: selectedContact.id, status });
+                    setSelectedContact({ ...selectedContact, status });
+                  }}
                 >
-                  <SelectTrigger className="w-40 mt-1" data-testid="select-update-status">
+                  <SelectTrigger className="w-44 mt-1" data-testid="select-update-status">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="new">New</SelectItem>
                     <SelectItem value="contacted">Contacted</SelectItem>
-                    <SelectItem value="qualified">Qualified</SelectItem>
+                    <SelectItem value="in-progress">In Progress</SelectItem>
+                    <SelectItem value="follow-up">Follow Up</SelectItem>
                     <SelectItem value="closed">Closed</SelectItem>
                   </SelectContent>
                 </Select>
@@ -292,7 +277,7 @@ export default function AdminContacts() {
                     onClick={() => addNoteMutation.mutate({
                       contactId: selectedContact.id,
                       note: newNote,
-                      authorName: (authData as any)?.username || "Admin"
+                      authorName: authData?.username || "Admin"
                     })}
                     disabled={!newNote.trim()}
                     data-testid="button-add-note"
@@ -305,6 +290,6 @@ export default function AdminContacts() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+    </AdminLayout>
   );
 }

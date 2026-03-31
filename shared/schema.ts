@@ -121,3 +121,27 @@ export const insertContactNoteSchema = createInsertSchema(contactNotes).omit({
 
 export type InsertContactNote = z.infer<typeof insertContactNoteSchema>;
 export type ContactNote = typeof contactNotes.$inferSelect;
+
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content").notNull(),
+  author: text("author").notNull(),
+  category: text("category"),
+  tags: text("tags"),
+  status: text("status").default("draft").notNull(),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+export type BlogPost = typeof blogPosts.$inferSelect;
