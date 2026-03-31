@@ -166,9 +166,7 @@ export default function ConcretePolishing() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Concrete Polishing for Durability, Appearance, and Long-Term Performance</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Concrete polishing helps commercial facilities improve the appearance, durability, and maintenance profile of their floors. In high-traffic environments, polished concrete can support a cleaner, more professional look while making routine upkeep more efficient.</p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides concrete polishing services for commercial spaces that need smoother surfaces, stronger presentation, and flooring systems designed to perform under daily wear. Our process supports both new and existing concrete floors, depending on the condition and goals of the space.</p>
-              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                Fine diamond abrasives are then used to refine the surface of the concrete until it meets the desired level of shine. Finally, a sealer protects the polished surface from stains and wear.
-              </p>
+              <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">With more than 20 years of operational experience and multi-site capability, Excel helps organizations improve floor performance through dependable service delivery, surface preparation, and finishing programs aligned with the needs of the facility.</p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
                   Get Started Today
