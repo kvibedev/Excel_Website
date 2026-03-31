@@ -71,7 +71,7 @@ export default function OfficeBuilding() {
         path="/industries/office-building"
       />
       <Hero
-        title="Office Building"
+        title="Facility Services for Modern Office Buildings"
         subtitle="EFSG provides reliable facility services to keep your office clean, comfortable, and safe."
         imageSrc={heroImage}
         height="medium"
