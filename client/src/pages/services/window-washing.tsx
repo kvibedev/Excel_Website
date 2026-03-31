@@ -162,9 +162,7 @@ export default function WindowWashing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT WINDOW WASHING SERVICES</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Crystal Clear Windows for Your Business
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Commercial Window Washing That Supports Building Presentation</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 Window washing is an important part of any commercial building maintenance plan. Our services not only improve the appearance of the building but also help extend the life of window panes by removing dirt, debris, and other corrosive materials. Excel Facility Services Group's window washing service can help improve indoor air quality by reducing the dust and allergens that circulate inside the building.
               </p>
