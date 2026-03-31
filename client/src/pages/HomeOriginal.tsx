@@ -37,6 +37,7 @@ import avettaLogo from "@assets/avetta_1774369371352.webp";
 import somersetLogo from "@assets/somerset_1774369371353.webp";
 import aboutImage from "@assets/Worker_group_shot_1774873159949.png";
 import officeImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
+import janitorialCardImage from "@assets/Janitor_BG_1774985198731.webp";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import dayPorterCardImage from "@assets/Day_porter_bg_1774873396267.webp";
 import disinfectionCardImage from "@assets/janitorial-workforce-in-hazmat-suits-sanitizing-th-2026-03-10-_1774873578053.jpg";
@@ -135,7 +136,7 @@ export default function HomeOriginal() {
       icon: Sparkles,
       title: "Janitorial",
       description: "Janitorial services are essential for businesses of all sizes. It not only keeps the workplace looking clean and professional, but they also help to ensure a safe and healthy environment for customers and employees.",
-      image: officeImage,
+      image: janitorialCardImage,
       href: "/services/janitorial",
     },
     {
