@@ -88,13 +88,12 @@ export default function MedicalGroups() {
       {/* Hero Section */}
       <Hero
         title="Medical Group Cleaning and Facility Services"
-        subtitle="It is crucial for medical groups to have a clean and healthy environment for their patients, staff, and visitors."
+        subtitle="Excel Facility Services Group helps medical groups maintain cleaner, safer, and more consistent environments through accountable service delivery, responsive support, and programs designed for patient-facing healthcare settings."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW SERVICES", href: "/services" }}
       />
-
       {/* About Section - Split Layout */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -115,9 +114,7 @@ export default function MedicalGroups() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">
                 ABOUT OUR SERVICE
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Creating Safe & Healthy Healthcare Environments
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Supporting Cleaner, Safer Medical Environments</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 <strong>A clean environment helps prevent the spread of illness and infection</strong> and makes a good impression on anyone who enters the facility — visitors, patients, and staff alike.
               </p>
@@ -137,7 +134,6 @@ export default function MedicalGroups() {
           </div>
         </div>
       </section>
-
       {/* Services Grid - Fore Tech Style */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -170,7 +166,6 @@ export default function MedicalGroups() {
           </div>
         </div>
       </section>
-
       {/* Key Benefits Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -211,7 +206,6 @@ export default function MedicalGroups() {
           </div>
         </div>
       </section>
-
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -237,7 +231,6 @@ export default function MedicalGroups() {
           </div>
         </div>
       </section>
-
       {/* Value Propositions - 5 Cards with green borders */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -264,7 +257,6 @@ export default function MedicalGroups() {
           </div>
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
