@@ -206,9 +206,7 @@ export default function Janitorial() {
             <Badge variant="outline" className="mb-4" data-testid="badge-benefits">
               KEY BENEFITS
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-benefits">
-              Why Professional Janitorial Services Matter
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-benefits">Why Consistent Professional Janitorial Services Matter</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               First impressions matter and a clean, well-maintained building will help your business project a professional image.
             </p>
