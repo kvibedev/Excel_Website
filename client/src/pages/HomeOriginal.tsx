@@ -41,7 +41,7 @@ import janitorialCardImage from "@assets/Janitor_BG_1774985198731.webp";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import dayPorterCardImage from "@assets/Day_porter_bg_1774873396267.webp";
 import disinfectionCardImage from "@assets/janitorial-workforce-in-hazmat-suits-sanitizing-th-2026-03-10-_1774873578053.jpg";
-import levelUpCardImage from "@assets/Day_porter_2_1774873680676.webp";
+import levelUpCardImage from "@assets/levelup_home_page_image_1774985318733.webp";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
 import restaurantImage from "@assets/generated_images/Restaurant_industry_image_41a06d21.png";
 import medicalImage from "@assets/generated_images/Medical_groups_industry_image_a154fa6b.png";
