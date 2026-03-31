@@ -112,7 +112,7 @@ export default function OfficeBuilding() {
         </div>
       </section>
       {/* Key Benefits Section */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      <section className="py-16 md:py-24 bg-[#6b70734d]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card className="border-0 shadow-lg">
