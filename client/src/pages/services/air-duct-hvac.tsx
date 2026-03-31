@@ -151,7 +151,7 @@ export default function AirDuctHVAC() {
       />
       {/* Hero Section */}
       <Hero
-        title="Air Duct & HVAC"
+        title="Commercial Air Duct and HVAC Services"
         subtitle="Professional Air Duct and HVAC cleaning and maintenance services can create a healthier and more comfortable environment for your business."
         imageSrc={heroImage}
         height="medium"
