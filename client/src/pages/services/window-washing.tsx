@@ -259,9 +259,7 @@ export default function WindowWashing() {
             <Badge variant="outline" className="mb-4" data-testid="badge-tasks">
               WHAT WE DO
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">
-              Comprehensive Window Washing Services
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">Comprehensive Window Washing Services for Commercial Buildings</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Our professional window washers are equipped to handle all your window cleaning needs
             </p>
