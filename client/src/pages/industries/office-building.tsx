@@ -81,17 +81,32 @@ export default function OfficeBuilding() {
       {/* Main Content Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <Badge variant="outline" className="mb-4" data-testid="badge-industries">
-              INDUSTRIES
-            </Badge>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-intro-1">
-              An office is one of the first places potential customers and partners will see when they visit your company. First impressions matter and a clean, well-maintained building will help your business project a professional image. <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about-efsg">Excel Facility Services Group</Link> offers a wide range of commercial cleaning services to keep your office looking its best. From regularly scheduled <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial-services">janitorial services</Link> to one-time deep cleans, we can develop a customized cleaning plan that meets your specific needs. Our experienced professionals only use the latest equipment and techniques to get the job done correctly.
-            </p>
-            
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-intro-2">
-              <strong>Excel Facility Services Group</strong> can help you get organized and create a space that reflects professionalism and attention to detail. We understand that privacy is very important in an office setting, so we are willing to work with our customers on scheduling times for cleaning their offices when no one else will be there.
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            <div>
+              <Badge variant="outline" className="mb-4" data-testid="badge-industries">
+                INDUSTRIES
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-intro">
+                Facility Services for Modern Office Buildings
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-intro-1">
+                Office buildings rely on cleanliness, presentation, and day-to-day consistency to support employee experience, visitor confidence, and tenant satisfaction. In shared workplace environments, facility service needs to feel structured, visible, and dependable, not reactive or inconsistent.
+              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-intro-2">
+                Excel Facility Services Group provides commercial cleaning and facility services for office buildings that need janitorial support, daytime upkeep, disinfection, floor care, and service programs aligned with the realities of business operations. Our approach helps maintain cleaner, safer, and more professional workplaces across lobbies, restrooms, break areas, elevators, corridors, meeting rooms, and common spaces.
+              </p>
+              <p className="text-lg text-muted-foreground" data-testid="text-intro-3">
+                With more than 20 years of operational experience and multi-site capability, Excel supports office environments that need more than a basic cleaning vendor. We help clients maintain healthier workplaces through accountable service delivery, responsive communication, and standards built for consistency.
+              </p>
+            </div>
+            <div className="relative">
+              <img
+                src={greenSealImage}
+                alt="Office Building Facility Services"
+                className="rounded-md w-full h-auto shadow-lg"
+                data-testid="img-intro"
+              />
+            </div>
           </div>
         </div>
       </section>
