@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { CheckCircle2, ArrowRight, Shield, Leaf, Users, Award, Clock, ThumbsUp, Building2 } from "lucide-react";
 import heroImage from "@assets/office_top_bg_1774871962308.webp";
 import greenSealImage from "@assets/Hero_building_image1_1774869765656.webp";
+import officeIntroImage from "@assets/the-stairs-2026-01-09-08-22-11-utc_1774997634796.jpg";
 import greenSealBadge from "@assets/GS-Provide-Service-dk_1764335201153.webp";
 
 export default function OfficeBuilding() {
@@ -102,7 +103,7 @@ export default function OfficeBuilding() {
             </div>
             <div className="relative">
               <img
-                src={greenSealImage}
+                src={officeIntroImage}
                 alt="Office Building Facility Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-intro"
