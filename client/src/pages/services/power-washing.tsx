@@ -149,7 +149,7 @@ export default function PowerWashing() {
       />
       {/* Hero Section */}
       <Hero
-        title="Power Washing"
+        title="Commercial Power Washing Services"
         subtitle="Looking to get the outside of your business clean? Look no further than power washing! This quick and efficient method will have your building looking good as new in no time."
         imageSrc={heroImage}
         height="medium"
