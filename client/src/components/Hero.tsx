@@ -119,7 +119,9 @@ export default function Hero({
         </h1>
         {subtitle && (
           <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-white/90" data-testid="text-hero-subtitle">
-            {subtitle}
+            {subtitle.split("\n").map((line, i, arr) => (
+              <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+            ))}
           </p>
         )}
         {(primaryCta || secondaryCta) && (

@@ -201,7 +201,7 @@ export default function HomeOriginal() {
       {/* Hero Section - Template 3 style with original content */}
       <Hero
         title="Creating Healthier Workplaces"
-        subtitle="Facility Services Built for Multi-Site Performance. Excel Facility Services Group helps organizations maintain cleaner, safer, and more consistent environments through accountable service delivery, regional responsiveness, and standards built for operational performance."
+        subtitle={"Facility Services Built for Multi-Site Performance.\nExcel Facility Services Group helps organizations maintain cleaner, safer, and more consistent environments through accountable service delivery, regional responsiveness, and standards built for operational performance."}
         imageSrc={heroImage}
         images={[heroImage, heroImage2, heroImage3]}
         primaryCta={{ text: "OUR SERVICES", href: "/services" }}
