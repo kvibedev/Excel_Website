@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/Janitor_BG_1774969060493.webp";
 import sectionImage from "@assets/Janitorial_1_1774969292430.webp";
+import tailoredImage from "@assets/Janitorial_2_1774969359809.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
@@ -307,7 +308,7 @@ export default function Janitorial() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="order-2 lg:order-1 relative">
               <img
-                src={heroImage}
+                src={tailoredImage}
                 alt="Tailored Janitorial Solutions"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-tailored"
