@@ -207,7 +207,6 @@ export default function HomeOriginal() {
         primaryCta={{ text: "OUR SERVICES", href: "/services" }}
         secondaryCta={{ text: "CONTACT US", href: "/contact" }}
       />
-
       {/* Stats Banner */}
       <section className="py-16 md:py-20 bg-[#063970]">
         <div className="container mx-auto px-4">
@@ -232,7 +231,6 @@ export default function HomeOriginal() {
           </div>
         </div>
       </section>
-
       {/* Certification Logo Carousel */}
       <section className="py-12 bg-white border-y border-border overflow-hidden">
         <div className="container mx-auto px-4 mb-6 text-center">
@@ -258,14 +256,11 @@ export default function HomeOriginal() {
           </div>
         </div>
       </section>
-
       {/* Value Propositions - 4-Step Workflow Style */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4" data-testid="badge-process">
-              WHY CHOOSE EFSG
-            </Badge>
+            <Badge variant="outline" className="mb-4" data-testid="badge-process">Why Organizations Choose Excel</Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-4" data-testid="heading-process">
               Our Commitment to Excellence
             </h2>
@@ -303,7 +298,6 @@ export default function HomeOriginal() {
           </div>
         </div>
       </section>
-
       {/* Company Section - Template 3 two-column style with original content */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -343,7 +337,6 @@ export default function HomeOriginal() {
           </div>
         </div>
       </section>
-
       {/* Industries Banner + Carousel - Template 3 style with 8 industries */}
       <section className="py-12 md:py-16 bg-[#063970]">
         <div className="container mx-auto px-4">
@@ -427,7 +420,6 @@ export default function HomeOriginal() {
           </div>
         </div>
       </section>
-
       {/* Services Section - Template 3 style with original 4 services */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -491,7 +483,6 @@ export default function HomeOriginal() {
           </div>
         </div>
       </section>
-
       {/* Final CTA - Template 3 style */}
       <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
