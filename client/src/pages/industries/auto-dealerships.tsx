@@ -92,7 +92,7 @@ export default function AutoDealerships() {
       {/* Hero Section */}
       <Hero
         title="Auto Dealership Cleaning and Facility Services"
-        subtitle="A dirty or cluttered dealership will give customers a bad impression and may cause them to go elsewhere. First impressions are important to customers."
+        subtitle="Excel Facility Services Group helps auto dealerships maintain cleaner, safer, and more customer-ready environments through accountable service delivery, responsive support, and programs built for showroom presentation, service areas, and daily operations."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
