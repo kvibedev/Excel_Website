@@ -165,9 +165,7 @@ export default function FloorCare() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT FLOOR CARE SERVICES</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Your Floors Reflect Your Business
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Floor Care That Supports Appearance, Safety, and Long-Term Performance</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 The condition of the floor tells you everything about how well a business is being run. First impressions are essential; if potential or existing customers see stained or dirty floors, they will likely go elsewhere for their purchase rather than with your company again because it could negatively affect customer loyalty.
               </p>
