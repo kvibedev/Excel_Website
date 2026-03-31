@@ -150,7 +150,7 @@ export default function ConcretePolishing() {
       />
       {/* Hero Section */}
       <Hero
-        title="Concrete Polishing"
+        title="Commercial Concrete Polishing Services"
         subtitle="Excel provides commercial concrete polishing services that help organizations improve floor appearance, support durability, and maintain cleaner, more professional environments in high-traffic spaces."
         imageSrc={heroImage}
         height="medium"
@@ -163,9 +163,7 @@ export default function ConcretePolishing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT CONCRETE POLISHING SERVICES</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Professional Concrete Polishing Services
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Concrete Polishing for Durability, Appearance, and Long-Term Performance</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 Concrete polishing is a process that uses specialized equipment to grind and smooth surfaces. The process can be used on both new and existing concrete, producing various benefits. Concrete polishing can improve the appearance of concrete, increase its durability, and make it easier to clean.
               </p>
