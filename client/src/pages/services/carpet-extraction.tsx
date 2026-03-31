@@ -266,9 +266,7 @@ export default function CarpetExtraction() {
               WHAT WE DO
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="heading-tasks">Comprehensive Carpet Extraction Services</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Our certified technicians use advanced extraction methods to restore your carpets to like-new condition
-            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Excel provides carpet extraction services designed to deep clean commercial carpeting, reduce buildup, and support cleaner, healthier interior spaces.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
