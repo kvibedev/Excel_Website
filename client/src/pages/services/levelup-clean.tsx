@@ -150,7 +150,7 @@ export default function LevelUpClean() {
       {/* Hero Section */}
       <Hero
         title="LevelUp Clean®"
-        subtitle="We Help Clients Navigate Change And Provide Assurance By Demonstrating Trustworthy Cleaning Through A Three-Step Approach That Delivers Healthy Workplaces With Certified Disinfection."
+        subtitle="Excel's structured service approach helps organizations maintain cleaner, safer, and more consistent environments through accountable execution, responsive support, and stronger quality control across client sites."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
