@@ -164,9 +164,7 @@ export default function Disinfection() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">ABOUT DISINFECTION SERVICES</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">A Practical, Modern Approach to Disinfection</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">Disinfection is now a standard part of facility care in many commercial environments. Whether the goal is routine hygiene support, high-touch surface attention, or added reassurance in shared spaces, disinfection helps reinforce cleaner, safer, and more confidence-inspiring workplaces.</p>
-              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                A properly disinfected commercial building is free of harmful bacteria and viruses that could make people sick. In addition, disinfection can help to prolong the life of your building by preventing the growth of mold and mildew.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">Excel Facility Services Group provides disinfection support for organizations that need stronger hygiene practices across high-use surfaces and shared environments. Our approach is designed to complement daily cleaning programs while helping reinforce workplace hygiene standards.</p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 Invest in a quality disinfection program if you own or manage a commercial building. It will pay off in the long run by protecting your employees and keeping your building in good condition.
               </p>
