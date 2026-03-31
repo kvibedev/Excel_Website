@@ -46,7 +46,7 @@ export default function OurTeam() {
     },
     {
       name: "Norma Benitez, MBA",
-      title: "MBA Financial Controller",
+      title: "Financial Controller",
       image: normaImage
     },
     {
