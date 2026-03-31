@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Calendar, Share2 } from "lucide-react";
+import { Calendar, Share2, Check } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface RelatedArticle {
   title: string;
@@ -13,6 +15,30 @@ interface BlogSidebarProps {
 }
 
 export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
+  const [copied, setCopied] = useState(false);
+  const { toast } = useToast();
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const title = document.title;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        toast({ title: "Link copied!", description: "The article link has been copied to your clipboard." });
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        toast({ title: "Unable to copy", description: "Please copy the URL from your browser's address bar.", variant: "destructive" });
+      }
+    }
+  };
+
   return (
     <div className="sticky top-24">
       {/* Share */}
@@ -22,9 +48,10 @@ export default function BlogSidebar({ relatedArticles }: BlogSidebarProps) {
           variant="outline" 
           className="w-full border-2 bg-white hover:bg-[#063970] hover:text-white hover:border-[#063970] transition-colors"
           data-testid="button-share"
+          onClick={handleShare}
         >
-          <Share2 className="w-4 h-4 mr-2" />
-          Share
+          {copied ? <Check className="w-4 h-4 mr-2" /> : <Share2 className="w-4 h-4 mr-2" />}
+          {copied ? "Copied!" : "Share"}
         </Button>
       </div>
       {/* Related Articles */}
