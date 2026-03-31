@@ -93,7 +93,8 @@ export default function OurTeam() {
     {
       name: "Jose Carrero",
       title: "Senior Account Manager",
-      image: joseImage
+      image: joseImage,
+      hidden: true
     },
     {
       name: "Cristian Molina",
@@ -103,7 +104,8 @@ export default function OurTeam() {
     {
       name: "Jhoana Vivas",
       title: "Field Operator",
-      image: jhoanaImage
+      image: jhoanaImage,
+      hidden: true
     },
     {
       name: "Ana Masis",
