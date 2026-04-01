@@ -216,26 +216,46 @@ export default function Retailer() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
               TAILORED APPROACH
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              Be the Best Retail Company in Your Area
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+              Built Around the Realities of Retail Operations
             </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
-              At Excel Facility Services, we recognize that cleanliness and organization are vital to your retail store's success. A well-kept environment not only draws customers in but also fosters loyalty and encourages repeat visits. Our dedicated team offers comprehensive cleaning solutions tailored to your specific needs, ensuring that every aspect of your store is immaculate.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              From regular <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial-2">janitorial services</Link> to specialized cleaning tasks, we cover all areas of your retail space. Our professionals are trained to manage everything from product displays to fitting rooms, ensuring that your store remains welcoming and hygienic.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              We utilize advanced cleaning technologies and <Link href="/services" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-eco">eco-friendly products</Link> to create a safe environment for both customers and employees. By partnering with Excel Facility Services, you're investing in the overall shopping experience of your customers.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              A clean, organized store reflects your brand's commitment to quality and care. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link> and let us help you maintain that perfect balance of cleanliness and organization, making your store the go-to destination in your area!
+            <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
+              Retail stores depend on cleanliness, presentation, and consistency to support customer confidence and protect brand perception. <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial-2">Excel Facility Services Group</Link> provides cleaning and facility services designed to help maintain cleaner entrances, sales floors, fitting rooms, restrooms, and other high-traffic spaces throughout the store.
             </p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="h-full" data-testid="card-tailored-1">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Customer-Ready Presentation</CardTitle>
+                <CardDescription className="text-base">
+                  Help keep sales floors, entrances, and display areas clean, polished, and ready to support a stronger first impression.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-2">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Cleaner Customer Spaces</CardTitle>
+                <CardDescription className="text-base">
+                  Maintain fitting rooms, restrooms, checkout zones, and shared spaces that shape how shoppers experience the store.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-3">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Support for Daily Operations</CardTitle>
+                <CardDescription className="text-base">
+                  Service programs built around store traffic, operating hours, and day-to-day retail activity to help maintain consistency without disruption.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto" data-testid="text-tailored-closing">
+            Our approach helps retail stores maintain cleaner, safer, and more organized environments that support both customer experience and daily operations. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link>.
+          </p>
         </div>
       </section>
 
