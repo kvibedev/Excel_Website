@@ -92,7 +92,6 @@ export default function Restaurants() {
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
         secondaryCta={{ text: "VIEW SERVICES", href: "/services" }}
       />
-
       {/* About Section - Split Layout */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -113,9 +112,7 @@ export default function Restaurants() {
               <Badge variant="outline" className="mb-4" data-testid="badge-about">
                 ABOUT OUR SERVICE
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Safe & Sanitary Restaurant Environments
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Cleaning Support Built for Restaurant Environments</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
                 The outbreak of <Link href="/services/covid-19-cleaning" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-covid">COVID-19</Link> has led to a sharp increase in the importance of commercial cleaning, particularly in the restaurant industry. In addition to the usual concerns about cleanliness and hygiene, restaurants now face the added challenge of preventing the spread of illness.
               </p>
@@ -135,7 +132,6 @@ export default function Restaurants() {
           </div>
         </div>
       </section>
-
       {/* Services Grid - Fore Tech Style */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -168,7 +164,6 @@ export default function Restaurants() {
           </div>
         </div>
       </section>
-
       {/* Key Benefits Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -212,7 +207,6 @@ export default function Restaurants() {
           </div>
         </div>
       </section>
-
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -238,7 +232,6 @@ export default function Restaurants() {
           </div>
         </div>
       </section>
-
       {/* Value Propositions - 5 Cards with green borders */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -265,7 +258,6 @@ export default function Restaurants() {
           </div>
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="py-20 md:py-28 bg-[#063970] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
