@@ -61,7 +61,7 @@ export default function AdminUsers() {
 
   const { data: users = [], isLoading } = useQuery<AdminUserData[]>({
     queryKey: ["/api/admin/users"],
-    enabled: !!authData?.authenticated,
+    enabled: !!authData?.authenticated && canAccess(myRole, "admin"),
   });
 
   const createMutation = useMutation({

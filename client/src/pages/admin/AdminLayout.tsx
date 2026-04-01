@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { LogOut } from "lucide-react";
 import { useEffect } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { AdminRole } from "@shared/schema";
+import { ROLE_LABELS, type AdminRole } from "@shared/schema";
 
 interface AdminAuthData {
   authenticated: boolean;
@@ -13,13 +13,6 @@ interface AdminAuthData {
   username?: string;
   role?: AdminRole;
 }
-
-const ROLE_LABELS: Record<string, string> = {
-  super_admin: "Super Admin",
-  admin: "Admin",
-  editor: "Editor",
-  viewer: "Viewer",
-};
 
 export function useAdminAuth() {
   const [, setLocation] = useLocation();
@@ -72,7 +65,6 @@ export default function AdminLayout({ children, title, activeNav }: AdminLayoutP
 
   const role = authData.role || "viewer";
   const showUsers = canAccess(role as AdminRole, "admin");
-  const showCrmWrite = canAccess(role as AdminRole, "admin");
 
   return (
     <div className="min-h-screen bg-gray-100">
