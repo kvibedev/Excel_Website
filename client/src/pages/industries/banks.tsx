@@ -114,16 +114,16 @@ export default function Banks() {
                 ABOUT OUR SERVICE
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Building Customer Trust Through Cleanliness
+                Building Customer Trust Through Cleaner Financial Environments
               </h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                At Excel Facility Services, we understand that the <Link href="/services/covid-19-cleaning" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-covid">COVID-19 pandemic</Link> brought unprecedented challenges to the banking industry. Bank facilities must now navigate a complex landscape of still-evolving health and safety guidelines while continuing to provide a safe and welcoming environment.
+                Banks depend on cleanliness, presentation, and consistency to support customer confidence and reinforce trust. In financial environments, facility services need to help maintain a clean, welcoming experience across lobbies, teller lines, offices, restrooms, waiting areas, and other shared spaces.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                We've all had the uncomfortable experience of walking into a bank that smells unpleasant, looks like the carpets haven't been cleaned in years, and seems poorly lit. No bank can afford to exhibit any of those unwelcoming characteristics, especially with industry competition at an all-time high.
+                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">Excel Facility Services Group</Link> provides commercial cleaning and facility services for banks, branches, and financial institutions that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with customer traffic, employee workflows, and day-to-day branch operations.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">Our team of experts</Link> is here to help. We offer a three-step approach to cleaning and disinfecting bank facilities that is proven to eliminate viruses and bacteria effectively. Our process begins with thoroughly cleaning all surfaces, followed by certified disinfection with <Link href="/services" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-green-seal">green-grade products</Link>.
+                With more than 20 years of operational experience and multi-site capability, Excel helps banks maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across customer-facing and operational spaces.
               </p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
