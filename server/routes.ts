@@ -85,7 +85,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { username, password, email } = req.body;
-      const admin = await storage.createAdminUser({ username, password, email });
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const admin = await storage.createAdminUser({ username, password: hashedPassword, email });
       res.json({ success: true, username: admin.username });
     } catch (error) {
       res.status(500).json({ error: "Setup failed" });
