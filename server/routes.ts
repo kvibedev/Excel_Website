@@ -278,6 +278,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/blog", async (req, res) => {
+    try {
+      const posts = await storage.getPublishedBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.get("/api/blog/:slug", async (req, res) => {
+    try {
+      const post = await storage.getPublishedBlogPostBySlug(req.params.slug);
+      if (!post) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
   app.get("/api/admin/blog", requireAdmin, async (req, res) => {
     try {
       const posts = await storage.getBlogPosts();

@@ -9,7 +9,7 @@ import {
   users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -41,6 +41,7 @@ export interface IStorage {
   getPublishedBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(id: number): Promise<BlogPost | undefined>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
+  getPublishedBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: number): Promise<void>;
@@ -161,7 +162,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPublishedBlogPosts(): Promise<BlogPost[]> {
-    return db.select().from(blogPosts).where(eq(blogPosts.status, "published")).orderBy(desc(blogPosts.publishedAt));
+    return db.select().from(blogPosts)
+      .where(eq(blogPosts.status, "published"))
+      .orderBy(desc(blogPosts.publishedAt));
   }
 
   async getBlogPost(id: number): Promise<BlogPost | undefined> {
@@ -171,6 +174,12 @@ export class DatabaseStorage implements IStorage {
 
   async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
     const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post;
+  }
+
+  async getPublishedBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts)
+      .where(and(eq(blogPosts.slug, slug), eq(blogPosts.status, "published")));
     return post;
   }
 

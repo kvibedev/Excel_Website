@@ -33,6 +33,7 @@ export default function AdminBlog() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
       toast({ title: "Post deleted" });
     },
   });

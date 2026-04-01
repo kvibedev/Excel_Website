@@ -20,19 +20,11 @@ function estimateReadTime(content: string): string {
 }
 
 export default function Resources() {
-  const { data: posts, isLoading, isError } = useQuery<BlogPost[]>({
+  const { data, isLoading, isError } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
   });
 
-  const blogArticles = (posts || []).map((post) => ({
-    id: post.id,
-    title: post.title,
-    date: formatDate(post.publishedAt),
-    readTime: estimateReadTime(post.content),
-    category: post.category || "General",
-    excerpt: post.excerpt || "",
-    slug: post.slug,
-  }));
+  const posts = data || [];
 
   return (
     <div>
@@ -42,7 +34,7 @@ export default function Resources() {
         path="/resources"
       />
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
@@ -130,142 +122,104 @@ export default function Resources() {
                 ))}
               </div>
             </div>
-          ) : blogArticles.length === 0 ? (
+          ) : posts.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-lg text-muted-foreground">No articles published yet. Check back soon for insights on facility management.</p>
+              <p className="text-lg text-muted-foreground" data-testid="text-no-posts">No articles published yet. Check back soon for insights on facility management.</p>
             </div>
           ) : (
             <>
-              {blogArticles.length >= 2 && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-                  {blogArticles.slice(0, 2).map((article) => (
-                    <Link href={`/resources/${article.slug}`} key={article.id}>
-                      <div 
-                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-lg h-full"
-                        data-testid={`card-featured-article-${article.id}`}
-                      >
-                        <div className="relative h-80 overflow-hidden bg-gradient-to-br from-[#063970] to-[#0A5EB9]">
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                {posts.slice(0, 2).map((article) => (
+                  <Link href={`/resources/${article.slug}`} key={article.id}>
+                    <div
+                      className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-visible shadow-lg h-full"
+                      data-testid={`card-featured-article-${article.id}`}
+                    >
+                      <div className="relative h-80 overflow-hidden rounded-t-xl">
+                        <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        {article.category && (
                           <div className="absolute top-6 left-6">
                             <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
                               {article.category}
                             </span>
                           </div>
-                          <div className="absolute bottom-6 left-6 right-6">
-                            <h3 className="text-2xl font-bold text-white leading-tight">
-                              {article.title}
-                            </h3>
+                        )}
+                      </div>
+
+                      <div className="p-8">
+                        <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-[#0A5EB9]" />
+                            <span data-testid={`text-date-${article.id}`}>{formatDate(article.publishedAt)}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-[#0A5EB9]" />
+                            <span data-testid={`text-readtime-${article.id}`}>{estimateReadTime(article.content)}</span>
                           </div>
                         </div>
-                        
-                        <div className="p-8">
-                          <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-[#0A5EB9]" />
-                              <span data-testid={`text-date-${article.id}`}>{article.date}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-4 h-4 text-[#0A5EB9]" />
-                              <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
-                            </div>
-                          </div>
-                          
-                          <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
-                            {article.excerpt}
-                          </p>
-                          
-                          <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold group-hover:gap-4 transition-all">
-                            <span>Read Article</span>
-                            <ArrowRight className="w-5 h-5" />
-                          </div>
+
+                        <h3 className="text-2xl font-bold text-[#063970] mb-4 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
+                          {article.title}
+                        </h3>
+
+                        <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
+                          {article.excerpt}
+                        </p>
+
+                        <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold group-hover:gap-4 transition-all">
+                          <span>Read Article</span>
+                          <ArrowRight className="w-5 h-5" />
                         </div>
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
 
-              {blogArticles.length > 2 && (
+              {posts.length > 2 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {blogArticles.slice(2).map((article) => (
+                  {posts.slice(2).map((article) => (
                     <Link href={`/resources/${article.slug}`} key={article.id}>
-                      <div 
-                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-md h-full"
+                      <div
+                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-visible shadow-md h-full"
                         data-testid={`card-article-${article.id}`}
                       >
-                        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-[#063970] to-[#0A5EB9]">
+                        <div className="relative h-56 overflow-hidden rounded-t-xl">
+                          <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                          <div className="absolute top-4 left-4">
-                            <span className="px-3 py-1 bg-[#97CC06] text-[#063970] text-xs font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
-                              {article.category}
-                            </span>
-                          </div>
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <h3 className="text-lg font-bold text-white leading-tight">
-                              {article.title}
-                            </h3>
-                          </div>
+                          {article.category && (
+                            <div className="absolute top-4 left-4">
+                              <span className="px-3 py-1 bg-[#97CC06] text-[#063970] text-xs font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
+                                {article.category}
+                              </span>
+                            </div>
+                          )}
                         </div>
-                        
+
                         <div className="p-6">
                           <div className="flex items-center gap-4 mb-3 text-xs text-muted-foreground">
                             <div className="flex items-center gap-1">
                               <Calendar className="w-3 h-3 text-[#0A5EB9]" />
-                              <span data-testid={`text-date-${article.id}`}>{article.date}</span>
+                              <span data-testid={`text-date-${article.id}`}>{formatDate(article.publishedAt)}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Clock className="w-3 h-3 text-[#0A5EB9]" />
-                              <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
+                              <span data-testid={`text-readtime-${article.id}`}>{estimateReadTime(article.content)}</span>
                             </div>
                           </div>
-                          
+
+                          <h3 className="text-xl font-bold text-[#063970] mb-3 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
+                            {article.title}
+                          </h3>
+
                           <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
                             {article.excerpt}
                           </p>
-                          
+
                           <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold text-sm group-hover:gap-3 transition-all">
                             <span>Read More</span>
                             <ArrowRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-
-              {blogArticles.length === 1 && (
-                <div className="grid grid-cols-1 max-w-2xl mx-auto">
-                  {blogArticles.map((article) => (
-                    <Link href={`/resources/${article.slug}`} key={article.id}>
-                      <div 
-                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-lg h-full"
-                        data-testid={`card-featured-article-${article.id}`}
-                      >
-                        <div className="relative h-80 overflow-hidden bg-gradient-to-br from-[#063970] to-[#0A5EB9]">
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                          <div className="absolute top-6 left-6">
-                            <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full">
-                              {article.category}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="p-8">
-                          <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-[#0A5EB9]" />
-                              <span>{article.date}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-4 h-4 text-[#0A5EB9]" />
-                              <span>{article.readTime}</span>
-                            </div>
-                          </div>
-                          <h3 className="text-2xl font-bold text-[#063970] mb-4">{article.title}</h3>
-                          <p className="text-muted-foreground mb-6">{article.excerpt}</p>
-                          <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold">
-                            <span>Read Article</span>
-                            <ArrowRight className="w-5 h-5" />
                           </div>
                         </div>
                       </div>
@@ -292,8 +246,8 @@ export default function Resources() {
           </p>
           <div className="flex flex-wrap gap-6 justify-center">
             <Link href="/contact">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 variant="default"
                 className="bg-[#97CC06] hover:bg-[#97CC06]/90 text-[#063970] border-2 border-[#97CC06] text-lg px-8 py-6 h-auto font-bold shadow-xl"
                 data-testid="button-request-proposal"
@@ -302,8 +256,8 @@ export default function Resources() {
               </Button>
             </Link>
             <Link href="/services">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 variant="outline"
                 className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 hover:bg-white/20 text-lg px-8 py-6 h-auto font-bold"
                 data-testid="button-view-services"

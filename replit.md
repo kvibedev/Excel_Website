@@ -123,6 +123,17 @@ This is a commercial cleaning services website for Excel Facility Services Group
   - FAQ section with 5 commercial cleaning questions
   - All interactive elements have data-testid attributes
 
+**Dynamic Blog/Resources System (Complete - April 2026)**
+- Blog posts are stored in PostgreSQL `blog_posts` table and managed via admin CRM
+- Public API: `GET /api/blog` (published posts), `GET /api/blog/:slug` (single post by slug)
+- Admin API: Full CRUD at `/api/admin/blog` (requires admin auth)
+- Resources listing page (`/resources`) fetches published posts dynamically from API
+- Dynamic blog detail page (`/resources/:slug`) renders post content with react-markdown
+- 6 seed articles auto-inserted on startup (idempotent by slug)
+- Draft posts only visible in admin; published posts appear on public site
+- BlogSidebar component shows related articles and share functionality
+- Static article pages replaced with single dynamic route in App.tsx
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

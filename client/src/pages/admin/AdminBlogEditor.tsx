@@ -80,6 +80,7 @@ export default function AdminBlogEditor() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
       toast({ title: "Post created successfully" });
       setLocation("/admin/blog");
     },
@@ -100,6 +101,7 @@ export default function AdminBlogEditor() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog", params.id] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
       toast({ title: "Post updated successfully" });
       setLocation("/admin/blog");
     },

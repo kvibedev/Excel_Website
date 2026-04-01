@@ -44,7 +44,7 @@ import Banks from "@/pages/industries/banks";
 import Schools from "@/pages/industries/schools";
 import AutoDealerships from "@/pages/industries/auto-dealerships";
 
-import BlogPost from "@/pages/BlogPost";
+import BlogPostDetail from "@/pages/resources/BlogPostDetail";
 
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
@@ -102,7 +102,7 @@ function MainRouter() {
         <Route path="/industries/schools" component={Schools} />
         <Route path="/industries/auto-dealerships" component={AutoDealerships} />
         
-        <Route path="/resources/:slug" component={BlogPost} />
+        <Route path="/resources/:slug" component={BlogPostDetail} />
         
         <Route component={NotFound} />
       </Switch>
