@@ -210,26 +210,48 @@ export default function Restaurants() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
               TAILORED APPROACH
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              Elevate Your Restaurant's Reputation
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+              Built Around the Realities of Restaurant Operations
             </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
-              At Excel Facility Services, we understand the unique cleaning challenges that restaurants face. A spotless establishment not only enhances the dining experience but also encourages customer retention. Our dedicated team provides a comprehensive range of cleaning services tailored explicitly for the restaurant industry.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              We emphasize the importance of <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">sanitation and hygiene</Link>, especially in high-touch areas such as menus, tables, and restrooms. Our skilled professionals are trained to implement deep-cleaning protocols that adhere to health regulations and safety standards.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              We work diligently to ensure that your restaurant remains an inviting space for customers, contributing to their overall satisfaction. In today's competitive market, maintaining a clean and safe environment is crucial for your restaurant's success.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              With our reliable cleaning services, you can focus on delivering exceptional food and service while we take care of the cleanliness. Trust Excel Facility Services to help elevate your restaurant's reputation and keep patrons returning for more — <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">contact us today</Link>!
+            <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
+              Restaurants depend on cleanliness, presentation, and consistency to support guest confidence and protect the dining experience. Excel Facility Services Group provides cleaning and facility services designed to help maintain cleaner dining areas, restrooms, entrances, and operational spaces throughout the restaurant.
             </p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="h-full" data-testid="card-tailored-1">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Guest-Ready Dining Spaces</CardTitle>
+                <CardDescription className="text-base">
+                  Help keep dining rooms, host areas, tables, and customer-facing spaces clean, polished, and ready to support a stronger first impression.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-2">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/disinfection" className="text-[#0A5EB9] hover:underline" data-testid="link-disinfection">Hygiene-Focused Support</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Maintain cleaner restrooms, high-touch surfaces, and shared spaces where cleanliness directly affects guest comfort and confidence.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-3">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Support for Daily Operations</CardTitle>
+                <CardDescription className="text-base">
+                  Service programs built around traffic flow, service hours, and back-of-house activity to help maintain consistency without disrupting operations.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto" data-testid="text-tailored-closing">
+            Our approach helps restaurants maintain cleaner, safer, and more organized environments that support both guest experience and day-to-day performance. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link>.
+          </p>
         </div>
       </section>
       {/* Value Propositions - 5 Cards with green borders */}
