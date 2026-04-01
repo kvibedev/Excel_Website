@@ -3,6 +3,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { injectOGTags } from "./og-metadata";
 import { seedBlogPosts } from "./seed-blog";
+import { seedAdminUser } from "./seed-admin";
 
 const app = express();
 app.use(express.json());
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  await seedAdminUser().catch((err) => console.error("Admin seed error:", err));
   await seedBlogPosts().catch((err) => console.error("Blog seed error:", err));
   const server = await registerRoutes(app);
 
