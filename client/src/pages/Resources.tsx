@@ -136,7 +136,11 @@ export default function Resources() {
                       data-testid={`card-featured-article-${article.id}`}
                     >
                       <div className="relative h-80 overflow-hidden rounded-t-xl">
-                        <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+                        {article.imageUrl ? (
+                          <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                         {article.category && (
                           <div className="absolute top-6 left-6">
@@ -186,7 +190,11 @@ export default function Resources() {
                         data-testid={`card-article-${article.id}`}
                       >
                         <div className="relative h-56 overflow-hidden rounded-t-xl">
-                          <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+                          {article.imageUrl ? (
+                            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                           {article.category && (
                             <div className="absolute top-4 left-4">

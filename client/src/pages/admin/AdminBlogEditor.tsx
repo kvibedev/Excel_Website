@@ -21,6 +21,7 @@ interface PostForm {
   author: string;
   category: string;
   tags: string;
+  imageUrl: string;
   status: string;
 }
 
@@ -48,6 +49,7 @@ export default function AdminBlogEditor() {
     author: "",
     category: "",
     tags: "",
+    imageUrl: "",
     status: "draft",
   });
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
@@ -67,6 +69,7 @@ export default function AdminBlogEditor() {
         author: existingPost.author,
         category: existingPost.category || "",
         tags: existingPost.tags || "",
+        imageUrl: existingPost.imageUrl || "",
         status: existingPost.status,
       });
       setSlugManuallyEdited(true);
@@ -227,6 +230,28 @@ export default function AdminBlogEditor() {
                       placeholder="Comma-separated tags (e.g. cleaning, green, tips)"
                       data-testid="input-tags"
                     />
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label htmlFor="imageUrl">Featured Image URL</Label>
+                    <Input
+                      id="imageUrl"
+                      value={form.imageUrl}
+                      onChange={(e) => setForm((p) => ({ ...p, imageUrl: e.target.value }))}
+                      placeholder="https://example.com/image.jpg"
+                      data-testid="input-image-url"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">Paste a URL for the blog post hero image and listing thumbnail.</p>
+                    {form.imageUrl && (
+                      <div className="mt-3 rounded-md overflow-hidden border max-h-48">
+                        <img
+                          src={form.imageUrl}
+                          alt="Preview"
+                          className="w-full h-48 object-cover"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                          data-testid="img-preview"
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="md:col-span-2">
                     <Label htmlFor="excerpt">Excerpt</Label>

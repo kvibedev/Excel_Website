@@ -163,7 +163,15 @@ export default function BlogPost() {
       </div>
 
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#063970] via-[#0A5EB9] to-[#063970]"></div>
+        {post.imageUrl ? (
+          <img
+            src={post.imageUrl}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        ) : null}
+        <div className={`absolute inset-0 ${post.imageUrl ? "bg-gradient-to-br from-[#063970]/95 via-[#0A5EB9]/90 to-[#063970]/85" : "bg-gradient-to-br from-[#063970] via-[#0A5EB9] to-[#063970]"}`}></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {post.category && (
