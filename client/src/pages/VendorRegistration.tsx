@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Briefcase, Plus, ArrowLeft } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
-import heroImage from "@assets/Vendor_registration_1775007221378.png";
+import heroImage from "@assets/modern-architecture-of-office-reception-area-2026-01-09-11-05-_1775007751040.jpg";
 
 interface ReferenceContact {
   id: string;
