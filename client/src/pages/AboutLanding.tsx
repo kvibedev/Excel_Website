@@ -80,9 +80,7 @@ export default function AboutLanding() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#063970]/95 via-[#063970]/90 to-[#063970]/85" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-4 bg-[#97CC06] text-[#063970] text-base px-4 py-2" data-testid="badge-established">
-              20+ Years of Operational Experience
-            </Badge>
+            <Badge className="mb-4 bg-[#97CC06] text-[#063970] text-base px-4 py-2" data-testid="badge-established">Established 2001</Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="text-about-landing-title">
               Creating Healthier Workplaces Through Accountable Service
             </h1>
