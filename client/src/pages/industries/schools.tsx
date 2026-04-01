@@ -113,16 +113,16 @@ export default function Schools() {
                 ABOUT OUR SERVICE
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Serving the Nation's Educational Communities
+                Facility Services Built for Educational Environments
               </h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                <strong>Excel Facility Services Group (EFSG)</strong> serves the nation's educational communities, providing <Link href="/services" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-services">cleaning and maintenance services</Link> for public school systems, private schools, universities, and colleges.
+                Schools rely on cleanliness, consistency, and safe learning environments to support students, staff, and daily operations. In educational facilities, cleaning programs need to help maintain classrooms, restrooms, cafeterias, entryways, and shared spaces in a way that supports both learning and day-to-day campus activity.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                Our commitment has always been to high standards that meet or exceed your expectations in every way possible. Our quality control programs are designed specifically around raising health & safety standards on our end, so you never have worries about unsafe practices going unnoticed.
+                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-services">Excel Facility Services Group</Link> provides commercial cleaning and facility services for schools, private campuses, educational centers, and other learning environments that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with student traffic, building schedules, and operational demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                All of our employees who work within these educational facilities undergo strict training. <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">Our experienced team</Link> ensures that schools are clean, healthy, and safe.
+                With more than 20 years of operational experience and multi-site capability, Excel helps schools maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across educational spaces.
               </p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
