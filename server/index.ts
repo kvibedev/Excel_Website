@@ -6,6 +6,11 @@ import { injectOGTags } from "./og-metadata";
 import { seedBlogPosts } from "./seed-blog";
 
 const app = express();
+
+// Trust Replit's (and other) reverse-proxy so req.secure is correct
+// and express-session sets the Secure cookie flag properly in production.
+app.set('trust proxy', 1);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
