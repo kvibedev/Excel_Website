@@ -6,6 +6,21 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { BlogPost } from "@shared/schema";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
+import fallbackSustainability from "@assets/greensealimg1_1764255375424.webp";
+import fallbackFloorCare from "@assets/floor_care_1_1774863820156.webp";
+import fallbackTechnology from "@assets/Hero_building_image1_1774869765656.webp";
+import fallbackDefault from "@assets/Janitor_BG_1774985198731.webp";
+
+const categoryFallbacks: Record<string, string> = {
+  Sustainability: fallbackSustainability,
+  "Floor Care": fallbackFloorCare,
+  Technology: fallbackTechnology,
+};
+
+function getPostImage(post: BlogPost): string {
+  if (post.imageUrl) return post.imageUrl;
+  return categoryFallbacks[post.category ?? ""] ?? fallbackDefault;
+}
 
 function formatDate(dateStr: string | Date | null): string {
   if (!dateStr) return "";
@@ -136,11 +151,7 @@ export default function Resources() {
                       data-testid={`card-featured-article-${article.id}`}
                     >
                       <div className="relative h-80 overflow-hidden rounded-t-xl">
-                        {article.imageUrl ? (
-                          <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
-                        )}
+                        <img src={getPostImage(article)} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                         {article.category && (
                           <div className="absolute top-6 left-6">
@@ -190,11 +201,7 @@ export default function Resources() {
                         data-testid={`card-article-${article.id}`}
                       >
                         <div className="relative h-56 overflow-hidden rounded-t-xl">
-                          {article.imageUrl ? (
-                            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                          ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
-                          )}
+                          <img src={getPostImage(article)} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                           {article.category && (
                             <div className="absolute top-4 left-4">

@@ -10,6 +10,7 @@ const seedArticles = [
     author: "Excel Facility Services Group",
     category: "Sustainability",
     tags: "nontoxic,cleaning,floorcare,greenproducts,facilitymanagement,sustainability",
+    imageUrl: "/media/greensealimg1_1764255375424.webp",
     status: "published",
     publishedAt: new Date("2025-07-22"),
     content: `Sustainability is shaking up the way property managers, facility teams, and cleaning contractors work. These days, almost everybody in facility management is under pressure to reduce environmental impact, but doing it responsibly means more than swapping out a couple cleaning sprays. Non-toxic cleaning solutions are at the center of this major change, with their ability to support both human health and long-term maintenance goals for any kind of building. With new rules, rising demands from tenants, and better products arriving on the market, green cleaning is quickly becoming essential for anyone managing buildings or cleaning services.
@@ -51,6 +52,7 @@ The future of facilities will demand even more non-toxic, low-impact strategies.
     author: "Excel Facility Services Group",
     category: "Floor Care",
     tags: "sustainable,floorcare,industrial,maintenance,ecoproducts,environment",
+    imageUrl: "/media/floor_care_1_1774863820156.webp",
     status: "published",
     publishedAt: new Date("2025-07-21"),
     content: `Facility managers in industrial centers, warehouses, and manufacturing plants are realizing that floor care is about much more than simply keeping up appearances. Keeping floors durable and hygienic while reducing environmental impact is now critical. Modern industrial spaces face tough wear from machines, heavy foot traffic, and constant use—so it's essential to shift toward sustainable floor care solutions that protect facilities, workers, and the environment at the same time.
@@ -90,6 +92,7 @@ Another big opportunity sits in customized cleaning schedules. When facilities d
   {
     title: "Green Cleaning Transforming Facility Management",
     slug: "green-cleaning-transforming-facility-management",
+    imageUrl: "/media/LevelUp_Clean_BG_1774970115114.webp",
     excerpt: "Discover how green cleaning is transforming facility management by replacing toxic chemicals with safer, eco-friendly products and technologies. This post explores trends, benefits, sector-specific strategies, and practical steps for leaders.",
     author: "Excel Facility Services Group",
     category: "Sustainability",
@@ -135,6 +138,7 @@ Unlocking the power of green cleaning gives your facility an edge, preparing it 
   {
     title: "Smart Technology Revolutionizes Facility Security",
     slug: "smart-technology-revolutionizes-facility-security",
+    imageUrl: "/media/Hero_building_image1_1774869765656.webp",
     excerpt: "This blog post explores how smart technology is revolutionizing facility security in the U.S., highlighting tools like AI video analytics, mobile access, cloud platforms, and IoT sensors that enhance safety, efficiency, and control.",
     author: "Excel Facility Services Group",
     category: "Technology",
@@ -184,6 +188,7 @@ Taking smart security seriously isn't a trend—it's a real, practical evolution
   {
     title: "Automation Revolutionizes Commercial Cleaning Efficiency",
     slug: "automation-revolutionizes-commercial-cleaning-efficiency",
+    imageUrl: "/media/Janitor_BG_1774985198731.webp",
     excerpt: "Discover how automation is revolutionizing commercial cleaning in the U.S., with robotics, AI, and smart sensors reshaping facility hygiene. This blog explores how these innovations boost efficiency, reduce costs, and enhance sustainability.",
     author: "Excel Facility Services Group",
     category: "Technology",
@@ -223,6 +228,7 @@ The best results depend on blending expert human attention with the right mix of
   {
     title: "Unlocking Energy Efficiency For Facilities",
     slug: "unlocking-energy-efficiency-for-facilities",
+    imageUrl: "/media/HVAC_bg_1774865693988.webp",
     excerpt: "This blog post explores how US facility managers are driving sustainability through energy efficiency initiatives. It covers key trends like smart retrofits, IoT-based monitoring, and renewable energy adoption with AI and cloud platforms.",
     author: "Excel Facility Services Group",
     category: "Sustainability",
@@ -274,7 +280,15 @@ export async function seedBlogPosts() {
       await db.insert(blogPosts).values(article);
       console.log(`Seeded blog post: ${article.title}`);
     } else {
-      console.log(`Blog post already exists: ${article.title}`);
+      // Backfill imageUrl if the existing record is missing it
+      if (article.imageUrl && !existing[0].imageUrl) {
+        await db.update(blogPosts)
+          .set({ imageUrl: article.imageUrl })
+          .where(eq(blogPosts.slug, article.slug));
+        console.log(`Backfilled imageUrl for: ${article.title}`);
+      } else {
+        console.log(`Blog post already exists: ${article.title}`);
+      }
     }
   }
 }
