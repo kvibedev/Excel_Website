@@ -100,7 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/me", (req, res) => {
     if (req.session.adminId) {
-      res.json({ authenticated: true, username: req.session.adminUsername, role: req.session.adminRole || "viewer" });
+      res.json({ authenticated: true, id: req.session.adminId, username: req.session.adminUsername, role: req.session.adminRole || "viewer" });
     } else {
       res.json({ authenticated: false });
     }

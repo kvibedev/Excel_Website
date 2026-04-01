@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,14 +29,21 @@ const ROLE_BADGE_COLORS: Record<string, string> = {
 };
 
 export default function AdminUsers() {
-  const { authData } = useAdminAuth();
+  const { authData, authLoading } = useAdminAuth();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [showForm, setShowForm] = useState(false);
   const [editingUser, setEditingUser] = useState<AdminUserData | null>(null);
   const [form, setForm] = useState({ username: "", email: "", password: "", role: "viewer" });
 
   const myRole = (authData?.role || "viewer") as AdminRole;
   const myLevel = ROLE_HIERARCHY[myRole];
+
+  useEffect(() => {
+    if (!authLoading && authData?.authenticated && !canAccess(myRole, "admin")) {
+      setLocation("/admin");
+    }
+  }, [authLoading, authData, myRole, setLocation]);
 
   const assignableRoles = ADMIN_ROLES.filter((r) => ROLE_HIERARCHY[r] <= myLevel);
 
@@ -291,7 +299,7 @@ export default function AdminUsers() {
                                 <Pencil className="w-4 h-4" />
                               </Button>
                             )}
-                            {canDeleteUser(user) && user.id !== (authData as any)?.id && (
+                            {canDeleteUser(user) && user.id !== authData?.id && (
                               <Button
                                 variant="ghost"
                                 size="icon"

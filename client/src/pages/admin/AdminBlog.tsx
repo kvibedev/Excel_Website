@@ -8,8 +8,8 @@ import { FileText, Plus, Trash2, Pencil } from "lucide-react";
 import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { BlogPost } from "@shared/schema";
-import AdminLayout, { useAdminAuth } from "./AdminLayout";
+import type { BlogPost, AdminRole } from "@shared/schema";
+import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-500",
@@ -19,6 +19,7 @@ const statusColors: Record<string, string> = {
 export default function AdminBlog() {
   const { toast } = useToast();
   const { authData, authLoading } = useAdminAuth();
+  const isReadOnly = !canAccess(authData?.role as AdminRole, "editor");
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: posts, isLoading: postsLoading } = useQuery<BlogPost[]>({
@@ -61,12 +62,14 @@ export default function AdminBlog() {
               <FileText className="w-5 h-5" />
               Blog Posts ({filteredPosts?.length || 0})
             </CardTitle>
-            <Link href="/admin/blog/new">
-              <Button data-testid="button-new-post">
-                <Plus className="w-4 h-4 mr-2" />
-                New Post
-              </Button>
-            </Link>
+            {!isReadOnly && (
+              <Link href="/admin/blog/new">
+                <Button data-testid="button-new-post">
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Post
+                </Button>
+              </Link>
+            )}
           </div>
           <div className="mt-4">
             <Input
@@ -99,23 +102,27 @@ export default function AdminBlog() {
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <Badge className={statusColors[post.status] || "bg-gray-400"}>{post.status}</Badge>
-                  <Link href={`/admin/blog/${post.id}/edit`}>
-                    <Button size="icon" variant="ghost" data-testid={`button-edit-post-${post.id}`}>
-                      <Pencil className="w-4 h-4" />
+                  {!isReadOnly && (
+                    <Link href={`/admin/blog/${post.id}/edit`}>
+                      <Button size="icon" variant="ghost" data-testid={`button-edit-post-${post.id}`}>
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                  )}
+                  {!isReadOnly && (
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => {
+                        if (confirm("Are you sure you want to delete this post?")) {
+                          deletePostMutation.mutate(post.id);
+                        }
+                      }}
+                      data-testid={`button-delete-post-${post.id}`}
+                    >
+                      <Trash2 className="w-4 h-4 text-destructive" />
                     </Button>
-                  </Link>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => {
-                      if (confirm("Are you sure you want to delete this post?")) {
-                        deletePostMutation.mutate(post.id);
-                      }
-                    }}
-                    data-testid={`button-delete-post-${post.id}`}
-                  >
-                    <Trash2 className="w-4 h-4 text-destructive" />
-                  </Button>
+                  )}
                 </div>
               </div>
             ))}

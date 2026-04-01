@@ -9,6 +9,7 @@ import type { AdminRole } from "@shared/schema";
 
 interface AdminAuthData {
   authenticated: boolean;
+  id?: number;
   username?: string;
   role?: AdminRole;
 }
