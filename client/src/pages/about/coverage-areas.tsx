@@ -80,7 +80,7 @@ export default function CoverageAreas() {
         </div>
       </section>
       {/* Experience Message Section */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      <section className="py-16 md:py-24 bg-[#0a5eb9]">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[#ffffff] text-[24px]" data-testid="text-experience">
