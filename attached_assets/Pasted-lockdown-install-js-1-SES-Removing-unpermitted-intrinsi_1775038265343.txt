@@ -1,0 +1,121 @@
+lockdown-install.js:1 SES Removing unpermitted intrinsics
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+Excel-Website/task/c933e39a-e245-4539-beda-24d5084e0058:1 The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+f743050f701c4d4c.js:21 
+      /////////////////////
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@#//////////////
+   ///////////////////////////
+      /////////////////////
+      
+f743050f701c4d4c.js:21 Download the Apollo DevTools for a better development experience: https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm
+ SES Removing unpermitted intrinsics
+f743050f701c4d4c.js:21 [LaunchDarkly] LaunchDarkly client initialized
+ Loading the font 'https://js.stripe.com/resources/fonts/IBMPlexSans-Medium.ttf' violates the following Content Security Policy directive: "font-src 'none'". The action has been blocked.
+(anonymous) @ paletteBuilder.js:1
+paletteBuilder.js:1 Loading the font 'https://js.stripe.com/resources/fonts/IBMPlexSans-Medium.ttf' violates the following Content Security Policy directive: "font-src 'none'". The action has been blocked.
+(anonymous) @ paletteBuilder.js:1
+lockdown-install.js:1 SES Removing unpermitted intrinsics
+lockdown-install.js:1 SES Removing unpermitted intrinsics
+ Loading the font 'https://js.stripe.com/resources/fonts/IBMPlexSans-Medium.ttf' violates the following Content Security Policy directive: "font-src 'none'". The policy is report-only, so the violation has been logged but no further action has been taken.
+paletteBuilder.js:1 Loading the font 'https://js.stripe.com/resources/fonts/IBMPlexSans-Medium.ttf' violates the following Content Security Policy directive: "font-src 'none'". The policy is report-only, so the violation has been logged but no further action has been taken.
+ Loading the font 'https://js.stripe.com/resources/fonts/IBMPlexSans-Medium.ttf' violates the following Content Security Policy directive: "font-src 'none'". The action has been blocked.
+(anonymous) @ paletteBuilder.js:1
+paletteBuilder.js:1 Loading the font 'https://js.stripe.com/resources/fonts/IBMPlexSans-Medium.ttf' violates the following Content Security Policy directive: "font-src 'none'". The action has been blocked.
+(anonymous) @ paletteBuilder.js:1
+lockdown-install.js:1 SES Removing unpermitted intrinsics
+Grammarly-check.js:1 [Violation] Permissions policy violation: unload is not allowed in this document.
+(anonymous) @ Grammarly-check.js:1
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+9954129c7dd6dc22.js:2 Unrecognized feature: 'ambient-light-sensor'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'battery'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'execution-while-not-rendered'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'execution-while-out-of-viewport'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'layout-animations'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'legacy-image-formats'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'navigation-override'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'oversized-images'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'publickey-credentials'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'speaker-selection'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'unoptimized-images'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'unsized-media'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Unrecognized feature: 'pointer-lock'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Allow attribute will take precedence over 'allowfullscreen'.
+C @ 9954129c7dd6dc22.js:2
+9954129c7dd6dc22.js:2 Allow attribute will take precedence over 'allowpaymentrequest'.
+C @ 9954129c7dd6dc22.js:2
+f743050f701c4d4c.js:21 Cache data may be lost when replacing the hostingBuildDeployActionUpdates field of a Subscription object.
+
+This could cause additional (usually avoidable) network requests to fetch data that were otherwise cached.
+
+To address this problem (which is not a bug in Apollo Client), either ensure all objects of type HostingBuildDeployLogAction and HostingBuildDeployStatusAction have an ID or a custom merge function, or define a custom merge function for the Subscription.hostingBuildDeployActionUpdates field, so InMemoryCache can safely merge these objects:
+
+  existing: {"__typename":"HostingBuildDeployLogAction","log":"\r\u001b[38;2;169;169;169m2026-04-01T09:52:16Z\u001b[37m \u001b[32minfo\u001b[37m: Build: ad256174-008f-4fa0-8c8f-3fa296c5f295\r\n"}
+  incoming: {"__typename":"HostingBuildDeployStatusAction","status":"security_scanning","message":null,"debugSummary":null,"build":{"__ref":"HostingBuild:ad256174-008f-4fa0-8c8f-3fa296c5f295"}}
+
+For more information about these options, please refer to the documentation:
+
+  * Ensuring entity objects have IDs: https://go.apollo.dev/c/generating-unique-identifiers
+  * Defining custom merge functions: https://go.apollo.dev/c/merging-non-normalized-objects
+
+(anonymous) @ f743050f701c4d4c.js:21
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'ambient-light-sensor'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'battery'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'execution-while-not-rendered'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'execution-while-out-of-viewport'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'layout-animations'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'legacy-image-formats'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'navigation-override'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'oversized-images'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'publickey-credentials'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'speaker-selection'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'unoptimized-images'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Unrecognized feature: 'unsized-media'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Allow attribute will take precedence over 'allowfullscreen'.
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=default-start-application:32 Allow attribute will take precedence over 'allowpaymentrequest'.
+lockdown-install.js:1 SES Removing unpermitted intrinsics
+lockdown-install.js:1 SES Removing unpermitted intrinsics
+14b791ee-84d7-4202-b336-0efc359dba3a-00-3492y10six2vn.janeway.replit.dev/api/admin/login:1  Failed to load resource: the server responded with a status of 500 (Internal Server Error)
