@@ -85,7 +85,7 @@ export default function DistributionCenters() {
       />
       {/* Hero Section */}
       <Hero
-        title="Distribution Centers"
+        title="Distribution Center Cleaning and Facility Services"
         subtitle="With our three-step approach that delivers healthy distribution centers, you can be assured that your facility will always operate safely and efficiently."
         imageSrc={heroImage}
         height="medium"
