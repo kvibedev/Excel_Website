@@ -1,39 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LogOut } from "lucide-react";
-import { useEffect } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { ROLE_LABELS, type AdminRole } from "@shared/schema";
-
-interface AdminAuthData {
-  authenticated: boolean;
-  id?: number;
-  username?: string;
-  role?: AdminRole;
-}
-
-export function useAdminAuth() {
-  const [, setLocation] = useLocation();
-
-  const { data: authData, isLoading: authLoading } = useQuery<AdminAuthData>({
-    queryKey: ["/api/admin/me"],
-  });
-
-  useEffect(() => {
-    if (!authLoading && !authData?.authenticated) {
-      setLocation("/admin/login");
-    }
-  }, [authData, authLoading, setLocation]);
-
-  return { authData, authLoading };
-}
-
-export function canAccess(role: AdminRole | undefined, minRole: AdminRole): boolean {
-  const hierarchy: Record<string, number> = { super_admin: 4, admin: 3, editor: 2, viewer: 1 };
-  return (hierarchy[role || "viewer"] || 0) >= (hierarchy[minRole] || 0);
-}
+import { useAdminAuth, canAccess } from "./adminAuth";
 
 interface AdminLayoutProps {
   children: React.ReactNode;

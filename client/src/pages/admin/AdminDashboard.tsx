@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Building2, BookOpen, CalendarClock } from "lucide-react";
 import type { Contact, VendorRegistration } from "@shared/schema";
-import AdminLayout, { useAdminAuth } from "./AdminLayout";
+import AdminLayout from "./AdminLayout";
+import { useAdminAuth } from "./adminAuth";
 
 interface DashboardStats {
   totalContacts: number;

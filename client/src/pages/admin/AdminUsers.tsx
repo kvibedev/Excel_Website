@@ -11,7 +11,8 @@ import { Users, Plus, Pencil, Trash2, Shield, X } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { ADMIN_ROLES, ROLE_LABELS, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
-import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
+import AdminLayout from "./AdminLayout";
+import { useAdminAuth, canAccess } from "./adminAuth";
 
 interface AdminUserData {
   id: number;

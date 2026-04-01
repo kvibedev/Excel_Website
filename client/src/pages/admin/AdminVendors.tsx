@@ -22,7 +22,8 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { VendorRegistration, VendorNote } from "@shared/schema";
 import type { AdminRole } from "@shared/schema";
-import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
+import AdminLayout from "./AdminLayout";
+import { useAdminAuth, canAccess } from "./adminAuth";
 
 const ITEMS_PER_PAGE = 10;
 

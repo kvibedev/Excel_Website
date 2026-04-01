@@ -11,7 +11,8 @@ import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { BlogPost, AdminRole } from "@shared/schema";
-import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
+import AdminLayout from "./AdminLayout";
+import { useAdminAuth, canAccess } from "./adminAuth";
 
 interface PostForm {
   title: string;

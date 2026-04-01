@@ -9,7 +9,8 @@ import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { BlogPost, AdminRole } from "@shared/schema";
-import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
+import AdminLayout from "./AdminLayout";
+import { useAdminAuth, canAccess } from "./adminAuth";
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-500",
