@@ -39,10 +39,19 @@ export default function AdminLogin() {
       queryClient.setQueryData(["/api/admin/me"], { authenticated: true, username: data.username });
       toast({ title: "Login successful" });
       setLocation("/admin");
-    } catch {
+    } catch (err: any) {
+      let message = "Something went wrong. Please try again.";
+      try {
+        const errMsg = err?.message || "";
+        const jsonStart = errMsg.indexOf("{");
+        if (jsonStart !== -1) {
+          const parsed = JSON.parse(errMsg.slice(jsonStart));
+          if (parsed.error) message = parsed.error;
+        }
+      } catch {}
       toast({
         title: "Login failed",
-        description: "Invalid email or password",
+        description: message,
         variant: "destructive",
       });
     } finally {

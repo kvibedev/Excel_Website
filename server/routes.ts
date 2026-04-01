@@ -42,15 +42,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-      const admin = await storage.getAdminByEmail(username);
 
+      if (!username || !password) {
+        return res.status(400).json({ error: "Please enter both email and password" });
+      }
+
+      const adminCount = await storage.getAdminUsers();
+      if (adminCount.length === 0) {
+        return res.status(503).json({ error: "No admin accounts have been created yet. Please contact your system administrator." });
+      }
+
+      const admin = await storage.getAdminByEmail(username);
       if (!admin) {
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(401).json({ error: "No account found with that email address" });
       }
 
       const isValidPassword = await bcrypt.compare(password, admin.password);
       if (!isValidPassword) {
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(401).json({ error: "Incorrect password. Please try again." });
       }
 
       req.session.adminId = admin.id;
@@ -59,7 +68,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, username: admin.username });
     } catch (error) {
       console.error("Login error:", error);
-      res.status(500).json({ error: "Login failed" });
+      res.status(500).json({ error: "Something went wrong. Please try again later." });
     }
   });
 
