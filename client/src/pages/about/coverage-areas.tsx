@@ -50,15 +50,14 @@ export default function CoverageAreas() {
           <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-coverage">
             Nationwide Service
           </Badge>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-hero-title">
-            Coverage Areas
-          </h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-hero-title">Coverage Areas
+          Supporting Multi-Site Operations Across 28 States
+</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto" data-testid="text-hero-subtitle">
             EFSG Continues To Expand Services Across The Country
           </p>
         </div>
       </section>
-
       {/* Introduction Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -81,7 +80,6 @@ export default function CoverageAreas() {
           </div>
         </div>
       </section>
-
       {/* Experience Message Section */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -92,7 +90,6 @@ export default function CoverageAreas() {
           </div>
         </div>
       </section>
-
       {/* States Listing Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -115,7 +112,6 @@ export default function CoverageAreas() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-[#063970] via-[#0A5EB9] to-[#063970] text-white">
         <div className="container mx-auto px-4 text-center">
