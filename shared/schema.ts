@@ -17,11 +17,29 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
+export const ADMIN_ROLES = ["super_admin", "admin", "editor", "viewer"] as const;
+export type AdminRole = (typeof ADMIN_ROLES)[number];
+
+export const ROLE_HIERARCHY: Record<AdminRole, number> = {
+  super_admin: 4,
+  admin: 3,
+  editor: 2,
+  viewer: 1,
+};
+
+export const ROLE_LABELS: Record<AdminRole, string> = {
+  super_admin: "Super Admin",
+  admin: "Admin",
+  editor: "Editor",
+  viewer: "Viewer",
+};
+
 export const adminUsers = pgTable("admin_users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   email: text("email").notNull(),
+  role: text("role").notNull().default("viewer"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

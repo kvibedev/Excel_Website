@@ -52,6 +52,7 @@ import AdminContacts from "@/pages/admin/AdminContacts";
 import AdminVendors from "@/pages/admin/AdminVendors";
 import AdminBlog from "@/pages/admin/AdminBlog";
 import AdminBlogEditor from "@/pages/admin/AdminBlogEditor";
+import AdminUsers from "@/pages/admin/AdminUsers";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -123,6 +124,7 @@ function AdminRouter() {
         <Route path="/admin/blog" component={AdminBlog} />
         <Route path="/admin/blog/new" component={AdminBlogEditor} />
         <Route path="/admin/blog/:id/edit" component={AdminBlogEditor} />
+        <Route path="/admin/users" component={AdminUsers} />
         <Route component={NotFound} />
       </Switch>
     </>

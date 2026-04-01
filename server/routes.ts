@@ -6,21 +6,37 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { storage } from "./storage";
-import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema } from "@shared/schema";
+import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
 import { z } from "zod";
 
 declare module "express-session" {
   interface SessionData {
     adminId?: number;
     adminUsername?: string;
+    adminRole?: string;
   }
 }
 
-function requireAdmin(req: Request, res: Response, next: NextFunction) {
+function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.session.adminId) {
     return res.status(401).json({ error: "Unauthorized" });
   }
   next();
+}
+
+function requireAtLeast(minRole: AdminRole) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.session.adminId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    const userRole = (req.session.adminRole || "viewer") as AdminRole;
+    const userLevel = ROLE_HIERARCHY[userRole] || 0;
+    const requiredLevel = ROLE_HIERARCHY[minRole] || 0;
+    if (userLevel < requiredLevel) {
+      return res.status(403).json({ error: "Insufficient permissions" });
+    }
+    next();
+  };
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -67,8 +83,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       req.session.adminId = admin.id;
       req.session.adminUsername = admin.username;
+      req.session.adminRole = admin.role;
 
-      res.json({ success: true, username: admin.username });
+      res.json({ success: true, username: admin.username, role: admin.role });
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({ error: "Something went wrong. Please try again later." });
@@ -83,7 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/me", (req, res) => {
     if (req.session.adminId) {
-      res.json({ authenticated: true, username: req.session.adminUsername });
+      res.json({ authenticated: true, username: req.session.adminUsername, role: req.session.adminRole || "viewer" });
     } else {
       res.json({ authenticated: false });
     }
@@ -105,20 +122,143 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ── Admin users ─────────────────────────────────────────────────────────────
+  // ── Admin user management ──────────────────────────────────────────────────
 
-  app.get("/api/admin/users", requireAdmin, async (req, res) => {
+  app.get("/api/admin/users", requireAtLeast("admin"), async (req, res) => {
     try {
       const admins = await storage.getAdminUsers();
-      res.json(admins.map((a) => ({ id: a.id, username: a.username, email: a.email })));
+      res.json(admins.map((a) => ({ id: a.id, username: a.username, email: a.email, role: a.role, createdAt: a.createdAt })));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch admin users" });
     }
   });
 
+  app.post("/api/admin/users", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const { username, email, password, role } = req.body;
+      if (!username || !email || !password || !role) {
+        return res.status(400).json({ error: "Username, email, password, and role are required" });
+      }
+
+      const callerRole = (req.session.adminRole || "viewer") as AdminRole;
+      const callerLevel = ROLE_HIERARCHY[callerRole];
+      const targetLevel = ROLE_HIERARCHY[role as AdminRole];
+      if (!targetLevel || targetLevel > callerLevel) {
+        return res.status(403).json({ error: "You cannot assign a role higher than your own" });
+      }
+
+      const existingEmail = await storage.getAdminByEmail(email);
+      if (existingEmail) {
+        return res.status(400).json({ error: "An account with this email already exists" });
+      }
+      const existingUsername = await storage.getAdminByUsername(username);
+      if (existingUsername) {
+        return res.status(400).json({ error: "An account with this username already exists" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const admin = await storage.createAdminUser({ username, email, password: hashedPassword, role });
+      res.json({ id: admin.id, username: admin.username, email: admin.email, role: admin.role, createdAt: admin.createdAt });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create admin user" });
+    }
+  });
+
+  app.patch("/api/admin/users/:id", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { username, email, password, role } = req.body;
+
+      const callerRole = (req.session.adminRole || "viewer") as AdminRole;
+      const callerLevel = ROLE_HIERARCHY[callerRole];
+
+      const target = await storage.getAdminUser(id);
+      if (!target) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const targetCurrentLevel = ROLE_HIERARCHY[(target.role || "viewer") as AdminRole];
+      if (targetCurrentLevel > callerLevel) {
+        return res.status(403).json({ error: "You cannot edit a user with a higher role" });
+      }
+
+      if (role) {
+        const newLevel = ROLE_HIERARCHY[role as AdminRole];
+        if (!newLevel || newLevel > callerLevel) {
+          return res.status(403).json({ error: "You cannot assign a role higher than your own" });
+        }
+      }
+
+      const updates: Record<string, any> = {};
+      if (username) updates.username = username;
+      if (email) updates.email = email;
+      if (role) updates.role = role;
+      if (password) updates.password = await bcrypt.hash(password, 10);
+
+      if (Object.keys(updates).length === 0) {
+        return res.status(400).json({ error: "No fields to update" });
+      }
+
+      if (email && email !== target.email) {
+        const existingEmail = await storage.getAdminByEmail(email);
+        if (existingEmail) {
+          return res.status(400).json({ error: "An account with this email already exists" });
+        }
+      }
+      if (username && username !== target.username) {
+        const existingUsername = await storage.getAdminByUsername(username);
+        if (existingUsername) {
+          return res.status(400).json({ error: "An account with this username already exists" });
+        }
+      }
+
+      const updated = await storage.updateAdminUser(id, updates);
+      if (!updated) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      if (id === req.session.adminId) {
+        req.session.adminUsername = updated.username;
+        req.session.adminRole = updated.role;
+      }
+
+      res.json({ id: updated.id, username: updated.username, email: updated.email, role: updated.role, createdAt: updated.createdAt });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update admin user" });
+    }
+  });
+
+  app.delete("/api/admin/users/:id", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+
+      if (id === req.session.adminId) {
+        return res.status(400).json({ error: "You cannot delete your own account" });
+      }
+
+      const callerRole = (req.session.adminRole || "viewer") as AdminRole;
+      const callerLevel = ROLE_HIERARCHY[callerRole];
+
+      const target = await storage.getAdminUser(id);
+      if (!target) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const targetLevel = ROLE_HIERARCHY[(target.role || "viewer") as AdminRole];
+      if (targetLevel > callerLevel) {
+        return res.status(403).json({ error: "You cannot delete a user with a higher role" });
+      }
+
+      await storage.deleteAdminUser(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete admin user" });
+    }
+  });
+
   // ── Stats ───────────────────────────────────────────────────────────────────
 
-  app.get("/api/admin/stats", requireAdmin, async (req, res) => {
+  app.get("/api/admin/stats", requireAuth, async (req, res) => {
     try {
       const contacts = await storage.getContacts();
       const vendors = await storage.getVendorRegistrations();
@@ -180,7 +320,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ── Contacts (admin) ────────────────────────────────────────────────────────
   // NOTE: static sub-paths (export/csv) MUST be registered before /:id
 
-  app.get("/api/admin/contacts/export/csv", requireAdmin, async (req, res) => {
+  app.get("/api/admin/contacts/export/csv", requireAtLeast("admin"), async (req, res) => {
     try {
       const contacts = await storage.getContacts();
       const headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Inquiry Type", "Service Interest", "Assigned To", "Follow Up Date", "Status", "Created At"];
@@ -209,7 +349,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/contacts", requireAdmin, async (req, res) => {
+  app.get("/api/admin/contacts", requireAuth, async (req, res) => {
     try {
       const contacts = await storage.getContacts();
       res.json(contacts);
@@ -218,7 +358,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/contacts/:id", requireAdmin, async (req, res) => {
+  app.get("/api/admin/contacts/:id", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const contact = await storage.getContact(id);
@@ -231,7 +371,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/admin/contacts/:id/status", requireAdmin, async (req, res) => {
+  app.patch("/api/admin/contacts/:id/status", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
@@ -245,7 +385,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/admin/contacts/:id/assignment", requireAdmin, async (req, res) => {
+  app.patch("/api/admin/contacts/:id/assignment", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { assignedTo, followUpDate } = req.body;
@@ -263,7 +403,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/admin/contacts/:id", requireAdmin, async (req, res) => {
+  app.delete("/api/admin/contacts/:id", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.deleteContact(id);
@@ -273,7 +413,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/contacts/:id/notes", requireAdmin, async (req, res) => {
+  app.get("/api/admin/contacts/:id/notes", requireAuth, async (req, res) => {
     try {
       const contactId = parseInt(req.params.id);
       const notes = await storage.getContactNotes(contactId);
@@ -283,7 +423,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/contacts/:id/notes", requireAdmin, async (req, res) => {
+  app.post("/api/admin/contacts/:id/notes", requireAtLeast("admin"), async (req, res) => {
     try {
       const contactId = parseInt(req.params.id);
       const parsed = insertContactNoteSchema.parse({ ...req.body, contactId });
@@ -297,7 +437,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/admin/contacts/:id/notes/:noteId", requireAdmin, async (req, res) => {
+  app.delete("/api/admin/contacts/:id/notes/:noteId", requireAtLeast("admin"), async (req, res) => {
     try {
       const noteId = parseInt(req.params.noteId);
       await storage.deleteContactNote(noteId);
@@ -310,7 +450,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ── Vendors (admin) ─────────────────────────────────────────────────────────
   // NOTE: static sub-paths (export/csv) MUST be registered before /:id
 
-  app.get("/api/admin/vendors/export/csv", requireAdmin, async (req, res) => {
+  app.get("/api/admin/vendors/export/csv", requireAtLeast("admin"), async (req, res) => {
     try {
       const vendors = await storage.getVendorRegistrations();
       const headers = ["ID", "Company Name", "Contact Name", "Email", "Phone", "City", "State", "Services Offered", "Assigned To", "Follow Up Date", "Status", "Created At"];
@@ -339,7 +479,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/vendors", requireAdmin, async (req, res) => {
+  app.get("/api/admin/vendors", requireAuth, async (req, res) => {
     try {
       const vendors = await storage.getVendorRegistrations();
       res.json(vendors);
@@ -348,7 +488,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/vendors/:id", requireAdmin, async (req, res) => {
+  app.get("/api/admin/vendors/:id", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const vendor = await storage.getVendorRegistration(id);
@@ -361,7 +501,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/admin/vendors/:id/status", requireAdmin, async (req, res) => {
+  app.patch("/api/admin/vendors/:id/status", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
@@ -375,7 +515,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/admin/vendors/:id/assignment", requireAdmin, async (req, res) => {
+  app.patch("/api/admin/vendors/:id/assignment", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { assignedTo, followUpDate } = req.body;
@@ -393,7 +533,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/admin/vendors/:id", requireAdmin, async (req, res) => {
+  app.delete("/api/admin/vendors/:id", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.deleteVendorRegistration(id);
@@ -403,7 +543,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/vendors/:id/notes", requireAdmin, async (req, res) => {
+  app.get("/api/admin/vendors/:id/notes", requireAuth, async (req, res) => {
     try {
       const vendorId = parseInt(req.params.id);
       const notes = await storage.getVendorNotes(vendorId);
@@ -413,7 +553,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/vendors/:id/notes", requireAdmin, async (req, res) => {
+  app.post("/api/admin/vendors/:id/notes", requireAtLeast("admin"), async (req, res) => {
     try {
       const vendorId = parseInt(req.params.id);
       const parsed = insertVendorNoteSchema.parse({ ...req.body, vendorId });
@@ -427,7 +567,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/admin/vendors/:id/notes/:noteId", requireAdmin, async (req, res) => {
+  app.delete("/api/admin/vendors/:id/notes/:noteId", requireAtLeast("admin"), async (req, res) => {
     try {
       const noteId = parseInt(req.params.noteId);
       await storage.deleteVendorNote(noteId);
@@ -439,7 +579,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // ── Blog (admin) ────────────────────────────────────────────────────────────
 
-  app.get("/api/admin/blog", requireAdmin, async (req, res) => {
+  app.get("/api/admin/blog", requireAuth, async (req, res) => {
     try {
       const posts = await storage.getBlogPosts();
       res.json(posts);
@@ -448,7 +588,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+  app.get("/api/admin/blog/:id", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const post = await storage.getBlogPost(id);
@@ -461,7 +601,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/blog", requireAdmin, async (req, res) => {
+  app.post("/api/admin/blog", requireAtLeast("editor"), async (req, res) => {
     try {
       const parsed = insertBlogPostSchema.parse(req.body);
       const existing = await storage.getBlogPostBySlug(parsed.slug);
@@ -481,7 +621,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+  app.patch("/api/admin/blog/:id", requireAtLeast("editor"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const updateSchema = insertBlogPostSchema.partial();
@@ -518,7 +658,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+  app.delete("/api/admin/blog/:id", requireAtLeast("admin"), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.deleteBlogPost(id);
@@ -556,7 +696,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   });
 
-  app.post("/api/admin/blog/upload-image", requireAdmin, (req, res) => {
+  app.post("/api/admin/blog/upload-image", requireAtLeast("editor"), (req, res) => {
     blogImageUpload.single("image")(req, res, (err) => {
       if (err instanceof multer.MulterError) {
         if (err.code === "LIMIT_FILE_SIZE") {

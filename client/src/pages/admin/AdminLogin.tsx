@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 interface AdminAuthData {
   authenticated: boolean;
   username?: string;
+  role?: string;
 }
 
 export default function AdminLogin() {
@@ -36,7 +37,7 @@ export default function AdminLogin() {
     try {
       const res = await apiRequest("POST", "/api/admin/login", { username, password });
       const data = await res.json();
-      queryClient.setQueryData(["/api/admin/me"], { authenticated: true, username: data.username });
+      queryClient.setQueryData(["/api/admin/me"], { authenticated: true, username: data.username, role: data.role });
       toast({ title: "Login successful" });
       setLocation("/admin");
     } catch (err: any) {

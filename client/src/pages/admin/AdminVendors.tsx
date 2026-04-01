@@ -21,7 +21,8 @@ import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { VendorRegistration, VendorNote } from "@shared/schema";
-import AdminLayout, { useAdminAuth } from "./AdminLayout";
+import type { AdminRole } from "@shared/schema";
+import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -44,6 +45,7 @@ interface AdminUser {
 export default function AdminVendors() {
   const { toast } = useToast();
   const { authData, authLoading } = useAdminAuth();
+  const isReadOnly = !canAccess(authData?.role as AdminRole, "admin");
   const [selectedVendor, setSelectedVendor] = useState<VendorRegistration | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -167,12 +169,14 @@ export default function AdminVendors() {
               <Building2 className="w-5 h-5" />
               Vendor Registrations ({filteredVendors.length})
             </CardTitle>
-            <a href="/api/admin/vendors/export/csv" download>
-              <Button size="sm" variant="outline" data-testid="button-export-vendors">
-                <Download className="w-4 h-4 mr-2" />
-                Export CSV
-              </Button>
-            </a>
+            {!isReadOnly && (
+              <a href="/api/admin/vendors/export/csv" download>
+                <Button size="sm" variant="outline" data-testid="button-export-vendors">
+                  <Download className="w-4 h-4 mr-2" />
+                  Export CSV
+                </Button>
+              </a>
+            )}
           </div>
           <div className="flex gap-4 mt-4 flex-wrap">
             <Input
@@ -228,17 +232,19 @@ export default function AdminVendors() {
                     {new Date(vendor.createdAt).toLocaleDateString()}
                   </p>
                   <Badge className={statusColors[vendor.status] || "bg-gray-400"}>{vendor.status}</Badge>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setConfirmDeleteId(vendor.id);
-                    }}
-                    data-testid={`button-delete-vendor-row-${vendor.id}`}
-                  >
-                    <Trash2 className="w-4 h-4 text-destructive" />
-                  </Button>
+                  {!isReadOnly && (
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setConfirmDeleteId(vendor.id);
+                      }}
+                      data-testid={`button-delete-vendor-row-${vendor.id}`}
+                    >
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                    </Button>
+                  )}
                 </div>
               </div>
             ))}
@@ -284,15 +290,17 @@ export default function AdminVendors() {
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between">
               Vendor Details
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => selectedVendor && setConfirmDeleteId(selectedVendor.id)}
-                data-testid="button-delete-vendor"
-              >
-                <Trash2 className="w-4 h-4 mr-2" />
-                Delete
-              </Button>
+              {!isReadOnly && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => selectedVendor && setConfirmDeleteId(selectedVendor.id)}
+                  data-testid="button-delete-vendor"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete
+                </Button>
+              )}
             </DialogTitle>
           </DialogHeader>
 
@@ -359,77 +367,82 @@ export default function AdminVendors() {
 
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Status</label>
-                <Select
-                  value={selectedVendor.status}
-                  onValueChange={(status) => {
-                    updateStatusMutation.mutate({ id: selectedVendor.id, status });
-                    setSelectedVendor({ ...selectedVendor, status });
-                  }}
-                >
-                  <SelectTrigger className="w-44 mt-1" data-testid="select-update-status">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="new">New</SelectItem>
-                    <SelectItem value="contacted">Contacted</SelectItem>
-                    <SelectItem value="in-progress">In Progress</SelectItem>
-                    <SelectItem value="follow-up">Follow Up</SelectItem>
-                    <SelectItem value="approved">Approved</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
-                    <SelectItem value="closed">Closed</SelectItem>
-                  </SelectContent>
-                </Select>
+                {isReadOnly ? (
+                  <p className="mt-1"><Badge className={statusColors[selectedVendor.status] || "bg-gray-400"}>{selectedVendor.status}</Badge></p>
+                ) : (
+                  <Select
+                    value={selectedVendor.status}
+                    onValueChange={(status) => {
+                      updateStatusMutation.mutate({ id: selectedVendor.id, status });
+                      setSelectedVendor({ ...selectedVendor, status });
+                    }}
+                  >
+                    <SelectTrigger className="w-44 mt-1" data-testid="select-update-status">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="new">New</SelectItem>
+                      <SelectItem value="contacted">Contacted</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="follow-up">Follow Up</SelectItem>
+                      <SelectItem value="approved">Approved</SelectItem>
+                      <SelectItem value="rejected">Rejected</SelectItem>
+                      <SelectItem value="closed">Closed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
               </div>
 
-              {/* Assignment & Follow-up */}
-              <div className="border rounded-lg p-4 space-y-4 bg-blue-50/40">
-                <h4 className="font-medium flex items-center gap-2">
-                  <UserCheck className="w-4 h-4 text-[#063970]" />
-                  Assignment &amp; Follow-up
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-muted-foreground block mb-1">Assign To</label>
-                    <Select value={assignedTo} onValueChange={setAssignedTo}>
-                      <SelectTrigger data-testid="select-assigned-to">
-                        <SelectValue placeholder="Select admin…" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="">— Unassigned —</SelectItem>
-                        {adminUsers?.map((u) => (
-                          <SelectItem key={u.id} value={u.username}>{u.username}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+              {!isReadOnly && (
+                <div className="border rounded-lg p-4 space-y-4 bg-blue-50/40">
+                  <h4 className="font-medium flex items-center gap-2">
+                    <UserCheck className="w-4 h-4 text-[#063970]" />
+                    Assignment &amp; Follow-up
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground block mb-1">Assign To</label>
+                      <Select value={assignedTo} onValueChange={setAssignedTo}>
+                        <SelectTrigger data-testid="select-assigned-to">
+                          <SelectValue placeholder="Select admin…" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">— Unassigned —</SelectItem>
+                          {adminUsers?.map((u) => (
+                            <SelectItem key={u.id} value={u.username}>{u.username}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground block mb-1">
+                        <Calendar className="w-3 h-3 inline mr-1" />
+                        Follow-up Date
+                      </label>
+                      <Input
+                        type="date"
+                        value={followUpDate}
+                        onChange={(e) => setFollowUpDate(e.target.value)}
+                        data-testid="input-follow-up-date"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="text-sm font-medium text-muted-foreground block mb-1">
-                      <Calendar className="w-3 h-3 inline mr-1" />
-                      Follow-up Date
-                    </label>
-                    <Input
-                      type="date"
-                      value={followUpDate}
-                      onChange={(e) => setFollowUpDate(e.target.value)}
-                      data-testid="input-follow-up-date"
-                    />
-                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() =>
+                      updateAssignmentMutation.mutate({
+                        id: selectedVendor.id,
+                        assignedTo,
+                        followUpDate,
+                      })
+                    }
+                    disabled={updateAssignmentMutation.isPending}
+                    data-testid="button-save-assignment"
+                  >
+                    Save Assignment
+                  </Button>
                 </div>
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    updateAssignmentMutation.mutate({
-                      id: selectedVendor.id,
-                      assignedTo,
-                      followUpDate,
-                    })
-                  }
-                  disabled={updateAssignmentMutation.isPending}
-                  data-testid="button-save-assignment"
-                >
-                  Save Assignment
-                </Button>
-              </div>
+              )}
 
               {/* Notes */}
               <div className="border-t pt-4">
@@ -446,43 +459,47 @@ export default function AdminVendors() {
                           {note.authorName} — {new Date(note.createdAt).toLocaleString()}
                         </p>
                       </div>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="flex-shrink-0 h-7 w-7"
-                        onClick={() => setConfirmDeleteNoteId(note.id)}
-                        data-testid={`button-delete-note-${note.id}`}
-                      >
-                        <Trash2 className="w-3.5 h-3.5 text-destructive" />
-                      </Button>
+                      {!isReadOnly && (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="flex-shrink-0 h-7 w-7"
+                          onClick={() => setConfirmDeleteNoteId(note.id)}
+                          data-testid={`button-delete-note-${note.id}`}
+                        >
+                          <Trash2 className="w-3.5 h-3.5 text-destructive" />
+                        </Button>
+                      )}
                     </div>
                   ))}
                   {(!notes || notes.length === 0) && (
                     <p className="text-muted-foreground text-sm">No notes yet</p>
                   )}
                 </div>
-                <div className="flex gap-2">
-                  <Textarea
-                    placeholder="Add a note..."
-                    value={newNote}
-                    onChange={(e) => setNewNote(e.target.value)}
-                    className="flex-1"
-                    data-testid="input-add-note"
-                  />
-                  <Button
-                    onClick={() =>
-                      addNoteMutation.mutate({
-                        vendorId: selectedVendor.id,
-                        note: newNote,
-                        authorName: authData?.username || "Admin",
-                      })
-                    }
-                    disabled={!newNote.trim()}
-                    data-testid="button-add-note"
-                  >
-                    Add
-                  </Button>
-                </div>
+                {!isReadOnly && (
+                  <div className="flex gap-2">
+                    <Textarea
+                      placeholder="Add a note..."
+                      value={newNote}
+                      onChange={(e) => setNewNote(e.target.value)}
+                      className="flex-1"
+                      data-testid="input-add-note"
+                    />
+                    <Button
+                      onClick={() =>
+                        addNoteMutation.mutate({
+                          vendorId: selectedVendor.id,
+                          note: newNote,
+                          authorName: authData?.username || "Admin",
+                        })
+                      }
+                      disabled={!newNote.trim()}
+                      data-testid="button-add-note"
+                    >
+                      Add
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           )}

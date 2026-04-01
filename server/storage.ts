@@ -22,6 +22,8 @@ export interface IStorage {
   createAdminUser(admin: InsertAdminUser): Promise<AdminUser>;
   
   getAdminUsers(): Promise<AdminUser[]>;
+  updateAdminUser(id: number, data: Partial<InsertAdminUser>): Promise<AdminUser | undefined>;
+  deleteAdminUser(id: number): Promise<void>;
 
   getContacts(): Promise<Contact[]>;
   getContact(id: number): Promise<Contact | undefined>;
@@ -91,6 +93,19 @@ export class DatabaseStorage implements IStorage {
 
   async getAdminUsers(): Promise<AdminUser[]> {
     return db.select().from(adminUsers).orderBy(adminUsers.username);
+  }
+
+  async updateAdminUser(id: number, data: Partial<InsertAdminUser>): Promise<AdminUser | undefined> {
+    const [updated] = await db
+      .update(adminUsers)
+      .set(data)
+      .where(eq(adminUsers.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteAdminUser(id: number): Promise<void> {
+    await db.delete(adminUsers).where(eq(adminUsers.id, id));
   }
 
   async getContacts(): Promise<Contact[]> {

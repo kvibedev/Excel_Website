@@ -1,14 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LogOut } from "lucide-react";
 import { useEffect } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import type { AdminRole } from "@shared/schema";
 
 interface AdminAuthData {
   authenticated: boolean;
   username?: string;
+  role?: AdminRole;
 }
+
+const ROLE_LABELS: Record<string, string> = {
+  super_admin: "Super Admin",
+  admin: "Admin",
+  editor: "Editor",
+  viewer: "Viewer",
+};
 
 export function useAdminAuth() {
   const [, setLocation] = useLocation();
@@ -26,10 +36,15 @@ export function useAdminAuth() {
   return { authData, authLoading };
 }
 
+export function canAccess(role: AdminRole | undefined, minRole: AdminRole): boolean {
+  const hierarchy: Record<string, number> = { super_admin: 4, admin: 3, editor: 2, viewer: 1 };
+  return (hierarchy[role || "viewer"] || 0) >= (hierarchy[minRole] || 0);
+}
+
 interface AdminLayoutProps {
   children: React.ReactNode;
   title: string;
-  activeNav?: "dashboard" | "contacts" | "vendors" | "blog";
+  activeNav?: "dashboard" | "contacts" | "vendors" | "blog" | "users";
 }
 
 export default function AdminLayout({ children, title, activeNav }: AdminLayoutProps) {
@@ -54,13 +69,22 @@ export default function AdminLayout({ children, title, activeNav }: AdminLayoutP
     return null;
   }
 
+  const role = authData.role || "viewer";
+  const showUsers = canAccess(role as AdminRole, "admin");
+  const showCrmWrite = canAccess(role as AdminRole, "admin");
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-[#063970] text-white py-4 px-6">
         <div className="container mx-auto flex justify-between items-center flex-wrap gap-2">
           <h1 className="text-xl font-bold">{title}</h1>
           <div className="flex items-center gap-4">
-            <span>Welcome, {authData.username}</span>
+            <div className="flex items-center gap-2">
+              <span>Welcome, {authData.username}</span>
+              <Badge variant="secondary" className="text-xs" data-testid="badge-role">
+                {ROLE_LABELS[role] || role}
+              </Badge>
+            </div>
             <Button variant="outline" size="sm" onClick={handleLogout} data-testid="button-logout">
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -107,6 +131,17 @@ export default function AdminLayout({ children, title, activeNav }: AdminLayoutP
               Blog
             </Button>
           </Link>
+          {showUsers && (
+            <Link href="/admin/users">
+              <Button
+                variant="ghost"
+                className={activeNav === "users" ? "text-[#063970]" : ""}
+                data-testid="link-users"
+              >
+                Users
+              </Button>
+            </Link>
+          )}
         </div>
       </nav>
 
