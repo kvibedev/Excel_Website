@@ -10,6 +10,7 @@ const seedArticles = [
     author: "Excel Facility Services Group",
     category: "Sustainability",
     tags: "nontoxic,cleaning,floorcare,greenproducts,facilitymanagement,sustainability",
+    imageUrl: "/images/blog/green-cleaning.webp",
     status: "published",
     publishedAt: new Date("2025-07-22"),
     content: `Sustainability is shaking up the way property managers, facility teams, and cleaning contractors work. These days, almost everybody in facility management is under pressure to reduce environmental impact, but doing it responsibly means more than swapping out a couple cleaning sprays. Non-toxic cleaning solutions are at the center of this major change, with their ability to support both human health and long-term maintenance goals for any kind of building. With new rules, rising demands from tenants, and better products arriving on the market, green cleaning is quickly becoming essential for anyone managing buildings or cleaning services.
@@ -51,6 +52,7 @@ The future of facilities will demand even more non-toxic, low-impact strategies.
     author: "Excel Facility Services Group",
     category: "Floor Care",
     tags: "sustainable,floorcare,industrial,maintenance,ecoproducts,environment",
+    imageUrl: "/images/blog/floor-care.webp",
     status: "published",
     publishedAt: new Date("2025-07-21"),
     content: `Facility managers in industrial centers, warehouses, and manufacturing plants are realizing that floor care is about much more than simply keeping up appearances. Keeping floors durable and hygienic while reducing environmental impact is now critical. Modern industrial spaces face tough wear from machines, heavy foot traffic, and constant use—so it's essential to shift toward sustainable floor care solutions that protect facilities, workers, and the environment at the same time.
@@ -94,6 +96,7 @@ Another big opportunity sits in customized cleaning schedules. When facilities d
     author: "Excel Facility Services Group",
     category: "Sustainability",
     tags: "greencleaning,sustainability,facilitycare,ecofriendly,nontoxic,floorcare",
+    imageUrl: "/images/blog/levelup-clean.webp",
     status: "published",
     publishedAt: new Date("2025-07-18"),
     content: `Facility management is seeing big changes as more companies trade toxic cleaning chemicals for greener and safer alternatives. Facility managers today can't really ignore the growing pressure to step up sustainability, partly because of tougher rules on things like PFAS and also because people are paying more attention to what's in the air they breathe inside buildings. It's not just about meeting the latest compliance requirement, either—there's a real drive to protect occupant health and show that your building cares about the planet. A focus on green cleaning isn't just a bonus for a facility anymore, it's basically a necessity.
@@ -139,6 +142,7 @@ Unlocking the power of green cleaning gives your facility an edge, preparing it 
     author: "Excel Facility Services Group",
     category: "Technology",
     tags: "Security,SmartTech,EFSG",
+    imageUrl: "/images/blog/smart-tech.webp",
     status: "published",
     publishedAt: new Date("2025-07-17"),
     content: `Across facilities in the United States, smart technology is reshaping what security means for business owners and facility managers. In 2025, the pressure's increasing not just to deal with traditional physical threats, but to harness data, automation, and intelligent software that lifts your security performance to a new level. This evolving digital transformation makes it possible to monitor and manage everything—access, cameras, doors, or environmental controls—faster and, quite honestly, smarter than ever before. Knowing how to work these innovations into daily operations is rapidly becoming a necessity, not just a trend.
@@ -188,6 +192,7 @@ Taking smart security seriously isn't a trend—it's a real, practical evolution
     author: "Excel Facility Services Group",
     category: "Technology",
     tags: "CommercialCleaning,Automation,EFSG",
+    imageUrl: "/images/blog/automation.webp",
     status: "published",
     publishedAt: new Date("2025-07-16"),
     content: `Commercial cleaning is changing fast in the United States, and automation is the major driver behind this transformation. For facility managers and business owners, embracing robotics, AI, and smart data systems can mean cleaner spaces, better efficiency, cost savings, and a serious boost to sustainability efforts. If you want your building to stand out for the right reasons, getting to grips with these cutting-edge cleaning innovations is now essential.
@@ -227,6 +232,7 @@ The best results depend on blending expert human attention with the right mix of
     author: "Excel Facility Services Group",
     category: "Sustainability",
     tags: "Sustainability,EnergyEfficiency,EFSG",
+    imageUrl: "/images/blog/energy-efficiency.jpg",
     status: "published",
     publishedAt: new Date("2025-07-15"),
     content: `Sustainability has quickly become a central focus for facility managers across the United States. What used to be just about keeping up with regulations is now a drive toward real efficiency and resilience in business operations. The shift is obvious—environmental, social, and governance (ESG) standards put energy strategy in the spotlight. Now, energy efficiency is no longer just a "good to have". It's necessary for staying competitive, controling operating costs, and meeting growing demands from both regulators and customers.
