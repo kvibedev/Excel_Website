@@ -403,12 +403,12 @@ export default function AdminVendors() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium text-muted-foreground block mb-1">Assign To</label>
-                      <Select value={assignedTo} onValueChange={setAssignedTo}>
+                      <Select value={assignedTo || "__unassigned__"} onValueChange={(v) => setAssignedTo(v === "__unassigned__" ? "" : v)}>
                         <SelectTrigger data-testid="select-assigned-to">
                           <SelectValue placeholder="Select admin…" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="">— Unassigned —</SelectItem>
+                          <SelectItem value="__unassigned__">— Unassigned —</SelectItem>
                           {adminUsers?.map((u) => (
                             <SelectItem key={u.id} value={u.username}>{u.username}</SelectItem>
                           ))}
