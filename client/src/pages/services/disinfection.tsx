@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import heroImage from "@assets/disinfection_1_1774989475422.png";
 import sectionImage from "@assets/disinfection_2_1774989494163.png";
-import tailoredImage from "@assets/man-wearing-protective-suit-disinfecting-school-cl-2026-03-20-_1774860864222.jpg";
+import tailoredImage from "@assets/modern-architecture-of-office-reception-area-2026-01-09-11-05-_1775007871514.jpg";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
 import retailImage from "@assets/generated_images/Retail_industry_image_2a0d9b2e.png";
 import distributionImage from "@assets/generated_images/Distribution_center_industry_image_5e966279.png";
