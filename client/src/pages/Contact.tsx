@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Phone, Mail, MapPin, Briefcase, Users } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import heroImage from "@assets/generated_images/Commercial_cleaning_hero_image_981b07c2.png";
+import heroImage from "@assets/Vendor_registration_(2)_1775007307662.png";
 
 export default function Contact() {
   return (
