@@ -114,16 +114,16 @@ export default function DistributionCenters() {
                 ABOUT OUR SERVICE
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Keeping Your Supply Chain Running Smoothly
+                Facility Services Built for Distribution Centers
               </h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                <strong>A distribution center is a critical link in the supply chain</strong>, and keeping it clean is essential to maintaining efficient operations. Dust, dirt, and other particulates can build up on surfaces and equipment, leading to increased wear and tear.
+                Distribution centers rely on cleanliness, consistency, and operational readiness to support productivity, safety, and workflow across the facility. In high-traffic industrial environments, cleaning programs need to help maintain aisles, loading areas, shared spaces, equipment zones, and employee areas without disrupting daily operations.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                When we work with a distribution center, <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">our team</Link> takes cleanliness and safety seriously, especially since the <Link href="/services/covid-19-cleaning" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-covid">COVID-19 pandemic</Link>. We understand that the constant flow of foot traffic in and out of the facility can quickly become a hotbed for viruses.
+                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for distribution centers that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with warehouse traffic, shift schedules, and day-to-day operational demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                That's why <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> ensures clean air quality by keeping germ-free surfaces, including high-touch areas like loading docks or storerooms. We also <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfect</Link> these areas with proper chemicals so no grime remains.
+                With more than 20 years of operational experience and multi-site capability, Excel helps distribution centers maintain cleaner, safer, and more efficient environments through dependable service delivery, responsive communication, and standards built for consistency across operational and employee-facing spaces.
               </p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
