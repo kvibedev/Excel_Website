@@ -126,7 +126,7 @@ export default function Hero({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {primaryCta && (
               <Link href={primaryCta.href}>
-                <Button size="lg" variant="default" data-testid="button-hero-primary">
+                <Button size="lg" variant="default" className="text-[#073970]" data-testid="button-hero-primary">
                   {primaryCta.text}
                 </Button>
               </Link>
