@@ -85,7 +85,7 @@ export default function Retailer() {
       />
       {/* Hero Section */}
       <Hero
-        title="Retail Stores"
+        title="Built Around the Realities of Retail Operations"
         subtitle="A well-managed facility can help to create a positive customer experience, which is essential for success in the retail industry."
         imageSrc={heroImage}
         height="medium"
