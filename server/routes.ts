@@ -109,9 +109,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  app.get("/api/admin/me", (req, res) => {
+  app.get("/api/admin/me", async (req, res) => {
     if (req.session.adminId) {
-      res.json({ authenticated: true, id: req.session.adminId, username: req.session.adminUsername, role: req.session.adminRole || "viewer" });
+      const admin = await storage.getAdminUser(req.session.adminId);
+      if (!admin || !admin.isActive) {
+        req.session.destroy(() => {});
+        return res.json({ authenticated: false });
+      }
+      req.session.adminRole = admin.role;
+      res.json({ authenticated: true, id: admin.id, username: admin.username, role: admin.role });
     } else {
       res.json({ authenticated: false });
     }

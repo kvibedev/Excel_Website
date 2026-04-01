@@ -29,6 +29,17 @@ const ROLE_BADGE_COLORS: Record<string, string> = {
   viewer: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
 };
 
+function parseApiError(err: Error, fallback: string): string {
+  try {
+    const jsonStart = (err.message || "").indexOf("{");
+    if (jsonStart !== -1) {
+      const parsed = JSON.parse(err.message.slice(jsonStart));
+      if (parsed.error) return parsed.error;
+    }
+  } catch {}
+  return fallback;
+}
+
 export default function AdminUsers() {
   const { authData, authLoading } = useAdminAuth();
   const { toast } = useToast();
@@ -64,15 +75,7 @@ export default function AdminUsers() {
       resetForm();
     },
     onError: (err: Error) => {
-      let message = "Failed to create user";
-      try {
-        const jsonStart = (err.message || "").indexOf("{");
-        if (jsonStart !== -1) {
-          const parsed = JSON.parse(err.message.slice(jsonStart));
-          if (parsed.error) message = parsed.error;
-        }
-      } catch {}
-      toast({ title: message, variant: "destructive" });
+      toast({ title: parseApiError(err, "Failed to create user"), variant: "destructive" });
     },
   });
 
@@ -88,15 +91,7 @@ export default function AdminUsers() {
       resetForm();
     },
     onError: (err: Error) => {
-      let message = "Failed to update user";
-      try {
-        const jsonStart = (err.message || "").indexOf("{");
-        if (jsonStart !== -1) {
-          const parsed = JSON.parse(err.message.slice(jsonStart));
-          if (parsed.error) message = parsed.error;
-        }
-      } catch {}
-      toast({ title: message, variant: "destructive" });
+      toast({ title: parseApiError(err, "Failed to update user"), variant: "destructive" });
     },
   });
 
@@ -109,15 +104,7 @@ export default function AdminUsers() {
       toast({ title: "User deactivated" });
     },
     onError: (err: Error) => {
-      let message = "Failed to deactivate user";
-      try {
-        const jsonStart = (err.message || "").indexOf("{");
-        if (jsonStart !== -1) {
-          const parsed = JSON.parse(err.message.slice(jsonStart));
-          if (parsed.error) message = parsed.error;
-        }
-      } catch {}
-      toast({ title: message, variant: "destructive" });
+      toast({ title: parseApiError(err, "Failed to deactivate user"), variant: "destructive" });
     },
   });
 
