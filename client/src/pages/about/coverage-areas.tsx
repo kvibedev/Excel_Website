@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { MapPin } from "lucide-react";
-import usaMapImage from "@assets/Excel_Map_(1)_1775005493219.png";
+import usaMapImage from "@assets/__1775005735744.png";
 
 export default function CoverageAreas() {
   const statesColumn1 = [
