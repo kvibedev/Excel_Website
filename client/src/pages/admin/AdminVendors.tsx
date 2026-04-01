@@ -68,7 +68,7 @@ export default function AdminVendors() {
 
   const { data: adminUsers } = useQuery<AdminUser[]>({
     queryKey: ["/api/admin/users"],
-    enabled: !!authData?.authenticated,
+    enabled: !!authData?.authenticated && !isReadOnly,
   });
 
   const updateStatusMutation = useMutation({

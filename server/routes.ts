@@ -129,14 +129,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/setup", async (req, res) => {
     try {
-      const existing = await storage.getAdminByUsername("admin");
-      if (existing) {
-        return res.status(400).json({ error: "Admin already exists" });
+      const allAdmins = await storage.getAdminUsers();
+      if (allAdmins.length > 0) {
+        return res.status(403).json({ error: "Setup is disabled. Admin accounts already exist." });
       }
 
       const { username, password, email } = req.body;
+      if (!username || !password || !email) {
+        return res.status(400).json({ error: "Username, password, and email are required" });
+      }
       const hashedPassword = await bcrypt.hash(password, 10);
-      const admin = await storage.createAdminUser({ username, password: hashedPassword, email });
+      const admin = await storage.createAdminUser({ username, password: hashedPassword, email, role: "super_admin" });
       res.json({ success: true, username: admin.username });
     } catch (error) {
       res.status(500).json({ error: "Setup failed" });
