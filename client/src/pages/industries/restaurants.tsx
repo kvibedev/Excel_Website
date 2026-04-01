@@ -86,7 +86,7 @@ export default function Restaurants() {
       {/* Hero Section */}
       <Hero
         title="Restaurants"
-        subtitle="Any restaurant owner knows that a clean and well-maintained dining area is essential for attracting and keeping customers."
+        subtitle="Excel Facility Services Group helps restaurants maintain cleaner, safer, and more guest-ready environments through accountable service delivery, responsive support, and programs built for front-of-house and back-of-house operations."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
