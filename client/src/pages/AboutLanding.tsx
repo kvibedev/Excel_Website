@@ -161,34 +161,33 @@ export default function AboutLanding() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {aboutSections.map((section, index) => (
-              <Card 
-                key={index}
-                className="p-8 hover-elevate active-elevate-2 border-t-4 border-t-[#97CC06]"
-                data-testid={`card-about-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-lg bg-[#0A5EB9]/10 flex items-center justify-center flex-shrink-0">
-                    <section.icon className="w-7 h-7 text-[#0A5EB9]" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-2xl font-bold">{section.title}</h3>
-                      <Badge className="bg-[#97CC06] text-[#063970]" data-testid={`badge-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-                        {section.badge}
-                      </Badge>
+              <Link key={index} href={section.link} data-testid={`link-card-about-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                <Card 
+                  className="p-8 hover-elevate active-elevate-2 border-t-4 border-t-[#97CC06] h-full cursor-pointer"
+                  data-testid={`card-about-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                >
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-14 h-14 rounded-lg bg-[#0A5EB9]/10 flex items-center justify-center flex-shrink-0">
+                      <section.icon className="w-7 h-7 text-[#0A5EB9]" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-2xl font-bold">{section.title}</h3>
+                        <Badge className="bg-[#97CC06] text-[#063970]" data-testid={`badge-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                          {section.badge}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <p className="text-muted-foreground mb-6">{section.description}</p>
-                <Link href={section.link}>
+                  <p className="text-muted-foreground mb-6">{section.description}</p>
                   <Button 
                     variant="default"
                     data-testid={`button-learn-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                   >
                     Learn More
                   </Button>
-                </Link>
-              </Card>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
