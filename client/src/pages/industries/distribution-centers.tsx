@@ -213,26 +213,48 @@ export default function DistributionCenters() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
               TAILORED APPROACH
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              Cleanliness Vital for Seamless Operations
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+              Built Around the Realities of Distribution Center Operations
             </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
-              At Excel Facility Services Group, we recognize that cleanliness is vital for the seamless operation of your distribution center. A clean facility not only promotes employee health but also ensures optimal performance in every function. Our specialized team is trained to address the unique challenges of maintaining cleanliness in high-traffic environments.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              We implement a <Link href="/services/levelup-clean" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-levelup">comprehensive cleaning regimen</Link> that includes regular sanitization of high-touch surfaces and thorough inspections to guarantee compliance with industry standards. Our advanced techniques and eco-friendly products ensure an environment that is not only clean but also conducive to productivity.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              By partnering with us, you can reduce the risk of illness in the workplace and create a welcoming space for employees and visitors alike. Our commitment to excellence allows us to adapt our services to meet your specific needs.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              Ensure that your distribution center remains a safe, efficient hub for operations. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link> to discover how we can enhance your facility's cleanliness and efficiency!
+            <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
+              Distribution centers depend on cleanliness, consistency, and operational readiness to support safety, productivity, and workflow. Excel Facility Services Group provides cleaning and facility services designed to help maintain cleaner aisles, loading areas, employee spaces, and other high-traffic parts of the facility.
             </p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="h-full" data-testid="card-tailored-1">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/levelup-clean" className="text-[#0A5EB9] hover:underline" data-testid="link-levelup">Operationally Aware Service</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Service programs built around active warehouse environments where timing, traffic, and workflow matter.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-2">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Cleaner High-Traffic Areas</CardTitle>
+                <CardDescription className="text-base">
+                  Maintain loading zones, shared spaces, restrooms, breakrooms, and other frequently used parts of the facility.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-3">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Support for Daily Efficiency</CardTitle>
+                <CardDescription className="text-base">
+                  Cleaning plans aligned with shift schedules, employee movement, and operational priorities to help maintain consistency without disruption.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto" data-testid="text-tailored-closing">
+            Our approach helps distribution centers maintain cleaner, safer, and more organized environments that support both daily operations and workforce confidence. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link>.
+          </p>
         </div>
       </section>
 
