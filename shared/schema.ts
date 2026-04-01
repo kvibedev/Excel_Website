@@ -45,6 +45,8 @@ export const contacts = pgTable("contacts", {
   serviceInterest: text("service_interest"),
   areaOfInquiry: text("area_of_inquiry"),
   status: text("status").default("new").notNull(),
+  assignedTo: text("assigned_to"),
+  followUpDate: timestamp("follow_up_date"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -76,6 +78,8 @@ export const vendorRegistrations = pgTable("vendor_registrations", {
   references: text("references"),
   additionalInfo: text("additional_info"),
   status: text("status").default("new").notNull(),
+  assignedTo: text("assigned_to"),
+  followUpDate: timestamp("follow_up_date"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

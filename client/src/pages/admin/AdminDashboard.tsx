@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Building2, BookOpen } from "lucide-react";
+import { Users, Building2, BookOpen, CalendarClock } from "lucide-react";
 import type { Contact, VendorRegistration } from "@shared/schema";
 import AdminLayout, { useAdminAuth } from "./AdminLayout";
 
@@ -14,6 +14,7 @@ interface DashboardStats {
   newVendors: number;
   publishedPosts: number;
   totalPosts: number;
+  pendingFollowUps: number;
   recentContacts: Contact[];
   recentVendors: VendorRegistration[];
 }
@@ -78,6 +79,17 @@ export default function AdminDashboard() {
           <CardContent>
             <div className="text-2xl font-bold" data-testid="stat-total-posts">{stats?.totalPosts || 0}</div>
             <p className="text-xs text-muted-foreground">{stats?.publishedPosts || 0} published</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending Follow-ups</CardTitle>
+            <CalendarClock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold" data-testid="stat-pending-followups">{stats?.pendingFollowUps || 0}</div>
+            <p className="text-xs text-muted-foreground">due today or overdue</p>
           </CardContent>
         </Card>
       </div>
