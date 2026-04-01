@@ -86,7 +86,7 @@ export default function DistributionCenters() {
       {/* Hero Section */}
       <Hero
         title="Distribution Center Cleaning and Facility Services"
-        subtitle="With our three-step approach that delivers healthy distribution centers, you can be assured that your facility will always operate safely and efficiently."
+        subtitle="Excel Facility Services Group helps distribution centers maintain cleaner, safer, and more efficient environments through accountable service delivery, responsive support, and programs built for high-traffic operations."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
