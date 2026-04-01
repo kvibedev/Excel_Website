@@ -87,9 +87,7 @@ export default function AboutLanding() {
             <p className="text-xl text-white/90 mb-4" data-testid="text-about-landing-subtitle">
               Excel Facility Services Group helps organizations maintain cleaner, safer, and more consistent facilities through disciplined service delivery, regional responsiveness, and a long-term commitment to operational excellence.
             </p>
-            <p className="text-sm text-white/70" data-testid="text-about-landing-proof">
-              28-state coverage &bull; 25M square feet serviced daily &bull; enterprise-focused facility support
-            </p>
+            <p className="text-sm text-white/70" data-testid="text-about-landing-proof">28-state coverage • 25M square feet serviced daily • Enterprise-focused facility support</p>
           </div>
         </div>
       </section>
