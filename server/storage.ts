@@ -23,7 +23,7 @@ export interface IStorage {
   
   getAdminUsers(): Promise<AdminUser[]>;
   updateAdminUser(id: number, data: Partial<InsertAdminUser>): Promise<AdminUser | undefined>;
-  deleteAdminUser(id: number): Promise<void>;
+  deactivateAdminUser(id: number): Promise<void>;
 
   getContacts(): Promise<Contact[]>;
   getContact(id: number): Promise<Contact | undefined>;
@@ -77,12 +77,16 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAdminByUsername(username: string): Promise<AdminUser | undefined> {
-    const [admin] = await db.select().from(adminUsers).where(eq(adminUsers.username, username));
+    const [admin] = await db.select().from(adminUsers).where(
+      and(eq(adminUsers.username, username), eq(adminUsers.isActive, true))
+    );
     return admin;
   }
 
   async getAdminByEmail(email: string): Promise<AdminUser | undefined> {
-    const [admin] = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
+    const [admin] = await db.select().from(adminUsers).where(
+      and(eq(adminUsers.email, email), eq(adminUsers.isActive, true))
+    );
     return admin;
   }
 
@@ -104,8 +108,8 @@ export class DatabaseStorage implements IStorage {
     return updated;
   }
 
-  async deleteAdminUser(id: number): Promise<void> {
-    await db.delete(adminUsers).where(eq(adminUsers.id, id));
+  async deactivateAdminUser(id: number): Promise<void> {
+    await db.update(adminUsers).set({ isActive: false }).where(eq(adminUsers.id, id));
   }
 
   async getContacts(): Promise<Contact[]> {

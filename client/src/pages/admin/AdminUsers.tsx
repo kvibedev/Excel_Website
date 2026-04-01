@@ -18,6 +18,7 @@ interface AdminUserData {
   username: string;
   email: string;
   role: string;
+  isActive: boolean;
   createdAt: string;
 }
 
@@ -99,16 +100,16 @@ export default function AdminUsers() {
     },
   });
 
-  const deleteMutation = useMutation({
+  const deactivateMutation = useMutation({
     mutationFn: async (id: number) => {
       await apiRequest("DELETE", `/api/admin/users/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
-      toast({ title: "User deleted" });
+      toast({ title: "User deactivated" });
     },
     onError: (err: Error) => {
-      let message = "Failed to delete user";
+      let message = "Failed to deactivate user";
       try {
         const jsonStart = (err.message || "").indexOf("{");
         if (jsonStart !== -1) {
@@ -155,10 +156,10 @@ export default function AdminUsers() {
     return targetLevel <= myLevel;
   };
 
-  const canDeleteUser = (user: AdminUserData) => {
-    if (user.id === authData?.username) return false;
+  const canDeactivateUser = (user: AdminUserData) => {
+    if (user.id === authData?.id) return false;
     const targetLevel = ROLE_HIERARCHY[(user.role || "viewer") as AdminRole];
-    return targetLevel <= myLevel;
+    return targetLevel <= myLevel && user.isActive;
   };
 
   return (
@@ -277,7 +278,10 @@ export default function AdminUsers() {
                   <tbody>
                     {users.map((user) => (
                       <tr key={user.id} className="border-b last:border-0" data-testid={`row-user-${user.id}`}>
-                        <td className="py-3 pr-4 font-medium" data-testid={`text-username-${user.id}`}>{user.username}</td>
+                        <td className="py-3 pr-4 font-medium" data-testid={`text-username-${user.id}`}>
+                          {user.username}
+                          {!user.isActive && <Badge className="ml-2 bg-gray-400 text-white" data-testid={`badge-inactive-${user.id}`}>Inactive</Badge>}
+                        </td>
                         <td className="py-3 pr-4 text-muted-foreground" data-testid={`text-email-${user.id}`}>{user.email}</td>
                         <td className="py-3 pr-4">
                           <Badge className={ROLE_BADGE_COLORS[user.role] || ""} data-testid={`badge-role-${user.id}`}>
@@ -299,16 +303,16 @@ export default function AdminUsers() {
                                 <Pencil className="w-4 h-4" />
                               </Button>
                             )}
-                            {canDeleteUser(user) && user.id !== authData?.id && (
+                            {canDeactivateUser(user) && (
                               <Button
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => {
-                                  if (confirm(`Are you sure you want to delete ${user.username}?`)) {
-                                    deleteMutation.mutate(user.id);
+                                  if (confirm(`Are you sure you want to deactivate ${user.username}? They will no longer be able to log in.`)) {
+                                    deactivateMutation.mutate(user.id);
                                   }
                                 }}
-                                data-testid={`button-delete-${user.id}`}
+                                data-testid={`button-deactivate-${user.id}`}
                               >
                                 <Trash2 className="w-4 h-4 text-red-500" />
                               </Button>

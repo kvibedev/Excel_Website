@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, pgEnum, text, varchar, timestamp, integer, serial } from "drizzle-orm/pg-core";
+import { pgTable, pgEnum, text, varchar, timestamp, integer, serial, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -42,11 +42,13 @@ export const adminUsers = pgTable("admin_users", {
   password: text("password").notNull(),
   email: text("email").notNull(),
   role: adminRoleEnum("role").notNull().default("viewer"),
+  isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
   id: true,
+  isActive: true,
   createdAt: true,
 });
 
