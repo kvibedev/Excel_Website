@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { Award, Shield, CheckCircle2, Laptop } from "lucide-react";
+import heroImage from "@assets/Professional_magazine-quality_8K_photorealistic_co-17750065984_1775006632029.png";
 import shccnjLogo from "@assets/shccnj_1774369098854.webp";
 import sbeLogo from "@assets/sbe_1774369212032.webp";
 import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
@@ -52,6 +53,7 @@ export default function RecognitionsCertifications() {
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
+        <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-recognitions">
