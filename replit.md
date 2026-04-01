@@ -15,6 +15,17 @@ This is a commercial cleaning services website for Excel Facility Services Group
 - Changed primary CTA to "REQUEST PROPOSAL" for enterprise buyers
 - Removed explicit contract amounts for sophisticated appeal
 
+**Dynamic Blog System (Complete - April 2026)**
+- Blog posts now stored in PostgreSQL database (blog_posts table) and served via public API
+- Public API routes: GET /api/blog (list published posts), GET /api/blog/:slug (single post)
+- Resources page (/resources) dynamically fetches published posts from the database
+- Dynamic blog post detail page at /resources/:slug replaces 6 static article components
+- Admin CRUD at /admin/blog creates, edits, publishes, and deletes posts — changes appear immediately on the public site
+- 6 original static articles seeded into the database as published posts (seed script: server/seed-blog.ts)
+- Old static resource page components remain in client/src/pages/resources/ but are no longer routed to
+- Blog content rendered as React text (not dangerouslySetInnerHTML) for XSS safety
+- Proper error handling: Resources shows retry button on API failure; BlogPost shows "Article Not Found" on 404
+
 **About Page Rebuild (Complete)**
 - Replicated original efsgnj.com/about-us/ structure
 - "At Excel, We Understand That People Matter" hero section

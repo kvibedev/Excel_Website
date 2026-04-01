@@ -2,76 +2,37 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Calendar, ArrowRight, Clock } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { BlogPost } from "@shared/schema";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
-import floorCareImage from "@assets/floor_care_1_1774863820156.webp";
-import greenCleaningImage from "@assets/GS-Provide-Service-dk_1764335201153.webp";
-import officeImage from "@assets/office_top_bg_1774871962308.webp";
-import automationImage from "@assets/glass-cleaning-with-special-chemicals-cleaning-se-2026-03-25-0_1774632037682.jpg";
-import buildingImage from "@assets/Hero_building_image1_1774628077282.webp";
+
+function formatDate(dateStr: string | Date | null): string {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+}
+
+function estimateReadTime(content: string): string {
+  const words = content.split(/\s+/).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min read`;
+}
 
 export default function Resources() {
-  const blogArticles = [
-    {
-      id: 1,
-      title: "Non Toxic Cleaning Transforms Facilities",
-      date: "July 22, 2025",
-      readTime: "5 min read",
-      category: "Sustainability",
-      excerpt: "This blog post explores how non-toxic cleaning solutions are transforming facility management through sustainable, health-conscious practices. It covers the growing demand for green cleaning due to regulations, tenant expectations, and environmental benefits.",
-      image: heroImage,
-      slug: "non-toxic-cleaning-transforms-facilities"
-    },
-    {
-      id: 2,
-      title: "Sustainable Floor Care Transforming Facilities",
-      date: "July 21, 2025",
-      readTime: "6 min read",
-      category: "Floor Care",
-      excerpt: "This blog explores sustainable floor care in industrial facilities, focusing on eco-friendly cleaning products, energy- and water-efficient equipment, and tailored maintenance routines that protect both worker health and the environment.",
-      image: floorCareImage,
-      slug: "sustainable-floor-care-transforming-facilities"
-    },
-    {
-      id: 3,
-      title: "Green Cleaning Transforming Facility Management",
-      date: "July 18, 2025",
-      readTime: "5 min read",
-      category: "Sustainability",
-      excerpt: "Discover how green cleaning is transforming facility management by replacing toxic chemicals with safer, eco-friendly products and technologies. This post explores trends, benefits, sector-specific strategies, and practical steps for leaders.",
-      image: greenCleaningImage,
-      slug: "green-cleaning-transforming-facility-management"
-    },
-    {
-      id: 4,
-      title: "Smart Technology Revolutionizes Facility Security",
-      date: "July 17, 2025",
-      readTime: "7 min read",
-      category: "Technology",
-      excerpt: "This blog post explores how smart technology is revolutionizing facility security in the U.S., highlighting tools like AI video analytics, mobile access, cloud platforms, and IoT sensors that enhance safety, efficiency, and control.",
-      image: officeImage,
-      slug: "smart-technology-revolutionizes-facility-security"
-    },
-    {
-      id: 5,
-      title: "Automation Revolutionizes Commercial Cleaning Efficiency",
-      date: "July 16, 2025",
-      readTime: "6 min read",
-      category: "Technology",
-      excerpt: "Discover how automation is revolutionizing commercial cleaning in the U.S., with robotics, AI, and smart sensors reshaping facility hygiene. This blog explores how these innovations boost efficiency, reduce costs, and enhance sustainability.",
-      image: automationImage,
-      slug: "automation-revolutionizes-commercial-cleaning-efficiency"
-    },
-    {
-      id: 6,
-      title: "Unlocking Energy Efficiency For Facilities",
-      date: "July 15, 2025",
-      readTime: "7 min read",
-      category: "Sustainability",
-      excerpt: "This blog post explores how US facility managers are driving sustainability through energy efficiency initiatives. It covers key trends like smart retrofits, IoT-based monitoring, and renewable energy adoption with AI and cloud platforms.",
-      image: buildingImage,
-      slug: "unlocking-energy-efficiency-for-facilities"
-    }
-  ];
+  const { data: posts, isLoading, isError } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog"],
+  });
+
+  const blogArticles = (posts || []).map((post) => ({
+    id: post.id,
+    title: post.title,
+    date: formatDate(post.publishedAt),
+    readTime: estimateReadTime(post.content),
+    category: post.category || "General",
+    excerpt: post.excerpt || "",
+    slug: post.slug,
+  }));
 
   return (
     <div>
@@ -80,7 +41,6 @@ export default function Resources() {
         description="Insights and articles on commercial cleaning, green practices, facility management, and industry trends from Excel Facility Services Group."
         path="/resources"
       />
-      {/* Hero Section with Enhanced Visual */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
@@ -119,7 +79,6 @@ export default function Resources() {
         </div>
       </section>
 
-      {/* Featured Articles Section with Syne-Inspired Design */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-white to-gray-50/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -131,113 +90,194 @@ export default function Resources() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-            {blogArticles.slice(0, 2).map((article) => (
-              <Link href={`/resources/${article.slug}`} key={article.id}>
-                <div 
-                  className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-lg h-full"
-                  data-testid={`card-featured-article-${article.id}`}
-                >
-                  <div className="relative h-80 overflow-hidden">
-                    <img 
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      data-testid={`img-article-${article.id}`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                    <div className="absolute top-6 left-6">
-                      <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
-                        {article.category}
-                      </span>
+          {isError ? (
+            <div className="text-center py-16">
+              <p className="text-lg text-muted-foreground mb-4">Unable to load articles right now. Please try again later.</p>
+              <Button
+                variant="default"
+                className="bg-[#063970]"
+                onClick={() => window.location.reload()}
+                data-testid="button-retry-load"
+              >
+                Try Again
+              </Button>
+            </div>
+          ) : isLoading ? (
+            <div className="space-y-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                {[1, 2].map((i) => (
+                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <Skeleton className="h-80 w-full" />
+                    <div className="p-8 space-y-4">
+                      <Skeleton className="h-4 w-48" />
+                      <Skeleton className="h-8 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
                     </div>
                   </div>
-                  
-                  <div className="p-8">
-                    <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-[#0A5EB9]" />
-                        <span data-testid={`text-date-${article.id}`}>{article.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-[#0A5EB9]" />
-                        <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-2xl font-bold text-[#063970] mb-4 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
-                      {article.title}
-                    </h3>
-                    
-                    <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
-                      {article.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold group-hover:gap-4 transition-all">
-                      <span>Read Article</span>
-                      <ArrowRight className="w-5 h-5" />
+                ))}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md">
+                    <Skeleton className="h-56 w-full" />
+                    <div className="p-6 space-y-3">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-6 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          ) : blogArticles.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-lg text-muted-foreground">No articles published yet. Check back soon for insights on facility management.</p>
+            </div>
+          ) : (
+            <>
+              {blogArticles.length >= 2 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                  {blogArticles.slice(0, 2).map((article) => (
+                    <Link href={`/resources/${article.slug}`} key={article.id}>
+                      <div 
+                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-lg h-full"
+                        data-testid={`card-featured-article-${article.id}`}
+                      >
+                        <div className="relative h-80 overflow-hidden bg-gradient-to-br from-[#063970] to-[#0A5EB9]">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                          <div className="absolute top-6 left-6">
+                            <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
+                              {article.category}
+                            </span>
+                          </div>
+                          <div className="absolute bottom-6 left-6 right-6">
+                            <h3 className="text-2xl font-bold text-white leading-tight">
+                              {article.title}
+                            </h3>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-[#0A5EB9]" />
+                              <span data-testid={`text-date-${article.id}`}>{article.date}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Clock className="w-4 h-4 text-[#0A5EB9]" />
+                              <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
+                            {article.excerpt}
+                          </p>
+                          
+                          <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold group-hover:gap-4 transition-all">
+                            <span>Read Article</span>
+                            <ArrowRight className="w-5 h-5" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              </Link>
-            ))}
-          </div>
+              )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogArticles.slice(2).map((article) => (
-              <Link href={`/resources/${article.slug}`} key={article.id}>
-                <div 
-                  className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-md h-full"
-                  data-testid={`card-article-${article.id}`}
-                >
-                  <div className="relative h-56 overflow-hidden">
-                    <img 
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      data-testid={`img-article-${article.id}`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-[#97CC06] text-[#063970] text-xs font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
-                        {article.category}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="flex items-center gap-4 mb-3 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-[#0A5EB9]" />
-                        <span data-testid={`text-date-${article.id}`}>{article.date}</span>
+              {blogArticles.length > 2 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {blogArticles.slice(2).map((article) => (
+                    <Link href={`/resources/${article.slug}`} key={article.id}>
+                      <div 
+                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-md h-full"
+                        data-testid={`card-article-${article.id}`}
+                      >
+                        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-[#063970] to-[#0A5EB9]">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                          <div className="absolute top-4 left-4">
+                            <span className="px-3 py-1 bg-[#97CC06] text-[#063970] text-xs font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
+                              {article.category}
+                            </span>
+                          </div>
+                          <div className="absolute bottom-4 left-4 right-4">
+                            <h3 className="text-lg font-bold text-white leading-tight">
+                              {article.title}
+                            </h3>
+                          </div>
+                        </div>
+                        
+                        <div className="p-6">
+                          <div className="flex items-center gap-4 mb-3 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-[#0A5EB9]" />
+                              <span data-testid={`text-date-${article.id}`}>{article.date}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3 h-3 text-[#0A5EB9]" />
+                              <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
+                            {article.excerpt}
+                          </p>
+                          
+                          <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold text-sm group-hover:gap-3 transition-all">
+                            <span>Read More</span>
+                            <ArrowRight className="w-4 h-4" />
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-[#0A5EB9]" />
-                        <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-[#063970] mb-3 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
-                      {article.title}
-                    </h3>
-                    
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
-                      {article.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold text-sm group-hover:gap-3 transition-all">
-                      <span>Read More</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </div>
+                    </Link>
+                  ))}
                 </div>
-              </Link>
-            ))}
-          </div>
+              )}
+
+              {blogArticles.length === 1 && (
+                <div className="grid grid-cols-1 max-w-2xl mx-auto">
+                  {blogArticles.map((article) => (
+                    <Link href={`/resources/${article.slug}`} key={article.id}>
+                      <div 
+                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-hidden shadow-lg h-full"
+                        data-testid={`card-featured-article-${article.id}`}
+                      >
+                        <div className="relative h-80 overflow-hidden bg-gradient-to-br from-[#063970] to-[#0A5EB9]">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                          <div className="absolute top-6 left-6">
+                            <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full">
+                              {article.category}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="p-8">
+                          <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-[#0A5EB9]" />
+                              <span>{article.date}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Clock className="w-4 h-4 text-[#0A5EB9]" />
+                              <span>{article.readTime}</span>
+                            </div>
+                          </div>
+                          <h3 className="text-2xl font-bold text-[#063970] mb-4">{article.title}</h3>
+                          <p className="text-muted-foreground mb-6">{article.excerpt}</p>
+                          <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold">
+                            <span>Read Article</span>
+                            <ArrowRight className="w-5 h-5" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
 
-      {/* Newsletter & CTA Section */}
       <section className="py-20 md:py-28 bg-gradient-to-br from-[#063970] via-[#0A5EB9] to-[#063970] text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 bg-[#97CC06] rounded-full blur-3xl"></div>

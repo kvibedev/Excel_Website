@@ -44,12 +44,7 @@ import Banks from "@/pages/industries/banks";
 import Schools from "@/pages/industries/schools";
 import AutoDealerships from "@/pages/industries/auto-dealerships";
 
-import NonToxicCleaningTransformsFacilities from "@/pages/resources/NonToxicCleaningTransformsFacilities";
-import SustainableFloorCareTransformingFacilities from "@/pages/resources/SustainableFloorCareTransformingFacilities";
-import GreenCleaningTransformingFacilityManagement from "@/pages/resources/GreenCleaningTransformingFacilityManagement";
-import SmartTechnologyRevolutionizesFacilitySecurity from "@/pages/resources/SmartTechnologyRevolutionizesFacilitySecurity";
-import AutomationRevolutionizesCommercialCleaningEfficiency from "@/pages/resources/AutomationRevolutionizesCommercialCleaningEfficiency";
-import UnlockingEnergyEfficiencyForFacilities from "@/pages/resources/UnlockingEnergyEfficiencyForFacilities";
+import BlogPost from "@/pages/BlogPost";
 
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
@@ -107,12 +102,7 @@ function MainRouter() {
         <Route path="/industries/schools" component={Schools} />
         <Route path="/industries/auto-dealerships" component={AutoDealerships} />
         
-        <Route path="/resources/non-toxic-cleaning-transforms-facilities" component={NonToxicCleaningTransformsFacilities} />
-        <Route path="/resources/sustainable-floor-care-transforming-facilities" component={SustainableFloorCareTransformingFacilities} />
-        <Route path="/resources/green-cleaning-transforming-facility-management" component={GreenCleaningTransformingFacilityManagement} />
-        <Route path="/resources/smart-technology-revolutionizes-facility-security" component={SmartTechnologyRevolutionizesFacilitySecurity} />
-        <Route path="/resources/automation-revolutionizes-commercial-cleaning-efficiency" component={AutomationRevolutionizesCommercialCleaningEfficiency} />
-        <Route path="/resources/unlocking-energy-efficiency-for-facilities" component={UnlockingEnergyEfficiencyForFacilities} />
+        <Route path="/resources/:slug" component={BlogPost} />
         
         <Route component={NotFound} />
       </Switch>

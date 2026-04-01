@@ -38,6 +38,7 @@ export interface IStorage {
   createVendorNote(note: InsertVendorNote): Promise<VendorNote>;
 
   getBlogPosts(): Promise<BlogPost[]>;
+  getPublishedBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(id: number): Promise<BlogPost | undefined>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
@@ -157,6 +158,10 @@ export class DatabaseStorage implements IStorage {
 
   async getBlogPosts(): Promise<BlogPost[]> {
     return db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  }
+
+  async getPublishedBlogPosts(): Promise<BlogPost[]> {
+    return db.select().from(blogPosts).where(eq(blogPosts.status, "published")).orderBy(desc(blogPosts.publishedAt));
   }
 
   async getBlogPost(id: number): Promise<BlogPost | undefined> {
