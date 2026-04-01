@@ -17,17 +17,27 @@ declare module "express-session" {
   }
 }
 
-function requireAuth(req: Request, res: Response, next: NextFunction) {
+async function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.session.adminId) {
     return res.status(401).json({ error: "Unauthorized" });
+  }
+  const admin = await storage.getAdminUser(req.session.adminId);
+  if (!admin || !admin.isActive) {
+    req.session.destroy(() => {});
+    return res.status(401).json({ error: "Account is deactivated" });
   }
   next();
 }
 
 function requireAtLeast(minRole: AdminRole) {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     if (!req.session.adminId) {
       return res.status(401).json({ error: "Unauthorized" });
+    }
+    const admin = await storage.getAdminUser(req.session.adminId);
+    if (!admin || !admin.isActive) {
+      req.session.destroy(() => {});
+      return res.status(401).json({ error: "Account is deactivated" });
     }
     const userRole = (req.session.adminRole || "viewer") as AdminRole;
     const userLevel = ROLE_HIERARCHY[userRole] || 0;
@@ -127,7 +137,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/users", requireAtLeast("admin"), async (req, res) => {
     try {
       const admins = await storage.getAdminUsers();
-      res.json(admins.map((a) => ({ id: a.id, username: a.username, email: a.email, role: a.role, createdAt: a.createdAt })));
+      res.json(admins.map((a) => ({ id: a.id, username: a.username, email: a.email, role: a.role, isActive: a.isActive, createdAt: a.createdAt })));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch admin users" });
     }

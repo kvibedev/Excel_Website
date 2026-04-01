@@ -10,8 +10,8 @@ import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X } from "lucide-rea
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { BlogPost } from "@shared/schema";
-import AdminLayout, { useAdminAuth } from "./AdminLayout";
+import type { BlogPost, AdminRole } from "@shared/schema";
+import AdminLayout, { useAdminAuth, canAccess } from "./AdminLayout";
 
 interface PostForm {
   title: string;
@@ -40,6 +40,12 @@ export default function AdminBlogEditor() {
   const params = useParams<{ id?: string }>();
   const isEditing = !!params.id;
   const { authData, authLoading } = useAdminAuth();
+
+  useEffect(() => {
+    if (!authLoading && authData?.authenticated && !canAccess(authData?.role as AdminRole, "editor")) {
+      setLocation("/admin/blog");
+    }
+  }, [authLoading, authData, setLocation]);
 
   const [form, setForm] = useState<PostForm>({
     title: "",
