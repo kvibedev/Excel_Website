@@ -42,7 +42,7 @@ export default function AdminLogin() {
     } catch {
       toast({
         title: "Login failed",
-        description: "Invalid username or password",
+        description: "Invalid email or password",
         variant: "destructive",
       });
     } finally {
@@ -69,8 +69,8 @@ export default function AdminLogin() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <Input
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="Email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 data-testid="input-username"
