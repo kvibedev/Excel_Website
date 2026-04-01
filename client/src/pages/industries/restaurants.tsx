@@ -114,13 +114,13 @@ export default function Restaurants() {
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">Cleaning Support Built for Restaurant Environments</h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                The outbreak of <Link href="/services/covid-19-cleaning" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-covid">COVID-19</Link> has led to a sharp increase in the importance of commercial cleaning, particularly in the restaurant industry. In addition to the usual concerns about cleanliness and hygiene, restaurants now face the added challenge of preventing the spread of illness.
+                Restaurants rely on cleanliness, presentation, and consistency to support guest confidence, staff efficiency, and day-to-day operations. In dining environments, facility services need to help maintain a clean, welcoming experience across entrances, dining areas, restrooms, kitchens, and other high-touch spaces.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                With the dynamic nature of the restaurant business, it can be challenging to find the time and resources to regularly give your establishment the deep clean it needs. That's where our <Link href="/services" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-services">commercial cleaning services</Link> can be a valuable asset.
+                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-services">Excel Facility Services Group</Link> provides commercial cleaning and facility services for restaurants that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, disinfection services, floor care, and structured cleaning programs aligned with customer traffic, service schedules, and operational demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                Commercial cleaning services can help ensure that your restaurant is safe for employees and customers. In addition to regular cleaning, we provide deep-cleaning services that target areas where viruses are most likely to accumulate.
+                With more than 20 years of operational experience and multi-site capability, Excel helps restaurants maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across customer-facing and operational spaces.
               </p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
