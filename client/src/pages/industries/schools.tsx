@@ -84,7 +84,7 @@ export default function Schools() {
       />
       {/* Hero Section */}
       <Hero
-        title="Schools"
+        title="School Cleaning and Facility Services"
         subtitle="Excel Facility Services Group provides service while raising health & safety standards across school facilities."
         imageSrc={heroImage}
         height="medium"
