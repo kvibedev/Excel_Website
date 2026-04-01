@@ -50,9 +50,8 @@ export default function CoverageAreas() {
           <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-coverage">
             Nationwide Service
           </Badge>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-hero-title">Coverage Areas
-          Supporting Multi-Site Operations Across 28 States
-</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-hero-title">Coverage Areas 
+          Supporting Multi-Site Operations Across 28 States</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto" data-testid="text-hero-subtitle">
             EFSG Continues To Expand Services Across The Country
           </p>
