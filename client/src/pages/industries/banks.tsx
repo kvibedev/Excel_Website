@@ -213,26 +213,50 @@ export default function Banks() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
               TAILORED APPROACH
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              Pristine Environments Build Lasting Trust
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+              Built Around the Realities of Banking Environments
             </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
-              At Excel Facility Services, we recognize that maintaining a pristine environment in your bank is crucial for building and retaining customer trust. A clean and inviting atmosphere not only reassures clients about the safety of their funds but also enhances their overall banking experience.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              Our <Link href="/services/levelup-clean" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-levelup">specialized cleaning solutions</Link> are designed to address the unique challenges faced by financial institutions. We focus on high-traffic areas such as lobbies, teller stations, and restrooms, ensuring every corner of your facility reflects professionalism and care.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              Our team employs industry-leading cleaning practices, using eco-friendly products to effectively sanitize surfaces while minimizing environmental impact. With our ongoing support and regular maintenance schedules, your bank will consistently present a safe and welcoming environment for both customers and staff.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              Let us partner with you to enhance your bank's image and create a space where customers feel valued and secure. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link> to learn more about how we can help you maintain a spotless facility!
+            <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
+              Banks depend on cleanliness, presentation, and consistency to support customer confidence and reinforce trust. Excel Facility Services Group provides cleaning and facility services designed to help maintain cleaner lobbies, teller areas, offices, restrooms, and other customer-facing spaces throughout the branch.
             </p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="h-full" data-testid="card-tailored-1">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Customer-Facing Presentation</CardTitle>
+                <CardDescription className="text-base">
+                  Help keep lobbies, teller lines, entrances, and shared spaces clean, polished, and ready to support a stronger first impression.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-2">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/disinfection" className="text-[#0A5EB9] hover:underline" data-testid="link-disinfection">Trust-Building Environments</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Maintain cleaner customer areas where presentation, comfort, and day-to-day consistency directly affect how the branch is experienced.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-3">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/janitorial" className="text-[#0A5EB9] hover:underline" data-testid="link-janitorial">Support for Daily Branch Operations</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Service programs built around customer traffic, employee workflow, and operational priorities to help maintain consistency without disruption.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto" data-testid="text-tailored-closing">
+            Our approach helps banks maintain cleaner, safer, and more professional environments that support both customer confidence and daily branch operations.
+          </p>
         </div>
       </section>
 
