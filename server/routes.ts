@@ -2,6 +2,9 @@ import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import session from "express-session";
 import bcrypt from "bcrypt";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema } from "@shared/schema";
 import { z } from "zod";
@@ -523,6 +526,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       res.status(500).json({ error: "Failed to delete blog post" });
     }
+  });
+
+  // ── Blog image upload ──────────────────────────────────────────────────────
+
+  const uploadDir = path.join(process.cwd(), "client", "public", "images", "blog");
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+
+  const blogImageUpload = multer({
+    storage: multer.diskStorage({
+      destination: (_req, _file, cb) => cb(null, uploadDir),
+      filename: (_req, file, cb) => {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e6);
+        const ext = path.extname(file.originalname).toLowerCase();
+        cb(null, `blog-${uniqueSuffix}${ext}`);
+      },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+      const allowed = [".jpg", ".jpeg", ".png", ".webp", ".gif"];
+      const ext = path.extname(file.originalname).toLowerCase();
+      if (allowed.includes(ext)) {
+        cb(null, true);
+      } else {
+        cb(new Error("Only JPG, PNG, WebP, and GIF images are allowed"));
+      }
+    },
+  });
+
+  app.post("/api/admin/blog/upload-image", requireAdmin, (req, res) => {
+    blogImageUpload.single("image")(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res.status(400).json({ error: "Image must be under 5MB" });
+        }
+        return res.status(400).json({ error: err.message });
+      }
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+      if (!req.file) {
+        return res.status(400).json({ error: "No image file provided" });
+      }
+      const imageUrl = `/images/blog/${req.file.filename}`;
+      res.json({ imageUrl });
+    });
   });
 
   // ── Public blog ─────────────────────────────────────────────────────────────

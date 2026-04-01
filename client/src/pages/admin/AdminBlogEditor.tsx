@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { FileText, ArrowLeft, Save } from "lucide-react";
-import { useEffect, useState } from "react";
+import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { BlogPost } from "@shared/schema";
@@ -53,6 +53,9 @@ export default function AdminBlogEditor() {
     status: "draft",
   });
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const [imageMode, setImageMode] = useState<"url" | "upload">("url");
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: existingPost, isLoading: postLoading } = useQuery<BlogPost>({
     queryKey: ["/api/admin/blog", params.id],
@@ -128,6 +131,35 @@ export default function AdminBlogEditor() {
   const handleSlugChange = (value: string) => {
     setSlugManuallyEdited(true);
     setForm((prev) => ({ ...prev, slug: value }));
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await fetch("/api/admin/blog/upload-image", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Upload failed");
+      }
+      const data = await res.json();
+      setForm((p) => ({ ...p, imageUrl: data.imageUrl }));
+      toast({ title: "Image uploaded successfully" });
+    } catch (err: any) {
+      toast({
+        title: "Upload failed",
+        description: err.message || "Could not upload image",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -232,24 +264,101 @@ export default function AdminBlogEditor() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <Label htmlFor="imageUrl">Featured Image URL</Label>
-                    <Input
-                      id="imageUrl"
-                      value={form.imageUrl}
-                      onChange={(e) => setForm((p) => ({ ...p, imageUrl: e.target.value }))}
-                      placeholder="https://example.com/image.jpg"
-                      data-testid="input-image-url"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1">Paste a URL for the blog post hero image and listing thumbnail.</p>
-                    {form.imageUrl && (
-                      <div className="mt-3 rounded-md overflow-hidden border max-h-48">
-                        <img
-                          src={form.imageUrl}
-                          alt="Preview"
-                          className="w-full h-48 object-cover"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                          data-testid="img-preview"
+                    <Label>Featured Image</Label>
+                    <p className="text-xs text-muted-foreground mb-3">Recommended: 1200 x 630 px (landscape). Max file size: 5 MB. Formats: JPG, PNG, WebP, GIF.</p>
+
+                    <div className="flex gap-2 mb-3">
+                      <Button
+                        type="button"
+                        variant={imageMode === "url" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setImageMode("url")}
+                        data-testid="button-image-url-mode"
+                      >
+                        <Link2 className="w-4 h-4 mr-1" />
+                        Paste URL
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={imageMode === "upload" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setImageMode("upload")}
+                        data-testid="button-image-upload-mode"
+                      >
+                        <Upload className="w-4 h-4 mr-1" />
+                        Upload File
+                      </Button>
+                    </div>
+
+                    {imageMode === "url" ? (
+                      <Input
+                        id="imageUrl"
+                        value={form.imageUrl}
+                        onChange={(e) => setForm((p) => ({ ...p, imageUrl: e.target.value }))}
+                        placeholder="https://example.com/image.jpg"
+                        data-testid="input-image-url"
+                      />
+                    ) : (
+                      <div
+                        className="border-2 border-dashed rounded-md p-6 text-center cursor-pointer transition-colors hover:border-[#0A5EB9] hover:bg-[#0A5EB9]/5"
+                        onClick={() => fileInputRef.current?.click()}
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file) handleImageUpload(file);
+                        }}
+                        data-testid="dropzone-image"
+                      >
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) handleImageUpload(file);
+                          }}
+                          data-testid="input-image-file"
                         />
+                        {isUploading ? (
+                          <div className="flex flex-col items-center gap-2">
+                            <Loader2 className="w-8 h-8 animate-spin text-[#0A5EB9]" />
+                            <span className="text-sm text-muted-foreground">Uploading...</span>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center gap-2">
+                            <Upload className="w-8 h-8 text-muted-foreground" />
+                            <span className="text-sm text-muted-foreground">Click to browse or drag and drop an image</span>
+                            <span className="text-xs text-muted-foreground">JPG, PNG, WebP, or GIF up to 5 MB</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {form.imageUrl && (
+                      <div className="mt-3 relative">
+                        <div className="rounded-md overflow-hidden border">
+                          <img
+                            src={form.imageUrl}
+                            alt="Preview"
+                            className="w-full h-48 object-cover"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                            data-testid="img-preview"
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm"
+                          onClick={() => setForm((p) => ({ ...p, imageUrl: "" }))}
+                          data-testid="button-remove-image"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                        <p className="text-xs text-muted-foreground mt-1 truncate">{form.imageUrl}</p>
                       </div>
                     )}
                   </div>
