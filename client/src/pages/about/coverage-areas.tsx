@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { MapPin } from "lucide-react";
-import usaMapImage from "@assets/Excel_Map_(1)_1774983125346.png";
+import usaMapImage from "@assets/Excel_Map_(1)_1775005493219.png";
 
 export default function CoverageAreas() {
   const statesColumn1 = [
@@ -44,6 +44,7 @@ export default function CoverageAreas() {
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
+        <img src={usaMapImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-coverage">
