@@ -114,16 +114,16 @@ export default function Retailer() {
                 ABOUT OUR SERVICE
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-about">
-                Keep Your Store Looking Its Best
+                Facility Services Built for Retail Stores
               </h2>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-1">
-                Maintaining a tidy, well-organized retail store is essential for attracting customers and maintaining a good reputation. However, keeping a store in top condition can be challenging, especially for busy businesses. <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> can help to keep your store clean and organized, freeing up your staff to focus on more important tasks.
+                Retail stores depend on cleanliness, presentation, and consistency to support customer confidence and protect brand perception. In customer-facing environments, facility service needs to help maintain a clean, welcoming experience across entrances, sales floors, fitting rooms, restrooms, and common areas.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                Our services range from <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial services</Link> to <Link href="/services/covid-19-cleaning" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-covid">COVID-19 cleaning</Link>. We can handle everything from big to small retail, from a single store to an entire shopping mall.
+                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for retail stores that need <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, day porter services, disinfection, floor care, and service programs aligned with customer traffic, operating hours, and day-to-day store demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                Our continued growth in this market is a testimony to our ability to provide superior service to companies with multi-site portfolios and special floor care needs. We have the <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-certifications">best janitorial services</Link> regardless of size or demand.
+                With more than 20 years of operational experience and multi-site capability, Excel helps retail stores maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across customer-facing and operational spaces.
               </p>
               <Link href="/about" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
