@@ -21,21 +21,27 @@ export interface IStorage {
   getAdminByEmail(email: string): Promise<AdminUser | undefined>;
   createAdminUser(admin: InsertAdminUser): Promise<AdminUser>;
   
+  getAdminUsers(): Promise<AdminUser[]>;
+
   getContacts(): Promise<Contact[]>;
   getContact(id: number): Promise<Contact | undefined>;
   createContact(contact: InsertContact): Promise<Contact>;
   updateContactStatus(id: number, status: string): Promise<Contact | undefined>;
+  updateContactAssignment(id: number, assignedTo: string | null, followUpDate: Date | null): Promise<Contact | undefined>;
   deleteContact(id: number): Promise<void>;
   getContactNotes(contactId: number): Promise<ContactNote[]>;
   createContactNote(note: InsertContactNote): Promise<ContactNote>;
-  
+  deleteContactNote(id: number): Promise<void>;
+
   getVendorRegistrations(): Promise<VendorRegistration[]>;
   getVendorRegistration(id: number): Promise<VendorRegistration | undefined>;
   createVendorRegistration(vendor: InsertVendorRegistration): Promise<VendorRegistration>;
   updateVendorStatus(id: number, status: string): Promise<VendorRegistration | undefined>;
+  updateVendorAssignment(id: number, assignedTo: string | null, followUpDate: Date | null): Promise<VendorRegistration | undefined>;
   deleteVendorRegistration(id: number): Promise<void>;
   getVendorNotes(vendorId: number): Promise<VendorNote[]>;
   createVendorNote(note: InsertVendorNote): Promise<VendorNote>;
+  deleteVendorNote(id: number): Promise<void>;
 
   getBlogPosts(): Promise<BlogPost[]>;
   getPublishedBlogPosts(): Promise<BlogPost[]>;
@@ -83,6 +89,10 @@ export class DatabaseStorage implements IStorage {
     return newAdmin;
   }
 
+  async getAdminUsers(): Promise<AdminUser[]> {
+    return db.select().from(adminUsers).orderBy(adminUsers.username);
+  }
+
   async getContacts(): Promise<Contact[]> {
     return db.select().from(contacts).orderBy(desc(contacts.createdAt));
   }
@@ -106,6 +116,15 @@ export class DatabaseStorage implements IStorage {
     return updated;
   }
 
+  async updateContactAssignment(id: number, assignedTo: string | null, followUpDate: Date | null): Promise<Contact | undefined> {
+    const [updated] = await db
+      .update(contacts)
+      .set({ assignedTo, followUpDate, updatedAt: new Date() })
+      .where(eq(contacts.id, id))
+      .returning();
+    return updated;
+  }
+
   async deleteContact(id: number): Promise<void> {
     await db.delete(contactNotes).where(eq(contactNotes.contactId, id));
     await db.delete(contacts).where(eq(contacts.id, id));
@@ -118,6 +137,10 @@ export class DatabaseStorage implements IStorage {
   async createContactNote(note: InsertContactNote): Promise<ContactNote> {
     const [newNote] = await db.insert(contactNotes).values(note).returning();
     return newNote;
+  }
+
+  async deleteContactNote(id: number): Promise<void> {
+    await db.delete(contactNotes).where(eq(contactNotes.id, id));
   }
 
   async getVendorRegistrations(): Promise<VendorRegistration[]> {
@@ -143,6 +166,15 @@ export class DatabaseStorage implements IStorage {
     return updated;
   }
 
+  async updateVendorAssignment(id: number, assignedTo: string | null, followUpDate: Date | null): Promise<VendorRegistration | undefined> {
+    const [updated] = await db
+      .update(vendorRegistrations)
+      .set({ assignedTo, followUpDate, updatedAt: new Date() })
+      .where(eq(vendorRegistrations.id, id))
+      .returning();
+    return updated;
+  }
+
   async deleteVendorRegistration(id: number): Promise<void> {
     await db.delete(vendorNotes).where(eq(vendorNotes.vendorId, id));
     await db.delete(vendorRegistrations).where(eq(vendorRegistrations.id, id));
@@ -155,6 +187,10 @@ export class DatabaseStorage implements IStorage {
   async createVendorNote(note: InsertVendorNote): Promise<VendorNote> {
     const [newNote] = await db.insert(vendorNotes).values(note).returning();
     return newNote;
+  }
+
+  async deleteVendorNote(id: number): Promise<void> {
+    await db.delete(vendorNotes).where(eq(vendorNotes.id, id));
   }
 
   async getBlogPosts(): Promise<BlogPost[]> {

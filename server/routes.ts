@@ -34,23 +34,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     })
   );
 
+  // ── Auth ────────────────────────────────────────────────────────────────────
+
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { username, password } = req.body;
       const admin = await storage.getAdminByEmail(username);
-      
+
       if (!admin) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
-      
+
       const isValidPassword = await bcrypt.compare(password, admin.password);
       if (!isValidPassword) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
-      
+
       req.session.adminId = admin.id;
       req.session.adminUsername = admin.username;
-      
+
       res.json({ success: true, username: admin.username });
     } catch (error) {
       console.error("Login error:", error);
@@ -78,7 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (existing) {
         return res.status(400).json({ error: "Admin already exists" });
       }
-      
+
       const { username, password, email } = req.body;
       const admin = await storage.createAdminUser({ username, password, email });
       res.json({ success: true, username: admin.username });
@@ -86,6 +88,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Setup failed" });
     }
   });
+
+  // ── Admin users ─────────────────────────────────────────────────────────────
+
+  app.get("/api/admin/users", requireAdmin, async (req, res) => {
+    try {
+      const admins = await storage.getAdminUsers();
+      res.json(admins.map((a) => ({ id: a.id, username: a.username, email: a.email })));
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch admin users" });
+    }
+  });
+
+  // ── Stats ───────────────────────────────────────────────────────────────────
+
+  app.get("/api/admin/stats", requireAdmin, async (req, res) => {
+    try {
+      const contacts = await storage.getContacts();
+      const vendors = await storage.getVendorRegistrations();
+      const posts = await storage.getBlogPosts();
+
+      const now = new Date();
+      const newContacts = contacts.filter((c) => c.status === "new").length;
+      const newVendors = vendors.filter((v) => v.status === "new").length;
+      const publishedPosts = posts.filter((p) => p.status === "published").length;
+      const pendingFollowUps = [
+        ...contacts.filter((c) => c.followUpDate && new Date(c.followUpDate) <= now),
+        ...vendors.filter((v) => v.followUpDate && new Date(v.followUpDate) <= now),
+      ].length;
+
+      res.json({
+        totalContacts: contacts.length,
+        totalVendors: vendors.length,
+        newContacts,
+        newVendors,
+        publishedPosts,
+        totalPosts: posts.length,
+        pendingFollowUps,
+        recentContacts: contacts.slice(0, 5),
+        recentVendors: vendors.slice(0, 5),
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch stats" });
+    }
+  });
+
+  // ── Public contact / vendor submission ──────────────────────────────────────
 
   app.post("/api/contacts", async (req, res) => {
     try {
@@ -97,6 +145,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: error.errors });
       }
       res.status(500).json({ error: "Failed to create contact" });
+    }
+  });
+
+  app.post("/api/vendors", async (req, res) => {
+    try {
+      const parsed = insertVendorRegistrationSchema.parse(req.body);
+      const vendor = await storage.createVendorRegistration(parsed);
+      res.json(vendor);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create vendor registration" });
+    }
+  });
+
+  // ── Contacts (admin) ────────────────────────────────────────────────────────
+  // NOTE: static sub-paths (export/csv) MUST be registered before /:id
+
+  app.get("/api/admin/contacts/export/csv", requireAdmin, async (req, res) => {
+    try {
+      const contacts = await storage.getContacts();
+      const headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Inquiry Type", "Service Interest", "Assigned To", "Follow Up Date", "Status", "Created At"];
+      const rows = contacts.map((c) => [
+        c.id,
+        c.firstName,
+        c.lastName,
+        c.email,
+        c.phone || "",
+        c.company || "",
+        c.inquiryType || "",
+        c.serviceInterest || "",
+        c.assignedTo || "",
+        c.followUpDate ? new Date(c.followUpDate).toISOString() : "",
+        c.status,
+        c.createdAt.toISOString(),
+      ]);
+
+      const csv = [headers.join(","), ...rows.map((r) => r.map((v) => `"${v}"`).join(","))].join("\n");
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=contacts.csv");
+      res.send(csv);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to export contacts" });
     }
   });
 
@@ -136,6 +229,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch("/api/admin/contacts/:id/assignment", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { assignedTo, followUpDate } = req.body;
+      const contact = await storage.updateContactAssignment(
+        id,
+        assignedTo || null,
+        followUpDate ? new Date(followUpDate) : null
+      );
+      if (!contact) {
+        return res.status(404).json({ error: "Contact not found" });
+      }
+      res.json(contact);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update assignment" });
+    }
+  });
+
   app.delete("/api/admin/contacts/:id", requireAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
@@ -170,16 +281,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/vendors", async (req, res) => {
+  app.delete("/api/admin/contacts/:id/notes/:noteId", requireAdmin, async (req, res) => {
     try {
-      const parsed = insertVendorRegistrationSchema.parse(req.body);
-      const vendor = await storage.createVendorRegistration(parsed);
-      res.json(vendor);
+      const noteId = parseInt(req.params.noteId);
+      await storage.deleteContactNote(noteId);
+      res.json({ success: true });
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: error.errors });
-      }
-      res.status(500).json({ error: "Failed to create vendor registration" });
+      res.status(500).json({ error: "Failed to delete note" });
+    }
+  });
+
+  // ── Vendors (admin) ─────────────────────────────────────────────────────────
+  // NOTE: static sub-paths (export/csv) MUST be registered before /:id
+
+  app.get("/api/admin/vendors/export/csv", requireAdmin, async (req, res) => {
+    try {
+      const vendors = await storage.getVendorRegistrations();
+      const headers = ["ID", "Company Name", "Contact Name", "Email", "Phone", "City", "State", "Services Offered", "Assigned To", "Follow Up Date", "Status", "Created At"];
+      const rows = vendors.map((v) => [
+        v.id,
+        v.companyName,
+        v.contactName,
+        v.email,
+        v.phone,
+        v.city || "",
+        v.state || "",
+        v.servicesOffered || "",
+        v.assignedTo || "",
+        v.followUpDate ? new Date(v.followUpDate).toISOString() : "",
+        v.status,
+        v.createdAt.toISOString(),
+      ]);
+
+      const csv = [headers.join(","), ...rows.map((r) => r.map((val) => `"${val}"`).join(","))].join("\n");
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=vendors.csv");
+      res.send(csv);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to export vendors" });
     }
   });
 
@@ -219,6 +359,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch("/api/admin/vendors/:id/assignment", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { assignedTo, followUpDate } = req.body;
+      const vendor = await storage.updateVendorAssignment(
+        id,
+        assignedTo || null,
+        followUpDate ? new Date(followUpDate) : null
+      );
+      if (!vendor) {
+        return res.status(404).json({ error: "Vendor not found" });
+      }
+      res.json(vendor);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update assignment" });
+    }
+  });
+
   app.delete("/api/admin/vendors/:id", requireAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
@@ -253,51 +411,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/stats", requireAdmin, async (req, res) => {
+  app.delete("/api/admin/vendors/:id/notes/:noteId", requireAdmin, async (req, res) => {
     try {
-      const contacts = await storage.getContacts();
-      const vendors = await storage.getVendorRegistrations();
-      const posts = await storage.getBlogPosts();
-      
-      const newContacts = contacts.filter(c => c.status === "new").length;
-      const newVendors = vendors.filter(v => v.status === "new").length;
-      const publishedPosts = posts.filter(p => p.status === "published").length;
-      
-      res.json({
-        totalContacts: contacts.length,
-        totalVendors: vendors.length,
-        newContacts,
-        newVendors,
-        publishedPosts,
-        totalPosts: posts.length,
-        recentContacts: contacts.slice(0, 5),
-        recentVendors: vendors.slice(0, 5),
-      });
+      const noteId = parseInt(req.params.noteId);
+      await storage.deleteVendorNote(noteId);
+      res.json({ success: true });
     } catch (error) {
-      res.status(500).json({ error: "Failed to fetch stats" });
+      res.status(500).json({ error: "Failed to delete note" });
     }
   });
 
-  app.get("/api/blog", async (req, res) => {
-    try {
-      const posts = await storage.getPublishedBlogPosts();
-      res.json(posts);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch blog posts" });
-    }
-  });
-
-  app.get("/api/blog/:slug", async (req, res) => {
-    try {
-      const post = await storage.getPublishedBlogPostBySlug(req.params.slug);
-      if (!post) {
-        return res.status(404).json({ error: "Blog post not found" });
-      }
-      res.json(post);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch blog post" });
-    }
-  });
+  // ── Blog (admin) ────────────────────────────────────────────────────────────
 
   app.get("/api/admin/blog", requireAdmin, async (req, res) => {
     try {
@@ -388,59 +512,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/contacts/export/csv", requireAdmin, async (req, res) => {
-    try {
-      const contacts = await storage.getContacts();
-      const headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Inquiry Type", "Service Interest", "Status", "Created At"];
-      const rows = contacts.map(c => [
-        c.id,
-        c.firstName,
-        c.lastName,
-        c.email,
-        c.phone || "",
-        c.company || "",
-        c.inquiryType || "",
-        c.serviceInterest || "",
-        c.status,
-        c.createdAt.toISOString()
-      ]);
-      
-      const csv = [headers.join(","), ...rows.map(r => r.map(v => `"${v}"`).join(","))].join("\n");
-      
-      res.setHeader("Content-Type", "text/csv");
-      res.setHeader("Content-Disposition", "attachment; filename=contacts.csv");
-      res.send(csv);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to export contacts" });
-    }
-  });
-
-  app.get("/api/admin/vendors/export/csv", requireAdmin, async (req, res) => {
-    try {
-      const vendors = await storage.getVendorRegistrations();
-      const headers = ["ID", "Company Name", "Contact Name", "Email", "Phone", "City", "State", "Services Offered", "Status", "Created At"];
-      const rows = vendors.map(v => [
-        v.id,
-        v.companyName,
-        v.contactName,
-        v.email,
-        v.phone,
-        v.city || "",
-        v.state || "",
-        v.servicesOffered || "",
-        v.status,
-        v.createdAt.toISOString()
-      ]);
-      
-      const csv = [headers.join(","), ...rows.map(r => r.map(val => `"${val}"`).join(","))].join("\n");
-      
-      res.setHeader("Content-Type", "text/csv");
-      res.setHeader("Content-Disposition", "attachment; filename=vendors.csv");
-      res.send(csv);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to export vendors" });
-    }
-  });
+  // ── Public blog ─────────────────────────────────────────────────────────────
 
   app.get("/api/blog", async (req, res) => {
     try {
@@ -453,8 +525,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/blog/:slug", async (req, res) => {
     try {
-      const post = await storage.getBlogPostBySlug(req.params.slug);
-      if (!post || post.status !== "published") {
+      const post = await storage.getPublishedBlogPostBySlug(req.params.slug);
+      if (!post) {
         return res.status(404).json({ error: "Blog post not found" });
       }
       res.json(post);
