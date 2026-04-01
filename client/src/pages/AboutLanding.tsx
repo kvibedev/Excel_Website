@@ -18,28 +18,28 @@ export default function AboutLanding() {
     {
       icon: MapPin,
       title: "Coverage Areas",
-      description: "Operating across 20+ states nationwide, we provide consistent, reliable commercial cleaning services wherever your facilities are located.",
+      description: "Regional scale with the ability to support multi-site operations across 28 states.",
       link: "/about/coverage-areas",
       badge: "20+ States"
     },
     {
       icon: Award,
       title: "Recognitions & Certifications",
-      description: "MBE Certified, Inc. 5000, and industry-leading certifications demonstrate our commitment to excellence and professional standards.",
+      description: "Industry credentials and recognized standards that reinforce trust, compliance, and service credibility.",
       link: "/about/recognitions-certifications",
       badge: "Industry Leader"
     },
     {
       icon: Leaf,
       title: "Green Seal Certified",
-      description: "GS-42 certified cleaning services ensuring environmentally responsible practices that protect both people and the planet.",
+      description: "Environmentally responsible cleaning practices that support healthier workplaces and more sustainable operations.",
       link: "/about/green-seal",
       badge: "GS-42 Certified"
     },
     {
       icon: Users,
       title: "Our Team",
-      description: "Meet the dedicated professionals who deliver excellence across our nationwide operations, from leadership to field operations.",
+      description: "The people behind the service — from leadership and oversight to field execution and quality control.",
       link: "/about/our-team",
       badge: "Expert Team"
     }
@@ -49,22 +49,22 @@ export default function AboutLanding() {
     {
       icon: Building2,
       title: "Scale & Reach",
-      description: "Operating across 20+ states with capacity to serve facilities of any size, from single locations to nationwide portfolios."
+      description: "Operational support across 28 states with the capacity to serve facilities of varying size, complexity, and footprint."
     },
     {
       icon: Shield,
       title: "Excellence & Trust",
-      description: "Over 20 years of proven excellence, earning the trust of enterprise clients through consistent, superior service delivery."
+      description: "More than 20 years of proven execution, built on dependable service delivery and long-term client relationships."
     },
     {
       icon: TrendingUp,
       title: "Technology & Innovation",
-      description: "Leveraging advanced cleaning systems and data-driven facility management for optimal performance."
+      description: "Modern systems, smarter workflows, and structured quality control that support stronger day-to-day performance."
     },
     {
       icon: CheckCircle2,
-      title: "100% Satisfaction",
-      description: "Our commitment to quality and customer satisfaction has earned us lasting partnerships with major organizations."
+      title: "Accountability & Consistency",
+      description: "A disciplined service model focused on communication, follow-through, and reliable execution across every site."
     }
   ];
 
@@ -81,13 +81,16 @@ export default function AboutLanding() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-4 bg-[#97CC06] text-[#063970] text-base px-4 py-2" data-testid="badge-established">
-              Established 2001
+              20+ Years of Operational Experience
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-testid="text-about-landing-title">
-              About Excel Facility Services Group
+              Creating Healthier Workplaces Through Accountable Service
             </h1>
-            <p className="text-xl text-white/90 mb-8" data-testid="text-about-landing-subtitle">
-              20+ years of commercial cleaning excellence across 20+ states, serving enterprise clients with 30M+ square feet managed daily.
+            <p className="text-xl text-white/90 mb-4" data-testid="text-about-landing-subtitle">
+              Excel Facility Services Group helps organizations maintain cleaner, safer, and more consistent facilities through disciplined service delivery, regional responsiveness, and a long-term commitment to operational excellence.
+            </p>
+            <p className="text-sm text-white/70" data-testid="text-about-landing-proof">
+              28-state coverage &bull; 25M square feet serviced daily &bull; enterprise-focused facility support
             </p>
           </div>
         </div>
@@ -97,13 +100,13 @@ export default function AboutLanding() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-overview-title">
-              Excel Facility Services Group
+              About Excel
             </h2>
             <p className="text-lg text-muted-foreground mb-4" data-testid="text-overview-p1">
-              Excel Facility Services Group has provided high-quality janitorial services since 2001. As an established company, we take pride in the partnerships our customers have formed with us over time. Through these partnerships, Excel Facility Services Group ensures their satisfaction and trust as they deliver excellent services at all times through customized plans.
+              Excel Facility Services Group has built its reputation through dependable execution, responsive communication, and a service model designed to support long-term client trust.
             </p>
             <p className="text-lg text-muted-foreground" data-testid="text-overview-p2">
-              We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers healthy workplaces with certified disinfection.
+              With more than 20 years of operational experience and multi-state capability, Excel serves organizations that need more than a commodity cleaning vendor. We support facilities that require consistency, accountability, and a partner that can adapt to the realities of each site.
             </p>
           </div>
 
@@ -133,7 +136,7 @@ export default function AboutLanding() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div data-testid="stat-states">
               <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">28</div>
-              <div className="text-xl">States Nationwide</div>
+              <div className="text-xl">States Covered</div>
             </div>
             <div data-testid="stat-sqft">
               <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">25M</div>
@@ -141,7 +144,7 @@ export default function AboutLanding() {
             </div>
             <div data-testid="stat-years">
               <div className="text-4xl md:text-5xl font-bold mb-2 text-[#97CC06]">20+</div>
-              <div className="text-xl">Years of Excellence</div>
+              <div className="text-xl">Years of Operational Experience</div>
             </div>
           </div>
         </div>
@@ -151,10 +154,10 @@ export default function AboutLanding() {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-learn-more-title">
-              Learn More About EFSG
+              Explore What Makes Excel Different
             </h2>
             <p className="text-lg text-muted-foreground" data-testid="text-learn-more-subtitle">
-              Discover what makes Excel Facility Services Group the trusted choice for enterprise commercial cleaning nationwide.
+              Learn more about the capabilities, standards, and credentials that support Excel Facility Services Group's service model.
             </p>
           </div>
 
@@ -196,10 +199,10 @@ export default function AboutLanding() {
       <section className="py-16 md:py-24 bg-gradient-to-br from-[#063970] via-[#0A5EB9] to-[#063970] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-final-cta-title">
-            Ready to Partner With Excel Facility Services Group?
+            Looking for a Facility Services Partner You Can Actually Rely On?
           </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto" data-testid="text-final-cta-subtitle">
-            Join the hundreds of enterprise clients who trust EFSG for their commercial cleaning needs across 20+ states.
+            Excel Facility Services Group helps organizations improve consistency, cleanliness, and confidence across their facilities through accountable, operations-aware service delivery.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/contact">

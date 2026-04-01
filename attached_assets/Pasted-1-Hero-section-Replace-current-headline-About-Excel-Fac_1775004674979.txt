@@ -1,0 +1,225 @@
+1. Hero section
+Replace current headline
+
+About Excel Facility Services Group
+
+With
+
+Creating Healthier Workplaces Through Accountable Service
+
+Replace current subheadline
+
+20+ years of commercial cleaning excellence across 20+ states, serving enterprise clients with 30M+ square feet managed daily.
+
+With
+
+Excel Facility Services Group helps organizations maintain cleaner, safer, and more consistent facilities through disciplined service delivery, regional responsiveness, and a long-term commitment to operational excellence.
+
+Replace the green badge
+
+Established 2001
+
+With
+
+20+ Years of Operational Experience
+
+Optional proof line under subheadline
+
+If you want a stronger proof line, use:
+
+28-state coverage • 25M square feet serviced daily • enterprise-focused facility support
+
+2. Main intro section
+Replace section headline
+
+Excel Facility Services Group
+
+With
+
+About Excel
+
+Replace first paragraph
+
+Excel Facility Services Group has provided high-quality janitorial services since 2001. As an established company, we take pride in the partnerships our customers have formed with us over time. Through these partnerships, Excel Facility Services Group ensures their satisfaction and trust as they deliver excellent services at all times through customized plans.
+
+With
+
+Excel Facility Services Group has built its reputation through dependable execution, responsive communication, and a service model designed to support long-term client trust.
+
+Replace second paragraph
+
+We help clients navigate change and provide assurance by demonstrating trustworthy cleaning through a three-step approach that delivers healthy workplaces with certified disinfection.
+
+With
+
+With more than 20 years of operational experience and multi-state capability, Excel serves organizations that need more than a commodity cleaning vendor. We support facilities that require consistency, accountability, and a partner that can adapt to the realities of each site.
+
+3. Four value cards
+Card 1
+
+Current:
+Scale & Reach
+Operating across 20+ states with capacity to serve facilities of any size, from single locations to nationwide portfolios.
+
+Replace with:
+Scale & Reach
+Operational support across 28 states with the capacity to serve facilities of varying size, complexity, and footprint.
+
+Card 2
+
+Current:
+Excellence & Trust
+Over 20 years of proven excellence, earning the trust of enterprise clients through consistent, superior service delivery.
+
+Replace with:
+Excellence & Trust
+More than 20 years of proven execution, built on dependable service delivery and long-term client relationships.
+
+Card 3
+
+Current:
+Technology & Innovation
+Leveraging advanced cleaning systems and data-driven facility management for optimal performance.
+
+Replace with:
+Technology & Innovation
+Modern systems, smarter workflows, and structured quality control that support stronger day-to-day performance.
+
+Card 4
+
+Current:
+100% Satisfaction
+Our commitment to quality and customer satisfaction has earned us lasting partnerships with major organizations.
+
+Replace with:
+Accountability & Consistency
+A disciplined service model focused on communication, follow-through, and reliable execution across every site.
+
+4. Stats bar
+Replace
+
+28
+States Nationwide
+
+With
+
+28
+States Covered
+
+Replace
+
+25M
+Square Feet Serviced Daily
+
+Keep as-is
+Replace
+
+20+
+Years of Excellence
+
+With
+
+20+
+Years of Operational Experience
+
+5. “Learn More About EFSG” section
+Replace section title
+
+Learn More About EFSG
+
+With
+
+Explore What Makes Excel Different
+
+Replace section intro
+
+Discover what makes Excel Facility Services Group the trusted choice for enterprise commercial cleaning nationwide.
+
+With
+
+Learn more about the capabilities, standards, and credentials that support Excel Facility Services Group’s service model.
+
+Card 1
+
+Current:
+Coverage Areas
+Operating across 20+ states nationwide, we provide consistent, reliable commercial cleaning services wherever your facilities are located.
+
+Replace with:
+Coverage Areas
+Regional scale with the ability to support multi-site operations across 28 states.
+
+Card 2
+
+Current:
+Recognitions & Certifications
+MBE Certified, Inc. 5000, and industry-leading certifications demonstrate our commitment to excellence and professional standards.
+
+Replace with:
+Recognitions & Certifications
+Industry credentials and recognized standards that reinforce trust, compliance, and service credibility.
+
+Card 3
+
+Current:
+Green Seal Certified
+GS-42 certified cleaning services ensuring environmentally responsible practices that protect both people and the planet.
+
+Replace with:
+Green Seal Certified
+Environmentally responsible cleaning practices that support healthier workplaces and more sustainable operations.
+
+Card 4
+
+Current:
+Our Team
+Meet the dedicated professionals who deliver excellence across our nationwide operations, from leadership to field operations.
+
+Replace with:
+Our Team
+The people behind the service — from leadership and oversight to field execution and quality control.
+
+6. Bottom CTA section
+Replace headline
+
+Ready to Partner With Excel Facility Services Group?
+
+With
+
+Looking for a Facility Services Partner You Can Actually Rely On?
+
+Replace subheadline
+
+Join the hundreds of enterprise clients who trust EFSG for their commercial cleaning needs across 20+ states.
+
+With
+
+Excel Facility Services Group helps organizations improve consistency, cleanliness, and confidence across their facilities through accountable, operations-aware service delivery.
+
+Replace buttons
+
+Request Proposal → keep
+Explore Services → keep
+
+Best visual tweak for this page
+
+Since you’re in Replit, I’d also recommend one layout improvement:
+
+For the main intro section, don’t keep both paragraphs centered in one narrow column if it feels too floaty.
+Make it:
+
+centered headline
+2 short paragraphs
+then the 4 cards directly under it
+
+That will feel tighter and more premium.
+
+My recommendation
+
+If you only do 3 things right now, do these first:
+
+Change the hero headline and subheadline
+Replace the two intro paragraphs with the tighter version
+Replace the “100% Satisfaction” card with “Accountability & Consistency”
+
+Those 3 changes alone will make the page feel a lot more enterprise-ready.
