@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -298,6 +298,7 @@ export default function AdminContacts() {
                 </Button>
               )}
             </DialogTitle>
+            <DialogDescription className="sr-only">View and manage contact details, notes, and assignments</DialogDescription>
           </DialogHeader>
 
           {selectedContact && (
