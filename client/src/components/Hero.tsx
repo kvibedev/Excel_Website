@@ -110,11 +110,9 @@ export default function Hero({
           />
         );
       })}
-
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" style={{ zIndex: 3 }} />
-
       <div className="relative container mx-auto px-4 text-center text-white" style={{ zIndex: 4 }}>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 max-w-4xl mx-auto" data-testid="text-hero-title">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 max-w-4xl mx-auto text-[#97cd07]" data-testid="text-hero-title">
           {title}
         </h1>
         {subtitle && (
