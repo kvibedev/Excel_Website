@@ -87,6 +87,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "No account found with that email address" });
       }
 
+      if (!admin.isActive) {
+        return res.status(401).json({ error: "This account has been deactivated. Please contact your administrator." });
+      }
+
       const isValidPassword = await bcrypt.compare(password, admin.password);
       if (!isValidPassword) {
         return res.status(401).json({ error: "Incorrect password. Please try again." });
