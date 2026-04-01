@@ -85,7 +85,7 @@ export default function Restaurants() {
       />
       {/* Hero Section */}
       <Hero
-        title="Restaurants"
+        title="Restaurant Cleaning and Facility Services"
         subtitle="Excel Facility Services Group helps restaurants maintain cleaner, safer, and more guest-ready environments through accountable service delivery, responsive support, and programs built for front-of-house and back-of-house operations."
         imageSrc={heroImage}
         height="medium"
