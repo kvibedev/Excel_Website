@@ -20,6 +20,7 @@ export default function AdminBlog() {
   const { toast } = useToast();
   const { authData, authLoading } = useAdminAuth();
   const isReadOnly = !canAccess(authData?.role as AdminRole, "editor");
+  const canDelete = canAccess(authData?.role as AdminRole, "admin");
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: posts, isLoading: postsLoading } = useQuery<BlogPost[]>({
@@ -109,7 +110,7 @@ export default function AdminBlog() {
                       </Button>
                     </Link>
                   )}
-                  {!isReadOnly && (
+                  {canDelete && (
                     <Button
                       size="icon"
                       variant="ghost"

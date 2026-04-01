@@ -1,16 +1,8 @@
-DO $$ BEGIN
-  CREATE TYPE "public"."admin_role" AS ENUM('super_admin', 'admin', 'editor', 'viewer');
-EXCEPTION
-  WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
 CREATE TABLE "admin_users" (
         "id" serial PRIMARY KEY NOT NULL,
         "username" text NOT NULL,
         "password" text NOT NULL,
         "email" text NOT NULL,
-        "role" "admin_role" DEFAULT 'viewer' NOT NULL,
-        "is_active" boolean DEFAULT true NOT NULL,
         "created_at" timestamp DEFAULT now() NOT NULL,
         CONSTRAINT "admin_users_username_unique" UNIQUE("username")
 );

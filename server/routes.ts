@@ -39,7 +39,8 @@ function requireAtLeast(minRole: AdminRole) {
       req.session.destroy(() => {});
       return res.status(401).json({ error: "Account is deactivated" });
     }
-    const userRole = (req.session.adminRole || "viewer") as AdminRole;
+    req.session.adminRole = admin.role;
+    const userRole = admin.role as AdminRole;
     const userLevel = ROLE_HIERARCHY[userRole] || 0;
     const requiredLevel = ROLE_HIERARCHY[minRole] || 0;
     if (userLevel < requiredLevel) {
