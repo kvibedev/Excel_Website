@@ -86,7 +86,7 @@ export default function Banks() {
       {/* Hero Section */}
       <Hero
         title="Bank Cleaning and Facility Services"
-        subtitle="Your customers need to feel confident that their money is in good hands, and a clean, well-maintained facility helps transmit that trust."
+        subtitle="Excel Facility Services Group helps banks maintain cleaner, safer, and more professional environments through accountable service delivery, responsive support, and programs built for customer-facing financial spaces."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
