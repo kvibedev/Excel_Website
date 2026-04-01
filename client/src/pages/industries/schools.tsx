@@ -85,7 +85,7 @@ export default function Schools() {
       {/* Hero Section */}
       <Hero
         title="School Cleaning and Facility Services"
-        subtitle="Excel Facility Services Group provides service while raising health & safety standards across school facilities."
+        subtitle="Excel Facility Services Group helps schools maintain cleaner, safer, and more consistent environments through accountable service delivery, responsive support, and programs built for classrooms, common areas, and daily campus operations."
         imageSrc={heroImage}
         height="medium"
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
