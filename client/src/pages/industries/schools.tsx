@@ -212,26 +212,50 @@ export default function Schools() {
       {/* Tailored Services Content */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <Badge variant="outline" className="mb-4" data-testid="badge-tailored">
               TAILORED APPROACH
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="heading-tailored">
-              A Clean School is Essential for Productive Learning
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="heading-tailored">
+              Built Around the Realities of Educational Environments
             </h2>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-1">
-              At Excel Facility Services Group, we believe that a clean school is essential for fostering a productive learning environment. Our comprehensive cleaning and maintenance solutions are tailored to meet the unique needs of educational institutions, ensuring both students and staff experience a safe and healthy space.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-2">
-              We are committed to using the latest cleaning technologies and methods to effectively <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfect">disinfect and sanitize</Link> classrooms, cafeterias, and common areas. Our team offers regular <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial services</Link>, as well as targeted deep cleaning protocols to effectively combat germs and maintain hygiene standards.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-              By choosing us as your cleaning partner, you are investing in the well-being of your students and staff. Our focus on health and safety helps to reduce illness-related absences and promotes an atmosphere conducive to learning.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8" data-testid="text-tailored-4">
-              Trust Excel Facility Services Group for reliable, high-quality cleaning services that consistently meet the rigorous standards of educational institutions. <Link href="/contact" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-contact">Contact us today</Link> — let's work together to create an impeccable and safe learning environment!
+            <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
+              Schools depend on cleanliness, consistency, and safe day-to-day conditions to support students, faculty, and staff. Excel Facility Services Group provides cleaning and facility services designed to help maintain cleaner classrooms, restrooms, cafeterias, hallways, and other shared spaces throughout the campus.
             </p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="h-full" data-testid="card-tailored-1">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">Learning Environment Support</CardTitle>
+                <CardDescription className="text-base">
+                  Help keep classrooms, common areas, and student spaces clean, organized, and ready to support focus and daily instruction.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-2">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/disinfection" className="text-[#0A5EB9] hover:underline" data-testid="link-disinfect">Hygiene-Focused Spaces</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Maintain cleaner restrooms, cafeterias, high-touch surfaces, and shared environments where hygiene directly affects student and staff confidence.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="h-full" data-testid="card-tailored-3">
+              <CardHeader>
+                <CardTitle className="text-xl mb-2">
+                  <Link href="/services/janitorial" className="text-[#0A5EB9] hover:underline" data-testid="link-janitorial">Support for Daily Campus Operations</Link>
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Service programs built around school traffic, academic schedules, and campus activity to help maintain consistency without disrupting the school day.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto" data-testid="text-tailored-closing">
+            Our approach helps schools maintain cleaner, safer, and more organized environments that support both learning and day-to-day operations.
+          </p>
         </div>
       </section>
 
