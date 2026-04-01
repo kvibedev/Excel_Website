@@ -85,7 +85,7 @@ export default function Banks() {
       />
       {/* Hero Section */}
       <Hero
-        title="Banks"
+        title="Bank Cleaning and Facility Services"
         subtitle="Your customers need to feel confident that their money is in good hands, and a clean, well-maintained facility helps transmit that trust."
         imageSrc={heroImage}
         height="medium"
