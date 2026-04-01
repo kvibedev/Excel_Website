@@ -21,11 +21,11 @@ export default function Footer() {
     <footer className="bg-muted border-t mt-auto">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center mb-4" data-testid="link-footer-logo">
               <img src={headerLogo} alt="Excel Facility Services Group" className="h-12 w-auto" />
             </Link>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground mb-4 text-center md:text-left">
               Professional commercial cleaning services with 20+ years of experience across 28 states nationwide.
             </p>
             <div className="flex gap-3">
@@ -59,7 +59,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               {serviceLinks.map((link) => (
@@ -72,7 +72,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="font-semibold mb-4">Industries</h3>
             <ul className="space-y-2">
               {industryLinks.map((link) => (
@@ -85,7 +85,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="font-semibold mb-4">Contact</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
