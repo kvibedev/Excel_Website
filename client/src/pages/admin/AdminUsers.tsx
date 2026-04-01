@@ -62,10 +62,10 @@ export default function AdminUsers() {
       toast({ title: "User created successfully" });
       resetForm();
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       let message = "Failed to create user";
       try {
-        const jsonStart = (err?.message || "").indexOf("{");
+        const jsonStart = (err.message || "").indexOf("{");
         if (jsonStart !== -1) {
           const parsed = JSON.parse(err.message.slice(jsonStart));
           if (parsed.error) message = parsed.error;
@@ -86,10 +86,10 @@ export default function AdminUsers() {
       toast({ title: "User updated successfully" });
       resetForm();
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       let message = "Failed to update user";
       try {
-        const jsonStart = (err?.message || "").indexOf("{");
+        const jsonStart = (err.message || "").indexOf("{");
         if (jsonStart !== -1) {
           const parsed = JSON.parse(err.message.slice(jsonStart));
           if (parsed.error) message = parsed.error;
@@ -107,10 +107,10 @@ export default function AdminUsers() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
       toast({ title: "User deleted" });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       let message = "Failed to delete user";
       try {
-        const jsonStart = (err?.message || "").indexOf("{");
+        const jsonStart = (err.message || "").indexOf("{");
         if (jsonStart !== -1) {
           const parsed = JSON.parse(err.message.slice(jsonStart));
           if (parsed.error) message = parsed.error;

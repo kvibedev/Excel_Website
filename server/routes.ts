@@ -189,7 +189,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      const updates: Record<string, any> = {};
+      const updates: Partial<{ username: string; email: string; role: string; password: string }> = {};
       if (username) updates.username = username;
       if (email) updates.email = email;
       if (role) updates.role = role;

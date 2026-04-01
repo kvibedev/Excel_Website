@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, integer, serial } from "drizzle-orm/pg-core";
+import { pgTable, pgEnum, text, varchar, timestamp, integer, serial } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -20,6 +20,8 @@ export type User = typeof users.$inferSelect;
 export const ADMIN_ROLES = ["super_admin", "admin", "editor", "viewer"] as const;
 export type AdminRole = (typeof ADMIN_ROLES)[number];
 
+export const adminRoleEnum = pgEnum("admin_role", ADMIN_ROLES);
+
 export const ROLE_HIERARCHY: Record<AdminRole, number> = {
   super_admin: 4,
   admin: 3,
@@ -39,7 +41,7 @@ export const adminUsers = pgTable("admin_users", {
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   email: text("email").notNull(),
-  role: text("role").notNull().default("viewer"),
+  role: adminRoleEnum("role").notNull().default("viewer"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
