@@ -83,7 +83,7 @@ export default function CoverageAreas() {
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-lg text-muted-foreground" data-testid="text-experience">
+            <p className="text-[#ffffff] text-[24px]" data-testid="text-experience">
               With more than 20 years of experience in providing high-quality services to customers in over 28 states. We are proud to offer our services near you.
             </p>
           </div>
