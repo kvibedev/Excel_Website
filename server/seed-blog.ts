@@ -280,7 +280,12 @@ export async function seedBlogPosts() {
       await db.insert(blogPosts).values(article);
       console.log(`Seeded blog post: ${article.title}`);
     } else {
-      console.log(`Blog post already exists: ${article.title}`);
+      if (existing[0].imageUrl !== article.imageUrl) {
+        await db.update(blogPosts).set({ imageUrl: article.imageUrl }).where(eq(blogPosts.slug, article.slug));
+        console.log(`Updated image for blog post: ${article.title}`);
+      } else {
+        console.log(`Blog post already exists: ${article.title}`);
+      }
     }
   }
 }
