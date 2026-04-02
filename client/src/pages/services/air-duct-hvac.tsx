@@ -148,6 +148,8 @@ export default function AirDuctHVAC() {
         title="Air Duct & HVAC Cleaning"
         description="Professional air duct and HVAC cleaning services from Excel Facility Services Group. Improve indoor air quality and energy efficiency."
         path="/services/air-duct-hvac"
+        image={heroImage}
+        keywords="air duct cleaning, HVAC cleaning, indoor air quality, ventilation cleaning"
       />
       {/* Hero Section */}
       <Hero

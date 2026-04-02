@@ -14,6 +14,8 @@ export default function Contact() {
         title="Contact Us"
         description="Get in touch with Excel Facility Services Group. Call (800) 593-2414 or email info@efsgnj.com. Request a proposal for commercial cleaning services."
         path="/contact"
+        image={heroImage}
+        keywords="contact Excel Facility Services, cleaning quote, commercial cleaning proposal, facility services inquiry"
       />
       {/* Hero Section */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">

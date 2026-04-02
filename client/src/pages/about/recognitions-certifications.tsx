@@ -50,6 +50,8 @@ export default function RecognitionsCertifications() {
         title="Recognitions & Certifications"
         description="View Excel Facility Services Group certifications, memberships, and industry recognitions including Green Seal GS-42 and MBE certification."
         path="/about/recognitions-certifications"
+        image={heroImage}
+        keywords="cleaning certifications, Green Seal GS-42, MBE certification, ISSA, facility services accreditation"
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">

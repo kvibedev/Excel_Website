@@ -88,6 +88,8 @@ export default function AutoDealerships() {
         title="Auto Dealership Cleaning"
         description="Professional cleaning services for auto dealerships from Excel Facility Services Group. Showroom-quality cleanliness."
         path="/industries/auto-dealerships"
+        image={heroImage}
+        keywords="auto dealership cleaning, showroom cleaning, car dealership maintenance, service center cleaning"
       />
       {/* Hero Section */}
       <Hero

@@ -82,6 +82,8 @@ export default function Restaurants() {
         title="Restaurant Cleaning"
         description="Professional cleaning services for restaurants from Excel Facility Services Group. Maintain health standards and customer satisfaction."
         path="/industries/restaurants"
+        image={heroImage}
+        keywords="restaurant cleaning, food service cleaning, kitchen cleaning, dining area sanitation"
       />
       {/* Hero Section */}
       <Hero

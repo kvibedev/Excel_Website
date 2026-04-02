@@ -148,6 +148,8 @@ export default function WindowWashing() {
         title="Window Washing"
         description="Commercial window washing services from Excel Facility Services Group. Keep your building looking professional and spotless."
         path="/services/window-washing"
+        image={heroImage}
+        keywords="window washing, commercial window cleaning, building glass cleaning, high-rise window washing"
       />
       <Hero
         title="Commercial Window Washing Services"

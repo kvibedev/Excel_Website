@@ -141,6 +141,8 @@ export default function LevelUpClean() {
         title="LevelUp Clean®"
         description="LevelUp Clean® by Excel Facility Services Group — advanced cleaning and disinfection with verified results and transparency."
         path="/services/levelup-clean"
+        image={heroImage}
+        keywords="LevelUp Clean, advanced cleaning, verified cleaning, transparent disinfection"
       />
       {/* Hero Section */}
       <Hero

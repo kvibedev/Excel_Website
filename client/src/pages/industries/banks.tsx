@@ -82,6 +82,8 @@ export default function Banks() {
         title="Bank & Financial Cleaning"
         description="Professional cleaning services for banks and financial institutions from Excel Facility Services Group."
         path="/industries/banks"
+        image={heroImage}
+        keywords="bank cleaning, financial institution cleaning, branch office cleaning, secure facility cleaning"
       />
       {/* Hero Section */}
       <Hero

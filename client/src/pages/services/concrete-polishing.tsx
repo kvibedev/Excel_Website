@@ -147,6 +147,8 @@ export default function ConcretePolishing() {
         title="Concrete Polishing"
         description="Professional concrete polishing services from Excel Facility Services Group. Durable, attractive floors for commercial spaces."
         path="/services/concrete-polishing"
+        image={heroImage}
+        keywords="concrete polishing, concrete floor finishing, commercial concrete care, floor polishing"
       />
       {/* Hero Section */}
       <Hero

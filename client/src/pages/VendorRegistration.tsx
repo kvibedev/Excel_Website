@@ -189,6 +189,8 @@ export default function VendorRegistration() {
         title="Vendor Registration"
         description="Register as a vendor or contractor with Excel Facility Services Group. Complete our registration form to partner with us."
         path="/vendor-registration"
+        image={heroImage}
+        keywords="vendor registration, contractor registration, cleaning vendor, facility services partner"
       />
       {/* Hero Section */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">

@@ -82,6 +82,8 @@ export default function DistributionCenters() {
         title="Distribution Center Cleaning"
         description="Professional cleaning for distribution centers from Excel Facility Services Group. Ensure safe, efficient operations."
         path="/industries/distribution-centers"
+        image={heroImage}
+        keywords="distribution center cleaning, warehouse cleaning, logistics facility cleaning, industrial cleaning"
       />
       {/* Hero Section */}
       <Hero

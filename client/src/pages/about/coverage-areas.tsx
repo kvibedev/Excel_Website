@@ -41,6 +41,8 @@ export default function CoverageAreas() {
         title="Coverage Areas"
         description="Excel Facility Services Group serves clients across 20+ states. View our nationwide coverage areas."
         path="/about/coverage-areas"
+        image={usaMapImage}
+        keywords="coverage areas, service locations, nationwide cleaning, multi-state facility services"
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">

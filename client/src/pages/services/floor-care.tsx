@@ -149,6 +149,8 @@ export default function FloorCare() {
         title="Floor Care Services"
         description="Professional floor care services from Excel Facility Services Group — maintenance, restoration, and protection for all floor types."
         path="/services/floor-care"
+        image={heroImage}
+        keywords="floor care, floor maintenance, floor restoration, commercial floor cleaning"
       />
       {/* Hero Section */}
       <Hero

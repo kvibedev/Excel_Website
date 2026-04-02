@@ -71,6 +71,11 @@ export default function BlogPostDetail() {
         title={post.title}
         description={post.excerpt || `Read ${post.title} on Excel Facility Services Group's resource center.`}
         path={`/resources/${post.slug}`}
+        image={post.imageUrl || undefined}
+        type="article"
+        publishedTime={post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined}
+        author={post.author}
+        keywords={post.tags || undefined}
       />
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">

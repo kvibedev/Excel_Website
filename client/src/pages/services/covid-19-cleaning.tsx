@@ -148,6 +148,8 @@ export default function Covid19Cleaning() {
         title="COVID-19 Cleaning"
         description="Specialized COVID-19 cleaning and disinfection services from Excel Facility Services Group for safe, healthy facilities."
         path="/services/covid-19-cleaning"
+        image={heroImage}
+        keywords="COVID-19 cleaning, pandemic disinfection, virus decontamination, facility sanitization"
       />
       {/* Hero Section */}
       <Hero

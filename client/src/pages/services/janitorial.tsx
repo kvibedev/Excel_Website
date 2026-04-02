@@ -147,6 +147,8 @@ export default function Janitorial() {
         title="Janitorial Services"
         description="Professional janitorial cleaning services from Excel Facility Services Group. Customized cleaning programs for your facility."
         path="/services/janitorial"
+        image={heroImage}
+        keywords="janitorial services, commercial janitorial, office cleaning, facility cleaning"
       />
       {/* Hero Section */}
       <Hero

@@ -198,6 +198,8 @@ export default function HomeOriginal() {
         title="Commercial Cleaning Services"
         description="Excel Facility Services Group provides professional commercial cleaning services with 20+ years of experience across 20+ states. Janitorial, disinfection, floor care, and facility maintenance solutions."
         path="/"
+        image={heroImage}
+        keywords="commercial cleaning, facility services, janitorial, disinfection, floor care, Excel Facility Services Group"
       />
       {/* Hero Section - Template 3 style with original content */}
       <Hero

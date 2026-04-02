@@ -39,6 +39,8 @@ export default function GreenSeal() {
         title="Green Seal Certification"
         description="Excel Facility Services Group is Green Seal GS-42 certified, delivering environmentally responsible commercial cleaning solutions."
         path="/about/green-seal"
+        image={buildingImg}
+        keywords="Green Seal certification, GS-42, green cleaning, eco-friendly commercial cleaning"
       />
 
       {/* Hero + Video Section */}

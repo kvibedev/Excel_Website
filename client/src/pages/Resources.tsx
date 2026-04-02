@@ -32,6 +32,8 @@ export default function Resources() {
         title="Resources"
         description="Insights and articles on commercial cleaning, green practices, facility management, and industry trends from Excel Facility Services Group."
         path="/resources"
+        image={heroImage}
+        keywords="cleaning resources, facility management articles, commercial cleaning blog, industry insights"
       />
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
         <div

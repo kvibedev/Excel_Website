@@ -33,6 +33,8 @@ export default function CommercialCleaning() {
         title="Commercial Cleaning"
         description="Comprehensive commercial cleaning services from Excel Facility Services Group. Customized solutions for businesses of all sizes."
         path="/services/commercial-cleaning"
+        image={heroImage}
+        keywords="commercial cleaning, business cleaning, office cleaning, professional cleaning services"
       />
       <Hero
         title="Leave the Commercial Cleaning to our Pro's"

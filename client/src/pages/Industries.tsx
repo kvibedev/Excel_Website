@@ -32,6 +32,8 @@ export default function Industries() {
         title="Industries We Serve"
         description="Excel Facility Services Group provides cleaning solutions for offices, retail, distribution centers, restaurants, medical facilities, banks, schools, and auto dealerships."
         path="/industries"
+        image={heroImage}
+        keywords="commercial cleaning industries, office cleaning, retail cleaning, hospital cleaning, school cleaning"
       />
       <Hero
         title="We offer services for a wide range of industries"

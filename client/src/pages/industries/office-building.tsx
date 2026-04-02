@@ -71,6 +71,8 @@ export default function OfficeBuilding() {
         title="Office Building Cleaning"
         description="Professional cleaning services for office buildings from Excel Facility Services Group. Create a healthier, more productive workspace."
         path="/industries/office-building"
+        image={heroImage}
+        keywords="office building cleaning, commercial office cleaning, workspace sanitation, office maintenance"
       />
       <Hero
         title="Office Building Cleaning and Facility Services"

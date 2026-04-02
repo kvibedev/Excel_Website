@@ -81,6 +81,8 @@ export default function Schools() {
         title="School Cleaning"
         description="Professional cleaning services for schools from Excel Facility Services Group. Safe, healthy learning environments."
         path="/industries/schools"
+        image={heroImage}
+        keywords="school cleaning, educational facility cleaning, campus sanitation, classroom cleaning"
       />
       {/* Hero Section */}
       <Hero

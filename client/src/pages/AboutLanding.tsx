@@ -75,6 +75,8 @@ export default function AboutLanding() {
         title="About Us"
         description="Learn about Excel Facility Services Group — 20+ years of commercial cleaning excellence across 20+ states. Our mission, values, and commitment to healthier workplaces."
         path="/about"
+        image={heroImage}
+        keywords="about Excel Facility Services, commercial cleaning company, facility management, company history"
       />
       {/* Hero Section */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">

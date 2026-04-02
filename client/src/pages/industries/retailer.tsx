@@ -82,6 +82,8 @@ export default function Retailer() {
         title="Retail Cleaning"
         description="Commercial cleaning services for retail stores from Excel Facility Services Group. Maintain a clean, inviting shopping environment."
         path="/industries/retailer"
+        image={heroImage}
+        keywords="retail cleaning, store cleaning, shopping center cleaning, commercial retail maintenance"
       />
       {/* Hero Section */}
       <Hero

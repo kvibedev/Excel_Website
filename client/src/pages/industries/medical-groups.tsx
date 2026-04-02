@@ -85,6 +85,8 @@ export default function MedicalGroups() {
         title="Medical Facility Cleaning"
         description="Specialized cleaning for medical groups from Excel Facility Services Group. Certified disinfection for healthcare environments."
         path="/industries/medical-groups"
+        image={heroImage}
+        keywords="medical facility cleaning, healthcare cleaning, hospital disinfection, clinic sanitation"
       />
       {/* Hero Section */}
       <Hero

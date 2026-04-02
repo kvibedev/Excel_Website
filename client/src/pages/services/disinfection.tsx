@@ -148,6 +148,8 @@ export default function Disinfection() {
         title="Disinfection Services"
         description="Professional disinfection services from Excel Facility Services Group. Certified protocols to keep your facility safe and healthy."
         path="/services/disinfection"
+        image={heroImage}
+        keywords="disinfection services, commercial disinfection, sanitization, facility health"
       />
       <Hero
         title="Commercial Disinfection Services"

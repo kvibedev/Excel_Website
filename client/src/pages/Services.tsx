@@ -101,6 +101,8 @@ export default function Services() {
         title="Services"
         description="Explore our full range of commercial cleaning services — janitorial, day porters, disinfection, floor care, window washing, air duct & HVAC, carpet extraction, and more."
         path="/services"
+        image={heroImage}
+        keywords="cleaning services, janitorial, day porters, disinfection, floor care, window washing, HVAC cleaning"
       />
       <Hero
         title="We specialize in expert cleaning and disinfection services"

@@ -148,6 +148,8 @@ export default function DayPorters() {
         title="Day Porter Services"
         description="Day porter services from Excel Facility Services Group. Keep your facility clean and presentable throughout the business day."
         path="/services/day-porters"
+        image={heroImage}
+        keywords="day porter services, facility attendant, building maintenance, lobby cleaning"
       />
       {/* Hero Section */}
       <Hero

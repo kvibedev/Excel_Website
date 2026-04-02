@@ -147,6 +147,8 @@ export default function CarpetExtraction() {
         title="Carpet Extraction"
         description="Professional carpet extraction and deep cleaning services from Excel Facility Services Group. Restore and maintain your carpets."
         path="/services/carpet-extraction"
+        image={heroImage}
+        keywords="carpet extraction, carpet deep cleaning, carpet restoration, commercial carpet care"
       />
       {/* Hero Section */}
       <Hero

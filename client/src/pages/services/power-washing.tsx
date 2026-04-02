@@ -146,6 +146,8 @@ export default function PowerWashing() {
         title="Power Washing"
         description="Commercial power washing services from Excel Facility Services Group. Keep your building exterior clean and professional."
         path="/services/power-washing"
+        image={heroImage}
+        keywords="power washing, pressure washing, commercial exterior cleaning, building wash"
       />
       {/* Hero Section */}
       <Hero
