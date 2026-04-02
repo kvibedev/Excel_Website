@@ -568,7 +568,7 @@ export default function VendorRegistration() {
                 {/* References Section */}
                 <div>
                   <h2 className="text-2xl font-bold mb-4" data-testid="text-section-references">References</h2>
-                  <p className="text-muted-foreground mb-8">Please provide 3 company references with phone numbers</p>
+                  <p className="text-muted-foreground mb-8">Please provide at least 1 company reference with phone number</p>
 
                   <div className="space-y-12">
                     {references.map((reference, refIndex) => (
@@ -580,10 +580,10 @@ export default function VendorRegistration() {
                         {reference.contacts.map((contact, contactIndex) => (
                           <div key={contact.id} className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                              <Label htmlFor={`${contact.id}-name`}>Name *</Label>
+                              <Label htmlFor={`${contact.id}-name`}>{refIndex === 0 ? "Name *" : "Name"}</Label>
                               <Input
                                 id={`${contact.id}-name`}
-                                required
+                                required={refIndex === 0}
                                 placeholder="Type your answer here..."
                                 value={contact.name}
                                 onChange={(e) => updateReferenceContact(reference.id, contact.id, "name", e.target.value)}
@@ -591,10 +591,10 @@ export default function VendorRegistration() {
                               />
                             </div>
                             <div>
-                              <Label htmlFor={`${contact.id}-company`}>Company Name *</Label>
+                              <Label htmlFor={`${contact.id}-company`}>{refIndex === 0 ? "Company Name *" : "Company Name"}</Label>
                               <Input
                                 id={`${contact.id}-company`}
-                                required
+                                required={refIndex === 0}
                                 placeholder="Type your answer here..."
                                 value={contact.companyName}
                                 onChange={(e) => updateReferenceContact(reference.id, contact.id, "companyName", e.target.value)}
@@ -602,11 +602,11 @@ export default function VendorRegistration() {
                               />
                             </div>
                             <div>
-                              <Label htmlFor={`${contact.id}-phone`}>Phone Number *</Label>
+                              <Label htmlFor={`${contact.id}-phone`}>{refIndex === 0 ? "Phone Number *" : "Phone Number"}</Label>
                               <Input
                                 id={`${contact.id}-phone`}
                                 type="tel"
-                                required
+                                required={refIndex === 0}
                                 placeholder="(000) 000-0000"
                                 value={contact.phoneNumber}
                                 onChange={(e) => updateReferenceContact(reference.id, contact.id, "phoneNumber", e.target.value)}
