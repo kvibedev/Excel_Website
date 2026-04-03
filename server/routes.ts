@@ -67,6 +67,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     "sustainable-floor-care-transforming-facilities",
     "green-cleaning-transforming-facility-management",
     "smart-technology-revolutionizes-facility-security",
+    "automation-revolutionizes-commercial-cleaning-efficiency",
+    "unlocking-energy-efficiency-for-facilities",
     "smart-iot-driving-facility-management",
     "unlocking-ai-power-in-facility-maintenance",
     "developing-cleaning-plans-for-diverse-industrial-facilities",
@@ -97,6 +99,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.redirect(301, `/resources/${slug}${query}`);
     }
     next();
+  });
+
+  app.get("/careers", (_req: Request, res: Response) => {
+    res.redirect(301, "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=2efccd9b-d01e-4fc0-a0bd-5735ec5ae45c&ccId=19000101_000001&lang=en_US");
   });
 
   const oldRouteRedirects: Record<string, string> = {
