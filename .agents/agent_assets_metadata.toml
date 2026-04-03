@@ -1,0 +1,128 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "z_pQn7CfRdLLc3KCH_gOL"
+uri = "file://attached_assets/stock_images/iot-facility-management.jpg"
+type = "image"
+title = "IoT smart building sensors facility management technology modern commercial building"
+
+[[outputs]]
+id = "yAbb71AOIVHA-Zz_3cZ45"
+uri = "file://attached_assets/stock_images/ai-facility-maintenance.jpg"
+type = "image"
+title = "artificial intelligence predictive maintenance industrial facility robotics"
+
+[[outputs]]
+id = "dnVx-is4G_dpLmAo5f0Uz"
+uri = "file://attached_assets/stock_images/industrial-cleaning-plans.jpg"
+type = "image"
+title = "industrial warehouse cleaning professional janitorial service factory floor"
+
+[[outputs]]
+id = "gyt6T7dkLiaOfVmoUHmlI"
+uri = "file://attached_assets/stock_images/office-cleaning-productivity.jpg"
+type = "image"
+title = "clean modern office workspace productive employees happy bright"
+
+[[outputs]]
+id = "dedfXMRxpbBeIAjDk-5TI"
+uri = "file://attached_assets/stock_images/distribution-center-janitorial.jpg"
+type = "image"
+title = "distribution center warehouse logistics clean organized facility"
+
+[[outputs]]
+id = "vNrbbG2ZDI1wFCQTHZs0P"
+uri = "file://attached_assets/stock_images/facilities-management-day.jpg"
+type = "image"
+title = "facility management team professional celebration corporate event"
+
+[[outputs]]
+id = "JfBqJAPrgRPgXO8Y55QnG"
+uri = "file://attached_assets/stock_images/sustainable-green-cleaning.jpg"
+type = "image"
+title = "eco-friendly green cleaning products sustainable environment nature"
+
+[[outputs]]
+id = "sTSFHyoAkwBLuXtxuLxLL"
+uri = "file://attached_assets/stock_images/spring-cleaning-commercial.jpg"
+type = "image"
+title = "spring cleaning commercial office space refresh bright sunlight"
+
+[[outputs]]
+id = "QjW37wIFU-IFtZmg6G_3f"
+uri = "file://attached_assets/stock_images/cleaning-vs-disinfecting.jpg"
+type = "image"
+title = "disinfecting cleaning spray sanitizing surface professional cleaner"
+
+[[outputs]]
+id = "iB64rFv_v0TnGHWLv5-iq"
+uri = "file://attached_assets/stock_images/indoor-air-quality.jpg"
+type = "image"
+title = "indoor air quality HVAC ventilation system clean air duct"
+
+[[outputs]]
+id = "Dwdfyzp0bffKEIRUdsyRc"
+uri = "file://attached_assets/stock_images/seasonal-cleaning-changes.jpg"
+type = "image"
+title = "autumn fall leaves changing seasons outdoor commercial building maintenance"
+
+[[outputs]]
+id = "sfMSM1cr1Bladt3P3XeJ9"
+uri = "file://attached_assets/stock_images/inc-5000-ranking.jpg"
+type = "image"
+title = "business growth success award trophy corporate achievement celebration"
+
+[[outputs]]
+id = "bP9t22kwagj72oMQX7YCX"
+uri = "file://attached_assets/stock_images/clean-school-environment.jpg"
+type = "image"
+title = "clean school classroom students learning bright modern education"
+
+[[outputs]]
+id = "3LxcBtpik-4kYBYgkhTwU"
+uri = "file://attached_assets/stock_images/professional-cleaning-services.jpg"
+type = "image"
+title = "professional cleaning team commercial building janitor mopping floor"
+
+[[outputs]]
+id = "MCc68__NPkRtHeBR4Hqyg"
+uri = "file://attached_assets/stock_images/national-cleaning-week.jpg"
+type = "image"
+title = "cleaning supplies mop bucket spray organized janitorial closet"
+
+[[outputs]]
+id = "x0EZQPkzmW70FblokIxSn"
+uri = "file://attached_assets/stock_images/preventive-maintenance.jpg"
+type = "image"
+title = "building maintenance technician inspecting HVAC equipment tools"
+
+[[outputs]]
+id = "3595fULBKHC7GIlKV4LoE"
+uri = "file://attached_assets/stock_images/workplace-safety-health.jpg"
+type = "image"
+title = "workplace safety hard hat gloves protective equipment construction site"
+
+[[outputs]]
+id = "ExajZ2KKYBUW3-kptjTSs"
+uri = "file://attached_assets/stock_images/day-porter-vs-janitorial.jpg"
+type = "image"
+title = "hotel lobby reception desk clean polished floor modern interior"
+
+[[outputs]]
+id = "9sZtKkcfKL0Hg_55_UvtD"
+uri = "file://attached_assets/stock_images/warehouse-clean-safe.jpg"
+type = "image"
+title = "warehouse interior shelves organized boxes storage facility clean"
+
+[[outputs]]
+id = "zvEjM42P2WNO2lAvvWjzO"
+uri = "file://attached_assets/stock_images/outsourcing-cleaning.jpg"
+type = "image"
+title = "business meeting handshake partnership office agreement deal"
+
+[[outputs]]
+id = "M4R5IAhfWTIv3AVxN68rK"
+uri = "file://attached_assets/stock_images/green-seal-indoor-air.jpg"
+type = "image"
+title = "green leaf plant nature eco friendly organic sustainable products"

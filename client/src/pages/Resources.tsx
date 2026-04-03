@@ -1,11 +1,14 @@
+import { useState, useRef } from "react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Calendar, ArrowRight, Clock } from "lucide-react";
+import { Calendar, ArrowRight, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { BlogPost } from "@shared/schema";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
+
+const POSTS_PER_PAGE = 9;
 
 function formatDate(dateStr: string | Date | null): string {
   if (!dateStr) return "";
@@ -19,12 +22,151 @@ function estimateReadTime(content: string): string {
   return `${minutes} min read`;
 }
 
+function FeaturedArticleCard({ article }: { article: BlogPost }) {
+  return (
+    <Link href={`/resources/${article.slug}`}>
+      <div
+        className="group hover-elevate active-elevate-2 bg-white dark:bg-card rounded-xl overflow-visible shadow-lg h-full"
+        data-testid={`card-featured-article-${article.id}`}
+      >
+        <div className="relative h-80 overflow-hidden rounded-t-xl">
+          {article.imageUrl ? (
+            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+          {article.category && (
+            <div className="absolute top-6 left-6">
+              <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
+                {article.category}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="p-8">
+          <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-[#0A5EB9] dark:text-blue-400" />
+              <span data-testid={`text-date-${article.id}`}>{formatDate(article.publishedAt)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#0A5EB9] dark:text-blue-400" />
+              <span data-testid={`text-readtime-${article.id}`}>{estimateReadTime(article.content)}</span>
+            </div>
+          </div>
+
+          <h3 className="text-2xl font-bold text-[#063970] dark:text-blue-300 mb-4 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
+            {article.title}
+          </h3>
+
+          <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
+            {article.excerpt}
+          </p>
+
+          <div className="flex items-center gap-2 text-[#0A5EB9] dark:text-blue-400 font-semibold transition-colors">
+            <span>Read Article</span>
+            <ArrowRight className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function ArticleCard({ article }: { article: BlogPost }) {
+  return (
+    <Link href={`/resources/${article.slug}`}>
+      <div
+        className="group hover-elevate active-elevate-2 bg-white dark:bg-card rounded-xl overflow-visible shadow-md h-full"
+        data-testid={`card-article-${article.id}`}
+      >
+        <div className="relative h-56 overflow-hidden rounded-t-xl">
+          {article.imageUrl ? (
+            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+          {article.category && (
+            <div className="absolute top-4 left-4">
+              <span className="px-3 py-1 bg-[#97CC06] text-[#063970] text-xs font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
+                {article.category}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="p-6">
+          <div className="flex items-center gap-4 mb-3 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1">
+              <Calendar className="w-3 h-3 text-[#0A5EB9] dark:text-blue-400" />
+              <span data-testid={`text-date-${article.id}`}>{formatDate(article.publishedAt)}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock className="w-3 h-3 text-[#0A5EB9] dark:text-blue-400" />
+              <span data-testid={`text-readtime-${article.id}`}>{estimateReadTime(article.content)}</span>
+            </div>
+          </div>
+
+          <h3 className="text-xl font-bold text-[#063970] dark:text-blue-300 mb-3 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
+            {article.title}
+          </h3>
+
+          <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
+            {article.excerpt}
+          </p>
+
+          <div className="flex items-center gap-2 text-[#0A5EB9] dark:text-blue-400 font-semibold text-sm transition-colors">
+            <span>Read More</span>
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function Resources() {
   const { data, isLoading, isError } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const gridRef = useRef<HTMLDivElement>(null);
+
   const posts = data || [];
+  const featuredPosts = posts.slice(0, 2);
+  const remainingPosts = posts.slice(2);
+  const totalPages = Math.max(1, Math.ceil(remainingPosts.length / POSTS_PER_PAGE));
+  const paginatedPosts = remainingPosts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
+
+  function goToPage(page: number) {
+    setCurrentPage(page);
+    if (gridRef.current) {
+      gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function getPageNumbers(): (number | "ellipsis")[] {
+    const pages: (number | "ellipsis")[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push("ellipsis");
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (currentPage < totalPages - 2) pages.push("ellipsis");
+      pages.push(totalPages);
+    }
+    return pages;
+  }
 
   return (
     <div>
@@ -73,10 +215,10 @@ export default function Resources() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-gradient-to-b from-white to-gray-50/50">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white to-gray-50/50 dark:from-background dark:to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#063970] mb-4" data-testid="text-featured-title">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#063970] dark:text-blue-300 mb-4" data-testid="text-featured-title">
               Latest Insights
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -100,7 +242,7 @@ export default function Resources() {
             <div className="space-y-12">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 {[1, 2].map((i) => (
-                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-lg">
+                  <div key={i} className="bg-white dark:bg-card rounded-xl overflow-hidden shadow-lg">
                     <Skeleton className="h-80 w-full" />
                     <div className="p-8 space-y-4">
                       <Skeleton className="h-4 w-48" />
@@ -113,7 +255,7 @@ export default function Resources() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md">
+                  <div key={i} className="bg-white dark:bg-card rounded-xl overflow-hidden shadow-md">
                     <Skeleton className="h-56 w-full" />
                     <div className="p-6 space-y-3">
                       <Skeleton className="h-4 w-32" />
@@ -130,111 +272,68 @@ export default function Resources() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-                {posts.slice(0, 2).map((article) => (
-                  <Link href={`/resources/${article.slug}`} key={article.id}>
-                    <div
-                      className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-visible shadow-lg h-full"
-                      data-testid={`card-featured-article-${article.id}`}
-                    >
-                      <div className="relative h-80 overflow-hidden rounded-t-xl">
-                        {article.imageUrl ? (
-                          <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                        {article.category && (
-                          <div className="absolute top-6 left-6">
-                            <span className="px-4 py-2 bg-[#97CC06] text-[#063970] text-sm font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
-                              {article.category}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="p-8">
-                        <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-[#0A5EB9]" />
-                            <span data-testid={`text-date-${article.id}`}>{formatDate(article.publishedAt)}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-[#0A5EB9]" />
-                            <span data-testid={`text-readtime-${article.id}`}>{estimateReadTime(article.content)}</span>
-                          </div>
-                        </div>
-
-                        <h3 className="text-2xl font-bold text-[#063970] mb-4 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
-                          {article.title}
-                        </h3>
-
-                        <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
-                          {article.excerpt}
-                        </p>
-
-                        <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold group-hover:gap-4 transition-all">
-                          <span>Read Article</span>
-                          <ArrowRight className="w-5 h-5" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                {featuredPosts.map((article) => (
+                  <FeaturedArticleCard key={article.id} article={article} />
                 ))}
               </div>
 
-              {posts.length > 2 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.slice(2).map((article) => (
-                    <Link href={`/resources/${article.slug}`} key={article.id}>
-                      <div
-                        className="group hover-elevate active-elevate-2 bg-white rounded-xl overflow-visible shadow-md h-full"
-                        data-testid={`card-article-${article.id}`}
+              {remainingPosts.length > 0 && (
+                <div ref={gridRef}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {paginatedPosts.map((article) => (
+                      <ArticleCard key={article.id} article={article} />
+                    ))}
+                  </div>
+
+                  {totalPages > 1 && (
+                    <nav className="flex items-center justify-center gap-2 mt-16" aria-label="Blog pagination" data-testid="pagination-nav">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => goToPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        data-testid="button-pagination-prev"
+                        aria-label="Previous page"
                       >
-                        <div className="relative h-56 overflow-hidden rounded-t-xl">
-                          {article.imageUrl ? (
-                            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                          ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                          {article.category && (
-                            <div className="absolute top-4 left-4">
-                              <span className="px-3 py-1 bg-[#97CC06] text-[#063970] text-xs font-bold rounded-full" data-testid={`badge-category-${article.id}`}>
-                                {article.category}
-                              </span>
-                            </div>
-                          )}
-                        </div>
+                        <ChevronLeft className="w-4 h-4" />
+                      </Button>
 
-                        <div className="p-6">
-                          <div className="flex items-center gap-4 mb-3 text-xs text-muted-foreground">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3 text-[#0A5EB9]" />
-                              <span data-testid={`text-date-${article.id}`}>{formatDate(article.publishedAt)}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="w-3 h-3 text-[#0A5EB9]" />
-                              <span data-testid={`text-readtime-${article.id}`}>{estimateReadTime(article.content)}</span>
-                            </div>
-                          </div>
+                      {getPageNumbers().map((page, idx) =>
+                        page === "ellipsis" ? (
+                          <span key={`ellipsis-${idx}`} className="px-2 text-muted-foreground select-none">...</span>
+                        ) : (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "outline"}
+                            size="icon"
+                            className={currentPage === page ? "bg-[#063970] text-white" : ""}
+                            onClick={() => goToPage(page)}
+                            data-testid={`button-pagination-${page}`}
+                            aria-label={`Page ${page}`}
+                            aria-current={currentPage === page ? "page" : undefined}
+                          >
+                            {page}
+                          </Button>
+                        )
+                      )}
 
-                          <h3 className="text-xl font-bold text-[#063970] mb-3 group-hover:text-[#0A5EB9] transition-colors leading-tight" data-testid={`text-title-${article.id}`}>
-                            {article.title}
-                          </h3>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => goToPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        data-testid="button-pagination-next"
+                        aria-label="Next page"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
 
-                          <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed" data-testid={`text-excerpt-${article.id}`}>
-                            {article.excerpt}
-                          </p>
-
-                          <div className="flex items-center gap-2 text-[#0A5EB9] font-semibold text-sm group-hover:gap-3 transition-all">
-                            <span>Read More</span>
-                            <ArrowRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
+                      <span className="ml-4 text-sm text-muted-foreground" data-testid="text-pagination-info">
+                        Page {currentPage} of {totalPages}
+                      </span>
+                    </nav>
+                  )}
                 </div>
               )}
             </>

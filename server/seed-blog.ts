@@ -278,7 +278,7 @@ One thing is clear: sustainability isn't just a buzzword for corporate PR anymor
     author: "Excel Facility Services Group",
     category: "Technology",
     tags: "IoT,smartbuilding,facilitymanagement,automation,sensors,technology",
-    imageUrl: "/images/blog/smart-tech.webp",
+    imageUrl: "/images/blog/iot-facility-management.jpg",
     status: "published",
     publishedAt: new Date("2025-06-15"),
     content: `The Internet of Things (IoT) is no longer a futuristic concept for facility management—it's a present-day reality transforming how buildings are monitored, maintained, and operated. By connecting sensors, devices, and building systems through a unified network, facility managers gain real-time visibility into virtually every aspect of their properties.
@@ -318,7 +318,7 @@ As 5G networks expand and sensor costs continue to fall, the range of IoT applic
     author: "Excel Facility Services Group",
     category: "Technology",
     tags: "AI,artificialintelligence,facilitymanagement,maintenance,predictive,automation",
-    imageUrl: "/images/blog/automation.webp",
+    imageUrl: "/images/blog/ai-facility-maintenance.jpg",
     status: "published",
     publishedAt: new Date("2025-06-10"),
     content: `Artificial intelligence is quickly moving from a buzzword to a practical tool in facility maintenance. For building managers and cleaning service providers, AI offers the ability to analyze vast amounts of operational data and turn it into actionable decisions—faster and more accurately than manual methods ever could.
@@ -356,7 +356,7 @@ Data quality matters enormously. AI systems are only as good as the data they re
     author: "Excel Facility Services Group",
     category: "Cleaning",
     tags: "industrial,cleaning,warehouse,manufacturing,cleaningplans,facilitymanagement",
-    imageUrl: "/images/blog/floor-care.webp",
+    imageUrl: "/images/blog/industrial-cleaning-plans.jpg",
     status: "published",
     publishedAt: new Date("2025-05-28"),
     content: `Industrial facilities present unique cleaning challenges that standard commercial cleaning programs simply cannot address. From heavy machinery grease and metal shavings in manufacturing plants to high-volume product dust in distribution centers, every industrial environment demands a cleaning plan built around its specific operations, materials, and regulatory requirements.
@@ -390,7 +390,7 @@ Working with a cleaning partner that understands industrial environments and has
     author: "Excel Facility Services Group",
     category: "Workplace",
     tags: "officecleaning,productivity,employeehealth,workplace,morale,janitorial",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/office-cleaning-productivity.jpg",
     status: "published",
     publishedAt: new Date("2025-05-20"),
     content: `A clean office is more than an aesthetic preference—it is a measurable factor in employee productivity, health, and satisfaction. Research consistently shows that workers in clean, well-maintained environments are more focused, take fewer sick days, and report higher job satisfaction compared to those in neglected workspaces.
@@ -426,7 +426,7 @@ Partnering with a professional cleaning service that provides trained staff, qua
     author: "Excel Facility Services Group",
     category: "Industries",
     tags: "distribution,warehouse,janitorial,safety,cleaning,logistics",
-    imageUrl: "/images/blog/floor-care.webp",
+    imageUrl: "/images/blog/distribution-center-janitorial.jpg",
     status: "published",
     publishedAt: new Date("2025-05-12"),
     content: `Distribution centers operate at a relentless pace. With forklifts running around the clock, thousands of packages moving through the system daily, and hundreds of workers on the floor, maintaining a clean and safe facility is both a significant challenge and an absolute necessity.
@@ -462,7 +462,7 @@ A clean distribution center is not a luxury—it is a competitive advantage.`,
     author: "Excel Facility Services Group",
     category: "Company News",
     tags: "worldfmday,facilitymanagement,celebration,EFSG,professionals,appreciation",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/facilities-management-day.jpg",
     status: "published",
     publishedAt: new Date("2025-05-14"),
     content: `Every year, World Facilities Management Day shines a spotlight on the professionals who keep our buildings running smoothly, safely, and sustainably. At Excel Facility Services Group, we take this day as an opportunity to recognize the dedicated teams whose work often goes unnoticed but is absolutely essential to every organization we serve.
@@ -488,7 +488,7 @@ To every facility manager, cleaning technician, day porter, and operations coord
     author: "Excel Facility Services Group",
     category: "Sustainability",
     tags: "greencleaning,sustainability,GreenSeal,ecofriendly,environment,EFSG",
-    imageUrl: "/images/blog/levelup-clean.webp",
+    imageUrl: "/images/blog/sustainable-green-cleaning.jpg",
     status: "published",
     publishedAt: new Date("2025-04-22"),
     content: `Sustainability is a core value at Excel Facility Services Group, not just a marketing message. As a Green Seal GS-42 certified company, we have embedded environmentally responsible practices into every layer of our operations—from the products we use to the equipment we deploy to the training we provide our teams.
@@ -522,7 +522,7 @@ We continue to evaluate new products, technologies, and methods that can further
     author: "Excel Facility Services Group",
     category: "Cleaning",
     tags: "springcleaning,deepcleaning,commercial,airquality,seasonal,facilitycare",
-    imageUrl: "/images/blog/levelup-clean.webp",
+    imageUrl: "/images/blog/spring-cleaning-commercial.jpg",
     status: "published",
     publishedAt: new Date("2025-03-20"),
     content: `Spring cleaning is a time-honored tradition in homes, but commercial spaces benefit just as much—if not more—from a thorough seasonal deep clean. After months of winter weather, closed windows, and heavier foot traffic, facilities accumulate dirt, allergens, and wear that routine nightly cleaning simply cannot address.
@@ -552,7 +552,7 @@ The key to a successful spring cleaning program is planning ahead. Work with you
     author: "Excel Facility Services Group",
     category: "Cleaning",
     tags: "cleaning,disinfecting,sanitation,health,safety,hygiene",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/cleaning-vs-disinfecting.jpg",
     status: "published",
     publishedAt: new Date("2025-03-10"),
     content: `Many people use the words "cleaning" and "disinfecting" interchangeably, but they are fundamentally different processes with different purposes. Understanding this distinction is essential for facility managers, building owners, and anyone responsible for maintaining healthy indoor environments.
@@ -588,7 +588,7 @@ One of the most common mistakes in disinfection is ignoring dwell time—the amo
     author: "Excel Facility Services Group",
     category: "Health & Safety",
     tags: "indoorairquality,IAQ,health,ventilation,HVAC,awareness",
-    imageUrl: "/images/blog/energy-efficiency.jpg",
+    imageUrl: "/images/blog/indoor-air-quality.jpg",
     status: "published",
     publishedAt: new Date("2024-10-15"),
     content: `Every October, Indoor Air Quality (IAQ) Awareness Month reminds us that the air inside our buildings can be two to five times more polluted than outdoor air, according to the EPA. For the millions of Americans who spend 90% of their time indoors, this statistic has real health implications—especially in commercial facilities where large numbers of people share the same air.
@@ -622,7 +622,7 @@ These relatively simple changes can make a meaningful difference in the air qual
     author: "Excel Facility Services Group",
     category: "Cleaning",
     tags: "seasonal,cleaning,winter,summer,commercial,maintenance",
-    imageUrl: "/images/blog/floor-care.webp",
+    imageUrl: "/images/blog/seasonal-cleaning-changes.jpg",
     status: "published",
     publishedAt: new Date("2024-09-18"),
     content: `Commercial cleaning is not a one-size-fits-all-year operation. Each season brings distinct challenges that require adjustments to cleaning schedules, product selection, equipment deployment, and staffing levels. Facility managers who anticipate these seasonal shifts can maintain consistent cleanliness and avoid the reactive scrambling that comes from being caught off guard.
@@ -656,7 +656,7 @@ The most effective approach is a cleaning calendar that maps seasonal adjustment
     author: "Excel Facility Services Group",
     category: "Company News",
     tags: "Inc5000,growth,award,EFSG,companynews,recognition",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/inc-5000-ranking.jpg",
     status: "published",
     publishedAt: new Date("2023-08-15"),
     content: `Excel Facility Services Group is proud to announce that it has been named to the 2023 Inc. 5000 list, ranking No. 2126 among America's fastest-growing private companies. This prestigious recognition reflects years of disciplined growth, strong client relationships, and a commitment to operational excellence across our nationwide operations.
@@ -682,7 +682,7 @@ We view this recognition not as a destination but as a milestone on a longer jou
     author: "Excel Facility Services Group",
     category: "Industries",
     tags: "schools,education,studenthealth,cleaning,performance,facilitymanagement",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/clean-school-environment.jpg",
     status: "published",
     publishedAt: new Date("2024-08-20"),
     content: `The condition of a school building is not just a matter of aesthetics—it has a measurable impact on student health, attendance, concentration, and academic performance. Research from organizations like the EPA, the National Center for Education Statistics, and various university studies consistently connects cleaner, healthier school environments with better educational outcomes.
@@ -718,7 +718,7 @@ Investing in professional cleaning for schools is not an expense—it is an inve
     author: "Excel Facility Services Group",
     category: "Business",
     tags: "professionalcleaning,outsourcing,business,ROI,facilityservices,janitorial",
-    imageUrl: "/images/blog/levelup-clean.webp",
+    imageUrl: "/images/blog/professional-cleaning-services.jpg",
     status: "published",
     publishedAt: new Date("2024-07-15"),
     content: `Every business faces a fundamental question about facility cleaning: should we handle it in-house or hire a professional service? While in-house cleaning might seem simpler or cheaper on the surface, a closer look reveals that professional cleaning services deliver superior results, reduce risk, and often cost less when all factors are considered.
@@ -752,7 +752,7 @@ The professional touch is not a luxury—it is a smart business strategy that pa
     author: "Excel Facility Services Group",
     category: "Company News",
     tags: "nationalcleaningweek,appreciation,cleaningprofessionals,EFSG,celebration,janitorial",
-    imageUrl: "/images/blog/levelup-clean.webp",
+    imageUrl: "/images/blog/national-cleaning-week.jpg",
     status: "published",
     publishedAt: new Date("2024-03-25"),
     content: `National Cleaning Week is a time to recognize and celebrate the hardworking professionals who keep our workplaces, schools, hospitals, and public spaces clean, safe, and healthy. At Excel Facility Services Group, we are proud to join in this celebration and honor the dedicated teams who make it all possible.
@@ -782,7 +782,7 @@ Thank you to every cleaning professional—at EFSG and across the country—for 
     author: "Excel Facility Services Group",
     category: "Facility Management",
     tags: "preventivemaintenance,costsavings,facilitymanagement,equipment,budgeting,ROI",
-    imageUrl: "/images/blog/smart-tech.webp",
+    imageUrl: "/images/blog/preventive-maintenance.jpg",
     status: "published",
     publishedAt: new Date("2024-06-10"),
     content: `The old saying "an ounce of prevention is worth a pound of cure" applies perfectly to facility maintenance. Preventive maintenance programs—systematic, scheduled maintenance of building systems and equipment—consistently deliver significant cost savings compared to reactive, break-fix approaches.
@@ -816,7 +816,7 @@ The upfront investment in a preventive maintenance program pays for itself many 
     author: "Excel Facility Services Group",
     category: "Health & Safety",
     tags: "workplacesafety,health,OSHA,cleaning,janitorial,occupationalsafety",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/workplace-safety-health.jpg",
     status: "published",
     publishedAt: new Date("2024-05-15"),
     content: `Workplace safety is a shared responsibility, and professional cleaning services are a critical component of any organization's safety program. Clean facilities are not just more pleasant to work in—they are measurably safer, with fewer injuries, illnesses, and compliance issues.
@@ -850,7 +850,7 @@ Investing in professional cleaning is investing in the safety and health of ever
     author: "Excel Facility Services Group",
     category: "Services",
     tags: "dayporter,janitorial,cleaning,facilityservices,comparison,businessneeds",
-    imageUrl: "/images/blog/levelup-clean.webp",
+    imageUrl: "/images/blog/day-porter-vs-janitorial.jpg",
     status: "published",
     publishedAt: new Date("2024-04-20"),
     content: `When evaluating commercial cleaning options, facility managers often need to decide between day porter services, traditional janitorial services, or a combination of both. Understanding the distinct roles each plays helps ensure that your facility receives the right level of service for its specific needs.
@@ -886,7 +886,7 @@ Your cleaning partner can help you evaluate your specific needs and design a pro
     author: "Excel Facility Services Group",
     category: "Industries",
     tags: "warehouse,safety,cleaning,OSHA,industrial,operations",
-    imageUrl: "/images/blog/floor-care.webp",
+    imageUrl: "/images/blog/warehouse-clean-safe.jpg",
     status: "published",
     publishedAt: new Date("2024-02-15"),
     content: `Warehouses are demanding environments where cleanliness and safety are deeply interconnected. A clean warehouse is a safer warehouse—and a safer warehouse is a more productive, more profitable warehouse. Here are practical strategies for maintaining the kind of clean, well-organized environment that protects workers, satisfies auditors, and supports efficient operations.
@@ -924,7 +924,7 @@ Warehouse cleaning requires specialized knowledge, equipment, and safety awarene
     author: "Excel Facility Services Group",
     category: "Business",
     tags: "outsourcing,cleaning,costsavings,business,facilityservices,efficiency",
-    imageUrl: "/images/blog/levelup-clean.webp",
+    imageUrl: "/images/blog/outsourcing-cleaning.jpg",
     status: "published",
     publishedAt: new Date("2024-01-20"),
     content: `More businesses than ever are choosing to outsource their facility cleaning, and for good reason. The benefits extend far beyond simply having someone else do the work. Here are three significant advantages that make outsourcing a smart strategic decision.
@@ -956,7 +956,7 @@ Outsourcing your cleaning needs is not about giving up control—it is about par
     author: "Excel Facility Services Group",
     category: "Sustainability",
     tags: "GreenSeal,GS42,indoorairquality,certification,greencleaning,health",
-    imageUrl: "/images/blog/green-cleaning.webp",
+    imageUrl: "/images/blog/green-seal-indoor-air.jpg",
     status: "published",
     publishedAt: new Date("2023-11-10"),
     content: `When you hire a cleaning service, you expect your facility to be cleaner and healthier after they leave. But many conventional cleaning products actually introduce harmful chemicals into the indoor environment—volatile organic compounds (VOCs), fragrances, and irritants that degrade air quality and can affect the health of building occupants. Choosing a Green Seal GS-42 certified cleaning service is one of the most effective ways to ensure that your cleaning program improves indoor conditions rather than compromising them.
