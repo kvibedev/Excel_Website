@@ -318,7 +318,7 @@ export default function CarpetExtraction() {
                 We understand the importance of prompt responses and timely answers to your needs and questions. Our dedicated team works tirelessly behind the scenes to ensure that your carpet extraction services are <strong>consistent and delivered on time</strong>.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-                We offer flexible scheduling options to accommodate your operational hours, ensuring that our extraction services align with your business needs. Our trained staff uses state-of-the-art equipment and <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-eco">eco-friendly products</Link> to deliver effective cleaning solutions without disrupting your daily operations.
+                We offer flexible scheduling options to accommodate your operational hours, ensuring that our extraction services align with your business needs. Our trained staff uses state-of-the-art equipment and <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-eco">eco-friendly products</Link> to deliver effective cleaning solutions without disrupting your daily operations.
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
                 <Link href="/contact" data-testid="link-contact-us">

@@ -123,7 +123,7 @@ export default function OurTeam() {
       <SEO
         title="Our Team"
         description="Meet the leadership team behind Excel Facility Services Group — dedicated professionals with decades of facility management experience."
-        path="/about/our-team"
+        path="/about-us/team"
         image={alvinImage}
         keywords="Excel Facility Services team, leadership, facility management professionals"
       />

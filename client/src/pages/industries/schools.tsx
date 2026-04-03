@@ -121,12 +121,12 @@ export default function Schools() {
                 Schools rely on cleanliness, consistency, and safe learning environments to support students, staff, and daily operations. In educational facilities, cleaning programs need to help maintain classrooms, restrooms, cafeterias, entryways, and shared spaces in a way that supports both learning and day-to-day campus activity.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-services">Excel Facility Services Group</Link> provides commercial cleaning and facility services for schools, private campuses, educational centers, and other learning environments that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with student traffic, building schedules, and operational demands.
+                <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-services">Excel Facility Services Group</Link> provides commercial cleaning and facility services for schools, private campuses, educational centers, and other learning environments that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with student traffic, building schedules, and operational demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 With more than 20 years of operational experience and multi-site capability, Excel helps schools maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across educational spaces.
               </p>
-              <Link href="/about" data-testid="link-learn-more">
+              <Link href="/about-us" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />

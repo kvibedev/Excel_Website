@@ -45,6 +45,7 @@ import Schools from "@/pages/industries/schools";
 import AutoDealerships from "@/pages/industries/auto-dealerships";
 
 import BlogPostDetail from "@/pages/resources/BlogPostDetail";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
@@ -70,11 +71,11 @@ function MainRouter() {
       <ScrollToTop />
       <Switch>
         <Route path="/" component={HomeOriginal} />
-        <Route path="/about" component={AboutLanding} />
-        <Route path="/about/our-team" component={OurTeam} />
-        <Route path="/about/coverage-areas" component={CoverageAreas} />
-        <Route path="/about/recognitions-certifications" component={RecognitionsCertifications} />
-        <Route path="/about/green-seal" component={GreenSeal} />
+        <Route path="/about-us" component={AboutLanding} />
+        <Route path="/about-us/team" component={OurTeam} />
+        <Route path="/about-us/coverage-areas" component={CoverageAreas} />
+        <Route path="/about-us/recognitions-and-certifications" component={RecognitionsCertifications} />
+        <Route path="/about-us/green-seal" component={GreenSeal} />
         <Route path="/services" component={Services} />
         <Route path="/industries" component={Industries} />
         <Route path="/contact" component={Contact} />
@@ -103,6 +104,7 @@ function MainRouter() {
         <Route path="/industries/schools" component={Schools} />
         <Route path="/industries/auto-dealerships" component={AutoDealerships} />
         
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/resources/:slug" component={BlogPostDetail} />
         
         <Route component={NotFound} />

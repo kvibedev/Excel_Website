@@ -20,28 +20,28 @@ export default function AboutLanding() {
       icon: MapPin,
       title: "Coverage Areas",
       description: "Regional scale with the ability to support multi-site operations across 28 states.",
-      link: "/about/coverage-areas",
+      link: "/about-us/coverage-areas",
       badge: "20+ States"
     },
     {
       icon: Award,
       title: "Recognitions & Certifications",
       description: "Industry credentials and recognized standards that reinforce trust, compliance, and service credibility.",
-      link: "/about/recognitions-certifications",
+      link: "/about-us/recognitions-and-certifications",
       badge: "Industry Leader"
     },
     {
       icon: Leaf,
       title: "Green Seal Certified",
       description: "Environmentally responsible cleaning practices that support healthier workplaces and more sustainable operations.",
-      link: "/about/green-seal",
+      link: "/about-us/green-seal",
       badge: "GS-42 Certified"
     },
     {
       icon: Users,
       title: "Our Team",
       description: "The people behind the service — from leadership and oversight to field execution and quality control.",
-      link: "/about/our-team",
+      link: "/about-us/team",
       badge: "Expert Team"
     }
   ];
@@ -74,7 +74,7 @@ export default function AboutLanding() {
       <SEO
         title="About Us"
         description="Learn about Excel Facility Services Group — 20+ years of commercial cleaning excellence across 20+ states. Our mission, values, and commitment to healthier workplaces."
-        path="/about"
+        path="/about-us"
         image={heroImage}
         keywords="about Excel Facility Services, commercial cleaning company, facility management, company history"
       />

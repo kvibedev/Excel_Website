@@ -253,7 +253,7 @@ export default function HomeTemplate3() {
               <p className="text-lg text-muted-foreground mb-6">
                 From single-location businesses to complex multi-state operations, we bring 20+ years of facility management excellence, proven systems, and technology-enabled transparency that transforms facilities from cost centers into strategic assets.
               </p>
-              <Link href="/about">
+              <Link href="/about-us">
                 <Button size="lg" data-testid="button-learn-more">
                   Learn More <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

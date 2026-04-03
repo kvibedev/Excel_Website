@@ -35,17 +35,17 @@ export default function Home() {
     {
       icon: Award,
       title: "Customer satisfaction guarantee",
-      href: "/about",
+      href: "/about-us",
     },
     {
       icon: GraduationCap,
       title: "Management and employee training",
-      href: "/about",
+      href: "/about-us",
     },
     {
       icon: Cpu,
       title: "Innovative technology and understanding of building needs",
-      href: "/about",
+      href: "/about-us",
     },
     {
       icon: Heart,
@@ -136,7 +136,7 @@ export default function Home() {
         subtitle="With more than 20 years of excellence managing 400 million square feet daily, Excel Facility Services Group delivers enterprise-scale commercial cleaning solutions with the agility and accountability that national providers cannot match."
         imageSrc={heroImage}
         primaryCta={{ text: "REQUEST PROPOSAL", href: "/contact" }}
-        secondaryCta={{ text: "LEARN MORE", href: "/about" }}
+        secondaryCta={{ text: "LEARN MORE", href: "/about-us" }}
       />
 
       {/* Enterprise Stats Bar */}
@@ -227,7 +227,7 @@ export default function Home() {
                 that nationals cannot match. We transform facilities from cost centers into strategic assets through 
                 operational excellence and data-driven insights.
               </p>
-              <Link href="/about">
+              <Link href="/about-us">
                 <Button size="lg" data-testid="button-about-us">
                   ABOUT US
                 </Button>
@@ -337,7 +337,7 @@ export default function Home() {
                 Request Enterprise Proposal
               </Button>
             </Link>
-            <Link href="/about">
+            <Link href="/about-us">
               <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10" data-testid="button-cta-learn-more">
                 Learn More About EFSG
               </Button>

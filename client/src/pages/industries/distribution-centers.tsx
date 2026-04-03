@@ -122,12 +122,12 @@ export default function DistributionCenters() {
                 Distribution centers rely on cleanliness, consistency, and operational readiness to support productivity, safety, and workflow across the facility. In high-traffic industrial environments, cleaning programs need to help maintain aisles, loading areas, shared spaces, equipment zones, and employee areas without disrupting daily operations.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for distribution centers that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with warehouse traffic, shift schedules, and day-to-day operational demands.
+                <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for distribution centers that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with warehouse traffic, shift schedules, and day-to-day operational demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 With more than 20 years of operational experience and multi-site capability, Excel helps distribution centers maintain cleaner, safer, and more efficient environments through dependable service delivery, responsive communication, and standards built for consistency across operational and employee-facing spaces.
               </p>
-              <Link href="/about" data-testid="link-learn-more">
+              <Link href="/about-us" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />

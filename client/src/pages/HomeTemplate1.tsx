@@ -217,7 +217,7 @@ export default function HomeTemplate1() {
                   <p className="text-muted-foreground">Green Seal GS-42 Environmental Excellence</p>
                 </div>
               </div>
-              <Link href="/about">
+              <Link href="/about-us">
                 <Button size="lg" data-testid="button-learn-more-about">
                   LEARN MORE ABOUT US
                 </Button>

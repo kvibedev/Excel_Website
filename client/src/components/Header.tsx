@@ -47,10 +47,10 @@ export default function Header() {
   ];
 
   const aboutLinks = [
-    { href: "/about/our-team", label: "Our Team" },
-    { href: "/about/coverage-areas", label: "Coverage Areas" },
-    { href: "/about/recognitions-certifications", label: "Recognitions & Certifications" },
-    { href: "/about/green-seal", label: "Green Seal" },
+    { href: "/about-us/team", label: "Our Team" },
+    { href: "/about-us/coverage-areas", label: "Coverage Areas" },
+    { href: "/about-us/recognitions-and-certifications", label: "Recognitions & Certifications" },
+    { href: "/about-us/green-seal", label: "Green Seal" },
   ];
 
   return (
@@ -152,11 +152,11 @@ export default function Header() {
                   <NavigationMenuTrigger 
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      location.startsWith("/about") ? "bg-secondary text-secondary-foreground" : ""
+                      location.startsWith("/about-us") ? "bg-secondary text-secondary-foreground" : ""
                     )}
                     onClick={(e) => {
                       if (!e.defaultPrevented) {
-                        setLocation('/about');
+                        setLocation('/about-us');
                       }
                     }}
                     data-testid="dropdown-about"
@@ -323,7 +323,7 @@ export default function Header() {
 
               <div>
                 <Button
-                  variant={location.startsWith("/about") ? "secondary" : "ghost"}
+                  variant={location.startsWith("/about-us") ? "secondary" : "ghost"}
                   className="w-full justify-between"
                   onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
                   data-testid="button-mobile-about"

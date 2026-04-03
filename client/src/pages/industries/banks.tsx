@@ -122,12 +122,12 @@ export default function Banks() {
                 Banks depend on cleanliness, presentation, and consistency to support customer confidence and reinforce trust. In financial environments, facility services need to help maintain a clean, welcoming experience across lobbies, teller lines, offices, restrooms, waiting areas, and other shared spaces.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">Excel Facility Services Group</Link> provides commercial cleaning and facility services for banks, branches, and financial institutions that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with customer traffic, employee workflows, and day-to-day branch operations.
+                <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-team">Excel Facility Services Group</Link> provides commercial cleaning and facility services for banks, branches, and financial institutions that need dependable <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-disinfection">disinfection services</Link>, <Link href="/services/floor-care" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-floor-care">floor care</Link>, and structured cleaning programs aligned with customer traffic, employee workflows, and day-to-day branch operations.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 With more than 20 years of operational experience and multi-site capability, Excel helps banks maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across customer-facing and operational spaces.
               </p>
-              <Link href="/about" data-testid="link-learn-more">
+              <Link href="/about-us" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />

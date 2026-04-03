@@ -178,7 +178,7 @@ export default function Covid19Cleaning() {
                 Our team of experienced and certified professionals uses the latest equipment and techniques to disinfect your workplace from top to bottom. We understand the critical importance of maintaining a hygienic environment in today's world.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
-                At <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-efsg">EFSG</Link>, we are committed to providing thorough disinfection services that give you peace of mind and help protect your employees and customers from harmful pathogens.
+                At <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-efsg">EFSG</Link>, we are committed to providing thorough disinfection services that give you peace of mind and help protect your employees and customers from harmful pathogens.
               </p>
               <Link href="/contact" data-testid="link-get-started">
                 <Button size="lg" data-testid="button-get-started">
@@ -331,7 +331,7 @@ export default function Covid19Cleaning() {
                 We understand the importance of prompt responses during these critical times. Our dedicated team works tirelessly to ensure that your COVID-19 cleaning services are <strong>consistent and delivered on time</strong>, minimizing disruption to your operations.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-                EFSG can help create a safe and healthy workplace for everyone by taking these extra steps. Our trained staff follows <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-cdc">CDC guidelines</Link> and uses state-of-the-art equipment to deliver effective disinfection solutions.
+                EFSG can help create a safe and healthy workplace for everyone by taking these extra steps. Our trained staff follows <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-cdc">CDC guidelines</Link> and uses state-of-the-art equipment to deliver effective disinfection solutions.
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
                 <Link href="/contact" data-testid="link-contact-us">

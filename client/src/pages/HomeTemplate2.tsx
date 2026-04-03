@@ -347,7 +347,7 @@ export default function HomeTemplate2() {
                 Our technology-enabled approach provides real-time transparency and data-driven insights 
                 that transform facilities from cost centers into strategic assets.
               </p>
-              <Link href="/about">
+              <Link href="/about-us">
                 <Button size="lg" data-testid="button-learn-more">
                   LEARN MORE
                   <ArrowRight className="ml-2 h-4 w-4" />

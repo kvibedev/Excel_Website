@@ -53,6 +53,69 @@ function requireAtLeast(minRole: AdminRole) {
 export async function registerRoutes(app: Express): Promise<Server> {
   app.set("trust proxy", 1);
 
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.path !== "/" && req.path.endsWith("/") && !req.path.startsWith("/api")) {
+      const newPath = req.path.slice(0, -1);
+      const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
+      return res.redirect(301, newPath + query);
+    }
+    next();
+  });
+
+  const oldBlogSlugs = [
+    "non-toxic-cleaning-transforms-facilities",
+    "sustainable-floor-care-transforming-facilities",
+    "green-cleaning-transforming-facility-management",
+    "smart-technology-revolutionizes-facility-security",
+    "smart-iot-driving-facility-management",
+    "unlocking-ai-power-in-facility-maintenance",
+    "developing-cleaning-plans-for-diverse-industrial-facilities",
+    "regular-office-cleaning-enhances-employee-productivity",
+    "the-importance-of-janitorial-services-for-distribution-centers",
+    "celebrating-world-facilities-management-day-with-excel-facility-services-group",
+    "empowering-a-sustainable-future-excel-facility-services-groups-commitment-to-green-cleaning",
+    "reinvigorating-spaces-and-minds-the-power-of-spring-cleaning-for-commercial-spaces",
+    "understanding-the-crucial-difference-between-cleaning-and-disinfecting",
+    "breathe-easy-and-stay-safe-indoor-air-quality-awareness-month",
+    "the-impact-of-seasonal-changes-on-commercial-cleaning",
+    "excel-facility-services-group-ranks-no-2126-on-the-2023-inc-5000",
+    "the-impact-of-a-clean-school-environment-on-student-performance",
+    "the-professional-touch-why-hiring-professional-cleaning-services-is-a-smart-business-move",
+    "celebrate-national-cleaning-week-with-excel-facility-services-group",
+    "how-a-preventive-maintenance-program-can-save-you-money",
+    "workplace-safety-and-health-the-role-of-professional-cleaning-services",
+    "choosing-between-day-porter-and-janitorial-services-what-does-your-business-need",
+    "how-to-ensure-that-your-warehouse-is-clean-and-safe",
+    "3-significant-benefits-of-outsourcing-your-cleaning-needs",
+    "a-green-seal-certified-cleaning-service-means-safer-indoor-air",
+  ];
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const slug = req.path.replace(/^\//, "").replace(/\/$/, "");
+    if (oldBlogSlugs.includes(slug)) {
+      const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
+      return res.redirect(301, `/resources/${slug}${query}`);
+    }
+    next();
+  });
+
+  const oldRouteRedirects: Record<string, string> = {
+    "/about": "/about-us",
+    "/about/our-team": "/about-us/team",
+    "/about/recognitions-certifications": "/about-us/recognitions-and-certifications",
+    "/about/coverage-areas": "/about-us/coverage-areas",
+    "/about/green-seal": "/about-us/green-seal",
+  };
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const target = oldRouteRedirects[req.path];
+    if (target) {
+      const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
+      return res.redirect(301, target + query);
+    }
+    next();
+  });
+
   app.use(
     session({
       secret: process.env.SESSION_SECRET || "crm-secret-key-change-in-production",

@@ -49,7 +49,7 @@ export default function RecognitionsCertifications() {
       <SEO
         title="Recognitions & Certifications"
         description="View Excel Facility Services Group certifications, memberships, and industry recognitions including Green Seal GS-42 and MBE certification."
-        path="/about/recognitions-certifications"
+        path="/about-us/recognitions-and-certifications"
         image={heroImage}
         keywords="cleaning certifications, Green Seal GS-42, MBE certification, ISSA, facility services accreditation"
       />
@@ -172,7 +172,7 @@ export default function RecognitionsCertifications() {
                 REQUEST PROPOSAL
               </Button>
             </Link>
-            <Link href="/about">
+            <Link href="/about-us">
               <Button 
                 size="lg"
                 variant="outline"

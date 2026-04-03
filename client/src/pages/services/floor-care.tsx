@@ -322,7 +322,7 @@ export default function FloorCare() {
                 We understand that different floors require different care approaches. Whether you have hardwood, tile, concrete, or vinyl flooring, our team has the expertise to <strong>maintain and restore</strong> your floors to their optimal condition.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-                We offer flexible scheduling options to accommodate your operational hours, ensuring that our floor care services don't disrupt your daily operations. Our trained staff uses <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-eco">eco-friendly products</Link> to deliver effective cleaning solutions.
+                We offer flexible scheduling options to accommodate your operational hours, ensuring that our floor care services don't disrupt your daily operations. Our trained staff uses <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-eco">eco-friendly products</Link> to deliver effective cleaning solutions.
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
                 <Link href="/contact" data-testid="link-contact-us">

@@ -40,7 +40,7 @@ export default function CoverageAreas() {
       <SEO
         title="Coverage Areas"
         description="Excel Facility Services Group serves clients across 20+ states. View our nationwide coverage areas."
-        path="/about/coverage-areas"
+        path="/about-us/coverage-areas"
         image={usaMapImage}
         keywords="coverage areas, service locations, nationwide cleaning, multi-state facility services"
       />

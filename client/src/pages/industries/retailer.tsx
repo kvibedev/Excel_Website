@@ -122,12 +122,12 @@ export default function Retailer() {
                 Retail stores depend on cleanliness, presentation, and consistency to support customer confidence and protect brand perception. In customer-facing environments, facility service needs to help maintain a clean, welcoming experience across entrances, sales floors, fitting rooms, restrooms, and common areas.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-about-2">
-                <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for retail stores that need <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, day porter services, disinfection, floor care, and service programs aligned with customer traffic, operating hours, and day-to-day store demands.
+                <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-about">Excel Facility Services Group</Link> provides commercial cleaning and facility services for retail stores that need <Link href="/services/janitorial" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial">janitorial support</Link>, day porter services, disinfection, floor care, and service programs aligned with customer traffic, operating hours, and day-to-day store demands.
               </p>
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 With more than 20 years of operational experience and multi-site capability, Excel helps retail stores maintain cleaner, safer, and more professional environments through dependable service delivery, responsive communication, and standards built for consistency across customer-facing and operational spaces.
               </p>
-              <Link href="/about" data-testid="link-learn-more">
+              <Link href="/about-us" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -226,7 +226,7 @@ export default function Retailer() {
               Built Around the Realities of Retail Operations
             </h2>
             <p className="text-lg text-muted-foreground" data-testid="text-tailored-1">
-              Retail stores depend on cleanliness, presentation, and consistency to support customer confidence and protect brand perception. <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial-2">Excel Facility Services Group</Link> provides cleaning and facility services designed to help maintain cleaner entrances, sales floors, fitting rooms, restrooms, and other high-traffic spaces throughout the store.
+              Retail stores depend on cleanliness, presentation, and consistency to support customer confidence and protect brand perception. <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-janitorial-2">Excel Facility Services Group</Link> provides cleaning and facility services designed to help maintain cleaner entrances, sales floors, fitting rooms, restrooms, and other high-traffic spaces throughout the store.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">

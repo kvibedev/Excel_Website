@@ -315,7 +315,7 @@ export default function Disinfection() {
                 We focus on high-touch areas such as doorknobs, light switches, and communal spaces, utilizing <strong>CDC-approved disinfectants</strong> to effectively eliminate viruses and bacteria.
               </p>
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
-                Our dedication to ensuring a germ-free environment fosters employee confidence and enhances productivity. Let Excel Facility Services Group be your trusted partner in creating a <Link href="/about" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-safe">safe, healthy, and welcoming environment</Link>.
+                Our dedication to ensuring a germ-free environment fosters employee confidence and enhances productivity. Let Excel Facility Services Group be your trusted partner in creating a <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-safe">safe, healthy, and welcoming environment</Link>.
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
                 <Link href="/contact" data-testid="link-contact-us">

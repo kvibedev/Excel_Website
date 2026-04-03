@@ -28,7 +28,14 @@ A user schema is defined with username/password fields, and session management i
 
 ### Routing & Navigation
 
-Frontend routes include `/`, `/about`, `/services`, `/industries`, `/contact`, `/resources`, and dynamic routes for individual services, industries, about subpages, and blog posts (`/resources/:slug`). A 404 handler is in place. API routes are prefixed with `/api/*`, with specific endpoints for dynamic blog content (`/api/blog` and `/api/blog/:slug`) and admin blog management (`/api/admin/blog`).
+Frontend routes include `/`, `/about-us`, `/services`, `/industries`, `/contact`, `/resources`, `/privacy-policy`, and dynamic routes for individual services, industries, about subpages (`/about-us/team`, `/about-us/coverage-areas`, `/about-us/recognitions-and-certifications`, `/about-us/green-seal`), and blog posts (`/resources/:slug`). A 404 handler is in place. API routes are prefixed with `/api/*`, with specific endpoints for dynamic blog content (`/api/blog` and `/api/blog/:slug`) and admin blog management (`/api/admin/blog`).
+
+### URL Redirects & SEO Continuity
+
+Server-side 301 redirects are configured for URL continuity during migration from WordPress (efsgnj.com):
+- **Trailing slash removal**: All non-root paths with trailing slashes redirect to the clean path (e.g., `/about-us/` → `/about-us`)
+- **Old about routes**: `/about` → `/about-us`, `/about/our-team` → `/about-us/team`, `/about/recognitions-certifications` → `/about-us/recognitions-and-certifications`, etc.
+- **Old blog slug redirects**: 25 root-level blog slugs (e.g., `/non-toxic-cleaning-transforms-facilities`) redirect to `/resources/{slug}`
 
 ## External Dependencies
 

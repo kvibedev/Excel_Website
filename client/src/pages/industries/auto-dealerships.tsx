@@ -126,7 +126,7 @@ export default function AutoDealerships() {
               <p className="text-lg text-muted-foreground mb-8" data-testid="text-about-3">
                 With more than 20 years of operational experience and multi-site capability, Excel supports auto dealerships with facility services designed to protect presentation, reinforce consistency, and maintain cleaner, safer environments across the property.
               </p>
-              <Link href="/about" data-testid="link-learn-more">
+              <Link href="/about-us" data-testid="link-learn-more">
                 <Button data-testid="button-learn-more">
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />
