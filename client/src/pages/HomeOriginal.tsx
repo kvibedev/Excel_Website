@@ -24,7 +24,7 @@ import heroImage from "@assets/greensealimg1_1764255375424.webp";
 import heroImage2 from "@assets/Hero_building_image1_1774628077282.webp";
 import heroImage3 from "@assets/Hero_building_image2_1774628077283.webp";
 import shccnjLogo from "@assets/shccnj_1774369098854.webp";
-
+import cimsLogo from "@assets/CIMS-Logo-with-Tagline-RGB-Full-Color_1775838775336.webp";
 import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
 import nmsdcLogo from "@assets/nmsdc_1774369212031.webp";
 import mbeLogo from "@assets/mbe_1774369297755.webp";
@@ -51,7 +51,7 @@ import autoImage from "@assets/generated_images/Auto_dealership_industry_image_7
 
 const certLogos = [
   { name: "SHCCNJ", logo: shccnjLogo },
-
+  { name: "ISSA CIMS", logo: cimsLogo },
   { name: "Port Authority NY/NJ", logo: portAuthorityLogo },
   { name: "NMSDC", logo: nmsdcLogo },
   { name: "MBE", logo: mbeLogo },

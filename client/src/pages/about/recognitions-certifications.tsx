@@ -6,7 +6,7 @@ import { Link } from "wouter";
 import { Award, Shield, CheckCircle2, Laptop } from "lucide-react";
 import heroImage from "@assets/Professional_magazine-quality_8K_photorealistic_co-17750065984_1775006632029.png";
 import shccnjLogo from "@assets/shccnj_1774369098854.webp";
-import sbeLogo from "@assets/sbe_1774369212032.webp";
+import cimsLogo from "@assets/CIMS-Logo-with-Tagline-RGB-Full-Color_1775838775336.webp";
 import portAuthorityLogo from "@assets/portauthority_1774369212031.webp";
 import nmsdcLogo from "@assets/nmsdc_1774369212031.webp";
 import mbeLogo from "@assets/mbe_1774369297755.webp";
@@ -24,7 +24,7 @@ import fmPilotLogo from "@assets/fmpilot_1774369430852.webp";
 export default function RecognitionsCertifications() {
   const certifications = [
     { name: "SHCCNJ", description: "State of NJ Hispanic Chamber of Commerce", logo: shccnjLogo },
-    { name: "SBE", description: "Small Business Enterprise", logo: sbeLogo },
+    { name: "ISSA CIMS", description: "Cleaning Industry Management Standard", logo: cimsLogo },
     { name: "Port Authority NY/NJ", description: "Port Authority Certified", logo: portAuthorityLogo },
     { name: "NMSDC", description: "National Minority Supplier Development Council", logo: nmsdcLogo },
     { name: "MBE", description: "Minority Business Enterprise", logo: mbeLogo },
