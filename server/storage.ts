@@ -6,7 +6,8 @@ import {
   type ContactNote, type InsertContactNote,
   type AdminUser, type InsertAdminUser,
   type BlogPost, type InsertBlogPost,
-  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts
+  type FormEmailSetting, type InsertFormEmailSetting,
+  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -53,6 +54,12 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: number): Promise<void>;
+
+  getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
+  getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
+  createFormEmailSetting(setting: InsertFormEmailSetting): Promise<FormEmailSetting>;
+  updateFormEmailSetting(id: number, data: Partial<InsertFormEmailSetting>): Promise<FormEmailSetting | undefined>;
+  deleteFormEmailSetting(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -250,6 +257,34 @@ export class DatabaseStorage implements IStorage {
 
   async deleteBlogPost(id: number): Promise<void> {
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
+  }
+
+  async getFormEmailSettings(formType: string): Promise<FormEmailSetting[]> {
+    return db.select().from(formEmailSettings)
+      .where(eq(formEmailSettings.formType, formType))
+      .orderBy(desc(formEmailSettings.createdAt));
+  }
+
+  async getAllFormEmailSettings(): Promise<FormEmailSetting[]> {
+    return db.select().from(formEmailSettings).orderBy(formEmailSettings.formType, desc(formEmailSettings.createdAt));
+  }
+
+  async createFormEmailSetting(setting: InsertFormEmailSetting): Promise<FormEmailSetting> {
+    const [created] = await db.insert(formEmailSettings).values(setting).returning();
+    return created;
+  }
+
+  async updateFormEmailSetting(id: number, data: Partial<InsertFormEmailSetting>): Promise<FormEmailSetting | undefined> {
+    const [updated] = await db
+      .update(formEmailSettings)
+      .set(data)
+      .where(eq(formEmailSettings.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteFormEmailSetting(id: number): Promise<void> {
+    await db.delete(formEmailSettings).where(eq(formEmailSettings.id, id));
   }
 }
 

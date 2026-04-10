@@ -37,6 +37,15 @@ Server-side 301 redirects are configured for URL continuity during migration fro
 - **Old about routes**: `/about` → `/about-us`, `/about/our-team` → `/about-us/team`, `/about/recognitions-certifications` → `/about-us/recognitions-and-certifications`, etc.
 - **Old blog slug redirects**: 25 root-level blog slugs (e.g., `/non-toxic-cleaning-transforms-facilities`) redirect to `/resources/{slug}`
 
+### Email Notifications
+
+SendGrid Web API is used to send email notifications when forms are submitted. Configuration is managed via the admin dashboard at `/admin/settings`:
+- **Form Email Settings**: Admin can add/remove/toggle email recipients per form type (Contact, Vendor)
+- **Recipient types**: "To" (primary) and "CC" for each form
+- **SendGrid**: Uses `@sendgrid/mail` package, API key stored in `SENDGRID_API_KEY` env secret
+- **From address**: `info@efsgnj.com`
+- **Schema**: `formEmailSettings` table stores recipient configs
+
 ## External Dependencies
 
 ### Core Framework Dependencies

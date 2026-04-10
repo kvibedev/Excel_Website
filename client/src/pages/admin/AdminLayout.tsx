@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { ROLE_LABELS, type AdminRole } from "@shared/schema";
 import { useAdminAuth, canAccess } from "./adminAuth";
@@ -9,7 +9,7 @@ import { useAdminAuth, canAccess } from "./adminAuth";
 interface AdminLayoutProps {
   children: React.ReactNode;
   title: string;
-  activeNav?: "dashboard" | "contacts" | "vendors" | "blog" | "users";
+  activeNav?: "dashboard" | "contacts" | "vendors" | "blog" | "users" | "settings";
 }
 
 export default function AdminLayout({ children, title, activeNav }: AdminLayoutProps) {
@@ -96,15 +96,27 @@ export default function AdminLayout({ children, title, activeNav }: AdminLayoutP
             </Button>
           </Link>
           {showUsers && (
-            <Link href="/admin/users">
-              <Button
-                variant="ghost"
-                className={activeNav === "users" ? "text-[#063970]" : ""}
-                data-testid="link-users"
-              >
-                Users
-              </Button>
-            </Link>
+            <>
+              <Link href="/admin/users">
+                <Button
+                  variant="ghost"
+                  className={activeNav === "users" ? "text-[#063970]" : ""}
+                  data-testid="link-users"
+                >
+                  Users
+                </Button>
+              </Link>
+              <Link href="/admin/settings">
+                <Button
+                  variant="ghost"
+                  className={activeNav === "settings" ? "text-[#063970]" : ""}
+                  data-testid="link-settings"
+                >
+                  <Settings className="w-4 h-4 mr-2" />
+                  Settings
+                </Button>
+              </Link>
+            </>
           )}
         </div>
       </nav>

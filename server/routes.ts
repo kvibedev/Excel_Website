@@ -6,8 +6,9 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { storage } from "./storage";
-import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
+import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
 import { z } from "zod";
+import { sendContactFormEmail } from "./email";
 
 declare module "express-session" {
   interface SessionData {
@@ -388,6 +389,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const parsed = insertContactSchema.parse(req.body);
       const contact = await storage.createContact(parsed);
+      sendContactFormEmail(contact).catch(err => {
+        console.error("Background email send failed:", err);
+      });
       res.json(contact);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -828,6 +832,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(post);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
+  // ── Admin form email settings ──────────────────────────────────────────────
+
+  app.get("/api/admin/form-email-settings", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const settings = await storage.getAllFormEmailSettings();
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch form email settings" });
+    }
+  });
+
+  app.post("/api/admin/form-email-settings", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const parsed = insertFormEmailSettingSchema.parse(req.body);
+      const setting = await storage.createFormEmailSetting(parsed);
+      res.json(setting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create form email setting" });
+    }
+  });
+
+  app.patch("/api/admin/form-email-settings/:id", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updated = await storage.updateFormEmailSetting(id, req.body);
+      if (!updated) return res.status(404).json({ error: "Setting not found" });
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update form email setting" });
+    }
+  });
+
+  app.delete("/api/admin/form-email-settings/:id", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteFormEmailSetting(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete form email setting" });
     }
   });
 

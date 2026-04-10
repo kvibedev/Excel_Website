@@ -172,3 +172,29 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type BlogPost = typeof blogPosts.$inferSelect;
+
+export const FORM_TYPES = ["contact", "vendor"] as const;
+export type FormType = (typeof FORM_TYPES)[number];
+
+export const FORM_TYPE_LABELS: Record<FormType, string> = {
+  contact: "Contact Form",
+  vendor: "Vendor Registration",
+};
+
+export const formEmailSettings = pgTable("form_email_settings", {
+  id: serial("id").primaryKey(),
+  formType: text("form_type").notNull(),
+  recipientEmail: text("recipient_email").notNull(),
+  recipientName: text("recipient_name"),
+  ccType: text("cc_type").notNull().default("to"),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertFormEmailSettingSchema = createInsertSchema(formEmailSettings).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertFormEmailSetting = z.infer<typeof insertFormEmailSettingSchema>;
+export type FormEmailSetting = typeof formEmailSettings.$inferSelect;
