@@ -21,6 +21,7 @@ import OurTeam from "@/pages/about/OurTeam";
 import CoverageAreas from "@/pages/about/coverage-areas";
 import RecognitionsCertifications from "@/pages/about/recognitions-certifications";
 import GreenSeal from "@/pages/about/green-seal";
+import CIMS from "@/pages/about/cims";
 
 import Janitorial from "@/pages/services/janitorial";
 import DayPorters from "@/pages/services/day-porters";
@@ -77,6 +78,7 @@ function MainRouter() {
         <Route path="/about-us/coverage-areas" component={CoverageAreas} />
         <Route path="/about-us/recognitions-and-certifications" component={RecognitionsCertifications} />
         <Route path="/about-us/green-seal" component={GreenSeal} />
+        <Route path="/about-us/cims" component={CIMS} />
         <Route path="/services" component={Services} />
         <Route path="/industries" component={Industries} />
         <Route path="/contact" component={Contact} />

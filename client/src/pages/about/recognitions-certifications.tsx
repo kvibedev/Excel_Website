@@ -24,13 +24,13 @@ import fmPilotLogo from "@assets/fmpilot_1774369430852.webp";
 export default function RecognitionsCertifications() {
   const certifications = [
     { name: "SHCCNJ", description: "State of NJ Hispanic Chamber of Commerce", logo: shccnjLogo },
-    { name: "ISSA CIMS", description: "Cleaning Industry Management Standard", logo: cimsLogo },
+    { name: "ISSA CIMS", description: "Cleaning Industry Management Standard", logo: cimsLogo, link: "/about-us/cims" },
     { name: "Port Authority NY/NJ", description: "Port Authority Certified", logo: portAuthorityLogo },
     { name: "NMSDC", description: "National Minority Supplier Development Council", logo: nmsdcLogo },
     { name: "MBE", description: "Minority Business Enterprise", logo: mbeLogo },
     { name: "ISSA", description: "International Sanitary Supply Association", logo: issaLogo },
     { name: "IFMA", description: "International Facility Management Association", logo: ifmaLogo },
-    { name: "Green Seal GS-42", description: "Environmental Certification", logo: greenSealLogo },
+    { name: "Green Seal GS-42", description: "Environmental Certification", logo: greenSealLogo, link: "/about-us/green-seal" },
     { name: "Connex", description: "Business Network Member", logo: connexLogo },
     { name: "Inc. 5000", description: "Fastest Growing Companies", logo: inc5000Logo },
     { name: "Avetta", description: "Supply Chain Risk Management", logo: avettaLogo },
@@ -100,22 +100,32 @@ export default function RecognitionsCertifications() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-10 max-w-5xl mx-auto items-center justify-items-center">
-            {certifications.map((cert, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-center"
-                data-testid={`cert-${cert.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-              >
-                {cert.logo ? (
-                  <img src={cert.logo} alt={cert.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
-                ) : (
-                  <div className="flex flex-col items-center gap-2">
-                    <Shield className="w-10 h-10 text-[#97CC06]" />
-                    <span className="text-sm font-semibold text-center">{cert.name}</span>
-                  </div>
-                )}
-              </div>
-            ))}
+            {certifications.map((cert, index) => {
+              const logoContent = cert.logo ? (
+                <img src={cert.logo} alt={cert.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
+              ) : (
+                <div className="flex flex-col items-center gap-2">
+                  <Shield className="w-10 h-10 text-[#97CC06]" />
+                  <span className="text-sm font-semibold text-center">{cert.name}</span>
+                </div>
+              );
+
+              return (
+                <div
+                  key={index}
+                  className="flex items-center justify-center"
+                  data-testid={`cert-${cert.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                >
+                  {"link" in cert && cert.link ? (
+                    <Link href={cert.link} className="hover:opacity-80 transition-opacity">
+                      {logoContent}
+                    </Link>
+                  ) : (
+                    logoContent
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

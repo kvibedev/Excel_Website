@@ -51,6 +51,7 @@ export default function Header() {
     { href: "/about-us/coverage-areas", label: "Coverage Areas" },
     { href: "/about-us/recognitions-and-certifications", label: "Recognitions & Certifications" },
     { href: "/about-us/green-seal", label: "Green Seal" },
+    { href: "/about-us/cims", label: "CIMS" },
   ];
 
   return (

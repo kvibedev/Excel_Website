@@ -7,6 +7,7 @@ import {
   MapPin,
   Award,
   Leaf,
+  ShieldCheck,
   Users,
   Building2,
   Shield,
@@ -36,6 +37,13 @@ export default function AboutLanding() {
       description: "Environmentally responsible cleaning practices that support healthier workplaces and more sustainable operations.",
       link: "/about-us/green-seal",
       badge: "GS-42 Certified"
+    },
+    {
+      icon: ShieldCheck,
+      title: "CIMS Certified",
+      description: "ISSA CIMS certification verifies our commitment to quality management systems, operational efficiency, and industry best practices.",
+      link: "/about-us/cims",
+      badge: "ISSA Certified"
     },
     {
       icon: Users,

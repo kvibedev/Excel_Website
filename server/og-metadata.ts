@@ -18,6 +18,7 @@ const routeMetadata: Record<string, PageMeta> = {
   "/about-us/coverage-areas": { title: "Coverage Areas", description: "Excel Facility Services Group serves clients across 20+ states." },
   "/about-us/recognitions-and-certifications": { title: "Recognitions & Certifications", description: "View certifications, memberships, and industry recognitions including Green Seal GS-42 and MBE certification." },
   "/about-us/green-seal": { title: "Green Seal Certification", description: "Green Seal GS-42 certified, delivering environmentally responsible commercial cleaning solutions." },
+  "/about-us/cims": { title: "CIMS Certification", description: "ISSA CIMS certified — meeting the Cleaning Industry Management Standard for quality, efficiency, and customer satisfaction." },
   "/about-us/team": { title: "Our Team", description: "Meet the leadership team behind Excel Facility Services Group." },
   "/privacy-policy": { title: "Privacy Policy", description: "Excel Facility Services Group privacy policy — how we collect, use, and protect your personal information." },
   "/services/janitorial": { title: "Janitorial Services", description: "Professional janitorial cleaning services. Customized cleaning programs for your facility." },
