@@ -6,6 +6,10 @@ const initialRecipients = [
   { formType: "contact", recipientEmail: "ymatos@efsgnj.com", recipientName: "Y. Matos", ccType: "cc" },
   { formType: "contact", recipientEmail: "nicholson@kvibe.com", recipientName: "Nicholson", ccType: "cc" },
   { formType: "contact", recipientEmail: "zcruz@efsgnj.com", recipientName: "Z. Cruz", ccType: "cc" },
+  { formType: "vendor", recipientEmail: "info@efsgnj.com", recipientName: "EFSG Info", ccType: "to" },
+  { formType: "vendor", recipientEmail: "ymatos@efsgnj.com", recipientName: "Y. Matos", ccType: "cc" },
+  { formType: "vendor", recipientEmail: "nicholson@kvibe.com", recipientName: "Nicholson", ccType: "cc" },
+  { formType: "vendor", recipientEmail: "zcruz@efsgnj.com", recipientName: "Z. Cruz", ccType: "cc" },
 ];
 
 export async function seedFormEmailSettings() {

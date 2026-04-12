@@ -8,7 +8,7 @@ import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
 import { z } from "zod";
-import { sendContactFormEmail } from "./email";
+import { sendContactFormEmail, sendVendorFormEmail } from "./email";
 
 declare module "express-session" {
   interface SessionData {
@@ -405,6 +405,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const parsed = insertVendorRegistrationSchema.parse(req.body);
       const vendor = await storage.createVendorRegistration(parsed);
+      sendVendorFormEmail(vendor).catch(err => {
+        console.error("Background vendor email send failed:", err);
+      });
       res.json(vendor);
     } catch (error) {
       if (error instanceof z.ZodError) {
