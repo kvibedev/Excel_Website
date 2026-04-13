@@ -3,7 +3,7 @@ import { storage } from "./storage";
 import type { Contact, VendorRegistration } from "@shared/schema";
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const FROM_EMAIL = "info@efsgnj.com";
+const FROM_EMAIL = "kvibe.excel.marketing@gmail.com";
 const FROM_NAME = "Excel Facility Services Group";
 
 if (SENDGRID_API_KEY) {
