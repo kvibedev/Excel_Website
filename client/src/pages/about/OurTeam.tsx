@@ -86,7 +86,7 @@ export default function OurTeam() {
     },
     {
       name: "Juan Huaman",
-      title: "Senior Account Manager I",
+      title: "Senior Account Manager",
       image: juanImage
     },
     {
