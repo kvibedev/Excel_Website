@@ -98,7 +98,8 @@ export default function OurTeam() {
     {
       name: "Cristian Molina",
       title: "Senior Account Manager",
-      image: cristianImage
+      image: cristianImage,
+      hidden: true
     },
     {
       name: "Jhoana Vivas",
