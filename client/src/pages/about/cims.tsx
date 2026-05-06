@@ -2,7 +2,19 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Link } from "wouter";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import {
+  CheckCircle2,
+  ArrowRight,
+  ClipboardCheck,
+  Sparkles,
+  Users,
+  ShieldCheck,
+  Briefcase,
+  Leaf,
+  ScrollText,
+  CalendarClock,
+  UserCheck,
+} from "lucide-react";
 import buildingImg from "@assets/Hero_building_image1_1774869765656.webp";
 import cimsLogo from "@assets/CIMS-Logo-with-Tagline-RGB-Full-Color_1775838775336.webp";
 
@@ -29,13 +41,61 @@ const benefits = [
   },
 ];
 
-const certificationSteps = [
-  "Commit to achieving CIMS and define timeline and scope.",
-  "Complete the application and provide required documentation.",
-  "Begin assessment preparation and documentation review.",
-  "Schedule assessment with an accredited independent assessor.",
-  "Assessment is completed and approval notification is issued.",
-  "Receive CIMS certification and communicate achievement to stakeholders.",
+const cimsPillars = [
+  {
+    icon: ClipboardCheck,
+    title: "Quality Management Systems",
+    description:
+      "Documented processes, performance measurement, and continuous-improvement practices that govern every account.",
+  },
+  {
+    icon: Sparkles,
+    title: "Service Delivery",
+    description:
+      "Verified workloading, scheduling, supervision, and quality control on the floor — not just on paper.",
+  },
+  {
+    icon: Users,
+    title: "Human Resources",
+    description:
+      "Recruiting, training, and retention practices that produce a stable, qualified, and properly supervised workforce.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Health, Safety & Environment",
+    description:
+      "OSHA-aligned safety programs, chemical handling, infection-prevention protocols, and incident management.",
+  },
+  {
+    icon: Briefcase,
+    title: "Management Commitment",
+    description:
+      "Executive accountability, customer-focused leadership, and a documented commitment to the CIMS standard.",
+  },
+  {
+    icon: Leaf,
+    title: "Green Building (CIMS-GB)",
+    description:
+      "Sustainable cleaning practices that support LEED documentation and healthier indoor environments.",
+  },
+];
+
+const cimsCredibility = [
+  {
+    icon: UserCheck,
+    value: "Independent",
+    label: "ISSA-accredited third-party assessor",
+  },
+  {
+    icon: ScrollText,
+    value: "Hundreds",
+    label: "of evaluation criteria reviewed on-site",
+  },
+  {
+    icon: CalendarClock,
+    value: "Every 2 Years",
+    label: "full recertification — no shortcuts",
+  },
 ];
 
 export default function CIMS() {
@@ -187,36 +247,86 @@ export default function CIMS() {
       </section>
 
       <section className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4 max-w-5xl">
+        <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-12">
             <h2
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
               data-testid="text-process-heading"
             >
-              The Certification Process
+              What It Takes to Earn CIMS
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              CIMS certification is verified by an independent, accredited
-              third-party assessor and renewed every two years.
+            <p
+              className="text-lg text-muted-foreground max-w-3xl mx-auto"
+              data-testid="text-process-intro"
+            >
+              CIMS isn&rsquo;t a self-declared badge. An independent,
+              ISSA-accredited assessor audits our entire operation against
+              hundreds of criteria — and we re-earn it every two years.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {certificationSteps.map((step, index) => (
-              <Card key={index} className="h-full" data-testid={`card-step-${index}`}>
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#063970] text-white font-bold shrink-0">
-                      {index + 1}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {cimsPillars.map((pillar, index) => {
+              const Icon = pillar.icon;
+              return (
+                <Card
+                  key={index}
+                  className="h-full"
+                  data-testid={`card-pillar-${index}`}
+                >
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#063970] text-white shrink-0">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <CardTitle
+                        className="text-base"
+                        data-testid={`text-pillar-title-${index}`}
+                      >
+                        {pillar.title}
+                      </CardTitle>
                     </div>
-                    <CardTitle className="text-base">Step {index + 1}</CardTitle>
-                  </div>
-                  <CardDescription className="text-sm">
-                    {step}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
+                    <CardDescription
+                      className="text-sm"
+                      data-testid={`text-pillar-description-${index}`}
+                    >
+                      {pillar.description}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {cimsCredibility.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <Card
+                  key={index}
+                  className="h-full"
+                  data-testid={`card-credibility-${index}`}
+                >
+                  <CardHeader className="text-center items-center">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#97CC06]/15 text-[#0A5EB9] mb-3">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <CardTitle
+                      className="text-2xl font-bold text-[#063970]"
+                      data-testid={`text-credibility-value-${index}`}
+                    >
+                      {stat.value}
+                    </CardTitle>
+                    <CardDescription
+                      className="text-sm"
+                      data-testid={`text-credibility-label-${index}`}
+                    >
+                      {stat.label}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
