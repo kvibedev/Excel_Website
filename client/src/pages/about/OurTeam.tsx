@@ -81,7 +81,7 @@ export default function OurTeam() {
     },
     {
       name: "Fernando Gonzalez",
-      title: "Operations Administrative Assistant",
+      title: "Account Manager",
       image: fernandoImage
     },
     {
