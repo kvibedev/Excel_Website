@@ -21,6 +21,17 @@ import jhoanaImage from "@assets/joana-vivas_1764595596798.webp";
 import anaImage from "@assets/Ana-Masis_1764595596798.webp";
 import myriamImage from "@assets/Myriam-Tandazo_1764595596798.webp";
 
+function placeholderImage(name: string): string {
+  const initials = name
+    .split(" ")
+    .filter((p) => /^[A-Za-z]/.test(p))
+    .slice(0, 2)
+    .map((p) => p[0].toUpperCase())
+    .join("");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0A5EB9"/><stop offset="100%" stop-color="#063970"/></linearGradient></defs><rect width="300" height="400" fill="url(#g)"/><circle cx="150" cy="160" r="60" fill="#ffffff" fill-opacity="0.15"/><text x="150" y="180" text-anchor="middle" font-family="Barlow, Arial, sans-serif" font-size="56" font-weight="700" fill="#ffffff">${initials}</text><text x="150" y="320" text-anchor="middle" font-family="Cabin, Arial, sans-serif" font-size="18" fill="#ffffff" fill-opacity="0.85">Photo Coming Soon</text></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 export default function OurTeam() {
   const teamMembers = [
     {
@@ -44,6 +55,11 @@ export default function OurTeam() {
       image: yairaImage
     },
     {
+      name: "Shayla Arce",
+      title: "Executive Assistant",
+      image: shaylaImage
+    },
+    {
       name: "Norma Benitez, MBA",
       title: "Financial Controller",
       image: normaImage
@@ -54,15 +70,9 @@ export default function OurTeam() {
       image: ruthImage
     },
     {
-      name: "Jacqueline Jimenez",
-      title: "Account Manager",
-      image: jacquelineImage,
-      hidden: true
-    },
-    {
-      name: "Shayla Arce",
-      title: "Executive Assistant",
-      image: shaylaImage
+      name: "Madison Scott",
+      title: "Accounting Clerk",
+      image: placeholderImage("Madison Scott")
     },
     {
       name: "Stephanie Candelaria",
@@ -76,8 +86,28 @@ export default function OurTeam() {
     },
     {
       name: "Zaira Cruz",
-      title: "Recruiting Specialist",
+      title: "Recruitment Specialist",
       image: zairaImage
+    },
+    {
+      name: "Jolie Figueroa",
+      title: "HR Assistant",
+      image: placeholderImage("Jolie Figueroa")
+    },
+    {
+      name: "Thomas Cooper",
+      title: "Senior Operations Manager",
+      image: placeholderImage("Thomas Cooper")
+    },
+    {
+      name: "Juan Huaman",
+      title: "Senior Account Manager",
+      image: juanImage
+    },
+    {
+      name: "Dyane Barbato",
+      title: "Account Manager",
+      image: placeholderImage("Dyane Barbato")
     },
     {
       name: "Fernando Gonzalez",
@@ -85,9 +115,40 @@ export default function OurTeam() {
       image: fernandoImage
     },
     {
-      name: "Juan Huaman",
-      title: "Senior Account Manager",
-      image: juanImage
+      name: "Katherine Tavarez",
+      title: "Account Manager",
+      image: placeholderImage("Katherine Tavarez")
+    },
+    {
+      name: "Yoel Beltre",
+      title: "Area Manager",
+      image: placeholderImage("Yoel Beltre")
+    },
+    {
+      name: "Darrel Bynum",
+      title: "Area Manager",
+      image: placeholderImage("Darrel Bynum")
+    },
+    {
+      name: "Guadalupe Urena",
+      title: "Area Manager",
+      image: placeholderImage("Guadalupe Urena")
+    },
+    {
+      name: "Ana Masis",
+      title: "Field Operator",
+      image: anaImage
+    },
+    {
+      name: "Myriam Tandazo",
+      title: "Field Operator",
+      image: myriamImage
+    },
+    {
+      name: "Jacqueline Jimenez",
+      title: "Account Manager",
+      image: jacquelineImage,
+      hidden: true
     },
     {
       name: "Jose Carrero",
@@ -106,16 +167,6 @@ export default function OurTeam() {
       title: "Field Operator",
       image: jhoanaImage,
       hidden: true
-    },
-    {
-      name: "Ana Masis",
-      title: "Field Operator",
-      image: anaImage
-    },
-    {
-      name: "Myriam Tandazo",
-      title: "Field Operator",
-      image: myriamImage
     }
   ];
 
