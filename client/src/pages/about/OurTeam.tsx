@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import alvinImage from "@assets/Alvin-1_1764595596799.webp";
 import gumersindoImage from "@assets/Mesa-de-trabajo-6-80-1_1764595596799.webp";
-import yairaImage from "@assets/Mesa-de-trabajo-7-80_1764595596799.webp";
+import yairaImage from "@assets/Yaira_1778310675624.jpg";
 import erinImage from "@assets/Erin_(1)_1774895727872.png";
 import normaImage from "@assets/Norma_(1)_1774895749603.png";
-import ruthImage from "@assets/Ruth_1764595596798.jpg";
+import ruthImage from "@assets/Ruthy_1778310675624.jpeg";
 import jacquelineImage from "@assets/JACQUELINE-JIMENEZ-ACCOUNT-MANAGER-edited-3_1764595596798.webp";
-import shaylaImage from "@assets/Shayla_1764595596798.webp";
+import shaylaImage from "@assets/Shayla_1778310675624.jpeg";
 import stephanieImage from "@assets/Stephanie_1764595596798.webp";
 import wendyImage from "@assets/Wendy_1764595596798.webp";
 import zairaImage from "@assets/Zaira-Cruz_1764595596798.webp";
@@ -20,6 +20,14 @@ import cristianImage from "@assets/Cristian-Molina_1764595596798.webp";
 import jhoanaImage from "@assets/joana-vivas_1764595596798.webp";
 import anaImage from "@assets/Ana-Masis_1764595596798.webp";
 import myriamImage from "@assets/Myriam-Tandazo_1764595596798.webp";
+import madisonImage from "@assets/Madison_1778310675624.jpeg";
+import jolieImage from "@assets/Jolie_Approved_1778310675625.jpeg";
+import thomasImage from "@assets/Thomas_1778310675624.jpg";
+import dyaneImage from "@assets/Dyane_1778310675625.png";
+import katherineImage from "@assets/Katherine_1778310675624.jpeg";
+import yoelImage from "@assets/Yoel_1778310675623.jpg";
+import darrelImage from "@assets/Darrell_1778310675625.jpg";
+import guadalupeImage from "@assets/Guadalupe_1778310675625.jpg";
 
 function placeholderImage(name: string): string {
   const initials = name
@@ -72,7 +80,7 @@ export default function OurTeam() {
     {
       name: "Madison Scott",
       title: "Accounting Clerk",
-      image: placeholderImage("Madison Scott")
+      image: madisonImage
     },
     {
       name: "Stephanie Candelaria",
@@ -92,12 +100,12 @@ export default function OurTeam() {
     {
       name: "Jolie Figueroa",
       title: "HR Assistant",
-      image: placeholderImage("Jolie Figueroa")
+      image: jolieImage
     },
     {
       name: "Thomas Cooper",
       title: "Senior Operations Manager",
-      image: placeholderImage("Thomas Cooper")
+      image: thomasImage
     },
     {
       name: "Juan Huaman",
@@ -107,7 +115,7 @@ export default function OurTeam() {
     {
       name: "Dyane Barbato",
       title: "Account Manager",
-      image: placeholderImage("Dyane Barbato")
+      image: dyaneImage
     },
     {
       name: "Fernando Gonzalez",
@@ -117,22 +125,22 @@ export default function OurTeam() {
     {
       name: "Katherine Tavarez",
       title: "Account Manager",
-      image: placeholderImage("Katherine Tavarez")
+      image: katherineImage
     },
     {
       name: "Yoel Beltre",
       title: "Area Manager",
-      image: placeholderImage("Yoel Beltre")
+      image: yoelImage
     },
     {
       name: "Darrel Bynum",
       title: "Area Manager",
-      image: placeholderImage("Darrel Bynum")
+      image: darrelImage
     },
     {
       name: "Guadalupe Urena",
       title: "Area Manager",
-      image: placeholderImage("Guadalupe Urena")
+      image: guadalupeImage
     },
     {
       name: "Ana Masis",
