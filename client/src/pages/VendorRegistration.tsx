@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Briefcase, Plus, ArrowLeft } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { trackFormSubmission } from "@/lib/analytics";
 import heroImage from "@assets/Edit_this_professional_vendor_registration_hero_im-17750050224_1775007935947.png";
 
 interface ReferenceContact {
@@ -102,6 +103,10 @@ export default function VendorRegistration() {
         additionalInfo: additionalInfo || null,
       });
       
+      trackFormSubmission("vendor_registration", {
+        primary_service: formData.primaryService || undefined,
+      });
+
       toast({
         title: "Form Submitted",
         description: "Thank you for your interest. We'll contact you within 48 hours.",

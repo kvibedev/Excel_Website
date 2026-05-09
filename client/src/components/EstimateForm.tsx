@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { trackFormSubmission } from "@/lib/analytics";
 
 export default function EstimateForm() {
   const { toast } = useToast();
@@ -63,6 +64,11 @@ export default function EstimateForm() {
         message: formData.message || null,
       });
       
+      trackFormSubmission("contact", {
+        inquiry_type: formData.inquiryType || undefined,
+        service_interest: formData.service || undefined,
+      });
+
       toast({
         title: "Message Received",
         description: "We will gladly reach out to assist you with any further questions.",
