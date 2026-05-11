@@ -315,7 +315,7 @@ export default function LevelUpClean() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
                 With our <strong>three-step certified disinfection approach</strong>, advanced <Link href="/services/disinfection" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-electrostatic">electrostatic technology</Link>, and trained associates, you can trust that your facility will be thoroughly protected and maintained to the highest standards.
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/contact" data-testid="link-contact-us">
                   <Button size="lg" data-testid="button-contact">
                     Contact Us Today

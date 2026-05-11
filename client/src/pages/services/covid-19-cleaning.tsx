@@ -331,7 +331,7 @@ export default function Covid19Cleaning() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
                 EFSG can help create a safe and healthy workplace for everyone by taking these extra steps. Our trained staff follows <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-cdc">CDC guidelines</Link> and uses state-of-the-art equipment to deliver effective disinfection solutions.
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/contact" data-testid="link-contact-us">
                   <Button size="lg" data-testid="button-contact">
                     Contact Us Today

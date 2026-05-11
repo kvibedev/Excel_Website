@@ -322,7 +322,7 @@ export default function FloorCare() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
                 We offer flexible scheduling options to accommodate your operational hours, ensuring that our floor care services don't disrupt your daily operations. Our trained staff uses <Link href="/about-us" className="text-[#0A5EB9] font-semibold hover:underline" data-testid="link-eco">eco-friendly products</Link> to deliver effective cleaning solutions.
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/contact" data-testid="link-contact-us">
                   <Button size="lg" data-testid="button-contact">
                     Contact Us Today

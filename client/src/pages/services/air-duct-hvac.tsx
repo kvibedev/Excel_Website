@@ -321,7 +321,7 @@ export default function AirDuctHVAC() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
                 Investing in professional air duct and HVAC cleaning and maintenance services can create a healthier and more comfortable environment for your business, improve indoor air quality, extend the life of your equipment, and save you money on energy costs.
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/contact" data-testid="link-contact-us">
                   <Button size="lg" data-testid="button-contact">
                     Contact Us Today

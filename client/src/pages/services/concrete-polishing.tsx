@@ -318,7 +318,7 @@ export default function ConcretePolishing() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
                 We understand that every facility has unique needs. That's why we offer customized polishing solutions tailored to your specific requirements, ensuring <strong>optimal results</strong> that exceed your expectations.
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/contact" data-testid="link-contact-us">
                   <Button size="lg" data-testid="button-contact">
                     Contact Us Today

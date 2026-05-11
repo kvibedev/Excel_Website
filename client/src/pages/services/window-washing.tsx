@@ -321,7 +321,7 @@ export default function WindowWashing() {
               <p className="text-lg text-muted-foreground mb-6" data-testid="text-tailored-3">
                 Our trained professionals use <strong>specialized equipment and eco-friendly cleaning solutions</strong> to deliver streak-free results that enhance your building's appearance and protect your investment in quality windows.
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/contact" data-testid="link-contact-us">
                   <Button size="lg" data-testid="button-contact">
                     Contact Us Today
