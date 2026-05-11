@@ -19,7 +19,8 @@ import {
   Globe,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import { useCallback, useEffect, useRef, useState } from "react";
 import heroImage from "@assets/greensealimg1_1764255375424.webp";
 import heroImage2 from "@assets/Hero_building_image1_1774628077282.webp";
 import heroImage3 from "@assets/Hero_building_image2_1774628077283.webp";
@@ -83,11 +84,17 @@ function UsaMapIcon({ className }: { className?: string }) {
 }
 
 export default function HomeOriginal() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    slidesToScroll: 1,
-  });
+  const autoplay = useRef(
+    Autoplay({ delay: 3500, stopOnInteraction: false, stopOnMouseEnter: true })
+  );
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "start",
+      slidesToScroll: 1,
+    },
+    [autoplay.current]
+  );
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -356,14 +363,14 @@ export default function HomeOriginal() {
           <div className="relative">
             <button
               onClick={scrollPrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm items-center justify-center text-white hover:bg-white/20 transition-colors"
               data-testid="button-carousel-prev"
               aria-label="Previous industries"
             >
-              <ChevronLeft className="h-6 w-6 md:h-8 md:w-8" />
+              <ChevronLeft className="h-8 w-8" />
             </button>
 
-            <div className="overflow-hidden mx-8 md:mx-12" ref={emblaRef}>
+            <div className="overflow-hidden mx-0 md:mx-12" ref={emblaRef}>
               <div className="flex gap-4 md:gap-6">
                 {industries.map((industry, index) => (
                   <div
@@ -402,11 +409,11 @@ export default function HomeOriginal() {
 
             <button
               onClick={scrollNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm items-center justify-center text-white hover:bg-white/20 transition-colors"
               data-testid="button-carousel-next"
               aria-label="Next industries"
             >
-              <ChevronRight className="h-6 w-6 md:h-8 md:w-8" />
+              <ChevronRight className="h-8 w-8" />
             </button>
           </div>
         </div>
