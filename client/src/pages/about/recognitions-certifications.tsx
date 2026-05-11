@@ -55,7 +55,7 @@ export default function RecognitionsCertifications() {
       />
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
-        <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" aria-hidden="true" />
+        <img loading="lazy" decoding="async" src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <Badge className="mb-4 bg-[#97CC06] text-[#063970]" data-testid="badge-recognitions">
@@ -102,7 +102,7 @@ export default function RecognitionsCertifications() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-10 max-w-5xl mx-auto items-center justify-items-center">
             {certifications.map((cert, index) => {
               const logoContent = cert.logo ? (
-                <img src={cert.logo} alt={cert.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
+                <img loading="lazy" decoding="async" src={cert.logo} alt={cert.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
               ) : (
                 <div className="flex flex-col items-center gap-2">
                   <Shield className="w-10 h-10 text-[#97CC06]" />
@@ -150,7 +150,7 @@ export default function RecognitionsCertifications() {
                 data-testid={`software-${tool.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               >
                 {tool.logo ? (
-                  <img src={tool.logo} alt={tool.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
+                  <img loading="lazy" decoding="async" src={tool.logo} alt={tool.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
                 ) : (
                   <div className="flex flex-col items-center gap-2">
                     <CheckCircle2 className="w-10 h-10 text-[#063970]" />

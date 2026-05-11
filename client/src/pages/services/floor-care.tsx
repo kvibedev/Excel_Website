@@ -181,8 +181,7 @@ export default function FloorCare() {
               </Link>
             </div>
             <div className="relative">
-              <img
-                src={sectionImage}
+              <img loading="lazy" decoding="async"                 src={sectionImage}
                 alt="Professional Floor Care Services"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-about"
@@ -301,8 +300,7 @@ export default function FloorCare() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="order-2 lg:order-1 relative">
-              <img
-                src={tailoredImage}
+              <img loading="lazy" decoding="async"                 src={tailoredImage}
                 alt="Tailored Floor Care Solutions"
                 className="rounded-md w-full h-auto shadow-lg"
                 data-testid="img-tailored"
@@ -364,7 +362,7 @@ export default function FloorCare() {
                 <Card className="w-64 hover-elevate transition-all cursor-pointer group border-2 border-transparent hover:border-[#97CC06] overflow-hidden bg-white shadow-lg">
                   <div className="h-1 bg-[#063970] w-full" />
                   <div className="h-32 overflow-hidden">
-                    <img 
+                    <img loading="lazy" decoding="async" 
                       src={industry.image} 
                       alt={industry.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

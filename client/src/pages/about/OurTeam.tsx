@@ -217,6 +217,8 @@ export default function OurTeam() {
                     <img 
                       src={member.image}
                       alt={member.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-top"
                       data-testid={`img-team-${member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                     />

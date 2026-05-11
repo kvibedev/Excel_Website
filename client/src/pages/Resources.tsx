@@ -31,7 +31,7 @@ function FeaturedArticleCard({ article }: { article: BlogPost }) {
       >
         <div className="relative h-80 overflow-hidden rounded-t-xl">
           {article.imageUrl ? (
-            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <img loading="lazy" decoding="async" src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
           )}
@@ -84,7 +84,7 @@ function ArticleCard({ article }: { article: BlogPost }) {
       >
         <div className="relative h-56 overflow-hidden rounded-t-xl">
           {article.imageUrl ? (
-            <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <img loading="lazy" decoding="async" src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-[#063970] to-[#0A5EB9]"></div>
           )}

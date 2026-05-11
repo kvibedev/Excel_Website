@@ -137,7 +137,7 @@ export default function About() {
             </div>
             <div className="relative">
               <div className="relative rounded-lg overflow-hidden shadow-lg">
-                <img 
+                <img loading="lazy" decoding="async" 
                   src={aboutImage} 
                   alt="Excel Facility Services Group Team" 
                   className="w-full h-auto"
@@ -210,7 +210,7 @@ export default function About() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative rounded-lg overflow-hidden shadow-lg order-2 lg:order-1">
-              <img 
+              <img loading="lazy" decoding="async" 
                 src={heroImage} 
                 alt="Creating Healthier Workplaces" 
                 className="w-full h-auto"
