@@ -126,13 +126,13 @@ export default function AboutLanding() {
                 className="p-6 hover-elevate active-elevate-2 border-t-4 border-t-[#0A5EB9]"
                 data-testid={`card-value-${value.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
               >
-                <div className="mb-4">
+                <div className="mb-4 flex justify-center md:block">
                   <div className="w-12 h-12 rounded-lg bg-[#0A5EB9]/10 flex items-center justify-center">
                     <value.icon className="w-6 h-6 text-[#0A5EB9]" />
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-3">{value.title}</h3>
-                <p className="text-sm text-muted-foreground">{value.description}</p>
+                <h3 className="text-lg font-semibold mb-3 text-center md:text-left">{value.title}</h3>
+                <p className="text-sm text-muted-foreground text-center md:text-left">{value.description}</p>
               </Card>
             ))}
           </div>

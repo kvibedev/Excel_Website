@@ -277,16 +277,16 @@ export default function HomeOriginal() {
               <div key={index} className="relative" data-testid={`card-value-prop-${index}`}>
                 <Card className="h-full hover-elevate transition-all">
                   <CardHeader>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-center md:justify-between mb-4">
                       <div className="flex h-16 w-16 items-center justify-center rounded-md bg-[#063970]">
                         <prop.icon className="h-8 w-8 text-white" />
                       </div>
-                      <div className="text-6xl font-bold text-[#97CC06]/20">
+                      <div className="hidden md:block text-6xl font-bold text-[#97CC06]/20">
                         {String(index + 1).padStart(2, '0')}
                       </div>
                     </div>
-                    <CardTitle className="text-xl mb-3">{prop.title}</CardTitle>
-                    <CardDescription className="text-base">
+                    <CardTitle className="text-xl mb-3 text-center md:text-left">{prop.title}</CardTitle>
+                    <CardDescription className="text-base text-center md:text-left">
                       {prop.description}
                     </CardDescription>
                   </CardHeader>
