@@ -54,7 +54,7 @@ export default function RecognitionsCertifications() {
         keywords="cleaning certifications, Green Seal GS-42, MBE certification, ISSA, facility services accreditation"
       />
       {/* Hero Section */}
-      <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[400px] md:min-h-[500px] py-16 md:py-20 flex items-center justify-center overflow-hidden">
         <img loading="lazy" decoding="async" src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#063970]/90 via-[#0A5EB9]/80 to-[#063970]/90" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
@@ -99,7 +99,7 @@ export default function RecognitionsCertifications() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-10 max-w-5xl mx-auto items-center justify-items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-12 md:gap-y-10 max-w-5xl mx-auto items-center justify-items-center">
             {certifications.map((cert, index) => {
               const logoContent = cert.logo ? (
                 <img loading="lazy" decoding="async" src={cert.logo} alt={cert.name} className="max-h-28 max-w-[200px] w-auto object-contain" />
@@ -142,7 +142,7 @@ export default function RecognitionsCertifications() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-10 max-w-4xl mx-auto items-center justify-items-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-12 md:gap-y-10 max-w-4xl mx-auto items-center justify-items-center">
             {softwareTools.map((tool, index) => (
               <div
                 key={index}

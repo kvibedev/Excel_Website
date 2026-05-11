@@ -177,7 +177,7 @@ export default function Resources() {
         image={heroImage}
         keywords="cleaning resources, facility management articles, commercial cleaning blog, industry insights"
       />
-      <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[500px] py-16 md:py-20 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
@@ -272,7 +272,7 @@ export default function Resources() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                 {featuredPosts.map((article) => (
                   <FeaturedArticleCard key={article.id} article={article} />
                 ))}
@@ -287,7 +287,7 @@ export default function Resources() {
                   </div>
 
                   {totalPages > 1 && (
-                    <nav className="flex items-center justify-center gap-2 mt-16" aria-label="Blog pagination" data-testid="pagination-nav">
+                    <nav className="flex flex-wrap items-center justify-center gap-2 mt-16" aria-label="Blog pagination" data-testid="pagination-nav">
                       <Button
                         variant="outline"
                         size="icon"

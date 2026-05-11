@@ -284,9 +284,12 @@ export default function HomeOriginal() {
               <div key={index} className="relative" data-testid={`card-value-prop-${index}`}>
                 <Card className="h-full hover-elevate transition-all">
                   <CardHeader>
-                    <div className="flex items-center justify-center md:justify-between mb-4">
+                    <div className="flex items-center justify-center md:justify-between mb-4 gap-3">
                       <div className="flex h-16 w-16 items-center justify-center rounded-md bg-[#063970]">
                         <prop.icon className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="md:hidden flex h-10 w-10 items-center justify-center rounded-full bg-[#97CC06]/15 text-[#97CC06] font-bold text-sm shrink-0">
+                        {String(index + 1).padStart(2, '0')}
                       </div>
                       <div className="hidden md:block text-6xl font-bold text-[#97CC06]/20">
                         {String(index + 1).padStart(2, '0')}
@@ -375,7 +378,7 @@ export default function HomeOriginal() {
                 {industries.map((industry, index) => (
                   <div
                     key={index}
-                    className="flex-none w-[calc(100%-2rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1rem)]"
+                    className="flex-none w-[85%] sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1rem)]"
                   >
                     <Link href={industry.href}>
                       <Card

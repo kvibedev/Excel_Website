@@ -48,8 +48,8 @@ export default function Industries() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" data-testid="heading-request-proposal">
               REQUEST PROPOSAL
             </h2>
-            <Card>
-              <CardContent className="pt-6">
+            <Card className="border-0 shadow-none bg-transparent md:border md:bg-card md:shadow-sm">
+              <CardContent className="px-0 pt-0 md:px-6 md:pt-6">
                 <EstimateForm />
               </CardContent>
             </Card>
