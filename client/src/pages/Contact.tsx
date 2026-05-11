@@ -49,7 +49,7 @@ export default function Contact() {
               <h2 className="text-3xl font-bold mb-8 text-center md:text-left" data-testid="text-contact-info-heading">Contact info</h2>
               
               <div className="space-y-6 mb-8">
-                <div className="flex gap-4 items-center justify-center md:justify-start md:items-start" data-testid="contact-phone">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center md:items-start justify-center md:justify-start" data-testid="contact-phone">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
                     <Phone className="h-6 w-6 text-[#0A5EB9]" />
                   </div>
@@ -60,7 +60,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex gap-4 items-center justify-center md:justify-start md:items-start" data-testid="contact-email">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center md:items-start justify-center md:justify-start" data-testid="contact-email">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
                     <Mail className="h-6 w-6 text-[#0A5EB9]" />
                   </div>
@@ -71,7 +71,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex gap-4 items-center justify-center md:justify-start md:items-start" data-testid="contact-address">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center md:items-start justify-center md:justify-start" data-testid="contact-address">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
                     <MapPin className="h-6 w-6 text-[#0A5EB9]" />
                   </div>
