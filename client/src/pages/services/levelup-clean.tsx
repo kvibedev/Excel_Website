@@ -238,12 +238,17 @@ export default function LevelUpClean() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {howWeWorkSteps.map((step, index) => (
               <div key={index} className="relative" data-testid={`step-${index}`}>
-                <div className="text-6xl md:text-7xl font-bold text-white/10 absolute -top-4 -left-2">
+                <div className="hidden md:block text-6xl md:text-7xl font-bold text-white/10 absolute -top-4 -left-2">
                   {step.step}
                 </div>
-                <div className="pt-8 pl-4">
-                  <h3 className="text-xl font-bold mb-3 text-[#97CC06]">{step.title}</h3>
-                  <p className="text-white/80">{step.description}</p>
+                <div className="md:pt-8 md:pl-4">
+                  <div className="flex md:block items-center justify-center gap-3 mb-3">
+                    <div className="md:hidden flex h-10 w-10 items-center justify-center rounded-full bg-[#97CC06]/15 text-[#97CC06] font-bold text-sm shrink-0">
+                      {step.step}
+                    </div>
+                    <h3 className="text-xl font-bold text-[#97CC06] md:mb-3">{step.title}</h3>
+                  </div>
+                  <p className="text-white/80 text-center md:text-left">{step.description}</p>
                 </div>
                 {index < howWeWorkSteps.length - 1 && (
                   <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
