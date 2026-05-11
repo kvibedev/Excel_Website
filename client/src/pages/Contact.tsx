@@ -46,10 +46,10 @@ export default function Contact() {
 
             {/* Right Column - Contact Info */}
             <div>
-              <h2 className="text-3xl font-bold mb-8" data-testid="text-contact-info-heading">Contact info</h2>
+              <h2 className="text-3xl font-bold mb-8 text-center md:text-left" data-testid="text-contact-info-heading">Contact info</h2>
               
               <div className="space-y-6 mb-8">
-                <div className="flex gap-4 items-start" data-testid="contact-phone">
+                <div className="flex gap-4 items-center justify-center md:justify-start md:items-start" data-testid="contact-phone">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
                     <Phone className="h-6 w-6 text-[#0A5EB9]" />
                   </div>
@@ -60,7 +60,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex gap-4 items-start" data-testid="contact-email">
+                <div className="flex gap-4 items-center justify-center md:justify-start md:items-start" data-testid="contact-email">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
                     <Mail className="h-6 w-6 text-[#0A5EB9]" />
                   </div>
@@ -71,12 +71,12 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex gap-4 items-start" data-testid="contact-address">
+                <div className="flex gap-4 items-center justify-center md:justify-start md:items-start" data-testid="contact-address">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A5EB9]/10 flex-shrink-0">
                     <MapPin className="h-6 w-6 text-[#0A5EB9]" />
                   </div>
                   <div>
-                    <p className="text-lg text-foreground" data-testid="text-address">
+                    <p className="text-lg text-foreground text-center md:text-left" data-testid="text-address">
                       200 Broadacres Dr., Suite 160<br />
                       Bloomfield, NJ 07003
                     </p>
@@ -84,13 +84,13 @@ export default function Contact() {
                 </div>
               </div>
 
-              <p className="text-muted-foreground italic mb-8" data-testid="text-tagline">
+              <p className="text-muted-foreground italic mb-8 text-center md:text-left" data-testid="text-tagline">
                 If you are looking for a commercial cleaning company you can trust to get the job done right, look no further than Excel Facility Services Group.
               </p>
 
               <div className="mb-12">
-                <h3 className="font-bold mb-4" data-testid="text-social-heading">Follow us:</h3>
-                <div className="flex gap-3">
+                <h3 className="font-bold mb-4 text-center md:text-left" data-testid="text-social-heading">Follow us:</h3>
+                <div className="flex gap-3 justify-center md:justify-start">
                   <a 
                     href="https://www.facebook.com/Excelfacilityservices" 
                     target="_blank" 
