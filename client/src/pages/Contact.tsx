@@ -124,12 +124,15 @@ export default function Contact() {
               {/* Vendors / Contractors Card */}
               <Card className="mb-6 hover-elevate border-t-4 border-t-[#97CC06]">
                 <div className="p-6">
-                  <div className="flex gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#97CC06]/10 flex-shrink-0">
-                      <Briefcase className="h-6 w-6 text-[#97CC06]" />
+                  <div className="md:flex md:gap-4">
+                    <div className="flex items-center justify-center gap-3 mb-4 md:mb-0 md:block">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#97CC06]/10 flex-shrink-0">
+                        <Briefcase className="h-6 w-6 text-[#97CC06]" />
+                      </div>
+                      <h3 className="md:hidden text-xl font-bold" data-testid="text-vendor-heading-mobile">Vendors / Contractors</h3>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-2" data-testid="text-vendor-heading">Vendors / Contractors</h3>
+                    <div className="flex-1 text-center md:text-left">
+                      <h3 className="hidden md:block text-xl font-bold mb-2" data-testid="text-vendor-heading">Vendors / Contractors</h3>
                       <p className="text-muted-foreground mb-4">
                         Excel Facility Services Group appreciates your interest in doing business with us. Please complete the form below and a company representative will contact you in the next 48 hours.
                       </p>
@@ -149,12 +152,15 @@ export default function Contact() {
               {/* Careers Card */}
               <Card className="hover-elevate border-t-4 border-t-[#97CC06]">
                 <div className="p-6">
-                  <div className="flex gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#97CC06]/10 flex-shrink-0">
-                      <Users className="h-6 w-6 text-[#97CC06]" />
+                  <div className="md:flex md:gap-4">
+                    <div className="flex items-center justify-center gap-3 mb-4 md:mb-0 md:block">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#97CC06]/10 flex-shrink-0">
+                        <Users className="h-6 w-6 text-[#97CC06]" />
+                      </div>
+                      <h3 className="md:hidden text-xl font-bold" data-testid="text-careers-heading-mobile">Careers</h3>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-2" data-testid="text-careers-heading">Careers</h3>
+                    <div className="flex-1 text-center md:text-left">
+                      <h3 className="hidden md:block text-xl font-bold mb-2" data-testid="text-careers-heading">Careers</h3>
                       <p className="text-muted-foreground mb-4">
                         Our Talent Community keeps you informed about the new opportunities relevant to your job profile.
                       </p>
