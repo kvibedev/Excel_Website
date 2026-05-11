@@ -376,3 +376,78 @@
     animation-play-state: paused;
   }
 }
+
+/* =========================================================================
+   MOBILE OPTIMIZATIONS (< 768px only)
+   - Smaller display fonts so headings don't dominate the screen
+   - Tighter line-heights for headings + body copy
+   - Tighter section padding
+   - Center-align text in sections that stack into a single column,
+     while keeping cards/grids/lists left-aligned for readability
+   ========================================================================= */
+@media (max-width: 767px) {
+  .text-6xl { font-size: 2.25rem; line-height: 1.15; }
+  .text-5xl { font-size: 2rem;    line-height: 1.15; }
+  .text-4xl { font-size: 1.75rem; line-height: 1.2; }
+  .text-3xl { font-size: 1.5rem;  line-height: 1.25; }
+  .text-2xl { font-size: 1.375rem;line-height: 1.3; }
+  .text-xl  { font-size: 1.125rem;line-height: 1.45; }
+  .text-lg  { font-size: 1rem;    line-height: 1.5; }
+  .text-base{ font-size: 0.9375rem; line-height: 1.5; }
+
+  h1, h2, h3, h4, h5, h6 { line-height: 1.2; }
+  p { line-height: 1.55; }
+
+  /* Tighter vertical rhythm for hero/section padding */
+  .py-12 { padding-top: 2rem;    padding-bottom: 2rem; }
+  .py-16 { padding-top: 2.5rem;  padding-bottom: 2.5rem; }
+  .py-20 { padding-top: 2.75rem; padding-bottom: 2.75rem; }
+  .py-24 { padding-top: 3rem;    padding-bottom: 3rem; }
+  .py-28 { padding-top: 3.25rem; padding-bottom: 3.25rem; }
+
+  /* Tighter heading/paragraph margins */
+  .mb-12 { margin-bottom: 2rem; }
+  .mb-16 { margin-bottom: 2.5rem; }
+  .mt-12 { margin-top: 2rem; }
+  .mt-16 { margin-top: 2.5rem; }
+
+  /* Center-align text in 2-column / 3-column / 4-column grid sections that
+     collapse to a single column on mobile. This catches the common pattern
+     of <div> with heading + paragraph + CTA sitting next to an image. */
+  section .container > .grid > div,
+  section .container > div > .grid > div {
+    text-align: center;
+  }
+
+  /* Make section heading rows (badge + title + subtitle) center on mobile */
+  section .container > div.text-left,
+  section .container > div > div.text-left {
+    text-align: center;
+  }
+
+  /* Center inline-flex CTAs (Link-wrapped Buttons) inside centered text */
+  section .container .grid > div > a {
+    display: inline-flex;
+    justify-content: center;
+  }
+
+  /* Center badges that sit above headings */
+  section .container .grid > div > [data-testid^="badge-"] {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Restore left alignment inside cards (so card content stays readable),
+     lists, and form fields */
+  section .container .grid > div ul,
+  section .container .grid > div ol,
+  section .container .grid > div form,
+  section .container .grid > div [role="list"] {
+    text-align: left;
+  }
+
+  /* Stack flex rows that have a CTA on the right (e.g. Industries banner) */
+  section .container > div.flex.justify-between {
+    text-align: center;
+  }
+}
