@@ -19,6 +19,33 @@ function formatDate(date: string | Date | null): string {
   return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
+function getVideoEmbed(url: string | null | undefined): { src: string; title: string } | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+
+  const yt = trimmed.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/i
+  );
+  if (yt && yt[1]) {
+    return { src: `https://www.youtube-nocookie.com/embed/${yt[1]}`, title: "YouTube video player" };
+  }
+
+  const vimeo = trimmed.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+  if (vimeo && vimeo[1]) {
+    return { src: `https://player.vimeo.com/video/${vimeo[1]}`, title: "Vimeo video player" };
+  }
+
+  return null;
+}
+
+function splitAfterFirstParagraph(markdown: string): { first: string; rest: string } {
+  const trimmed = markdown.replace(/^\s+/, "");
+  const idx = trimmed.search(/\n\s*\n/);
+  if (idx === -1) return { first: trimmed, rest: "" };
+  return { first: trimmed.slice(0, idx), rest: trimmed.slice(idx) };
+}
+
 export default function BlogPostDetail() {
   const { slug } = useParams<{ slug: string }>();
 
@@ -64,6 +91,10 @@ export default function BlogPostDetail() {
 
   const readTime = estimateReadTime(post.content);
   const tags = post.tags ? post.tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
+  const videoEmbed = getVideoEmbed(post.videoUrl);
+  const { first: firstParagraph, rest: restContent } = videoEmbed
+    ? splitAfterFirstParagraph(post.content)
+    : { first: post.content, rest: "" };
 
   return (
     <div>
@@ -152,7 +183,30 @@ export default function BlogPostDetail() {
                   </div>
                 )}
                 <article className="prose prose-lg max-w-none prose-headings:text-[#063970] prose-h2:text-3xl prose-h2:font-bold prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4">
-                  <Markdown>{post.content}</Markdown>
+                  {videoEmbed ? (
+                    <>
+                      <Markdown>{firstParagraph}</Markdown>
+                      <div
+                        className="my-10 overflow-hidden rounded-xl shadow-md bg-black"
+                        style={{ aspectRatio: "16 / 9" }}
+                        data-testid="video-embed-wrapper"
+                      >
+                        <iframe
+                          src={videoEmbed.src}
+                          title={videoEmbed.title}
+                          className="w-full h-full"
+                          loading="lazy"
+                          frameBorder={0}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          data-testid="video-embed-iframe"
+                        />
+                      </div>
+                      {restContent && <Markdown>{restContent}</Markdown>}
+                    </>
+                  ) : (
+                    <Markdown>{post.content}</Markdown>
+                  )}
 
                   {tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-12 pt-8 border-t">

@@ -162,6 +162,7 @@ export const blogPosts = pgTable("blog_posts", {
   category: text("category"),
   tags: text("tags"),
   imageUrl: text("image_url"),
+  videoUrl: text("video_url"),
   status: text("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
   approvalStatus: text("approval_status").default("none").notNull(),
@@ -203,6 +204,19 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  imageUrl: z.string().trim().min(1, "Featured image is required"),
+  videoUrl: z
+    .string()
+    .trim()
+    .max(2048)
+    .regex(
+      /^(?:https?:\/\/)(?:(?:www\.|m\.)?youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)[A-Za-z0-9_-]{6,}|youtu\.be\/[A-Za-z0-9_-]{6,}|(?:www\.|player\.)?vimeo\.com\/(?:video\/)?\d+)/i,
+      "Must be a YouTube or Vimeo URL"
+    )
+    .optional()
+    .nullable()
+    .or(z.literal("")),
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

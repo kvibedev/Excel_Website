@@ -25,6 +25,7 @@ interface PostForm {
   category: string;
   tags: string;
   imageUrl: string;
+  videoUrl: string;
   status: string;
 }
 
@@ -59,6 +60,7 @@ export default function AdminBlogEditor() {
     category: "",
     tags: "",
     imageUrl: "",
+    videoUrl: "",
     status: "draft",
   });
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
@@ -146,6 +148,7 @@ export default function AdminBlogEditor() {
         category: existingPost.category || "",
         tags: existingPost.tags || "",
         imageUrl: existingPost.imageUrl || "",
+        videoUrl: existingPost.videoUrl || "",
         status: existingPost.status,
       });
       setSlugManuallyEdited(true);
@@ -244,6 +247,29 @@ export default function AdminBlogEditor() {
         variant: "destructive",
       });
       return;
+    }
+    if (!form.imageUrl.trim()) {
+      toast({
+        title: "Featured image required",
+        description: "Please add a featured image before saving the post.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (form.videoUrl.trim()) {
+      const v = form.videoUrl.trim();
+      const ok =
+        /^(?:https?:\/\/)(?:(?:www\.|m\.)?youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)[A-Za-z0-9_-]{6,}|youtu\.be\/[A-Za-z0-9_-]{6,}|(?:www\.|player\.)?vimeo\.com\/(?:video\/)?\d+)/i.test(
+          v
+        );
+      if (!ok) {
+        toast({
+          title: "Invalid video URL",
+          description: "Please paste a YouTube or Vimeo link (e.g. https://youtu.be/... or https://vimeo.com/...).",
+          variant: "destructive",
+        });
+        return;
+      }
     }
     if (isEditing) {
       updateMutation.mutate(form);
@@ -419,8 +445,8 @@ export default function AdminBlogEditor() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <Label>Featured Image</Label>
-                    <p className="text-xs text-muted-foreground mb-3">Recommended: 1200 x 630 px (landscape). Max file size: 5 MB. Formats: JPG, PNG, WebP, GIF.</p>
+                    <Label>Featured Image *</Label>
+                    <p className="text-xs text-muted-foreground mb-3">Required. Recommended: 1200 x 630 px (landscape). Max file size: 5 MB. Formats: JPG, PNG, WebP, GIF.</p>
 
                     <div className="flex gap-2 mb-3">
                       <Button
@@ -516,6 +542,17 @@ export default function AdminBlogEditor() {
                         <p className="text-xs text-muted-foreground mt-1 truncate">{form.imageUrl}</p>
                       </div>
                     )}
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label htmlFor="videoUrl">Video URL (optional)</Label>
+                    <p className="text-xs text-muted-foreground mb-2">Paste a YouTube or Vimeo link. The video will appear after the first paragraph of the post.</p>
+                    <Input
+                      id="videoUrl"
+                      value={form.videoUrl}
+                      onChange={(e) => setForm((p) => ({ ...p, videoUrl: e.target.value }))}
+                      placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
+                      data-testid="input-video-url"
+                    />
                   </div>
                   <div className="md:col-span-2">
                     <Label htmlFor="excerpt">Excerpt</Label>
