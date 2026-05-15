@@ -8,7 +8,7 @@ import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
 import { z } from "zod";
-import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail } from "./email";
+import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, getBlogApprovalRecipients } from "./email";
 import crypto from "crypto";
 
 declare module "express-session" {
@@ -838,6 +838,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const id = parseInt(req.params.id);
       const post = await storage.getBlogPost(id);
       if (!post) return res.status(404).json({ error: "Blog post not found" });
+
+      const { to: approvalTo } = await getBlogApprovalRecipients();
+      if (approvalTo.length === 0) {
+        return res.status(400).json({ error: "No client approval recipients configured. Add a recipient in Admin → Email Settings under Blog Approval before sending." });
+      }
 
       if (post.approvalStatus === "changes_requested") {
         const history = await storage.getBlogApprovalHistory(id);

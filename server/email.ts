@@ -115,7 +115,7 @@ export async function sendContactFormEmail(contact: Contact): Promise<void> {
   }
 }
 
-async function getBlogApprovalRecipients() {
+export async function getBlogApprovalRecipients() {
   const settings = await storage.getFormEmailSettings("blog_approval");
   const active = settings.filter(s => s.isActive);
   const to = active.filter(s => s.ccType === "to").map(s => ({ email: s.recipientEmail, name: s.recipientName || undefined }));
