@@ -179,6 +179,7 @@ export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string
 
   const msg: sgMail.MailDataRequired = {
     to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text,
+    trackingSettings: { clickTracking: { enable: false, enableText: false } },
   };
   if (cc.length > 0) msg.cc = cc;
   try {
@@ -246,6 +247,7 @@ export async function sendBlogClientConfirmationEmail(
     subject,
     html,
     text,
+    trackingSettings: { clickTracking: { enable: false, enableText: false } },
   };
   try {
     await sgMail.send(msg);
@@ -276,7 +278,7 @@ export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
       </div>
     </div>`;
   const text = `Blog post approved and published.\n\nTitle: ${post.title}\nLive URL: ${liveUrl}`;
-  const msg: sgMail.MailDataRequired = { to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text };
+  const msg: sgMail.MailDataRequired = { to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text, trackingSettings: { clickTracking: { enable: false, enableText: false } } };
   if (cc.length > 0) msg.cc = cc;
   try { await sgMail.send(msg); } catch (error: any) {
     console.error("SendGrid email error:", error?.response?.body || error.message);
@@ -306,7 +308,7 @@ export async function sendBlogChangesRequestedEmail(post: BlogPost, feedback: st
       </div>
     </div>`;
   const text = `Changes requested for: ${post.title}\n\nFeedback:\n${feedback}\n\nUpdate the post and resend it for approval.`;
-  const msg: sgMail.MailDataRequired = { to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text };
+  const msg: sgMail.MailDataRequired = { to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text, trackingSettings: { clickTracking: { enable: false, enableText: false } } };
   if (cc.length > 0) msg.cc = cc;
   try { await sgMail.send(msg); } catch (error: any) {
     console.error("SendGrid email error:", error?.response?.body || error.message);
