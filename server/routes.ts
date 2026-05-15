@@ -887,6 +887,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (post.approvalStatus !== "changes_requested") {
         return res.status(400).json({ error: "Post is not in 'changes requested' state" });
       }
+      const history = await storage.getBlogApprovalHistory(id);
+      const lastFeedback = history.find(h => h.action === "changes_requested");
+      const alreadyCompleted = lastFeedback
+        ? history.some(h => h.action === "edits_completed" && new Date(h.createdAt) > new Date(lastFeedback.createdAt))
+        : false;
+      if (alreadyCompleted) {
+        return res.status(400).json({ error: "Edits have already been marked completed for the latest feedback" });
+      }
       await storage.createBlogApprovalHistory({
         blogPostId: id,
         action: "edits_completed",

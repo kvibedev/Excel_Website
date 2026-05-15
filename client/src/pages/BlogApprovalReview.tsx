@@ -7,9 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
-import { Check, MessageSquare, Loader2, CheckCircle2, AlertCircle, Calendar, Clock } from "lucide-react";
+import { Check, MessageSquare, Loader2, CheckCircle2, AlertCircle, Clock } from "lucide-react";
 import Markdown from "react-markdown";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { BlogPost, BlogApprovalHistory } from "@shared/schema";
 
@@ -21,11 +21,6 @@ interface ReviewData {
 function estimateReadTime(content: string): string {
   const words = content.split(/\s+/).length;
   return `${Math.max(1, Math.ceil(words / 200))} min read`;
-}
-
-function formatDate(d: string | Date | null | undefined): string {
-  if (!d) return "";
-  return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
 function formatDateTime(d: string | Date | null | undefined): string {
