@@ -124,6 +124,14 @@ async function getBlogApprovalRecipients() {
   return { to, cc };
 }
 
+async function getAdminNotificationRecipients() {
+  const admins = await storage.getAdminUsers();
+  const to = admins
+    .filter(a => a.isActive && a.email)
+    .map(a => ({ email: a.email, name: a.username || undefined }));
+  return { to, cc: [] as { email: string; name?: string }[] };
+}
+
 function getAppBaseUrl(): string {
   if (process.env.PUBLIC_APP_URL) return process.env.PUBLIC_APP_URL.replace(/\/$/, "");
   if (process.env.REPLIT_DEV_DOMAIN) return `https://${process.env.REPLIT_DEV_DOMAIN}`;
@@ -171,8 +179,8 @@ export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string
 
 export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
   if (!SENDGRID_API_KEY) return;
-  const { to, cc } = await getBlogApprovalRecipients();
-  if (to.length === 0) return;
+  const { to, cc } = await getAdminNotificationRecipients();
+  if (to.length === 0) { console.warn("No active admin recipients for approval notification"); return; }
   const liveUrl = `${getAppBaseUrl()}/resources/${post.slug}`;
   const subject = `Approved & published: ${post.title}`;
   const html = `
@@ -198,8 +206,8 @@ export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
 
 export async function sendBlogChangesRequestedEmail(post: BlogPost, feedback: string): Promise<void> {
   if (!SENDGRID_API_KEY) return;
-  const { to, cc } = await getBlogApprovalRecipients();
-  if (to.length === 0) return;
+  const { to, cc } = await getAdminNotificationRecipients();
+  if (to.length === 0) { console.warn("No active admin recipients for changes-requested notification"); return; }
   const subject = `Changes requested: ${post.title}`;
   const safeFeedback = feedback.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const html = `
