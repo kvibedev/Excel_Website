@@ -45,16 +45,18 @@ export default function BlogApprovalReview() {
   const { toast } = useToast();
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [decision, setDecision] = useState<null | "approved" | "changes_requested">(null);
 
   const { data, isLoading, error } = useQuery<ReviewData>({
     queryKey: ["/api/blog-approval", token],
     retry: false,
+    enabled: decision === null,
   });
 
   const approveMutation = useMutation({
     mutationFn: async () => apiRequest("POST", `/api/blog-approval/${token}/approve`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/blog-approval", token] });
+      setDecision("approved");
       toast({ title: "Approved", description: "The post has been approved and published." });
     },
     onError: () => toast({ title: "Could not approve", description: "This review link may have expired.", variant: "destructive" }),
@@ -63,13 +65,39 @@ export default function BlogApprovalReview() {
   const requestEditsMutation = useMutation({
     mutationFn: async (fb: string) => apiRequest("POST", `/api/blog-approval/${token}/request-edits`, { feedback: fb }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/blog-approval", token] });
       setFeedbackOpen(false);
       setFeedback("");
+      setDecision("changes_requested");
       toast({ title: "Feedback sent", description: "The team has been notified of your requested changes." });
     },
     onError: () => toast({ title: "Could not submit feedback", description: "Please try again.", variant: "destructive" }),
   });
+
+  if (decision) {
+    const approved = decision === "approved";
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="pt-8 pb-8 text-center space-y-4">
+            {approved ? (
+              <CheckCircle2 className="w-16 h-16 text-[#97CC06] mx-auto" />
+            ) : (
+              <MessageSquare className="w-16 h-16 text-amber-500 mx-auto" />
+            )}
+            <h1 className="text-2xl font-bold text-[#063970]" data-testid="text-decision-confirmed">
+              {approved ? "Approved & Published" : "Feedback Submitted"}
+            </h1>
+            <p className="text-muted-foreground">
+              {approved
+                ? "Thank you. The post is now live on the Excel Facility Services Group site."
+                : "Thank you. The team has been notified and will send a revised version for review."}
+            </p>
+            <p className="text-xs text-muted-foreground">You can safely close this window.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
