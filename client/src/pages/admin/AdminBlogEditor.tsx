@@ -226,7 +226,10 @@ export default function AdminBlogEditor() {
   const hasEditsCompletedAfterLastFeedback = lastFeedbackEntry
     ? approvalHistory.some(h => h.action === "edits_completed" && new Date(h.createdAt) > new Date(lastFeedbackEntry.createdAt))
     : false;
-  const canSendForApproval = isEditing && !isPending;
+  const canSendForApproval =
+    isEditing &&
+    !isPending &&
+    (approvalStatus !== "changes_requested" || hasEditsCompletedAfterLastFeedback);
 
   const approvalStatusBadge = (() => {
     if (approvalStatus === "pending") return <Badge className="bg-blue-500" data-testid="badge-approval-status">Pending Review (Round {roundNumber})</Badge>;

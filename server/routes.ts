@@ -6,7 +6,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { storage } from "./storage";
-import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
+import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
 import { z } from "zod";
 import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail } from "./email";
 import crypto from "crypto";
@@ -680,8 +680,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // ── Blog (admin) ────────────────────────────────────────────────────────────
 
-  const sanitizeBlogPost = <T extends { approvalToken?: string | null }>(p: T) => {
-    const { approvalToken: _t, ...rest } = p;
+  const sanitizeBlogPost = <T extends { approvalToken?: string | null; approvalTokenExpiresAt?: Date | null }>(p: T) => {
+    const { approvalToken: _t, approvalTokenExpiresAt: _e, ...rest } = p;
     return rest;
   };
 
@@ -839,6 +839,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const post = await storage.getBlogPost(id);
       if (!post) return res.status(404).json({ error: "Blog post not found" });
 
+      if (post.approvalStatus === "changes_requested") {
+        const history = await storage.getBlogApprovalHistory(id);
+        const lastFeedback = history.find(h => h.action === "changes_requested");
+        const hasCompletion = lastFeedback
+          ? history.some(h => h.action === "edits_completed" && new Date(h.createdAt) > new Date(lastFeedback.createdAt))
+          : false;
+        if (!hasCompletion) {
+          return res.status(400).json({ error: "Mark edits completed before resending for approval" });
+        }
+      }
+
       const token = crypto.randomBytes(32).toString("hex");
       const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
@@ -846,7 +857,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         approvalStatus: "pending",
         approvalToken: token,
         approvalTokenExpiresAt: expiresAt,
-      } as any);
+      });
 
       await storage.createBlogApprovalHistory({
         blogPostId: id,
@@ -856,7 +867,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       sendBlogApprovalRequestEmail(updated!, token).catch(err => console.error("Background email failed:", err));
-      res.json(updated);
+      res.json(updated ? sanitizeBlogPost(updated) : null);
     } catch (error) {
       console.error("send-for-approval error:", error);
       res.status(500).json({ error: "Failed to send for approval" });
@@ -915,7 +926,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (existing.approvalTokenExpiresAt && new Date(existing.approvalTokenExpiresAt) < new Date()) {
         return res.status(410).json({ error: "This review link has expired" });
       }
-      const updates: any = {
+      const updates: Partial<InsertBlogPost> = {
         approvalStatus: "approved",
         approvalToken: null,
         approvalTokenExpiresAt: null,
@@ -956,7 +967,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         approvalStatus: "changes_requested",
         approvalToken: null,
         approvalTokenExpiresAt: null,
-      } as any);
+      });
       if (!updated) {
         return res.status(409).json({ error: "This review link has already been used" });
       }
@@ -979,7 +990,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/blog", async (req, res) => {
     try {
       const posts = await storage.getPublishedBlogPosts();
-      res.json(posts);
+      res.json(posts.map(sanitizeBlogPost));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog posts" });
     }
@@ -991,7 +1002,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!post) {
         return res.status(404).json({ error: "Blog post not found" });
       }
-      res.json(post);
+      res.json(sanitizeBlogPost(post));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog post" });
     }
