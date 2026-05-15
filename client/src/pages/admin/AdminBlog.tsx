@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { FileText, Plus, Trash2, Pencil } from "lucide-react";
+import { FileText, Plus, Trash2, Pencil, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -115,6 +115,28 @@ export default function AdminBlog() {
                       {approvalStatusLabels[post.approvalStatus].label}
                     </Badge>
                   )}
+                  {(() => {
+                    if (post.approvalStatus !== "pending" || !post.approvalTokenExpiresAt) return null;
+                    const diffMs = new Date(post.approvalTokenExpiresAt).getTime() - Date.now();
+                    if (diffMs <= 0) {
+                      return (
+                        <Badge variant="outline" className="border-red-300 bg-red-50 text-red-800" data-testid={`badge-expired-${post.id}`}>
+                          <AlertTriangle className="w-3 h-3 mr-1" />
+                          Expired — resend
+                        </Badge>
+                      );
+                    }
+                    const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+                    if (days <= 3) {
+                      return (
+                        <Badge variant="outline" className="border-amber-300 bg-amber-50 text-amber-800" data-testid={`badge-expiring-${post.id}`}>
+                          <AlertTriangle className="w-3 h-3 mr-1" />
+                          Expires in {days} day{days === 1 ? "" : "s"}
+                        </Badge>
+                      );
+                    }
+                    return null;
+                  })()}
                   {!isReadOnly && (
                     <Link href={`/admin/blog/${post.id}/edit`}>
                       <Button size="icon" variant="ghost" data-testid={`button-edit-post-${post.id}`}>

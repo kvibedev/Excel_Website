@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2 } from "lucide-react";
+import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -254,6 +254,34 @@ export default function AdminBlogEditor() {
     return new Date(d).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
   }
 
+  function formatDate(d: string | Date): string {
+    return new Date(d).toLocaleDateString("en-US", { dateStyle: "medium" });
+  }
+
+  function getExpirationInfo(expiresAt: string | Date | null | undefined) {
+    if (!expiresAt) return null;
+    const expiry = new Date(expiresAt).getTime();
+    const now = Date.now();
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const diffMs = expiry - now;
+    const expired = diffMs <= 0;
+    const daysRemaining = Math.ceil(diffMs / msPerDay);
+    let relative: string;
+    if (expired) {
+      relative = "Expired";
+    } else if (daysRemaining <= 1) {
+      const hours = Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60)));
+      relative = `Expires in ${hours} hour${hours === 1 ? "" : "s"}`;
+    } else {
+      relative = `Expires in ${daysRemaining} days`;
+    }
+    return { expired, daysRemaining, relative, warning: !expired && daysRemaining <= 3 };
+  }
+
+  const expirationInfo = approvalStatus === "pending"
+    ? getExpirationInfo(existingPost?.approvalTokenExpiresAt)
+    : null;
+
   const historyChronological = [...approvalHistory].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
@@ -495,6 +523,46 @@ export default function AdminBlogEditor() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {expirationInfo && (
+                    expirationInfo.expired ? (
+                      <div
+                        className="bg-red-50 border border-red-200 rounded-md p-3 flex items-start gap-2"
+                        data-testid="expiration-expired"
+                      >
+                        <AlertTriangle className="w-5 h-5 text-red-700 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-red-900">Review link expired — resend</p>
+                          <p className="text-xs text-red-800 mt-0.5">
+                            Expired on {formatDateTime(existingPost!.approvalTokenExpiresAt!)}. The client can no longer open the link until you resend it.
+                          </p>
+                        </div>
+                      </div>
+                    ) : expirationInfo.warning ? (
+                      <div
+                        className="bg-amber-50 border border-amber-200 rounded-md p-3 flex items-start gap-2"
+                        data-testid="expiration-warning"
+                      >
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-amber-900">{expirationInfo.relative}</p>
+                          <p className="text-xs text-amber-800 mt-0.5">
+                            Expires {formatDate(existingPost!.approvalTokenExpiresAt!)}. Resend the link if the client needs more time.
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className="text-sm text-muted-foreground flex items-center gap-2"
+                        data-testid="expiration-info"
+                      >
+                        <Clock className="w-4 h-4" />
+                        <span>
+                          {expirationInfo.relative} ({formatDate(existingPost!.approvalTokenExpiresAt!)})
+                        </span>
+                      </div>
+                    )
+                  )}
+
                   {approvalStatus === "changes_requested" && lastFeedbackEntry && (
                     <div className="bg-amber-50 border border-amber-200 rounded-md p-4">
                       <div className="flex items-start gap-2">
