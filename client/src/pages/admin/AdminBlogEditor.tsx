@@ -249,6 +249,16 @@ export default function AdminBlogEditor() {
     return new Date(d).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
   }
 
+  const historyChronological = [...approvalHistory].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
+  const roundByEntryId = new Map<number, number>();
+  let currentRound = 0;
+  for (const h of historyChronological) {
+    if (h.action === "sent_for_approval") currentRound += 1;
+    roundByEntryId.set(h.id, currentRound || 1);
+  }
+
   if (authLoading || (isEditing && postLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -534,6 +544,9 @@ export default function AdminBlogEditor() {
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap">
                                   <span className="font-medium text-gray-900">{actionLabels[h.action] || h.action}</span>
+                                  <Badge variant="outline" className="text-xs" data-testid={`badge-round-${h.id}`}>
+                                    Round {roundByEntryId.get(h.id) || 1}
+                                  </Badge>
                                   {isFeedback && matchingCompletion && (
                                     <span className="inline-flex items-center gap-1 text-xs text-green-700 font-medium" title="Edits completed">
                                       <CheckCircle2 className="w-3.5 h-3.5" />
@@ -573,10 +586,24 @@ export default function AdminBlogEditor() {
                       {form.status === "published" ? "Published" : "Draft"}
                     </Label>
                   </div>
-                  <Button type="submit" disabled={isPending} data-testid="button-save">
-                    <Save className="w-4 h-4 mr-2" />
-                    {isPending ? "Saving..." : isEditing ? "Update Post" : "Create Post"}
-                  </Button>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {isEditing && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => sendForApprovalMutation.mutate()}
+                        disabled={!canSendForApproval || sendForApprovalMutation.isPending}
+                        data-testid="button-send-for-approval-inline"
+                      >
+                        <Send className="w-4 h-4 mr-2" />
+                        {approvalStatus === "pending" ? "Resend Review Link" : "Send for Approval"}
+                      </Button>
+                    )}
+                    <Button type="submit" disabled={isPending} data-testid="button-save">
+                      <Save className="w-4 h-4 mr-2" />
+                      {isPending ? "Saving..." : isEditing ? "Update Post" : "Create Post"}
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

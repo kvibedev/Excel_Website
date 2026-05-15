@@ -132,6 +132,15 @@ async function getAdminNotificationRecipients() {
   return { to, cc: [] as { email: string; name?: string }[] };
 }
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function getAppBaseUrl(): string {
   if (process.env.PUBLIC_APP_URL) return process.env.PUBLIC_APP_URL.replace(/\/$/, "");
   if (process.env.REPLIT_DEV_DOMAIN) return `https://${process.env.REPLIT_DEV_DOMAIN}`;
@@ -144,6 +153,9 @@ export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string
   if (to.length === 0) { console.warn("No blog_approval recipients — skipping"); return; }
 
   const reviewUrl = `${getAppBaseUrl()}/blog/approval/${token}`;
+  const safeTitle = escapeHtml(post.title);
+  const safeAuthor = post.author ? escapeHtml(post.author) : "";
+  const safeExcerpt = post.excerpt ? escapeHtml(post.excerpt) : "";
   const subject = `Blog post ready for your review: ${post.title}`;
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -152,9 +164,9 @@ export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string
       </div>
       <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
         <p style="color: #111827;">A blog post is ready for your review and approval.</p>
-        <p style="color: #111827;"><strong>Title:</strong> ${post.title}</p>
-        ${post.author ? `<p style="color: #111827;"><strong>Author:</strong> ${post.author}</p>` : ""}
-        ${post.excerpt ? `<p style="color: #374151;"><em>${post.excerpt}</em></p>` : ""}
+        <p style="color: #111827;"><strong>Title:</strong> ${safeTitle}</p>
+        ${safeAuthor ? `<p style="color: #111827;"><strong>Author:</strong> ${safeAuthor}</p>` : ""}
+        ${safeExcerpt ? `<p style="color: #374151;"><em>${safeExcerpt}</em></p>` : ""}
         <p style="text-align: center; margin: 28px 0;">
           <a href="${reviewUrl}" style="background-color: #063970; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Review &amp; Approve</a>
         </p>
@@ -182,6 +194,7 @@ export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
   const { to, cc } = await getAdminNotificationRecipients();
   if (to.length === 0) { console.warn("No active admin recipients for approval notification"); return; }
   const liveUrl = `${getAppBaseUrl()}/resources/${post.slug}`;
+  const safeTitle = escapeHtml(post.title);
   const subject = `Approved & published: ${post.title}`;
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -190,7 +203,7 @@ export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
       </div>
       <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
         <p style="color: #111827;">The following blog post has been approved and is now live:</p>
-        <p style="color: #111827;"><strong>${post.title}</strong></p>
+        <p style="color: #111827;"><strong>${safeTitle}</strong></p>
         <p style="text-align: center; margin: 24px 0;">
           <a href="${liveUrl}" style="background-color: #063970; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 4px; font-weight: bold;">View Live Post</a>
         </p>
@@ -209,7 +222,8 @@ export async function sendBlogChangesRequestedEmail(post: BlogPost, feedback: st
   const { to, cc } = await getAdminNotificationRecipients();
   if (to.length === 0) { console.warn("No active admin recipients for changes-requested notification"); return; }
   const subject = `Changes requested: ${post.title}`;
-  const safeFeedback = feedback.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const safeFeedback = escapeHtml(feedback);
+  const safeTitle = escapeHtml(post.title);
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <div style="background-color: #b45309; padding: 20px; text-align: center;">
@@ -217,7 +231,7 @@ export async function sendBlogChangesRequestedEmail(post: BlogPost, feedback: st
       </div>
       <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
         <p style="color: #111827;">The client has requested changes to:</p>
-        <p style="color: #111827;"><strong>${post.title}</strong></p>
+        <p style="color: #111827;"><strong>${safeTitle}</strong></p>
         <div style="background-color: #ffffff; border-left: 4px solid #b45309; padding: 12px 16px; margin: 16px 0;">
           <p style="color: #6b7280; font-size: 12px; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Feedback</p>
           <p style="color: #111827; white-space: pre-wrap; margin: 0;">${safeFeedback}</p>
