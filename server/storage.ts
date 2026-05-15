@@ -26,6 +26,9 @@ export interface IStorage {
   getAdminUsers(): Promise<AdminUser[]>;
   updateAdminUser(id: number, data: Partial<InsertAdminUser>): Promise<AdminUser | undefined>;
   deactivateAdminUser(id: number): Promise<void>;
+  setPasswordResetToken(id: number, token: string, expiresAt: Date): Promise<void>;
+  getAdminByResetToken(token: string): Promise<AdminUser | undefined>;
+  clearPasswordResetToken(id: number, newPasswordHash: string): Promise<void>;
 
   getContacts(): Promise<Contact[]>;
   getContact(id: number): Promise<Contact | undefined>;
@@ -119,6 +122,25 @@ export class DatabaseStorage implements IStorage {
 
   async deactivateAdminUser(id: number): Promise<void> {
     await db.update(adminUsers).set({ isActive: false }).where(eq(adminUsers.id, id));
+  }
+
+  async setPasswordResetToken(id: number, token: string, expiresAt: Date): Promise<void> {
+    await db
+      .update(adminUsers)
+      .set({ passwordResetToken: token, passwordResetExpiresAt: expiresAt })
+      .where(eq(adminUsers.id, id));
+  }
+
+  async getAdminByResetToken(token: string): Promise<AdminUser | undefined> {
+    const [admin] = await db.select().from(adminUsers).where(eq(adminUsers.passwordResetToken, token));
+    return admin;
+  }
+
+  async clearPasswordResetToken(id: number, newPasswordHash: string): Promise<void> {
+    await db
+      .update(adminUsers)
+      .set({ password: newPasswordHash, passwordResetToken: null, passwordResetExpiresAt: null })
+      .where(eq(adminUsers.id, id));
   }
 
   async getContacts(): Promise<Contact[]> {

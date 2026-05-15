@@ -43,12 +43,16 @@ export const adminUsers = pgTable("admin_users", {
   email: text("email").notNull(),
   role: adminRoleEnum("role").notNull().default("viewer"),
   isActive: boolean("is_active").notNull().default(true),
+  passwordResetToken: text("password_reset_token"),
+  passwordResetExpiresAt: timestamp("password_reset_expires_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
   id: true,
   isActive: true,
+  passwordResetToken: true,
+  passwordResetExpiresAt: true,
   createdAt: true,
 });
 

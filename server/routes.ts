@@ -8,7 +8,7 @@ import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
 import { z } from "zod";
-import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, sendBlogClientConfirmationEmail, getBlogApprovalRecipients } from "./email";
+import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, sendBlogClientConfirmationEmail, getBlogApprovalRecipients, sendPasswordResetEmail } from "./email";
 import crypto from "crypto";
 
 declare module "express-session" {
@@ -175,6 +175,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({ error: "Something went wrong. Please try again later." });
+    }
+  });
+
+  app.post("/api/admin/forgot-password", async (req, res) => {
+    try {
+      const { email } = req.body;
+      if (!email || typeof email !== "string") {
+        return res.status(400).json({ error: "Please enter your email address." });
+      }
+
+      const admin = await storage.getAdminByEmail(email.trim().toLowerCase());
+      const genericMsg = { success: true, message: "If an account exists for that email, a password reset link has been sent." };
+
+      if (!admin || !admin.isActive) {
+        return res.json(genericMsg);
+      }
+
+      const token = crypto.randomBytes(32).toString("hex");
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+      await storage.setPasswordResetToken(admin.id, token, expiresAt);
+
+      try {
+        await sendPasswordResetEmail({ email: admin.email, name: admin.username }, token);
+      } catch (err) {
+        console.error("Failed to send password reset email:", err);
+      }
+
+      res.json(genericMsg);
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      res.status(500).json({ error: "Something went wrong. Please try again." });
+    }
+  });
+
+  app.post("/api/admin/reset-password", async (req, res) => {
+    try {
+      const { token, password } = req.body;
+      if (!token || !password) {
+        return res.status(400).json({ error: "Reset token and a new password are required." });
+      }
+      if (typeof password !== "string" || password.length < 8) {
+        return res.status(400).json({ error: "Password must be at least 8 characters long." });
+      }
+
+      const admin = await storage.getAdminByResetToken(token);
+      if (!admin || !admin.passwordResetExpiresAt) {
+        return res.status(400).json({ error: "This reset link is invalid. Please request a new one." });
+      }
+      if (new Date(admin.passwordResetExpiresAt).getTime() < Date.now()) {
+        return res.status(400).json({ error: "This reset link has expired. Please request a new one." });
+      }
+      if (!admin.isActive) {
+        return res.status(400).json({ error: "This account is no longer active. Please contact your administrator." });
+      }
+
+      const newHash = await bcrypt.hash(password, 10);
+      await storage.clearPasswordResetToken(admin.id, newHash);
+
+      res.json({ success: true, message: "Your password has been reset. You can now log in with the new password." });
+    } catch (error) {
+      console.error("Reset password error:", error);
+      res.status(500).json({ error: "Something went wrong. Please try again." });
+    }
+  });
+
+  app.get("/api/admin/reset-password/verify", async (req, res) => {
+    try {
+      const token = typeof req.query.token === "string" ? req.query.token : "";
+      if (!token) return res.json({ valid: false, reason: "missing" });
+      const admin = await storage.getAdminByResetToken(token);
+      if (!admin || !admin.passwordResetExpiresAt) return res.json({ valid: false, reason: "invalid" });
+      if (new Date(admin.passwordResetExpiresAt).getTime() < Date.now()) return res.json({ valid: false, reason: "expired" });
+      if (!admin.isActive) return res.json({ valid: false, reason: "inactive" });
+      res.json({ valid: true, email: admin.email });
+    } catch (error) {
+      res.status(500).json({ valid: false, reason: "error" });
     }
   });
 

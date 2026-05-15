@@ -49,6 +49,7 @@ import BlogPostDetail from "@/pages/resources/BlogPostDetail";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminResetPassword from "@/pages/admin/AdminResetPassword";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminContacts from "@/pages/admin/AdminContacts";
 import AdminVendors from "@/pages/admin/AdminVendors";
@@ -131,6 +132,7 @@ function AdminRouter() {
       <ScrollToTop />
       <Switch>
         <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin/reset-password" component={AdminResetPassword} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/dashboard" component={AdminDashboard} />
         <Route path="/admin/contacts" component={AdminContacts} />
