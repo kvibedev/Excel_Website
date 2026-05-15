@@ -189,6 +189,72 @@ export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string
   }
 }
 
+export async function sendBlogClientConfirmationEmail(
+  post: BlogPost,
+  clientEmail: string,
+  action: "approved" | "changes_requested",
+  feedback?: string,
+): Promise<void> {
+  if (!SENDGRID_API_KEY) {
+    console.warn("SendGrid not configured — skipping client confirmation email");
+    return;
+  }
+  const email = clientEmail.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return;
+  }
+
+  const safeTitle = escapeHtml(post.title);
+  const approved = action === "approved";
+  const subject = approved
+    ? `Your approval was received: ${post.title}`
+    : `We received your feedback: ${post.title}`;
+
+  const headerBg = approved ? "#97CC06" : "#b45309";
+  const headerColor = approved ? "#063970" : "#ffffff";
+  const headerText = approved ? "Approval Received" : "Feedback Received";
+
+  const intro = approved
+    ? "Thank you — we've received your approval and the post has been published."
+    : "Thank you — we've received your feedback and the team will revise the post and send you an updated version for review.";
+
+  const safeFeedback = feedback ? escapeHtml(feedback) : "";
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: ${headerBg}; padding: 20px; text-align: center;">
+        <h1 style="color: ${headerColor}; margin: 0; font-size: 22px;">${headerText}</h1>
+      </div>
+      <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
+        <p style="color: #111827;">${intro}</p>
+        <p style="color: #111827;"><strong>Post:</strong> ${safeTitle}</p>
+        ${!approved && safeFeedback ? `
+        <div style="background-color: #ffffff; border-left: 4px solid #b45309; padding: 12px 16px; margin: 16px 0;">
+          <p style="color: #6b7280; font-size: 12px; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Your Feedback</p>
+          <p style="color: #111827; white-space: pre-wrap; margin: 0;">${safeFeedback}</p>
+        </div>` : ""}
+        <p style="color: #6b7280; font-size: 13px; margin-top: 24px;">This is an automated confirmation from Excel Facility Services Group. You don't need to reply.</p>
+      </div>
+    </div>`;
+  const text = approved
+    ? `${intro}\n\nPost: ${post.title}`
+    : `${intro}\n\nPost: ${post.title}${feedback ? `\n\nYour feedback:\n${feedback}` : ""}`;
+
+  const msg: sgMail.MailDataRequired = {
+    to: [{ email }],
+    from: { email: FROM_EMAIL, name: FROM_NAME },
+    subject,
+    html,
+    text,
+  };
+  try {
+    await sgMail.send(msg);
+    console.log(`Client confirmation email (${action}) sent to ${email} for post ${post.id}`);
+  } catch (error: any) {
+    console.error("SendGrid client confirmation email error:", error?.response?.body || error.message);
+  }
+}
+
 export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
   if (!SENDGRID_API_KEY) return;
   const { to, cc } = await getAdminNotificationRecipients();

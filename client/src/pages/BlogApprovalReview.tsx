@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Check, MessageSquare, Loader2, CheckCircle2, AlertCircle, Clock } from "lucide-react";
@@ -40,7 +41,11 @@ export default function BlogApprovalReview() {
   const { toast } = useToast();
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [clientEmail, setClientEmail] = useState("");
   const [decision, setDecision] = useState<null | "approved" | "changes_requested">(null);
+
+  const trimmedEmail = clientEmail.trim();
+  const emailIsValid = trimmedEmail === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
 
   const { data, isLoading, error } = useQuery<ReviewData>({
     queryKey: ["/api/blog-approval", token],
@@ -49,21 +54,31 @@ export default function BlogApprovalReview() {
   });
 
   const approveMutation = useMutation({
-    mutationFn: async () => apiRequest("POST", `/api/blog-approval/${token}/approve`),
+    mutationFn: async () => apiRequest("POST", `/api/blog-approval/${token}/approve`, trimmedEmail ? { clientEmail: trimmedEmail } : {}),
     onSuccess: () => {
       setDecision("approved");
-      toast({ title: "Approved", description: "The post has been approved and published." });
+      toast({
+        title: "Approved",
+        description: trimmedEmail
+          ? "The post has been approved and published. A confirmation email has been sent to you."
+          : "The post has been approved and published.",
+      });
     },
     onError: () => toast({ title: "Could not approve", description: "This review link may have expired.", variant: "destructive" }),
   });
 
   const requestEditsMutation = useMutation({
-    mutationFn: async (fb: string) => apiRequest("POST", `/api/blog-approval/${token}/request-edits`, { feedback: fb }),
+    mutationFn: async (fb: string) => apiRequest("POST", `/api/blog-approval/${token}/request-edits`, { feedback: fb, ...(trimmedEmail ? { clientEmail: trimmedEmail } : {}) }),
     onSuccess: () => {
       setFeedbackOpen(false);
       setFeedback("");
       setDecision("changes_requested");
-      toast({ title: "Feedback sent", description: "The team has been notified of your requested changes." });
+      toast({
+        title: "Feedback sent",
+        description: trimmedEmail
+          ? "The team has been notified of your requested changes. A confirmation email has been sent to you."
+          : "The team has been notified of your requested changes.",
+      });
     },
     onError: () => toast({ title: "Could not submit feedback", description: "Please try again.", variant: "destructive" }),
   });
@@ -204,10 +219,25 @@ export default function BlogApprovalReview() {
                 ) : (
                   <>
                     <p className="text-sm text-muted-foreground">Please review the post on the left. Once you're satisfied, approve it to publish — or request edits with your feedback.</p>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="client-email" className="text-sm">Your email <span className="text-muted-foreground font-normal">(optional)</span></Label>
+                      <Input
+                        id="client-email"
+                        type="email"
+                        value={clientEmail}
+                        onChange={(e) => setClientEmail(e.target.value)}
+                        placeholder="you@example.com"
+                        data-testid="input-client-email"
+                      />
+                      <p className="text-xs text-muted-foreground">Add your email to receive a confirmation of your decision.</p>
+                      {!emailIsValid && (
+                        <p className="text-xs text-destructive" data-testid="text-email-error">Please enter a valid email address.</p>
+                      )}
+                    </div>
                     <Button
                       className="w-full bg-[#97CC06] hover:bg-[#97CC06]/90 text-[#063970] font-bold"
                       onClick={() => approveMutation.mutate()}
-                      disabled={approveMutation.isPending}
+                      disabled={approveMutation.isPending || !emailIsValid}
                       data-testid="button-approve"
                     >
                       <Check className="w-4 h-4 mr-2" />
@@ -217,6 +247,7 @@ export default function BlogApprovalReview() {
                       variant="outline"
                       className="w-full"
                       onClick={() => setFeedbackOpen(true)}
+                      disabled={!emailIsValid}
                       data-testid="button-request-edits"
                     >
                       <MessageSquare className="w-4 h-4 mr-2" />

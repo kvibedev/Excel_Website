@@ -8,7 +8,7 @@ import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
 import { z } from "zod";
-import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, getBlogApprovalRecipients } from "./email";
+import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, sendBlogClientConfirmationEmail, getBlogApprovalRecipients } from "./email";
 import crypto from "crypto";
 
 declare module "express-session" {
@@ -929,11 +929,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  const clientEmailSchema = z.object({ clientEmail: z.string().trim().email().max(254).optional().or(z.literal("")) }).partial();
+
   app.post("/api/blog-approval/:token/approve", async (req, res) => {
     try {
       if (!validateToken(req.params.token)) {
         return res.status(404).json({ error: "Invalid or expired review link" });
       }
+      const parsedBody = clientEmailSchema.safeParse(req.body || {});
+      const clientEmail = parsedBody.success ? (parsedBody.data.clientEmail || "").trim() : "";
       const existing = await storage.getBlogPostByApprovalToken(req.params.token);
       if (!existing) return res.status(404).json({ error: "Invalid or expired review link" });
       if (existing.approvalTokenExpiresAt && new Date(existing.approvalTokenExpiresAt) < new Date()) {
@@ -957,6 +961,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         performedBy: "client",
       });
       sendBlogApprovedEmail(updated).catch(err => console.error("Background email failed:", err));
+      if (clientEmail) {
+        sendBlogClientConfirmationEmail(updated, clientEmail, "approved").catch(err => console.error("Client confirmation email failed:", err));
+      }
       res.json({ success: true });
     } catch (error) {
       console.error("approve error:", error);
@@ -971,6 +978,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const feedbackSchema = z.object({ feedback: z.string().min(1, "Please provide feedback").max(5000) });
       const { feedback } = feedbackSchema.parse(req.body);
+      const parsedEmail = clientEmailSchema.safeParse(req.body || {});
+      const clientEmail = parsedEmail.success ? (parsedEmail.data.clientEmail || "").trim() : "";
       const existing = await storage.getBlogPostByApprovalToken(req.params.token);
       if (!existing) return res.status(404).json({ error: "Invalid or expired review link" });
       if (existing.approvalTokenExpiresAt && new Date(existing.approvalTokenExpiresAt) < new Date()) {
@@ -991,6 +1000,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         performedBy: "client",
       });
       sendBlogChangesRequestedEmail(updated, feedback).catch(err => console.error("Background email failed:", err));
+      if (clientEmail) {
+        sendBlogClientConfirmationEmail(updated, clientEmail, "changes_requested", feedback).catch(err => console.error("Client confirmation email failed:", err));
+      }
       res.json({ success: true });
     } catch (error) {
       if (error instanceof z.ZodError) return res.status(400).json({ error: error.errors });
