@@ -310,7 +310,7 @@ export default function AdminBlogEditor() {
 
   return (
     <AdminLayout title={`Excel CRM - ${isEditing ? "Edit Post" : "New Post"}`} activeNav="blog">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-4">
           <Link href="/admin/blog">
             <Button variant="ghost" size="sm" data-testid="button-back">
@@ -321,7 +321,8 @@ export default function AdminBlogEditor() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="space-y-6">
+          <div className={isEditing ? "grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-6" : ""}>
+          <div className="space-y-6 min-w-0">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -513,143 +514,6 @@ export default function AdminBlogEditor() {
               </CardContent>
             </Card>
 
-            {isEditing && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 flex-wrap">
-                    <Send className="w-5 h-5" />
-                    Client Approval
-                    {approvalStatusBadge}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {expirationInfo && (
-                    expirationInfo.expired ? (
-                      <div
-                        className="bg-red-50 border border-red-200 rounded-md p-3 flex items-start gap-2"
-                        data-testid="expiration-expired"
-                      >
-                        <AlertTriangle className="w-5 h-5 text-red-700 flex-shrink-0 mt-0.5" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-red-900">Review link expired — resend</p>
-                          <p className="text-xs text-red-800 mt-0.5">
-                            Expired on {formatDateTime(existingPost!.approvalTokenExpiresAt!)}. The client can no longer open the link until you resend it.
-                          </p>
-                        </div>
-                      </div>
-                    ) : expirationInfo.warning ? (
-                      <div
-                        className="bg-amber-50 border border-amber-200 rounded-md p-3 flex items-start gap-2"
-                        data-testid="expiration-warning"
-                      >
-                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-amber-900">{expirationInfo.relative}</p>
-                          <p className="text-xs text-amber-800 mt-0.5">
-                            Expires {formatDate(existingPost!.approvalTokenExpiresAt!)}. Resend the link if the client needs more time.
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div
-                        className="text-sm text-muted-foreground flex items-center gap-2"
-                        data-testid="expiration-info"
-                      >
-                        <Clock className="w-4 h-4" />
-                        <span>
-                          {expirationInfo.relative} ({formatDate(existingPost!.approvalTokenExpiresAt!)})
-                        </span>
-                      </div>
-                    )
-                  )}
-
-                  {approvalStatus === "changes_requested" && lastFeedbackEntry && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-md p-4">
-                      <div className="flex items-start gap-2">
-                        <MessageSquare className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-amber-900 mb-1">Most recent feedback</p>
-                          <p className="text-sm text-amber-900 whitespace-pre-wrap" data-testid="text-latest-feedback">{lastFeedbackEntry.feedback}</p>
-                          <p className="text-xs text-amber-700 mt-2">{formatDateTime(lastFeedbackEntry.createdAt)}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Button
-                      type="button"
-                      onClick={() => sendForApprovalMutation.mutate()}
-                      disabled={!canSendForApproval || sendForApprovalMutation.isPending}
-                      data-testid="button-send-for-approval"
-                    >
-                      <Send className="w-4 h-4 mr-2" />
-                      {sendForApprovalMutation.isPending ? "Sending..." :
-                       approvalStatus === "none" ? "Send for Approval" :
-                       approvalStatus === "pending" ? "Resend Review Link" :
-                       "Send for Approval Again"}
-                    </Button>
-                    {approvalStatus === "changes_requested" && !hasEditsCompletedAfterLastFeedback && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => markEditsCompletedMutation.mutate()}
-                        disabled={markEditsCompletedMutation.isPending}
-                        data-testid="button-mark-edits-completed"
-                      >
-                        <Check className="w-4 h-4 mr-2" />
-                        Mark Edits Completed
-                      </Button>
-                    )}
-                  </div>
-
-                  {approvalHistory.length > 0 && (
-                    <div className="border-t pt-4">
-                      <p className="text-sm font-semibold text-gray-700 mb-3">Approval History</p>
-                      <div className="space-y-3">
-                        {approvalHistory.map((h) => {
-                          const isFeedback = h.action === "changes_requested";
-                          const isApproved = h.action === "approved";
-                          const isCompleted = h.action === "edits_completed";
-                          const matchingCompletion = isFeedback
-                            ? approvalHistory.find(e => e.action === "edits_completed" && new Date(e.createdAt) > new Date(h.createdAt))
-                            : null;
-                          return (
-                            <div key={h.id} className="flex items-start gap-3 text-sm" data-testid={`history-${h.id}`}>
-                              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                                isApproved ? "bg-[#97CC06]" :
-                                isFeedback ? "bg-amber-500" :
-                                isCompleted ? "bg-green-600" :
-                                "bg-blue-500"
-                              }`}></div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 flex-wrap">
-                                  <span className="font-medium text-gray-900">{actionLabels[h.action] || h.action}</span>
-                                  <Badge variant="outline" className="text-xs" data-testid={`badge-round-${h.id}`}>
-                                    Round {roundByEntryId.get(h.id) || 1}
-                                  </Badge>
-                                  {isFeedback && matchingCompletion && (
-                                    <span className="inline-flex items-center gap-1 text-xs text-green-700 font-medium" title="Edits completed">
-                                      <CheckCircle2 className="w-3.5 h-3.5" />
-                                      Resolved
-                                    </span>
-                                  )}
-                                  <span className="text-xs text-muted-foreground">{formatDateTime(h.createdAt)}</span>
-                                </div>
-                                <p className="text-xs text-muted-foreground">by {h.performedBy}</p>
-                                {h.feedback && (
-                                  <div className="mt-1 bg-gray-50 border-l-2 border-amber-400 pl-3 py-2 rounded text-sm text-gray-800 whitespace-pre-wrap">{h.feedback}</div>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            )}
 
             <Card>
               <CardContent className="pt-6">
@@ -688,6 +552,177 @@ export default function AdminBlogEditor() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {isEditing && (
+            <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 flex-wrap text-base">
+                    <Send className="w-4 h-4" />
+                    Client Approval
+                    {approvalStatusBadge}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {expirationInfo && (
+                    expirationInfo.expired ? (
+                      <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-start gap-2" data-testid="expiration-expired">
+                        <AlertTriangle className="w-5 h-5 text-red-700 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-red-900">Review link expired — resend</p>
+                          <p className="text-xs text-red-800 mt-0.5">Expired on {formatDateTime(existingPost!.approvalTokenExpiresAt!)}.</p>
+                        </div>
+                      </div>
+                    ) : expirationInfo.warning ? (
+                      <div className="bg-amber-50 border border-amber-200 rounded-md p-3 flex items-start gap-2" data-testid="expiration-warning">
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-amber-900">{expirationInfo.relative}</p>
+                          <p className="text-xs text-amber-800 mt-0.5">Expires {formatDate(existingPost!.approvalTokenExpiresAt!)}.</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-sm text-muted-foreground flex items-center gap-2" data-testid="expiration-info">
+                        <Clock className="w-4 h-4" />
+                        <span>{expirationInfo.relative} ({formatDate(existingPost!.approvalTokenExpiresAt!)})</span>
+                      </div>
+                    )
+                  )}
+
+                  {approvalStatus === "changes_requested" && lastFeedbackEntry && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-md p-3">
+                      <div className="flex items-start gap-2">
+                        <MessageSquare className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-amber-900 mb-1">Most recent feedback</p>
+                          <p className="text-sm text-amber-900 whitespace-pre-wrap" data-testid="text-latest-feedback">{lastFeedbackEntry.feedback}</p>
+                          <p className="text-xs text-amber-700 mt-2">{formatDateTime(lastFeedbackEntry.createdAt)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      type="button"
+                      onClick={() => sendForApprovalMutation.mutate()}
+                      disabled={!canSendForApproval || sendForApprovalMutation.isPending}
+                      data-testid="button-send-for-approval"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      {sendForApprovalMutation.isPending ? "Sending..." :
+                       approvalStatus === "none" ? "Send for Approval" :
+                       approvalStatus === "pending" ? "Resend Review Link" :
+                       "Send for Approval Again"}
+                    </Button>
+                    {approvalStatus === "changes_requested" && !hasEditsCompletedAfterLastFeedback && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => markEditsCompletedMutation.mutate()}
+                        disabled={markEditsCompletedMutation.isPending}
+                        data-testid="button-mark-edits-completed"
+                      >
+                        <Check className="w-4 h-4 mr-2" />
+                        Mark Edits Completed
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <MessageSquare className="w-4 h-4" />
+                    Edits Activity
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {(() => {
+                    const editEvents = historyChronological.filter(h => h.action === "changes_requested" || h.action === "edits_completed");
+                    if (editEvents.length === 0) {
+                      return <p className="text-sm text-muted-foreground" data-testid="text-no-edits">No edit requests yet. When the client requests changes, they'll appear here with date and time.</p>;
+                    }
+                    return (
+                      <div className="space-y-3">
+                        {editEvents.map(h => {
+                          const isFeedback = h.action === "changes_requested";
+                          const matchingCompletion = isFeedback
+                            ? historyChronological.find(e => e.action === "edits_completed" && new Date(e.createdAt) > new Date(h.createdAt))
+                            : null;
+                          return (
+                            <div key={h.id} className="flex items-start gap-3 text-sm" data-testid={`edit-event-${h.id}`}>
+                              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${isFeedback ? "bg-amber-500" : "bg-green-600"}`}></div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="font-medium text-gray-900">
+                                    {isFeedback ? "Edits requested" : "Edits completed"}
+                                  </span>
+                                  <Badge variant="outline" className="text-xs">Round {roundByEntryId.get(h.id) || 1}</Badge>
+                                  {isFeedback && matchingCompletion && (
+                                    <span className="inline-flex items-center gap-1 text-xs text-green-700 font-medium">
+                                      <CheckCircle2 className="w-3.5 h-3.5" />
+                                      Resolved
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-0.5">
+                                  <Clock className="w-3 h-3 inline mr-1" />
+                                  {formatDateTime(h.createdAt)}
+                                  <span className="ml-2">by {h.performedBy}</span>
+                                </p>
+                                {h.feedback && (
+                                  <div className="mt-2 bg-gray-50 border-l-2 border-amber-400 pl-3 py-2 rounded text-sm text-gray-800 whitespace-pre-wrap">{h.feedback}</div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
+                </CardContent>
+              </Card>
+
+              {approvalHistory.length > 0 && (
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base">Full Approval History</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {approvalHistory.map((h) => {
+                        const isFeedback = h.action === "changes_requested";
+                        const isApproved = h.action === "approved";
+                        const isCompleted = h.action === "edits_completed";
+                        return (
+                          <div key={h.id} className="flex items-start gap-3 text-sm" data-testid={`history-${h.id}`}>
+                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                              isApproved ? "bg-[#97CC06]" :
+                              isFeedback ? "bg-amber-500" :
+                              isCompleted ? "bg-green-600" :
+                              "bg-blue-500"
+                            }`}></div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="font-medium text-gray-900">{actionLabels[h.action] || h.action}</span>
+                                <Badge variant="outline" className="text-xs" data-testid={`badge-round-${h.id}`}>
+                                  Round {roundByEntryId.get(h.id) || 1}
+                                </Badge>
+                              </div>
+                              <p className="text-xs text-muted-foreground">{formatDateTime(h.createdAt)} · by {h.performedBy}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </aside>
+          )}
           </div>
         </form>
       </div>
