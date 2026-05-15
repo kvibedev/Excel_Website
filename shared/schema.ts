@@ -160,9 +160,40 @@ export const blogPosts = pgTable("blog_posts", {
   imageUrl: text("image_url"),
   status: text("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
+  approvalStatus: text("approval_status").default("none").notNull(),
+  approvalToken: text("approval_token"),
+  approvalTokenExpiresAt: timestamp("approval_token_expires_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const BLOG_APPROVAL_STATUSES = ["none", "pending", "approved", "changes_requested"] as const;
+export type BlogApprovalStatus = (typeof BLOG_APPROVAL_STATUSES)[number];
+
+export const blogApprovalHistory = pgTable("blog_approval_history", {
+  id: serial("id").primaryKey(),
+  blogPostId: integer("blog_post_id").notNull().references(() => blogPosts.id),
+  action: text("action").notNull(),
+  feedback: text("feedback"),
+  performedBy: text("performed_by").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertBlogApprovalHistorySchema = createInsertSchema(blogApprovalHistory).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertBlogApprovalHistory = z.infer<typeof insertBlogApprovalHistorySchema>;
+export type BlogApprovalHistory = typeof blogApprovalHistory.$inferSelect;
+
+export const BLOG_APPROVAL_ACTIONS = [
+  "sent_for_approval",
+  "approved",
+  "changes_requested",
+  "edits_completed",
+] as const;
+export type BlogApprovalAction = (typeof BLOG_APPROVAL_ACTIONS)[number];
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
@@ -173,12 +204,13 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type BlogPost = typeof blogPosts.$inferSelect;
 
-export const FORM_TYPES = ["contact", "vendor"] as const;
+export const FORM_TYPES = ["contact", "vendor", "blog_approval"] as const;
 export type FormType = (typeof FORM_TYPES)[number];
 
 export const FORM_TYPE_LABELS: Record<FormType, string> = {
   contact: "Contact Form",
   vendor: "Vendor Registration",
+  blog_approval: "Blog Post Approval",
 };
 
 export const formEmailSettings = pgTable("form_email_settings", {

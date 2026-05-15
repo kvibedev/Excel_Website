@@ -17,6 +17,12 @@ const statusColors: Record<string, string> = {
   published: "bg-green-500",
 };
 
+const approvalStatusLabels: Record<string, { label: string; className: string }> = {
+  pending: { label: "Pending Review", className: "bg-blue-500" },
+  approved: { label: "Client Approved", className: "bg-[#97CC06] text-[#063970]" },
+  changes_requested: { label: "Changes Requested", className: "bg-amber-500" },
+};
+
 export default function AdminBlog() {
   const { toast } = useToast();
   const { authData, authLoading } = useAdminAuth();
@@ -102,8 +108,13 @@ export default function AdminBlog() {
                     <p className="text-sm text-muted-foreground truncate mt-1">{post.excerpt}</p>
                   )}
                 </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
+                <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
                   <Badge className={statusColors[post.status] || "bg-gray-400"}>{post.status}</Badge>
+                  {post.approvalStatus && post.approvalStatus !== "none" && approvalStatusLabels[post.approvalStatus] && (
+                    <Badge className={approvalStatusLabels[post.approvalStatus].className} data-testid={`badge-approval-${post.id}`}>
+                      {approvalStatusLabels[post.approvalStatus].label}
+                    </Badge>
+                  )}
                   {!isReadOnly && (
                     <Link href={`/admin/blog/${post.id}/edit`}>
                       <Button size="icon" variant="ghost" data-testid={`button-edit-post-${post.id}`}>

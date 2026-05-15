@@ -69,6 +69,7 @@ export default function AdminEmailSettings() {
 
   const contactSettings = settings.filter(s => s.formType === "contact");
   const vendorSettings = settings.filter(s => s.formType === "vendor");
+  const blogApprovalSettings = settings.filter(s => s.formType === "blog_approval");
 
   return (
     <AdminLayout title="Email Settings" activeNav="settings">
@@ -88,6 +89,7 @@ export default function AdminEmailSettings() {
               <SelectContent>
                 <SelectItem value="contact">Contact Form</SelectItem>
                 <SelectItem value="vendor">Vendor Registration</SelectItem>
+                <SelectItem value="blog_approval">Blog Post Approval</SelectItem>
               </SelectContent>
             </Select>
 
@@ -141,6 +143,13 @@ export default function AdminEmailSettings() {
             <RecipientSection
               title={FORM_TYPE_LABELS.vendor}
               settings={vendorSettings}
+              onToggle={(id, active) => toggleMutation.mutate({ id, isActive: active })}
+              onDelete={(id) => deleteMutation.mutate(id)}
+            />
+
+            <RecipientSection
+              title={FORM_TYPE_LABELS.blog_approval}
+              settings={blogApprovalSettings}
               onToggle={(id, active) => toggleMutation.mutate({ id, isActive: active })}
               onDelete={(id) => deleteMutation.mutate(id)}
             />

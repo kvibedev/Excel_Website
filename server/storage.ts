@@ -7,7 +7,8 @@ import {
   type AdminUser, type InsertAdminUser,
   type BlogPost, type InsertBlogPost,
   type FormEmailSetting, type InsertFormEmailSetting,
-  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings
+  type BlogApprovalHistory, type InsertBlogApprovalHistory,
+  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -54,6 +55,11 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: number): Promise<void>;
+
+  getBlogPostByApprovalToken(token: string): Promise<BlogPost | undefined>;
+  consumeApprovalToken(token: string, updates: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
+  getBlogApprovalHistory(blogPostId: number): Promise<BlogApprovalHistory[]>;
+  createBlogApprovalHistory(entry: InsertBlogApprovalHistory): Promise<BlogApprovalHistory>;
 
   getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
   getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
@@ -256,7 +262,33 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteBlogPost(id: number): Promise<void> {
+    await db.delete(blogApprovalHistory).where(eq(blogApprovalHistory.blogPostId, id));
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
+  }
+
+  async getBlogPostByApprovalToken(token: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.approvalToken, token));
+    return post;
+  }
+
+  async consumeApprovalToken(token: string, updates: Partial<InsertBlogPost>): Promise<BlogPost | undefined> {
+    const [updated] = await db
+      .update(blogPosts)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(blogPosts.approvalToken, token))
+      .returning();
+    return updated;
+  }
+
+  async getBlogApprovalHistory(blogPostId: number): Promise<BlogApprovalHistory[]> {
+    return db.select().from(blogApprovalHistory)
+      .where(eq(blogApprovalHistory.blogPostId, blogPostId))
+      .orderBy(desc(blogApprovalHistory.createdAt));
+  }
+
+  async createBlogApprovalHistory(entry: InsertBlogApprovalHistory): Promise<BlogApprovalHistory> {
+    const [created] = await db.insert(blogApprovalHistory).values(entry).returning();
+    return created;
   }
 
   async getFormEmailSettings(formType: string): Promise<FormEmailSetting[]> {

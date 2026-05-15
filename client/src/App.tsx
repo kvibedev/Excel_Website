@@ -56,6 +56,7 @@ import AdminBlog from "@/pages/admin/AdminBlog";
 import AdminBlogEditor from "@/pages/admin/AdminBlogEditor";
 import AdminUsers from "@/pages/admin/AdminUsers";
 import AdminEmailSettings from "@/pages/admin/AdminEmailSettings";
+import BlogApprovalReview from "@/pages/BlogApprovalReview";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -148,12 +149,20 @@ function AdminRouter() {
 function App() {
   const [location] = useLocation();
   const isAdminRoute = location.startsWith("/admin");
+  const isApprovalRoute = location.startsWith("/blog/approval/");
 
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          {isAdminRoute ? (
+          {isApprovalRoute ? (
+            <>
+              <ScrollToTop />
+              <Switch>
+                <Route path="/blog/approval/:token" component={BlogApprovalReview} />
+              </Switch>
+            </>
+          ) : isAdminRoute ? (
             <AdminRouter />
           ) : (
             <div className="flex flex-col min-h-screen">

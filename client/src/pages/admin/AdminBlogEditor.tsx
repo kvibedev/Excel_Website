@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { BlogPost, AdminRole } from "@shared/schema";
+import type { BlogPost, AdminRole, BlogApprovalHistory } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
 import { useAdminAuth, canAccess } from "./adminAuth";
 
@@ -67,6 +68,36 @@ export default function AdminBlogEditor() {
   const { data: existingPost, isLoading: postLoading } = useQuery<BlogPost>({
     queryKey: ["/api/admin/blog", params.id],
     enabled: isEditing && !!authData?.authenticated,
+  });
+
+  const { data: approvalHistory = [] } = useQuery<BlogApprovalHistory[]>({
+    queryKey: ["/api/admin/blog", params.id, "approval-history"],
+    queryFn: async () => {
+      const res = await fetch(`/api/admin/blog/${params.id}/approval-history`, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to load history");
+      return res.json();
+    },
+    enabled: isEditing && !!authData?.authenticated,
+  });
+
+  const sendForApprovalMutation = useMutation({
+    mutationFn: async () => apiRequest("POST", `/api/admin/blog/${params.id}/send-for-approval`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog", params.id] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog", params.id, "approval-history"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
+      toast({ title: "Sent for approval", description: "The client has been emailed a review link." });
+    },
+    onError: () => toast({ title: "Failed to send", description: "Make sure approval recipients are configured in Email Settings.", variant: "destructive" }),
+  });
+
+  const markEditsCompletedMutation = useMutation({
+    mutationFn: async () => apiRequest("POST", `/api/admin/blog/${params.id}/mark-edits-completed`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog", params.id, "approval-history"] });
+      toast({ title: "Edits marked complete", description: "Now send the post for approval again when ready." });
+    },
+    onError: () => toast({ title: "Failed to mark complete", variant: "destructive" }),
   });
 
   useEffect(() => {
@@ -187,6 +218,33 @@ export default function AdminBlogEditor() {
   };
 
   const isPending = createMutation.isPending || updateMutation.isPending;
+
+  const approvalStatus = existingPost?.approvalStatus || "none";
+  const sentEntries = approvalHistory.filter(h => h.action === "sent_for_approval");
+  const roundNumber = sentEntries.length;
+  const lastFeedbackEntry = approvalHistory.find(h => h.action === "changes_requested");
+  const hasEditsCompletedAfterLastFeedback = lastFeedbackEntry
+    ? approvalHistory.some(h => h.action === "edits_completed" && new Date(h.createdAt) > new Date(lastFeedbackEntry.createdAt))
+    : false;
+  const canSendForApproval = isEditing && !isPending;
+
+  const approvalStatusBadge = (() => {
+    if (approvalStatus === "pending") return <Badge className="bg-blue-500" data-testid="badge-approval-status">Pending Review (Round {roundNumber})</Badge>;
+    if (approvalStatus === "approved") return <Badge className="bg-[#97CC06] text-[#063970]" data-testid="badge-approval-status">Client Approved</Badge>;
+    if (approvalStatus === "changes_requested") return <Badge className="bg-amber-500" data-testid="badge-approval-status">Changes Requested (Round {roundNumber})</Badge>;
+    return null;
+  })();
+
+  const actionLabels: Record<string, string> = {
+    sent_for_approval: "Sent for approval",
+    approved: "Client approved",
+    changes_requested: "Client requested changes",
+    edits_completed: "Edits completed",
+  };
+
+  function formatDateTime(d: string | Date): string {
+    return new Date(d).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
+  }
 
   if (authLoading || (isEditing && postLoading)) {
     return (
@@ -400,6 +458,101 @@ export default function AdminBlogEditor() {
                 <p className="text-xs text-muted-foreground mt-2">Markdown supported</p>
               </CardContent>
             </Card>
+
+            {isEditing && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 flex-wrap">
+                    <Send className="w-5 h-5" />
+                    Client Approval
+                    {approvalStatusBadge}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {approvalStatus === "changes_requested" && lastFeedbackEntry && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-md p-4">
+                      <div className="flex items-start gap-2">
+                        <MessageSquare className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-amber-900 mb-1">Most recent feedback</p>
+                          <p className="text-sm text-amber-900 whitespace-pre-wrap" data-testid="text-latest-feedback">{lastFeedbackEntry.feedback}</p>
+                          <p className="text-xs text-amber-700 mt-2">{formatDateTime(lastFeedbackEntry.createdAt)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Button
+                      type="button"
+                      onClick={() => sendForApprovalMutation.mutate()}
+                      disabled={!canSendForApproval || sendForApprovalMutation.isPending}
+                      data-testid="button-send-for-approval"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      {sendForApprovalMutation.isPending ? "Sending..." :
+                       approvalStatus === "none" ? "Send for Approval" :
+                       approvalStatus === "pending" ? "Resend Review Link" :
+                       "Send for Approval Again"}
+                    </Button>
+                    {approvalStatus === "changes_requested" && !hasEditsCompletedAfterLastFeedback && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => markEditsCompletedMutation.mutate()}
+                        disabled={markEditsCompletedMutation.isPending}
+                        data-testid="button-mark-edits-completed"
+                      >
+                        <Check className="w-4 h-4 mr-2" />
+                        Mark Edits Completed
+                      </Button>
+                    )}
+                  </div>
+
+                  {approvalHistory.length > 0 && (
+                    <div className="border-t pt-4">
+                      <p className="text-sm font-semibold text-gray-700 mb-3">Approval History</p>
+                      <div className="space-y-3">
+                        {approvalHistory.map((h) => {
+                          const isFeedback = h.action === "changes_requested";
+                          const isApproved = h.action === "approved";
+                          const isCompleted = h.action === "edits_completed";
+                          const matchingCompletion = isFeedback
+                            ? approvalHistory.find(e => e.action === "edits_completed" && new Date(e.createdAt) > new Date(h.createdAt))
+                            : null;
+                          return (
+                            <div key={h.id} className="flex items-start gap-3 text-sm" data-testid={`history-${h.id}`}>
+                              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                                isApproved ? "bg-[#97CC06]" :
+                                isFeedback ? "bg-amber-500" :
+                                isCompleted ? "bg-green-600" :
+                                "bg-blue-500"
+                              }`}></div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="font-medium text-gray-900">{actionLabels[h.action] || h.action}</span>
+                                  {isFeedback && matchingCompletion && (
+                                    <span className="inline-flex items-center gap-1 text-xs text-green-700 font-medium" title="Edits completed">
+                                      <CheckCircle2 className="w-3.5 h-3.5" />
+                                      Resolved
+                                    </span>
+                                  )}
+                                  <span className="text-xs text-muted-foreground">{formatDateTime(h.createdAt)}</span>
+                                </div>
+                                <p className="text-xs text-muted-foreground">by {h.performedBy}</p>
+                                {h.feedback && (
+                                  <div className="mt-1 bg-gray-50 border-l-2 border-amber-400 pl-3 py-2 rounded text-sm text-gray-800 whitespace-pre-wrap">{h.feedback}</div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
 
             <Card>
               <CardContent className="pt-6">

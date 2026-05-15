@@ -1,6 +1,6 @@
 import sgMail from "@sendgrid/mail";
 import { storage } from "./storage";
-import type { Contact, VendorRegistration } from "@shared/schema";
+import type { Contact, VendorRegistration, BlogPost } from "@shared/schema";
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const FROM_EMAIL = "info@efsgnj.com";
@@ -111,6 +111,116 @@ export async function sendContactFormEmail(contact: Contact): Promise<void> {
     await sgMail.send(msg);
     console.log(`Contact form email sent to ${toRecipients.map(r => r.email).join(", ")}${ccRecipients.length > 0 ? ` (CC: ${ccRecipients.map(r => r.email).join(", ")})` : ""}`);
   } catch (error: any) {
+    console.error("SendGrid email error:", error?.response?.body || error.message);
+  }
+}
+
+async function getBlogApprovalRecipients() {
+  const settings = await storage.getFormEmailSettings("blog_approval");
+  const active = settings.filter(s => s.isActive);
+  const to = active.filter(s => s.ccType === "to").map(s => ({ email: s.recipientEmail, name: s.recipientName || undefined }));
+  const cc = active.filter(s => s.ccType === "cc").map(s => ({ email: s.recipientEmail, name: s.recipientName || undefined }));
+  if (to.length === 0 && cc.length > 0) to.push(cc.shift()!);
+  return { to, cc };
+}
+
+function getAppBaseUrl(): string {
+  if (process.env.PUBLIC_APP_URL) return process.env.PUBLIC_APP_URL.replace(/\/$/, "");
+  if (process.env.REPLIT_DEV_DOMAIN) return `https://${process.env.REPLIT_DEV_DOMAIN}`;
+  return "https://www.efsgnj.com";
+}
+
+export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string): Promise<void> {
+  if (!SENDGRID_API_KEY) { console.warn("SendGrid not configured — skipping blog approval email"); return; }
+  const { to, cc } = await getBlogApprovalRecipients();
+  if (to.length === 0) { console.warn("No blog_approval recipients — skipping"); return; }
+
+  const reviewUrl = `${getAppBaseUrl()}/blog/approval/${token}`;
+  const subject = `Blog post ready for your review: ${post.title}`;
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #063970; padding: 20px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 22px;">Blog Post Ready for Review</h1>
+      </div>
+      <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
+        <p style="color: #111827;">A blog post is ready for your review and approval.</p>
+        <p style="color: #111827;"><strong>Title:</strong> ${post.title}</p>
+        ${post.author ? `<p style="color: #111827;"><strong>Author:</strong> ${post.author}</p>` : ""}
+        ${post.excerpt ? `<p style="color: #374151;"><em>${post.excerpt}</em></p>` : ""}
+        <p style="text-align: center; margin: 28px 0;">
+          <a href="${reviewUrl}" style="background-color: #063970; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Review &amp; Approve</a>
+        </p>
+        <p style="color: #6b7280; font-size: 13px;">Or copy this link into your browser: <br/><a href="${reviewUrl}" style="color: #063970; word-break: break-all;">${reviewUrl}</a></p>
+        <p style="color: #6b7280; font-size: 12px;">This review link will expire in 30 days.</p>
+      </div>
+    </div>
+  `;
+  const text = `A blog post is ready for review.\n\nTitle: ${post.title}\nAuthor: ${post.author}\n\nReview & approve: ${reviewUrl}\n\nThis link expires in 30 days.`;
+
+  const msg: sgMail.MailDataRequired = {
+    to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text,
+  };
+  if (cc.length > 0) msg.cc = cc;
+  try {
+    await sgMail.send(msg);
+    console.log(`Blog approval email sent for post ${post.id}`);
+  } catch (error: any) {
+    console.error("SendGrid email error:", error?.response?.body || error.message);
+  }
+}
+
+export async function sendBlogApprovedEmail(post: BlogPost): Promise<void> {
+  if (!SENDGRID_API_KEY) return;
+  const { to, cc } = await getBlogApprovalRecipients();
+  if (to.length === 0) return;
+  const liveUrl = `${getAppBaseUrl()}/resources/${post.slug}`;
+  const subject = `Approved & published: ${post.title}`;
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #97CC06; padding: 20px; text-align: center;">
+        <h1 style="color: #063970; margin: 0; font-size: 22px;">Blog Post Approved &amp; Published</h1>
+      </div>
+      <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
+        <p style="color: #111827;">The following blog post has been approved and is now live:</p>
+        <p style="color: #111827;"><strong>${post.title}</strong></p>
+        <p style="text-align: center; margin: 24px 0;">
+          <a href="${liveUrl}" style="background-color: #063970; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 4px; font-weight: bold;">View Live Post</a>
+        </p>
+      </div>
+    </div>`;
+  const text = `Blog post approved and published.\n\nTitle: ${post.title}\nLive URL: ${liveUrl}`;
+  const msg: sgMail.MailDataRequired = { to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text };
+  if (cc.length > 0) msg.cc = cc;
+  try { await sgMail.send(msg); } catch (error: any) {
+    console.error("SendGrid email error:", error?.response?.body || error.message);
+  }
+}
+
+export async function sendBlogChangesRequestedEmail(post: BlogPost, feedback: string): Promise<void> {
+  if (!SENDGRID_API_KEY) return;
+  const { to, cc } = await getBlogApprovalRecipients();
+  if (to.length === 0) return;
+  const subject = `Changes requested: ${post.title}`;
+  const safeFeedback = feedback.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #b45309; padding: 20px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 22px;">Changes Requested</h1>
+      </div>
+      <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
+        <p style="color: #111827;">The client has requested changes to:</p>
+        <p style="color: #111827;"><strong>${post.title}</strong></p>
+        <div style="background-color: #ffffff; border-left: 4px solid #b45309; padding: 12px 16px; margin: 16px 0;">
+          <p style="color: #6b7280; font-size: 12px; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Feedback</p>
+          <p style="color: #111827; white-space: pre-wrap; margin: 0;">${safeFeedback}</p>
+        </div>
+        <p style="color: #6b7280; font-size: 13px;">Update the post in the admin dashboard, mark the edits as completed, then resend it for approval.</p>
+      </div>
+    </div>`;
+  const text = `Changes requested for: ${post.title}\n\nFeedback:\n${feedback}\n\nUpdate the post and resend it for approval.`;
+  const msg: sgMail.MailDataRequired = { to, from: { email: FROM_EMAIL, name: FROM_NAME }, subject, html, text };
+  if (cc.length > 0) msg.cc = cc;
+  try { await sgMail.send(msg); } catch (error: any) {
     console.error("SendGrid email error:", error?.response?.body || error.message);
   }
 }

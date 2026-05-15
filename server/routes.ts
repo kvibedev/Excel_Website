@@ -8,7 +8,8 @@ import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
 import { z } from "zod";
-import { sendContactFormEmail, sendVendorFormEmail } from "./email";
+import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail } from "./email";
+import crypto from "crypto";
 
 declare module "express-session" {
   interface SessionData {
@@ -679,10 +680,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // ── Blog (admin) ────────────────────────────────────────────────────────────
 
+  const sanitizeBlogPost = <T extends { approvalToken?: string | null }>(p: T) => {
+    const { approvalToken: _t, ...rest } = p;
+    return rest;
+  };
+
   app.get("/api/admin/blog", requireAuth, async (req, res) => {
     try {
       const posts = await storage.getBlogPosts();
-      res.json(posts);
+      res.json(posts.map(sanitizeBlogPost));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog posts" });
     }
@@ -695,7 +701,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!post) {
         return res.status(404).json({ error: "Blog post not found" });
       }
-      res.json(post);
+      res.json(sanitizeBlogPost(post));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog post" });
     }
@@ -813,6 +819,159 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const imageUrl = `/images/blog/${req.file.filename}`;
       res.json({ imageUrl });
     });
+  });
+
+  // ── Blog approval workflow ─────────────────────────────────────────────────
+
+  app.get("/api/admin/blog/:id/approval-history", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const history = await storage.getBlogApprovalHistory(id);
+      res.json(history);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch approval history" });
+    }
+  });
+
+  app.post("/api/admin/blog/:id/send-for-approval", requireAtLeast("editor"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const post = await storage.getBlogPost(id);
+      if (!post) return res.status(404).json({ error: "Blog post not found" });
+
+      const token = crypto.randomBytes(32).toString("hex");
+      const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+      const updated = await storage.updateBlogPost(id, {
+        approvalStatus: "pending",
+        approvalToken: token,
+        approvalTokenExpiresAt: expiresAt,
+      } as any);
+
+      await storage.createBlogApprovalHistory({
+        blogPostId: id,
+        action: "sent_for_approval",
+        feedback: null,
+        performedBy: req.session.adminUsername || "admin",
+      });
+
+      sendBlogApprovalRequestEmail(updated!, token).catch(err => console.error("Background email failed:", err));
+      res.json(updated);
+    } catch (error) {
+      console.error("send-for-approval error:", error);
+      res.status(500).json({ error: "Failed to send for approval" });
+    }
+  });
+
+  app.post("/api/admin/blog/:id/mark-edits-completed", requireAtLeast("editor"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const post = await storage.getBlogPost(id);
+      if (!post) return res.status(404).json({ error: "Blog post not found" });
+      if (post.approvalStatus !== "changes_requested") {
+        return res.status(400).json({ error: "Post is not in 'changes requested' state" });
+      }
+      await storage.createBlogApprovalHistory({
+        blogPostId: id,
+        action: "edits_completed",
+        feedback: null,
+        performedBy: req.session.adminUsername || "admin",
+      });
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to mark edits completed" });
+    }
+  });
+
+  // Public token-secured approval endpoints
+  const APPROVAL_TOKEN_REGEX = /^[a-f0-9]{64}$/;
+  const validateToken = (token: string) => APPROVAL_TOKEN_REGEX.test(token);
+
+  app.get("/api/blog-approval/:token", async (req, res) => {
+    try {
+      if (!validateToken(req.params.token)) {
+        return res.status(404).json({ error: "Invalid or expired review link" });
+      }
+      const post = await storage.getBlogPostByApprovalToken(req.params.token);
+      if (!post) return res.status(404).json({ error: "Invalid or expired review link" });
+      if (post.approvalTokenExpiresAt && new Date(post.approvalTokenExpiresAt) < new Date()) {
+        return res.status(410).json({ error: "This review link has expired" });
+      }
+      const history = await storage.getBlogApprovalHistory(post.id);
+      const { approvalToken: _t, ...safePost } = post;
+      res.json({ post: safePost, history });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to load review" });
+    }
+  });
+
+  app.post("/api/blog-approval/:token/approve", async (req, res) => {
+    try {
+      if (!validateToken(req.params.token)) {
+        return res.status(404).json({ error: "Invalid or expired review link" });
+      }
+      const existing = await storage.getBlogPostByApprovalToken(req.params.token);
+      if (!existing) return res.status(404).json({ error: "Invalid or expired review link" });
+      if (existing.approvalTokenExpiresAt && new Date(existing.approvalTokenExpiresAt) < new Date()) {
+        return res.status(410).json({ error: "This review link has expired" });
+      }
+      const updates: any = {
+        approvalStatus: "approved",
+        approvalToken: null,
+        approvalTokenExpiresAt: null,
+        status: "published",
+      };
+      if (!existing.publishedAt) updates.publishedAt = new Date();
+      const updated = await storage.consumeApprovalToken(req.params.token, updates);
+      if (!updated) {
+        return res.status(409).json({ error: "This review link has already been used" });
+      }
+      await storage.createBlogApprovalHistory({
+        blogPostId: updated.id,
+        action: "approved",
+        feedback: null,
+        performedBy: "client",
+      });
+      sendBlogApprovedEmail(updated).catch(err => console.error("Background email failed:", err));
+      res.json({ success: true });
+    } catch (error) {
+      console.error("approve error:", error);
+      res.status(500).json({ error: "Failed to approve post" });
+    }
+  });
+
+  app.post("/api/blog-approval/:token/request-edits", async (req, res) => {
+    try {
+      if (!validateToken(req.params.token)) {
+        return res.status(404).json({ error: "Invalid or expired review link" });
+      }
+      const feedbackSchema = z.object({ feedback: z.string().min(1, "Please provide feedback").max(5000) });
+      const { feedback } = feedbackSchema.parse(req.body);
+      const existing = await storage.getBlogPostByApprovalToken(req.params.token);
+      if (!existing) return res.status(404).json({ error: "Invalid or expired review link" });
+      if (existing.approvalTokenExpiresAt && new Date(existing.approvalTokenExpiresAt) < new Date()) {
+        return res.status(410).json({ error: "This review link has expired" });
+      }
+      const updated = await storage.consumeApprovalToken(req.params.token, {
+        approvalStatus: "changes_requested",
+        approvalToken: null,
+        approvalTokenExpiresAt: null,
+      } as any);
+      if (!updated) {
+        return res.status(409).json({ error: "This review link has already been used" });
+      }
+      await storage.createBlogApprovalHistory({
+        blogPostId: updated.id,
+        action: "changes_requested",
+        feedback,
+        performedBy: "client",
+      });
+      sendBlogChangesRequestedEmail(updated, feedback).catch(err => console.error("Background email failed:", err));
+      res.json({ success: true });
+    } catch (error) {
+      if (error instanceof z.ZodError) return res.status(400).json({ error: error.errors });
+      res.status(500).json({ error: "Failed to submit feedback" });
+    }
   });
 
   // ── Public blog ─────────────────────────────────────────────────────────────
