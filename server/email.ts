@@ -143,6 +143,12 @@ function escapeHtml(s: string): string {
 
 function getAppBaseUrl(): string {
   if (process.env.PUBLIC_APP_URL) return process.env.PUBLIC_APP_URL.replace(/\/$/, "");
+  if (process.env.REPLIT_DEPLOYMENT === "1") {
+    const domains = (process.env.REPLIT_DOMAINS || "").split(",").map(d => d.trim()).filter(Boolean);
+    const prod = domains.find(d => !d.includes(".replit.dev") && !d.includes(".janeway.")) || domains[0];
+    if (prod) return `https://${prod}`;
+    return "https://www.efsgnj.com";
+  }
   if (process.env.REPLIT_DEV_DOMAIN) return `https://${process.env.REPLIT_DEV_DOMAIN}`;
   return "https://www.efsgnj.com";
 }
