@@ -1,8 +1,10 @@
-import { useState, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { Calendar, ArrowRight, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, ArrowRight, Clock, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { BlogPost } from "@shared/schema";
@@ -134,16 +136,60 @@ export default function Resources() {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState<string>("all");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
   const gridRef = useRef<HTMLDivElement>(null);
 
   const posts = data || [];
-  const featuredPosts = posts.slice(0, 2);
-  const remainingPosts = posts.slice(2);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    posts.forEach((p) => {
+      if (p.category && p.category.trim()) set.add(p.category.trim());
+    });
+    return Array.from(set).sort();
+  }, [posts]);
+
+  const filtersActive = search.trim() !== "" || category !== "all";
+
+  const filteredPosts = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    let result = posts.filter((p) => {
+      if (category !== "all" && p.category !== category) return false;
+      if (q) {
+        const hay = `${p.title} ${p.excerpt ?? ""} ${p.tags ?? ""}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    if (sortOrder === "oldest") {
+      result = [...result].sort((a, b) => {
+        const da = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
+        const db = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+        return da - db;
+      });
+    }
+    return result;
+  }, [posts, search, category, sortOrder]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, category, sortOrder]);
+
+  const featuredPosts = filtersActive ? [] : filteredPosts.slice(0, 2);
+  const remainingPosts = filtersActive ? filteredPosts : filteredPosts.slice(2);
   const totalPages = Math.max(1, Math.ceil(remainingPosts.length / POSTS_PER_PAGE));
   const paginatedPosts = remainingPosts.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE
   );
+
+  const clearFilters = () => {
+    setSearch("");
+    setCategory("all");
+    setSortOrder("newest");
+  };
 
   function goToPage(page: number) {
     setCurrentPage(page);
@@ -217,7 +263,7 @@ export default function Resources() {
 
       <section className="py-20 md:py-28 bg-gradient-to-b from-white to-gray-50/50 dark:from-background dark:to-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-[#063970] dark:text-blue-300 mb-4" data-testid="text-featured-title">
               Latest Insights
             </h2>
@@ -225,6 +271,72 @@ export default function Resources() {
               Expert perspectives on commercial cleaning, sustainability, and facility management
             </p>
           </div>
+
+          {!isLoading && !isError && posts.length > 0 && (
+            <div className="max-w-5xl mx-auto mb-12" data-testid="blog-filters">
+              <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  <Input
+                    type="search"
+                    placeholder="Search articles by title, excerpt, or tag..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-9 pr-9"
+                    data-testid="input-blog-search"
+                    aria-label="Search articles"
+                  />
+                  {search && (
+                    <button
+                      type="button"
+                      onClick={() => setSearch("")}
+                      aria-label="Clear search"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded text-muted-foreground hover:text-foreground"
+                      data-testid="button-clear-search"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className="md:w-56" data-testid="select-blog-category" aria-label="Filter by category">
+                    <SelectValue placeholder="All categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" data-testid="option-category-all">All categories</SelectItem>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat} value={cat} data-testid={`option-category-${cat}`}>{cat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select value={sortOrder} onValueChange={(v) => setSortOrder(v as "newest" | "oldest")}>
+                  <SelectTrigger className="md:w-44" data-testid="select-blog-sort" aria-label="Sort articles">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="newest" data-testid="option-sort-newest">Newest first</SelectItem>
+                    <SelectItem value="oldest" data-testid="option-sort-oldest">Oldest first</SelectItem>
+                  </SelectContent>
+                </Select>
+                {(filtersActive || sortOrder !== "newest") && (
+                  <Button
+                    variant="outline"
+                    onClick={clearFilters}
+                    data-testid="button-clear-filters"
+                  >
+                    Clear
+                  </Button>
+                )}
+              </div>
+              {filtersActive && (
+                <p className="text-sm text-muted-foreground mt-3" data-testid="text-filter-results-count">
+                  {filteredPosts.length === 0
+                    ? "No articles match your filters."
+                    : `Showing ${filteredPosts.length} article${filteredPosts.length === 1 ? "" : "s"}.`}
+                </p>
+              )}
+            </div>
+          )}
 
           {isError ? (
             <div className="text-center py-16">
@@ -270,13 +382,22 @@ export default function Resources() {
             <div className="text-center py-16">
               <p className="text-lg text-muted-foreground" data-testid="text-no-posts">No articles published yet. Check back soon for insights on facility management.</p>
             </div>
+          ) : filteredPosts.length === 0 ? (
+            <div className="text-center py-16" data-testid="text-no-filter-results">
+              <p className="text-lg text-muted-foreground mb-4">No articles match your filters.</p>
+              <Button variant="outline" onClick={clearFilters} data-testid="button-clear-filters-empty">
+                Clear filters
+              </Button>
+            </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-                {featuredPosts.map((article) => (
-                  <FeaturedArticleCard key={article.id} article={article} />
-                ))}
-              </div>
+              {featuredPosts.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                  {featuredPosts.map((article) => (
+                    <FeaturedArticleCard key={article.id} article={article} />
+                  ))}
+                </div>
+              )}
 
               {remainingPosts.length > 0 && (
                 <div ref={gridRef}>
