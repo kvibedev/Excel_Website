@@ -220,8 +220,13 @@ export default function AdminBlogEditor() {
   const isPending = createMutation.isPending || updateMutation.isPending;
 
   const approvalStatus = existingPost?.approvalStatus || "none";
-  const sentEntries = approvalHistory.filter(h => h.action === "sent_for_approval");
-  const roundNumber = sentEntries.length;
+  const decisionsCount = approvalHistory.filter(
+    h => h.action === "approved" || h.action === "changes_requested"
+  ).length;
+  const hasAnySend = approvalHistory.some(h => h.action === "sent_for_approval");
+  const roundNumber = approvalStatus === "changes_requested" || approvalStatus === "approved"
+    ? Math.max(1, decisionsCount)
+    : (hasAnySend ? decisionsCount + 1 : 1);
   const lastFeedbackEntry = approvalHistory.find(h => h.action === "changes_requested");
   const hasEditsCompletedAfterLastFeedback = lastFeedbackEntry
     ? approvalHistory.some(h => h.action === "edits_completed" && new Date(h.createdAt) > new Date(lastFeedbackEntry.createdAt))
@@ -254,8 +259,16 @@ export default function AdminBlogEditor() {
   );
   const roundByEntryId = new Map<number, number>();
   let currentRound = 0;
+  let roundOpen = false;
   for (const h of historyChronological) {
-    if (h.action === "sent_for_approval") currentRound += 1;
+    if (h.action === "sent_for_approval") {
+      if (!roundOpen) {
+        currentRound += 1;
+        roundOpen = true;
+      }
+    } else if (h.action === "approved" || h.action === "changes_requested") {
+      roundOpen = false;
+    }
     roundByEntryId.set(h.id, currentRound || 1);
   }
 
