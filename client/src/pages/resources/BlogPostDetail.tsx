@@ -136,6 +136,21 @@ export default function BlogPostDetail() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
+                {post.imageUrl && (
+                  <div
+                    className="mb-10 overflow-hidden rounded-xl shadow-md"
+                    data-testid="img-featured-wrapper"
+                  >
+                    <img
+                      src={post.imageUrl}
+                      alt={post.title}
+                      className="w-full h-auto object-cover"
+                      loading="eager"
+                      decoding="async"
+                      data-testid="img-featured"
+                    />
+                  </div>
+                )}
                 <article className="prose prose-lg max-w-none prose-headings:text-[#063970] prose-h2:text-3xl prose-h2:font-bold prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4">
                   <Markdown>{post.content}</Markdown>
 
