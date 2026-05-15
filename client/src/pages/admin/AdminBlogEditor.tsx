@@ -11,6 +11,7 @@ import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, Mess
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import type { BlogPost, AdminRole, BlogApprovalHistory } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
 import { useAdminAuth, canAccess } from "./adminAuth";
@@ -88,7 +89,41 @@ export default function AdminBlogEditor() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
       toast({ title: "Sent for approval", description: "The client has been emailed a review link." });
     },
-    onError: () => toast({ title: "Failed to send", description: "Make sure approval recipients are configured in Email Settings.", variant: "destructive" }),
+    onError: (err: any) => {
+      let serverMsg = "";
+      try {
+        const m = err?.message || "";
+        const idx = m.indexOf("{");
+        if (idx !== -1) {
+          const parsed = JSON.parse(m.slice(idx));
+          if (parsed?.error) serverMsg = parsed.error;
+        }
+      } catch {}
+
+      const noRecipients = /recipient/i.test(serverMsg) || /^400/.test(err?.message || "");
+      if (noRecipients) {
+        toast({
+          title: "No approval recipients configured",
+          description: "Add a Blog Approval recipient in Email Settings before sending posts for client review.",
+          variant: "destructive",
+          action: (
+            <ToastAction
+              altText="Open Email Settings"
+              onClick={() => setLocation("/admin/settings")}
+              data-testid="toast-action-open-settings"
+            >
+              Open settings
+            </ToastAction>
+          ),
+        });
+      } else {
+        toast({
+          title: "Failed to send",
+          description: serverMsg || "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+      }
+    },
   });
 
   const markEditsCompletedMutation = useMutation({
