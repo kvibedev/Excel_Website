@@ -235,7 +235,7 @@ export default function AdminBlogEditor() {
     if (approvalStatus === "pending") return <Badge className="bg-blue-500" data-testid="badge-approval-status">Pending Review (Round {roundNumber})</Badge>;
     if (approvalStatus === "approved") return <Badge className="bg-[#97CC06] text-[#063970]" data-testid="badge-approval-status">Client Approved</Badge>;
     if (approvalStatus === "changes_requested") return <Badge className="bg-amber-500" data-testid="badge-approval-status">Changes Requested (Round {roundNumber})</Badge>;
-    return null;
+    return <Badge variant="outline" data-testid="badge-approval-status">Not Sent</Badge>;
   })();
 
   const actionLabels: Record<string, string> = {
