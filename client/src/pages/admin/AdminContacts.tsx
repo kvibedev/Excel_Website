@@ -357,6 +357,48 @@ export default function AdminContacts() {
                     <p className="mt-1 text-sm text-muted-foreground">Unknown</p>
                   )}
                 </div>
+                <div className="mb-3">
+                  <label className="text-sm font-medium text-muted-foreground">Referrer</label>
+                  {selectedContact.referrerUrl ? (
+                    <p
+                      className="mt-1 font-mono text-sm break-all"
+                      data-testid={`text-referrer-${selectedContact.id}`}
+                    >
+                      {selectedContact.referrerUrl}
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-sm text-muted-foreground">Direct / unknown</p>
+                  )}
+                </div>
+                <div className="mb-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">UTM Source</label>
+                    <p
+                      className="mt-1 text-sm break-all"
+                      data-testid={`text-utm-source-${selectedContact.id}`}
+                    >
+                      {selectedContact.utmSource || <span className="text-muted-foreground">—</span>}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">UTM Medium</label>
+                    <p
+                      className="mt-1 text-sm break-all"
+                      data-testid={`text-utm-medium-${selectedContact.id}`}
+                    >
+                      {selectedContact.utmMedium || <span className="text-muted-foreground">—</span>}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">UTM Campaign</label>
+                    <p
+                      className="mt-1 text-sm break-all"
+                      data-testid={`text-utm-campaign-${selectedContact.id}`}
+                    >
+                      {selectedContact.utmCampaign || <span className="text-muted-foreground">—</span>}
+                    </p>
+                  </div>
+                </div>
                 <div>
                   <label className="text-sm font-medium text-muted-foreground block mb-1">
                     Attributed blog posts {attributions && attributions.length > 0 && `(${attributions.length})`}

@@ -621,7 +621,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/contacts/export/csv", requireAtLeast("admin"), async (req, res) => {
     try {
       const contacts = await storage.getContacts();
-      const headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Inquiry Type", "Service Interest", "Assigned To", "Follow Up Date", "Status", "Created At"];
+      const headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Inquiry Type", "Service Interest", "Assigned To", "Follow Up Date", "Status", "UTM Source", "UTM Medium", "UTM Campaign", "Referrer", "Created At"];
       const rows = contacts.map((c) => [
         c.id,
         c.firstName,
@@ -634,6 +634,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         c.assignedTo || "",
         c.followUpDate ? new Date(c.followUpDate).toISOString() : "",
         c.status,
+        c.utmSource || "",
+        c.utmMedium || "",
+        c.utmCampaign || "",
+        c.referrerUrl || "",
         c.createdAt.toISOString(),
       ]);
 

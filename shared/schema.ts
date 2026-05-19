@@ -75,6 +75,10 @@ export const contacts = pgTable("contacts", {
   followUpDate: timestamp("follow_up_date"),
   submittedFromPath: text("submitted_from_path"),
   visitorId: text("visitor_id"),
+  utmSource: text("utm_source"),
+  utmMedium: text("utm_medium"),
+  utmCampaign: text("utm_campaign"),
+  referrerUrl: text("referrer_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

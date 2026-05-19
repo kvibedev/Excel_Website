@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { trackFormSubmission } from "@/lib/analytics";
+import { getAttributionForSubmit } from "@/lib/leadAttribution";
 
 export default function EstimateForm() {
   const { toast } = useToast();
@@ -52,6 +53,8 @@ export default function EstimateForm() {
       const firstName = nameParts[0] || "";
       const lastName = nameParts.slice(1).join(" ") || "";
       
+      const attribution = getAttributionForSubmit();
+
       await apiRequest("POST", "/api/contacts", {
         firstName,
         lastName,
@@ -65,6 +68,10 @@ export default function EstimateForm() {
         submittedFromPath: typeof window !== "undefined"
           ? window.location.pathname + window.location.search
           : null,
+        utmSource: attribution.utmSource,
+        utmMedium: attribution.utmMedium,
+        utmCampaign: attribution.utmCampaign,
+        referrerUrl: attribution.referrerUrl,
       });
       
       trackFormSubmission("contact", {
