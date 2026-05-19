@@ -868,7 +868,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/blog/:id", requireAuth, async (req, res) => {
+  app.get("/api/admin/blog/stats", requireAuth, async (_req, res) => {
+    try {
+      const stats = await storage.getBlogPostStatsForAll();
+      res.json(stats);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog stats" });
+    }
+  });
+
+  app.get("/api/admin/blog/:id(\\d+)/stats", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (!Number.isFinite(id)) return res.status(400).json({ error: "Invalid id" });
+      const rangeRaw = (req.query.range || "30").toString();
+      const range = rangeRaw === "all" ? null : (["7", "30", "90"].includes(rangeRaw) ? parseInt(rangeRaw) : 30);
+      const detail = await storage.getBlogPostStatsDetail(id, range);
+      res.json(detail);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog post stats" });
+    }
+  });
+
+  app.get("/api/admin/blog/:id(\\d+)", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const post = await storage.getBlogPost(id);
@@ -1204,6 +1226,130 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(sanitizeBlogPost(post));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
+  // ── Blog post view tracking ────────────────────────────────────────────────
+
+  const BOT_UA_REGEX = /bot|crawl|spider|slurp|bing|google|yandex|baidu|facebookexternalhit|twitterbot|linkedinbot|embedly|whatsapp|telegram|pinterest|preview|fetch|monitoring|headless|lighthouse|pingdom|uptimerobot/i;
+  const VISITOR_COOKIE = "efsg_bv";
+  const VISITOR_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365;
+
+  function parseCookies(header: string | undefined): Record<string, string> {
+    if (!header) return {};
+    const out: Record<string, string> = {};
+    for (const part of header.split(";")) {
+      const [k, ...v] = part.trim().split("=");
+      if (!k) continue;
+      out[k] = decodeURIComponent(v.join("=") || "");
+    }
+    return out;
+  }
+
+  function shouldTrackView(req: Request): boolean {
+    if (req.session.adminId) return false;
+    const ua = (req.headers["user-agent"] || "").toString();
+    if (!ua || BOT_UA_REGEX.test(ua)) return false;
+    return true;
+  }
+
+  function getOrSetVisitorId(req: Request, res: Response): string {
+    const cookies = parseCookies(req.headers.cookie);
+    let id = cookies[VISITOR_COOKIE];
+    if (!id || !/^[a-f0-9]{32,64}$/.test(id)) {
+      id = crypto.randomBytes(24).toString("hex");
+      const isProd = process.env.NODE_ENV === "production";
+      const parts = [
+        `${VISITOR_COOKIE}=${id}`,
+        "Path=/",
+        `Max-Age=${Math.floor(VISITOR_COOKIE_MAX_AGE / 1000)}`,
+        "HttpOnly",
+        "SameSite=Lax",
+      ];
+      if (isProd) parts.push("Secure");
+      res.append("Set-Cookie", parts.join("; "));
+    }
+    return crypto.createHash("sha256").update(id).digest("hex").slice(0, 32);
+  }
+
+  app.post("/api/blog/:slug/view", async (req, res) => {
+    try {
+      if (!shouldTrackView(req)) {
+        return res.json({ tracked: false });
+      }
+      const post = await storage.getPublishedBlogPostBySlug(req.params.slug);
+      if (!post) return res.status(404).json({ error: "Blog post not found" });
+
+      const visitorId = getOrSetVisitorId(req, res);
+      const referrerRaw = typeof req.body?.referrer === "string" ? req.body.referrer : "";
+      const sameOriginRef = (() => {
+        try {
+          if (!referrerRaw) return "";
+          const u = new URL(referrerRaw);
+          const host = req.headers.host || "";
+          if (u.host && host && u.host === host) return "";
+          return u.hostname || "";
+        } catch {
+          return "";
+        }
+      })();
+      const ua = (req.headers["user-agent"] || "").toString().slice(0, 500);
+
+      const sessionIdRaw = typeof req.body?.sessionId === "string" ? req.body.sessionId : "";
+      if (!/^[A-Za-z0-9_-]{16,64}$/.test(sessionIdRaw)) {
+        return res.status(400).json({ error: "Invalid session id" });
+      }
+      const sessionId = crypto.createHash("sha256")
+        .update(`${visitorId}:${sessionIdRaw}`)
+        .digest("hex")
+        .slice(0, 32);
+
+      const view = await storage.getOrCreateBlogPostView({
+        blogPostId: post.id,
+        visitorId,
+        sessionId,
+        referrer: sameOriginRef || null,
+        userAgent: ua || null,
+        timeOnPageMs: 0,
+      });
+      res.json({ tracked: true, viewId: view.id });
+    } catch (error) {
+      console.error("view tracking error:", error);
+      res.status(500).json({ error: "Failed to record view" });
+    }
+  });
+
+  app.post("/api/blog/:slug/view/heartbeat", async (req, res) => {
+    try {
+      if (!shouldTrackView(req)) {
+        return res.json({ tracked: false });
+      }
+      const cookies = parseCookies(req.headers.cookie);
+      const rawCookie = cookies[VISITOR_COOKIE];
+      if (!rawCookie || !/^[a-f0-9]{32,64}$/.test(rawCookie)) {
+        return res.status(401).json({ error: "Missing visitor cookie" });
+      }
+      const visitorId = crypto.createHash("sha256").update(rawCookie).digest("hex").slice(0, 32);
+
+      const viewId = parseInt(req.body?.viewId);
+      const timeOnPageMs = parseInt(req.body?.timeOnPageMs);
+      if (!Number.isFinite(viewId) || viewId <= 0 || !Number.isFinite(timeOnPageMs) || timeOnPageMs < 0) {
+        return res.status(400).json({ error: "Invalid heartbeat" });
+      }
+      const existing = await storage.getBlogPostView(viewId);
+      if (!existing) return res.status(404).json({ error: "View not found" });
+      if (existing.visitorId !== visitorId) {
+        return res.status(403).json({ error: "View belongs to another visitor" });
+      }
+      const post = await storage.getPublishedBlogPostBySlug(req.params.slug);
+      if (!post || post.id !== existing.blogPostId) {
+        return res.status(400).json({ error: "Mismatched post" });
+      }
+      const ok = await storage.updateBlogPostViewTime(viewId, visitorId, timeOnPageMs);
+      res.json({ tracked: ok });
+    } catch (error) {
+      console.error("heartbeat error:", error);
+      res.status(500).json({ error: "Failed to record heartbeat" });
     }
   });
 

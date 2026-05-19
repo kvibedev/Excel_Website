@@ -8,10 +8,12 @@ import {
   type BlogPost, type InsertBlogPost,
   type FormEmailSetting, type InsertFormEmailSetting,
   type BlogApprovalHistory, type InsertBlogApprovalHistory,
-  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory
+  type BlogPostView, type InsertBlogPostView,
+  type BlogPostStats, type BlogPostStatsDetail,
+  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and, gt } from "drizzle-orm";
+import { eq, desc, and, gt, gte, sql } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -64,6 +66,12 @@ export interface IStorage {
   consumeApprovalToken(token: string, updates: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   getBlogApprovalHistory(blogPostId: number): Promise<BlogApprovalHistory[]>;
   createBlogApprovalHistory(entry: InsertBlogApprovalHistory): Promise<BlogApprovalHistory>;
+
+  getOrCreateBlogPostView(input: InsertBlogPostView): Promise<BlogPostView>;
+  updateBlogPostViewTime(id: number, visitorId: string, timeOnPageMs: number): Promise<boolean>;
+  getBlogPostView(id: number): Promise<BlogPostView | undefined>;
+  getBlogPostStatsForAll(): Promise<BlogPostStats[]>;
+  getBlogPostStatsDetail(postId: number, sinceDays: number | null): Promise<BlogPostStatsDetail>;
 
   getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
   getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
@@ -301,7 +309,98 @@ export class DatabaseStorage implements IStorage {
 
   async deleteBlogPost(id: number): Promise<void> {
     await db.delete(blogApprovalHistory).where(eq(blogApprovalHistory.blogPostId, id));
+    await db.delete(blogPostViews).where(eq(blogPostViews.blogPostId, id));
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
+  }
+
+  async getOrCreateBlogPostView(input: InsertBlogPostView): Promise<BlogPostView> {
+    const [existing] = await db.select().from(blogPostViews)
+      .where(and(
+        eq(blogPostViews.blogPostId, input.blogPostId),
+        eq(blogPostViews.sessionId, input.sessionId),
+      ))
+      .orderBy(desc(blogPostViews.createdAt))
+      .limit(1);
+    if (existing) return existing;
+    const [created] = await db.insert(blogPostViews).values(input).returning();
+    return created;
+  }
+
+  async updateBlogPostViewTime(id: number, visitorId: string, timeOnPageMs: number): Promise<boolean> {
+    const clamped = Math.max(0, Math.min(timeOnPageMs, 6 * 60 * 60 * 1000));
+    const result = await db.update(blogPostViews)
+      .set({ timeOnPageMs: clamped })
+      .where(and(
+        eq(blogPostViews.id, id),
+        eq(blogPostViews.visitorId, visitorId),
+        sql`${blogPostViews.timeOnPageMs} < ${clamped}`,
+      ))
+      .returning({ id: blogPostViews.id });
+    return result.length > 0;
+  }
+
+  async getBlogPostView(id: number): Promise<BlogPostView | undefined> {
+    const [view] = await db.select().from(blogPostViews).where(eq(blogPostViews.id, id));
+    return view;
+  }
+
+  async getBlogPostStatsForAll(): Promise<BlogPostStats[]> {
+    const rows = await db
+      .select({
+        postId: blogPostViews.blogPostId,
+        totalViews: sql<number>`count(*)::int`,
+        uniqueVisitors: sql<number>`count(distinct ${blogPostViews.visitorId})::int`,
+        avgTimeOnPageMs: sql<number>`coalesce(avg(nullif(${blogPostViews.timeOnPageMs}, 0)), 0)::int`,
+      })
+      .from(blogPostViews)
+      .groupBy(blogPostViews.blogPostId);
+    return rows;
+  }
+
+  async getBlogPostStatsDetail(postId: number, sinceDays: number | null): Promise<BlogPostStatsDetail> {
+    const sinceDate = sinceDays != null ? new Date(Date.now() - sinceDays * 24 * 60 * 60 * 1000) : null;
+    const conditions = sinceDate
+      ? and(eq(blogPostViews.blogPostId, postId), gte(blogPostViews.createdAt, sinceDate))
+      : eq(blogPostViews.blogPostId, postId);
+
+    const [totals] = await db
+      .select({
+        totalViews: sql<number>`count(*)::int`,
+        uniqueVisitors: sql<number>`count(distinct ${blogPostViews.visitorId})::int`,
+        avgTimeOnPageMs: sql<number>`coalesce(avg(nullif(${blogPostViews.timeOnPageMs}, 0)), 0)::int`,
+      })
+      .from(blogPostViews)
+      .where(conditions);
+
+    const seriesRows = await db
+      .select({
+        date: sql<string>`to_char(date_trunc('day', ${blogPostViews.createdAt}), 'YYYY-MM-DD')`,
+        views: sql<number>`count(*)::int`,
+      })
+      .from(blogPostViews)
+      .where(conditions)
+      .groupBy(sql`date_trunc('day', ${blogPostViews.createdAt})`)
+      .orderBy(sql`date_trunc('day', ${blogPostViews.createdAt})`);
+
+    const referrerRows = await db
+      .select({
+        referrer: sql<string>`coalesce(nullif(${blogPostViews.referrer}, ''), '(direct)')`,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(blogPostViews)
+      .where(conditions)
+      .groupBy(sql`coalesce(nullif(${blogPostViews.referrer}, ''), '(direct)')`)
+      .orderBy(desc(sql`count(*)`))
+      .limit(10);
+
+    return {
+      postId,
+      totalViews: totals?.totalViews ?? 0,
+      uniqueVisitors: totals?.uniqueVisitors ?? 0,
+      avgTimeOnPageMs: totals?.avgTimeOnPageMs ?? 0,
+      series: seriesRows,
+      topReferrers: referrerRows,
+    };
   }
 
   async getBlogPostByApprovalToken(token: string): Promise<BlogPost | undefined> {

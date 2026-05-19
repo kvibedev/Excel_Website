@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useParams } from "wouter";
 import { Calendar, Clock, ArrowLeft, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import type { BlogPost } from "@shared/schema";
 import Markdown from "react-markdown";
 import BlogSidebar from "@/components/blog/BlogSidebar";
@@ -56,6 +57,100 @@ export default function BlogPostDetail() {
   const { data: allPosts } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
   });
+
+  useEffect(() => {
+    if (!post || !slug) return;
+    if (typeof window === "undefined") return;
+
+    const sessionKey = `efsg_bv_tracked_${slug}`;
+    const SESSION_ID_KEY = "efsg_bv_sid";
+    let sessionId = sessionStorage.getItem(SESSION_ID_KEY);
+    if (!sessionId) {
+      const bytes = new Uint8Array(18);
+      window.crypto.getRandomValues(bytes);
+      sessionId = btoa(String.fromCharCode(...bytes)).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
+      sessionStorage.setItem(SESSION_ID_KEY, sessionId);
+    }
+    let cancelled = false;
+    let viewId: number | null = null;
+    const startedAt = Date.now();
+    let lastSent = 0;
+
+    const alreadyTracked = sessionStorage.getItem(sessionKey);
+    if (alreadyTracked) {
+      const parsed = parseInt(alreadyTracked);
+      if (Number.isFinite(parsed) && parsed > 0) viewId = parsed;
+    }
+
+    const sendBeacon = (timeMs: number) => {
+      if (!viewId || timeMs <= lastSent + 1000) return;
+      lastSent = timeMs;
+      const payload = JSON.stringify({ viewId, timeOnPageMs: timeMs });
+      const url = `/api/blog/${encodeURIComponent(slug)}/view/heartbeat`;
+      try {
+        if (navigator.sendBeacon) {
+          const blob = new Blob([payload], { type: "application/json" });
+          navigator.sendBeacon(url, blob);
+          return;
+        }
+      } catch {}
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        credentials: "include",
+        keepalive: true,
+      }).catch(() => {});
+    };
+
+    const trackView = async () => {
+      if (viewId) return;
+      try {
+        try {
+          const meRes = await fetch("/api/admin/me", { credentials: "include" });
+          if (meRes.ok) {
+            const me = await meRes.json();
+            if (me?.authenticated) return;
+          }
+        } catch {}
+        if (cancelled) return;
+        const res = await fetch(`/api/blog/${encodeURIComponent(slug)}/view`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ referrer: document.referrer || "", sessionId }),
+          credentials: "include",
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (cancelled) return;
+        if (data?.viewId) {
+          viewId = data.viewId;
+          sessionStorage.setItem(sessionKey, String(viewId));
+        }
+      } catch {}
+    };
+
+    trackView();
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        sendBeacon(Date.now() - startedAt);
+      }
+    };
+    const onPageHide = () => sendBeacon(Date.now() - startedAt);
+    const intervalId = window.setInterval(() => sendBeacon(Date.now() - startedAt), 30000);
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("pagehide", onPageHide);
+
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("pagehide", onPageHide);
+      window.clearInterval(intervalId);
+      sendBeacon(Date.now() - startedAt);
+    };
+  }, [post, slug]);
 
   if (isLoading) {
     return (

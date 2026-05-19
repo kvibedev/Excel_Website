@@ -222,6 +222,37 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type BlogPost = typeof blogPosts.$inferSelect;
 
+export const blogPostViews = pgTable("blog_post_views", {
+  id: serial("id").primaryKey(),
+  blogPostId: integer("blog_post_id").notNull().references(() => blogPosts.id),
+  visitorId: text("visitor_id").notNull(),
+  sessionId: text("session_id").notNull(),
+  referrer: text("referrer"),
+  userAgent: text("user_agent"),
+  timeOnPageMs: integer("time_on_page_ms").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertBlogPostViewSchema = createInsertSchema(blogPostViews).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertBlogPostView = z.infer<typeof insertBlogPostViewSchema>;
+export type BlogPostView = typeof blogPostViews.$inferSelect;
+
+export type BlogPostStats = {
+  postId: number;
+  totalViews: number;
+  uniqueVisitors: number;
+  avgTimeOnPageMs: number;
+};
+
+export type BlogPostStatsDetail = BlogPostStats & {
+  series: { date: string; views: number }[];
+  topReferrers: { referrer: string; count: number }[];
+};
+
 export const FORM_TYPES = ["contact", "vendor", "blog_approval"] as const;
 export type FormType = (typeof FORM_TYPES)[number];
 
