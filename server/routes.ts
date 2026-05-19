@@ -55,6 +55,86 @@ function requireAtLeast(minRole: AdminRole) {
 export async function registerRoutes(app: Express): Promise<Server> {
   app.set("trust proxy", 1);
 
+  function getSiteOrigin(req: Request): string {
+    const envOrigin = process.env.SITE_ORIGIN || process.env.PUBLIC_SITE_URL;
+    if (envOrigin) return envOrigin.replace(/\/$/, "");
+    const host = req.get("host") || "efsgnj.com";
+    const proto = (req.get("x-forwarded-proto") || req.protocol || "https").split(",")[0].trim();
+    return `${proto}://${host}`;
+  }
+
+  app.get("/robots.txt", (req: Request, res: Response) => {
+    const origin = getSiteOrigin(req);
+    res.type("text/plain").send(
+      `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /admin/\nDisallow: /api/\n\nSitemap: ${origin}/sitemap.xml\n`
+    );
+  });
+
+  app.get("/sitemap.xml", async (req: Request, res: Response) => {
+    const origin = getSiteOrigin(req);
+    const staticPaths = [
+      "/",
+      "/about-us",
+      "/about-us/team",
+      "/about-us/coverage-areas",
+      "/about-us/recognitions-and-certifications",
+      "/about-us/green-seal",
+      "/about-us/cims",
+      "/services",
+      "/services/janitorial",
+      "/services/day-porters",
+      "/services/levelup-clean",
+      "/services/disinfection",
+      "/services/covid-19-cleaning",
+      "/services/floor-care",
+      "/services/window-washing",
+      "/services/air-duct-hvac",
+      "/services/carpet-extraction",
+      "/services/concrete-polishing",
+      "/services/power-washing",
+      "/services/commercial-cleaning",
+      "/industries",
+      "/industries/office-building",
+      "/industries/retailer",
+      "/industries/distribution-centers",
+      "/industries/restaurants",
+      "/industries/medical-groups",
+      "/industries/banks",
+      "/industries/schools",
+      "/industries/auto-dealerships",
+      "/contact",
+      "/resources",
+      "/vendor-registration",
+      "/privacy-policy",
+    ];
+
+    let blogUrls: { loc: string; lastmod?: string }[] = [];
+    try {
+      const posts = await storage.getPublishedBlogPosts();
+      blogUrls = posts.map((p: any) => ({
+        loc: `${origin}/resources/${p.slug}`,
+        lastmod: (p.publishedAt || p.createdAt || new Date()).toISOString?.() ?? undefined,
+      }));
+    } catch {
+      blogUrls = [];
+    }
+
+    const escapeXml = (s: string) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+
+    const urls = [
+      ...staticPaths.map((p) => `  <url><loc>${escapeXml(origin + p)}</loc></url>`),
+      ...blogUrls.map(
+        (u) =>
+          `  <url><loc>${escapeXml(u.loc)}</loc>${u.lastmod ? `<lastmod>${escapeXml(u.lastmod)}</lastmod>` : ""}</url>`
+      ),
+    ].join("\n");
+
+    res.type("application/xml").send(
+      `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+    );
+  });
+
   app.use((req: Request, res: Response, next: NextFunction) => {
     if (req.path !== "/" && req.path.endsWith("/") && !req.path.startsWith("/api")) {
       const newPath = req.path.slice(0, -1);
