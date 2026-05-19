@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, pgEnum, text, varchar, timestamp, integer, serial, boolean } from "drizzle-orm/pg-core";
+import { pgTable, pgEnum, text, varchar, timestamp, integer, serial, boolean, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -231,7 +231,11 @@ export const blogPostViews = pgTable("blog_post_views", {
   userAgent: text("user_agent"),
   timeOnPageMs: integer("time_on_page_ms").notNull().default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  blogPostIdIdx: index("blog_post_views_blog_post_id_idx").on(table.blogPostId),
+  blogPostIdCreatedAtIdx: index("blog_post_views_blog_post_id_created_at_idx").on(table.blogPostId, table.createdAt),
+  blogPostIdVisitorIdCreatedAtIdx: index("blog_post_views_blog_post_id_visitor_id_created_at_idx").on(table.blogPostId, table.visitorId, table.createdAt),
+}));
 
 export const insertBlogPostViewSchema = createInsertSchema(blogPostViews).omit({
   id: true,
