@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Briefcase, Plus, ArrowLeft } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { trackFormSubmission } from "@/lib/analytics";
+import { getAttributionForSubmit } from "@/lib/leadAttribution";
 import heroImage from "@assets/Edit_this_professional_vendor_registration_hero_im-17750050224_1775007935947.png";
 
 interface ReferenceContact {
@@ -86,6 +87,8 @@ export default function VendorRegistration() {
         formData.willingBackgroundCheck === "yes" ? "Willing to do background check" : null,
       ].filter(Boolean).join("; ");
 
+      const attribution = getAttributionForSubmit();
+
       await apiRequest("POST", "/api/vendors", {
         companyName: formData.companyName,
         contactName: `${formData.firstName} ${formData.lastName}`,
@@ -101,6 +104,13 @@ export default function VendorRegistration() {
         certifications: null,
         references: referencesText || null,
         additionalInfo: additionalInfo || null,
+        submittedFromPath: typeof window !== "undefined"
+          ? window.location.pathname + window.location.search
+          : null,
+        utmSource: attribution.utmSource,
+        utmMedium: attribution.utmMedium,
+        utmCampaign: attribution.utmCampaign,
+        referrerUrl: attribution.referrerUrl,
       });
       
       trackFormSubmission("vendor_registration", {

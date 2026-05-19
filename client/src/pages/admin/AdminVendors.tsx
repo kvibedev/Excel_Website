@@ -16,7 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Building2, Trash2, MessageSquare, Download, ChevronLeft, ChevronRight, UserCheck, Calendar } from "lucide-react";
+import { Building2, Trash2, MessageSquare, Download, ChevronLeft, ChevronRight, UserCheck, Calendar, FileText } from "lucide-react";
 import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -366,6 +366,65 @@ export default function AdminVendors() {
                   <p className="bg-gray-50 p-3 rounded-lg mt-1">{selectedVendor.additionalInfo}</p>
                 </div>
               )}
+
+              <div className="border rounded-lg p-4 bg-emerald-50/40">
+                <h4 className="font-medium flex items-center gap-2 mb-3">
+                  <FileText className="w-4 h-4 text-[#063970]" />
+                  Lead Source
+                </h4>
+                <div className="mb-3">
+                  <label className="text-sm font-medium text-muted-foreground">Submitted from</label>
+                  {selectedVendor.submittedFromPath ? (
+                    <p className="mt-1 font-mono text-sm break-all" data-testid={`text-submitted-from-${selectedVendor.id}`}>
+                      {selectedVendor.submittedFromPath}
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-sm text-muted-foreground">Unknown</p>
+                  )}
+                </div>
+                <div className="mb-3">
+                  <label className="text-sm font-medium text-muted-foreground">Referrer</label>
+                  {selectedVendor.referrerUrl ? (
+                    <p
+                      className="mt-1 font-mono text-sm break-all"
+                      data-testid={`text-referrer-${selectedVendor.id}`}
+                    >
+                      {selectedVendor.referrerUrl}
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-sm text-muted-foreground">Direct / unknown</p>
+                  )}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">UTM Source</label>
+                    <p
+                      className="mt-1 text-sm break-all"
+                      data-testid={`text-utm-source-${selectedVendor.id}`}
+                    >
+                      {selectedVendor.utmSource || <span className="text-muted-foreground">—</span>}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">UTM Medium</label>
+                    <p
+                      className="mt-1 text-sm break-all"
+                      data-testid={`text-utm-medium-${selectedVendor.id}`}
+                    >
+                      {selectedVendor.utmMedium || <span className="text-muted-foreground">—</span>}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">UTM Campaign</label>
+                    <p
+                      className="mt-1 text-sm break-all"
+                      data-testid={`text-utm-campaign-${selectedVendor.id}`}
+                    >
+                      {selectedVendor.utmCampaign || <span className="text-muted-foreground">—</span>}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Status</label>

@@ -765,7 +765,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/vendors/export/csv", requireAtLeast("admin"), async (req, res) => {
     try {
       const vendors = await storage.getVendorRegistrations();
-      const headers = ["ID", "Company Name", "Contact Name", "Email", "Phone", "City", "State", "Services Offered", "Assigned To", "Follow Up Date", "Status", "Created At"];
+      const headers = ["ID", "Company Name", "Contact Name", "Email", "Phone", "City", "State", "Services Offered", "Assigned To", "Follow Up Date", "Status", "UTM Source", "UTM Medium", "UTM Campaign", "Referrer", "Created At"];
       const rows = vendors.map((v) => [
         v.id,
         v.companyName,
@@ -778,6 +778,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         v.assignedTo || "",
         v.followUpDate ? new Date(v.followUpDate).toISOString() : "",
         v.status,
+        v.utmSource || "",
+        v.utmMedium || "",
+        v.utmCampaign || "",
+        v.referrerUrl || "",
         v.createdAt.toISOString(),
       ]);
 

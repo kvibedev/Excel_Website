@@ -136,6 +136,11 @@ export const vendorRegistrations = pgTable("vendor_registrations", {
   status: text("status").default("new").notNull(),
   assignedTo: text("assigned_to"),
   followUpDate: timestamp("follow_up_date"),
+  submittedFromPath: text("submitted_from_path"),
+  utmSource: text("utm_source"),
+  utmMedium: text("utm_medium"),
+  utmCampaign: text("utm_campaign"),
+  referrerUrl: text("referrer_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
