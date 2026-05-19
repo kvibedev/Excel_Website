@@ -3,8 +3,8 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Building2, BookOpen, CalendarClock } from "lucide-react";
-import type { Contact, VendorRegistration } from "@shared/schema";
+import { Users, Building2, BookOpen, CalendarClock, TrendingUp } from "lucide-react";
+import type { Contact, VendorRegistration, TopBlogPostStats } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
 import { useAdminAuth } from "./adminAuth";
 import BlogPerformancePanel from "@/components/admin/BlogPerformancePanel";
@@ -28,6 +28,25 @@ export default function AdminDashboard() {
     queryKey: ["/api/admin/stats"],
     enabled: !!authData?.authenticated,
   });
+
+  const { data: topPosts, isLoading: topPostsLoading } = useQuery<TopBlogPostStats[]>({
+    queryKey: ["/api/admin/blog/top-stats", { limit: 5, range: 30 }],
+    queryFn: async () => {
+      const res = await fetch("/api/admin/blog/top-stats?limit=5&range=30", { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to load top posts");
+      return res.json();
+    },
+    enabled: !!authData?.authenticated,
+  });
+
+  const formatDuration = (ms: number): string => {
+    if (!ms || ms <= 0) return "—";
+    const sec = Math.round(ms / 1000);
+    if (sec < 60) return `${sec}s`;
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}m ${s}s`;
+  };
 
   if (authLoading || statsLoading) {
     return (
@@ -99,6 +118,51 @@ export default function AdminDashboard() {
       <div className="mb-8">
         <BlogPerformancePanel />
       </div>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="flex justify-between items-center gap-2">
+            <span className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5" />
+              Top blog posts (last 30 days)
+            </span>
+            <Link href="/admin/blog">
+              <Button variant="ghost" size="sm" data-testid="link-view-all-blog-admin">View All</Button>
+            </Link>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {topPostsLoading ? (
+            <p className="text-muted-foreground text-center py-4">Loading...</p>
+          ) : !topPosts || topPosts.length === 0 ? (
+            <p className="text-muted-foreground text-center py-4" data-testid="text-no-top-posts">No blog views in the last 30 days</p>
+          ) : (
+            <div className="space-y-2">
+              {topPosts.map((p, idx) => (
+                <Link key={p.postId} href={`/admin/blog?expand=${p.postId}`}>
+                  <div
+                    className="flex items-center justify-between gap-4 p-3 rounded-md hover-elevate cursor-pointer"
+                    data-testid={`row-top-post-${p.postId}`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="text-sm font-semibold text-muted-foreground tabular-nums w-5">{idx + 1}.</span>
+                      <p className="font-medium truncate" data-testid={`text-top-post-title-${p.postId}`}>{p.title}</p>
+                    </div>
+                    <div className="flex gap-6 text-sm flex-shrink-0">
+                      <span className="text-muted-foreground">
+                        Views: <span className="font-semibold text-[#063970] tabular-nums" data-testid={`text-top-post-views-${p.postId}`}>{p.totalViews.toLocaleString()}</span>
+                      </span>
+                      <span className="text-muted-foreground hidden sm:inline">
+                        Avg. time: <span className="font-semibold text-[#063970] tabular-nums" data-testid={`text-top-post-avgtime-${p.postId}`}>{formatDuration(p.avgTimeOnPageMs)}</span>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>

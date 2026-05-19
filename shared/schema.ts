@@ -299,6 +299,11 @@ export type BlogOverviewStats = {
   }[];
 };
 
+export type TopBlogPostStats = BlogPostStats & {
+  title: string;
+  slug: string;
+};
+
 export const FORM_TYPES = ["contact", "vendor", "blog_approval"] as const;
 export type FormType = (typeof FORM_TYPES)[number];
 

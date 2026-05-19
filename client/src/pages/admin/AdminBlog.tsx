@@ -1,11 +1,11 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { FileText, Plus, Trash2, Pencil, AlertTriangle, BarChart3, ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { BlogPost, AdminRole, BlogPostStats } from "@shared/schema";
@@ -43,6 +43,9 @@ export default function AdminBlog() {
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("newest");
+  const search = useSearch();
+  const expandedFromQueryRef = useRef(false);
+  const expandedRowRef = useRef<HTMLDivElement | null>(null);
 
   const { data: posts, isLoading: postsLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/admin/blog"],
@@ -60,6 +63,24 @@ export default function AdminBlog() {
     (stats || []).forEach((s) => map.set(s.postId, s));
     return map;
   }, [stats]);
+
+  useEffect(() => {
+    if (expandedFromQueryRef.current) return;
+    const params = new URLSearchParams(search);
+    const expandRaw = params.get("expand");
+    if (!expandRaw) return;
+    const id = parseInt(expandRaw, 10);
+    if (Number.isFinite(id)) {
+      setExpandedId(id);
+      expandedFromQueryRef.current = true;
+    }
+  }, [search]);
+
+  useEffect(() => {
+    if (expandedId && expandedRowRef.current) {
+      expandedRowRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [expandedId, posts]);
 
   const deletePostMutation = useMutation({
     mutationFn: async (id: number) => {
@@ -142,7 +163,11 @@ export default function AdminBlog() {
               const s = statsByPostId.get(post.id);
               const expanded = expandedId === post.id;
               return (
-                <div key={post.id} data-testid={`post-row-${post.id}`}>
+                <div
+                  key={post.id}
+                  data-testid={`post-row-${post.id}`}
+                  ref={expanded ? expandedRowRef : undefined}
+                >
                   <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg gap-4 flex-wrap">
                     <div className="flex-1 min-w-0">
                       <p className="font-medium truncate">{post.title}</p>

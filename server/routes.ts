@@ -921,6 +921,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/blog/top-stats", requireAuth, async (req, res) => {
+    try {
+      const limitRaw = parseInt((req.query.limit || "5").toString());
+      const limit = Number.isFinite(limitRaw) ? Math.max(1, Math.min(50, limitRaw)) : 5;
+      const rangeRaw = (req.query.range || "30").toString();
+      const range = rangeRaw === "all" ? null : (["7", "30", "90"].includes(rangeRaw) ? parseInt(rangeRaw) : 30);
+      const top = await storage.getTopBlogPostsByViews(limit, range);
+      res.json(top);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch top blog posts" });
+    }
+  });
+
   app.get("/api/admin/blog/:id(\\d+)/stats", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);

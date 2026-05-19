@@ -9,7 +9,7 @@ import {
   type FormEmailSetting, type InsertFormEmailSetting,
   type BlogApprovalHistory, type InsertBlogApprovalHistory,
   type BlogPostView, type InsertBlogPostView,
-  type BlogPostStats, type BlogPostStatsDetail, type BlogOverviewStats,
+  type BlogPostStats, type BlogPostStatsDetail, type BlogOverviewStats, type TopBlogPostStats,
   type ContactBlogAttribution, type InsertContactBlogAttribution, type ContactAttributedPost,
   users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews, contactBlogAttributions
 } from "@shared/schema";
@@ -75,6 +75,7 @@ export interface IStorage {
   getBlogPostStatsForAll(): Promise<BlogPostStats[]>;
   getBlogPostStatsDetail(postId: number, sinceDays: number | null): Promise<BlogPostStatsDetail>;
   getBlogOverviewStats(sinceDays: number | null): Promise<BlogOverviewStats>;
+  getTopBlogPostsByViews(limit: number, sinceDays: number | null): Promise<TopBlogPostStats[]>;
 
   setContactVisitorId(id: number, visitorId: string): Promise<void>;
   createContactBlogAttributions(entries: InsertContactBlogAttribution[]): Promise<void>;
@@ -527,6 +528,28 @@ export class DatabaseStorage implements IStorage {
       series: seriesRows,
       topPosts: topRows,
     };
+  }
+
+  async getTopBlogPostsByViews(limit: number, sinceDays: number | null): Promise<TopBlogPostStats[]> {
+    const sinceDate = sinceDays != null ? new Date(Date.now() - sinceDays * 24 * 60 * 60 * 1000) : null;
+    const whereClause = sinceDate ? gte(blogPostViews.createdAt, sinceDate) : undefined;
+
+    const rows = await db
+      .select({
+        postId: blogPostViews.blogPostId,
+        title: blogPosts.title,
+        slug: blogPosts.slug,
+        totalViews: sql<number>`count(*)::int`,
+        uniqueVisitors: sql<number>`count(distinct ${blogPostViews.visitorId})::int`,
+        avgTimeOnPageMs: sql<number>`coalesce(avg(nullif(${blogPostViews.timeOnPageMs}, 0)), 0)::int`,
+      })
+      .from(blogPostViews)
+      .innerJoin(blogPosts, eq(blogPosts.id, blogPostViews.blogPostId))
+      .where(whereClause)
+      .groupBy(blogPostViews.blogPostId, blogPosts.title, blogPosts.slug)
+      .orderBy(desc(sql`count(*)`))
+      .limit(limit);
+    return rows;
   }
 
   async getBlogPostByApprovalToken(token: string): Promise<BlogPost | undefined> {
