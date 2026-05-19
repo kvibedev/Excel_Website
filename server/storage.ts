@@ -10,6 +10,7 @@ import {
   type BlogApprovalHistory, type InsertBlogApprovalHistory,
   type BlogPostView, type InsertBlogPostView,
   type BlogPostStats, type BlogPostStatsDetail, type BlogOverviewStats, type TopBlogPostStats,
+  type LeadSourceBreakdown, type LeadSourceRow,
   type ContactBlogAttribution, type InsertContactBlogAttribution, type ContactAttributedPost,
   users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews, contactBlogAttributions
 } from "@shared/schema";
@@ -80,6 +81,7 @@ export interface IStorage {
   setContactVisitorId(id: number, visitorId: string): Promise<void>;
   createContactBlogAttributions(entries: InsertContactBlogAttribution[]): Promise<void>;
   getContactBlogAttributions(contactId: number): Promise<ContactAttributedPost[]>;
+  getLeadSourceBreakdown(sinceDays: number | null): Promise<LeadSourceBreakdown>;
 
   getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
   getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
@@ -235,6 +237,80 @@ export class DatabaseStorage implements IStorage {
       .where(eq(contactBlogAttributions.contactId, contactId))
       .orderBy(desc(contactBlogAttributions.viewedAt));
     return rows;
+  }
+
+  async getLeadSourceBreakdown(sinceDays: number | null): Promise<LeadSourceBreakdown> {
+    const whereClauses = sinceDays
+      ? [gte(contacts.createdAt, new Date(Date.now() - sinceDays * 24 * 60 * 60 * 1000))]
+      : [];
+    const rows = await db
+      .select({
+        utmSource: contacts.utmSource,
+        utmMedium: contacts.utmMedium,
+        referrerUrl: contacts.referrerUrl,
+      })
+      .from(contacts)
+      .where(whereClauses.length ? and(...whereClauses) : undefined);
+
+    const normalize = (v: string | null | undefined) => (v ?? "").trim().toLowerCase() || null;
+    const referrerDomain = (url: string | null | undefined): string | null => {
+      if (!url) return null;
+      const raw = url.trim();
+      if (!raw) return null;
+      try {
+        const u = new URL(raw.startsWith("http") ? raw : `https://${raw}`);
+        return u.hostname.replace(/^www\./, "").toLowerCase() || null;
+      } catch {
+        return null;
+      }
+    };
+
+    const map = new Map<string, LeadSourceRow>();
+    for (const r of rows) {
+      const src = normalize(r.utmSource);
+      const med = normalize(r.utmMedium);
+      const ref = referrerDomain(r.referrerUrl);
+      let row: LeadSourceRow;
+      if (src) {
+        const key = `utm:${src}|${med ?? ""}`;
+        row = map.get(key) ?? {
+          key,
+          label: med ? `${src} / ${med}` : src,
+          type: "utm",
+          utmSource: src,
+          utmMedium: med,
+          referrerDomain: null,
+          count: 0,
+        };
+      } else if (ref) {
+        const key = `ref:${ref}`;
+        row = map.get(key) ?? {
+          key,
+          label: ref,
+          type: "referrer",
+          utmSource: null,
+          utmMedium: null,
+          referrerDomain: ref,
+          count: 0,
+        };
+      } else {
+        const key = "direct";
+        row = map.get(key) ?? {
+          key,
+          label: "Direct / unknown",
+          type: "direct",
+          utmSource: null,
+          utmMedium: null,
+          referrerDomain: null,
+          count: 0,
+        };
+      }
+      row.count += 1;
+      map.set(row.key, row);
+    }
+
+    const out = Array.from(map.values()).sort((a, b) => b.count - a.count);
+    return { total: rows.length, rows: out };
   }
 
   async getRecentBlogViewsForVisitor(visitorId: string, sinceDays: number): Promise<{ blogPostId: number; viewedAt: Date }[]> {

@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useSearch } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,8 +17,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Users, Trash2, MessageSquare, Download, ChevronLeft, ChevronRight, UserCheck, Calendar, FileText, Link2 } from "lucide-react";
-import { useState } from "react";
+import { Users, Trash2, MessageSquare, Download, ChevronLeft, ChevronRight, UserCheck, Calendar, FileText, Link2, X } from "lucide-react";
+import { useState, useMemo } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Contact, ContactNote, ContactAttributedPost } from "@shared/schema";
@@ -45,6 +46,28 @@ export default function AdminContacts() {
   const { toast } = useToast();
   const { authData, authLoading } = useAdminAuth();
   const isReadOnly = !canAccess(authData?.role as AdminRole, "admin");
+  const search = useSearch();
+  const sourceFilter = useMemo(() => {
+    const params = new URLSearchParams(search);
+    const utmSource = params.get("utmSource");
+    const utmMedium = params.get("utmMedium");
+    const referrer = params.get("referrer");
+    const directOnly = params.get("source") === "direct";
+    if (!utmSource && !utmMedium && !referrer && !directOnly) return null;
+    const labelParts: string[] = [];
+    if (utmSource) labelParts.push(`utm_source=${utmSource}`);
+    if (utmMedium) labelParts.push(`utm_medium=${utmMedium}`);
+    if (referrer) labelParts.push(`referrer=${referrer}`);
+    if (directOnly) labelParts.push("Direct / unknown");
+    return {
+      utmSource: utmSource?.toLowerCase() ?? null,
+      utmMedium: utmMedium?.toLowerCase() ?? null,
+      referrer: referrer?.toLowerCase() ?? null,
+      directOnly,
+      label: labelParts.join(" · "),
+    };
+  }, [search]);
+
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -143,6 +166,16 @@ export default function AdminContacts() {
     );
   }
 
+  const extractReferrerDomain = (url: string | null | undefined): string | null => {
+    if (!url) return null;
+    try {
+      const u = new URL(url.startsWith("http") ? url : `https://${url}`);
+      return u.hostname.replace(/^www\./, "").toLowerCase();
+    } catch {
+      return null;
+    }
+  };
+
   const filteredContacts = contacts?.filter((contact) => {
     const matchesStatus = filterStatus === "all" || contact.status === filterStatus;
     const matchesSearch =
@@ -150,7 +183,22 @@ export default function AdminContacts() {
       contact.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (contact.company?.toLowerCase().includes(searchTerm.toLowerCase()));
-    return matchesStatus && matchesSearch;
+    let matchesSource = true;
+    if (sourceFilter) {
+      const cSrc = (contact.utmSource ?? "").trim().toLowerCase();
+      const cMed = (contact.utmMedium ?? "").trim().toLowerCase();
+      const cRefDomain = extractReferrerDomain(contact.referrerUrl);
+      if (sourceFilter.directOnly) {
+        matchesSource = !cSrc && !cRefDomain;
+      } else if (sourceFilter.utmSource) {
+        matchesSource =
+          cSrc === sourceFilter.utmSource &&
+          (sourceFilter.utmMedium ? cMed === sourceFilter.utmMedium : true);
+      } else if (sourceFilter.referrer) {
+        matchesSource = !cSrc && cRefDomain === sourceFilter.referrer;
+      }
+    }
+    return matchesStatus && matchesSearch && matchesSource;
   }) ?? [];
 
   const totalPages = Math.max(1, Math.ceil(filteredContacts.length / ITEMS_PER_PAGE));
@@ -205,6 +253,22 @@ export default function AdminContacts() {
               </SelectContent>
             </Select>
           </div>
+          {sourceFilter && (
+            <div
+              className="flex items-center justify-between gap-2 mt-4 p-3 rounded-md border bg-muted/40"
+              data-testid="banner-source-filter"
+            >
+              <div className="text-sm">
+                <span className="text-muted-foreground">Filtering by source:</span>{" "}
+                <span className="font-medium" data-testid="text-source-filter-label">{sourceFilter.label}</span>
+              </div>
+              <a href="/admin/contacts">
+                <Button size="sm" variant="ghost" data-testid="button-clear-source-filter">
+                  <X className="w-4 h-4 mr-1" /> Clear
+                </Button>
+              </a>
+            </div>
+          )}
         </CardHeader>
         <CardContent>
           <div className="space-y-4">

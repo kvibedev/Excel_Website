@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Building2, BookOpen, CalendarClock, TrendingUp } from "lucide-react";
-import type { Contact, VendorRegistration, TopBlogPostStats } from "@shared/schema";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Users, Building2, BookOpen, CalendarClock, TrendingUp, Compass } from "lucide-react";
+import type { Contact, VendorRegistration, TopBlogPostStats, LeadSourceBreakdown, LeadSourceRow } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
 import { useAdminAuth } from "./adminAuth";
 import BlogPerformancePanel from "@/components/admin/BlogPerformancePanel";
@@ -21,11 +23,37 @@ interface DashboardStats {
   recentVendors: VendorRegistration[];
 }
 
+type LeadSourceRange = "7" | "30" | "90" | "all";
+
+function buildLeadSourceHref(row: LeadSourceRow): string {
+  const params = new URLSearchParams();
+  if (row.type === "utm") {
+    if (row.utmSource) params.set("utmSource", row.utmSource);
+    if (row.utmMedium) params.set("utmMedium", row.utmMedium);
+  } else if (row.type === "referrer" && row.referrerDomain) {
+    params.set("referrer", row.referrerDomain);
+  } else {
+    params.set("source", "direct");
+  }
+  return `/admin/contacts?${params.toString()}`;
+}
+
 export default function AdminDashboard() {
   const { authData, authLoading } = useAdminAuth();
+  const [leadRange, setLeadRange] = useState<LeadSourceRange>("30");
 
   const { data: stats, isLoading: statsLoading } = useQuery<DashboardStats>({
     queryKey: ["/api/admin/stats"],
+    enabled: !!authData?.authenticated,
+  });
+
+  const { data: leadSources, isLoading: leadSourcesLoading } = useQuery<LeadSourceBreakdown>({
+    queryKey: ["/api/admin/contacts/source-breakdown", { range: leadRange }],
+    queryFn: async () => {
+      const res = await fetch(`/api/admin/contacts/source-breakdown?range=${leadRange}`, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to load lead sources");
+      return res.json();
+    },
     enabled: !!authData?.authenticated,
   });
 
@@ -114,6 +142,72 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="flex justify-between items-center gap-2 flex-wrap">
+            <span className="flex items-center gap-2">
+              <Compass className="w-5 h-5" />
+              Lead sources
+            </span>
+            <Select value={leadRange} onValueChange={(v) => setLeadRange(v as LeadSourceRange)}>
+              <SelectTrigger className="w-40" data-testid="select-lead-sources-range">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7">Last 7 days</SelectItem>
+                <SelectItem value="30">Last 30 days</SelectItem>
+                <SelectItem value="90">Last 90 days</SelectItem>
+                <SelectItem value="all">All time</SelectItem>
+              </SelectContent>
+            </Select>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {leadSourcesLoading ? (
+            <p className="text-muted-foreground text-center py-4">Loading...</p>
+          ) : !leadSources || leadSources.rows.length === 0 ? (
+            <p className="text-muted-foreground text-center py-4" data-testid="text-no-lead-sources">
+              No leads in this range yet
+            </p>
+          ) : (
+            <div className="space-y-2">
+              {leadSources.rows.map((row) => {
+                const pct = leadSources.total > 0 ? Math.round((row.count / leadSources.total) * 100) : 0;
+                const typeLabel =
+                  row.type === "utm" ? "UTM" : row.type === "referrer" ? "Referrer" : "Direct";
+                return (
+                  <Link key={row.key} href={buildLeadSourceHref(row)}>
+                    <div
+                      className="flex items-center justify-between gap-4 p-3 rounded-md hover-elevate cursor-pointer"
+                      data-testid={`row-lead-source-${row.key}`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Badge variant="outline" className="flex-shrink-0">{typeLabel}</Badge>
+                        <p className="font-medium truncate" data-testid={`text-lead-source-label-${row.key}`}>
+                          {row.label}
+                        </p>
+                      </div>
+                      <div className="flex gap-6 text-sm flex-shrink-0 items-center">
+                        <span className="text-muted-foreground tabular-nums hidden sm:inline">{pct}%</span>
+                        <span className="text-muted-foreground">
+                          Leads:{" "}
+                          <span
+                            className="font-semibold text-[#063970] tabular-nums"
+                            data-testid={`text-lead-source-count-${row.key}`}
+                          >
+                            {row.count.toLocaleString()}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className="mb-8">
         <BlogPerformancePanel />

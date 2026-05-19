@@ -651,6 +651,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/contacts/source-breakdown", requireAuth, async (req, res) => {
+    try {
+      const rangeRaw = typeof req.query.range === "string" ? req.query.range : "30";
+      let sinceDays: number | null = null;
+      if (rangeRaw !== "all") {
+        const parsed = parseInt(rangeRaw, 10);
+        sinceDays = Number.isFinite(parsed) && parsed > 0 ? parsed : 30;
+      }
+      const data = await storage.getLeadSourceBreakdown(sinceDays);
+      res.json(data);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch lead source breakdown" });
+    }
+  });
+
   app.get("/api/admin/contacts", requireAuth, async (req, res) => {
     try {
       const contacts = await storage.getContacts();

@@ -313,6 +313,21 @@ export type TopBlogPostStats = BlogPostStats & {
   slug: string;
 };
 
+export type LeadSourceRow = {
+  key: string;
+  label: string;
+  type: "utm" | "referrer" | "direct";
+  utmSource: string | null;
+  utmMedium: string | null;
+  referrerDomain: string | null;
+  count: number;
+};
+
+export type LeadSourceBreakdown = {
+  total: number;
+  rows: LeadSourceRow[];
+};
+
 export const FORM_TYPES = ["contact", "vendor", "blog_approval"] as const;
 export type FormType = (typeof FORM_TYPES)[number];
 
