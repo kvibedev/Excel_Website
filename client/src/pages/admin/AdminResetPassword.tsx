@@ -19,6 +19,7 @@ export default function AdminResetPassword() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const token = useMemo(() => new URLSearchParams(window.location.search).get("token") || "", []);
+  const isSetup = useMemo(() => new URLSearchParams(window.location.search).get("setup") === "1", []);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -92,8 +93,8 @@ export default function AdminResetPassword() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-[#063970]">Reset Password</CardTitle>
-          <p className="text-muted-foreground">Choose a new password for your admin account</p>
+          <CardTitle className="text-2xl text-[#063970]">{isSetup ? "Welcome — Set Your Password" : "Reset Password"}</CardTitle>
+          <p className="text-muted-foreground">{isSetup ? "Choose a password to finish setting up your admin account." : "Choose a new password for your admin account"}</p>
         </CardHeader>
         <CardContent>
           {!token || verifyLoading ? (
@@ -124,11 +125,12 @@ export default function AdminResetPassword() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {verify.email && (
                 <p className="text-sm text-muted-foreground" data-testid="text-reset-email">
-                  Resetting password for <strong className="text-gray-900">{verify.email}</strong>
+                  {isSetup ? "Setting password for " : "Resetting password for "}
+                  <strong className="text-gray-900">{verify.email}</strong>
                 </p>
               )}
               <div>
-                <Label htmlFor="new-password">New password</Label>
+                <Label htmlFor="new-password">{isSetup ? "Choose a password" : "New password"}</Label>
                 <div className="relative">
                   <Input
                     id="new-password"
@@ -178,7 +180,7 @@ export default function AdminResetPassword() {
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading} data-testid="button-reset-password">
-                {isLoading ? "Updating..." : "Update password"}
+                {isLoading ? "Saving..." : isSetup ? "Set password and continue" : "Update password"}
               </Button>
             </form>
           )}

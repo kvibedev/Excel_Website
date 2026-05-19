@@ -8,7 +8,7 @@ import fs from "fs";
 import { storage } from "./storage";
 import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
 import { z } from "zod";
-import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, sendBlogClientConfirmationEmail, getBlogApprovalRecipients, sendPasswordResetEmail } from "./email";
+import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, sendBlogClientConfirmationEmail, getBlogApprovalRecipients, sendPasswordResetEmail, sendAdminInviteEmail } from "./email";
 import crypto from "crypto";
 
 declare module "express-session" {
@@ -219,19 +219,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Password must be at least 8 characters long." });
       }
 
-      const admin = await storage.getAdminByResetToken(token);
-      if (!admin || !admin.passwordResetExpiresAt) {
+      const newHash = await bcrypt.hash(password, 10);
+      const updated = await storage.consumePasswordResetToken(token, newHash);
+      if (!updated) {
+        const existing = await storage.getAdminByResetToken(token);
+        if (existing && !existing.isActive) {
+          return res.status(400).json({ error: "This account is no longer active. Please contact your administrator." });
+        }
+        if (existing && existing.passwordResetExpiresAt && new Date(existing.passwordResetExpiresAt).getTime() < Date.now()) {
+          return res.status(400).json({ error: "This reset link has expired. Please request a new one." });
+        }
         return res.status(400).json({ error: "This reset link is invalid. Please request a new one." });
       }
-      if (new Date(admin.passwordResetExpiresAt).getTime() < Date.now()) {
-        return res.status(400).json({ error: "This reset link has expired. Please request a new one." });
-      }
-      if (!admin.isActive) {
-        return res.status(400).json({ error: "This account is no longer active. Please contact your administrator." });
-      }
-
-      const newHash = await bcrypt.hash(password, 10);
-      await storage.clearPasswordResetToken(admin.id, newHash);
 
       res.json({ success: true, message: "Your password has been reset. You can now log in with the new password." });
     } catch (error) {
@@ -306,9 +305,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/users", requireAtLeast("admin"), async (req, res) => {
     try {
-      const { username, email, password, role } = req.body;
-      if (!username || !email || !password || !role) {
-        return res.status(400).json({ error: "Username, email, password, and role are required" });
+      const { username, email, role } = req.body;
+      if (!username || !email || !role) {
+        return res.status(400).json({ error: "Username, email, and role are required" });
       }
 
       const callerRole = (req.session.adminRole || "viewer") as AdminRole;
@@ -318,7 +317,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "You cannot assign a role higher than your own" });
       }
 
-      const existingEmail = await storage.getAdminByEmail(email);
+      const normalizedEmail = String(email).trim().toLowerCase();
+      const existingEmail = await storage.getAdminByEmail(normalizedEmail);
       if (existingEmail) {
         return res.status(400).json({ error: "An account with this email already exists" });
       }
@@ -327,11 +327,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "An account with this username already exists" });
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const admin = await storage.createAdminUser({ username, email, password: hashedPassword, role });
-      res.json({ id: admin.id, username: admin.username, email: admin.email, role: admin.role, createdAt: admin.createdAt });
+      // Create the account with an unusable random password — the user must
+      // set their own via the invite link.
+      const placeholder = crypto.randomBytes(32).toString("hex");
+      const hashedPassword = await bcrypt.hash(placeholder, 10);
+      const admin = await storage.createAdminUser({ username, email: normalizedEmail, password: hashedPassword, role });
+
+      const token = crypto.randomBytes(32).toString("hex");
+      const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+      await storage.setPasswordResetToken(admin.id, token, expiresAt);
+
+      let emailSent = true;
+      try {
+        await sendAdminInviteEmail(
+          { email: admin.email, name: admin.username },
+          token,
+          req.session.adminUsername
+        );
+      } catch (err) {
+        emailSent = false;
+        console.error("Failed to send admin invite email:", err);
+      }
+
+      res.json({
+        id: admin.id,
+        username: admin.username,
+        email: admin.email,
+        role: admin.role,
+        createdAt: admin.createdAt,
+        inviteSent: emailSent,
+      });
     } catch (error) {
       res.status(500).json({ error: "Failed to create admin user" });
+    }
+  });
+
+  app.post("/api/admin/users/:id/resend-invite", requireAtLeast("admin"), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const callerRole = (req.session.adminRole || "viewer") as AdminRole;
+      const callerLevel = ROLE_HIERARCHY[callerRole];
+
+      const target = await storage.getAdminUser(id);
+      if (!target) return res.status(404).json({ error: "User not found" });
+      if (!target.isActive) return res.status(400).json({ error: "This account is inactive." });
+
+      const targetLevel = ROLE_HIERARCHY[(target.role || "viewer") as AdminRole];
+      if (targetLevel > callerLevel) {
+        return res.status(403).json({ error: "You cannot resend an invite for a user with a higher role" });
+      }
+
+      const token = crypto.randomBytes(32).toString("hex");
+      const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+      await storage.setPasswordResetToken(target.id, token, expiresAt);
+
+      try {
+        await sendAdminInviteEmail(
+          { email: target.email, name: target.username },
+          token,
+          req.session.adminUsername
+        );
+      } catch (err) {
+        console.error("Failed to resend admin invite email:", err);
+        return res.status(500).json({ error: "Failed to send invite email. Please try again." });
+      }
+
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to resend invite" });
     }
   });
 

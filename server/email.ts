@@ -199,6 +199,64 @@ export async function sendPasswordResetEmail(to: { email: string; name?: string 
   }
 }
 
+export async function sendAdminInviteEmail(
+  to: { email: string; name?: string },
+  token: string,
+  inviterName?: string
+): Promise<void> {
+  if (!SENDGRID_API_KEY) {
+    console.warn("SendGrid not configured — skipping admin invite email");
+    throw new Error("Email service is not configured. Please set SENDGRID_API_KEY.");
+  }
+
+  const setupUrl = `${getAppBaseUrl()}/admin/reset-password?token=${encodeURIComponent(token)}&setup=1`;
+  const safeName = to.name ? escapeHtml(to.name) : "there";
+  const safeInviter = inviterName ? escapeHtml(inviterName) : "";
+  const subject = "You've been invited to the Excel Facility Services admin portal";
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #063970; padding: 20px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 22px;">Welcome to the EFSG Admin Portal</h1>
+      </div>
+      <div style="padding: 24px; background-color: #f9fafb; border: 1px solid #e5e7eb;">
+        <p style="color: #111827; font-size: 15px;">Hi ${safeName},</p>
+        <p style="color: #111827; font-size: 15px;">
+          ${safeInviter ? `${safeInviter} has invited you` : "You've been invited"}
+          to access the Excel Facility Services admin portal. Your account has been created for
+          <strong>${escapeHtml(to.email)}</strong>.
+        </p>
+        <p style="color: #111827; font-size: 15px;">To get started, click the button below to set your password. This link will expire in 7 days.</p>
+        <div style="text-align: center; margin: 28px 0;">
+          <a href="${setupUrl}" style="background-color: #0A5EB9; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Set Your Password</a>
+        </div>
+        <p style="color: #6b7280; font-size: 13px;">Or copy this link into your browser:<br/><a href="${setupUrl}" style="color: #063970; word-break: break-all;">${setupUrl}</a></p>
+        <p style="color: #6b7280; font-size: 13px; margin-top: 24px;">If you weren't expecting this invitation, you can safely ignore this email.</p>
+      </div>
+      <div style="padding: 16px; text-align: center; color: #6b7280; font-size: 12px;">
+        <p>Excel Facility Services Group</p>
+      </div>
+    </div>
+  `;
+
+  const text = `Welcome to the EFSG Admin Portal\n\nHi ${to.name || "there"},\n\n${inviterName ? `${inviterName} has invited you` : "You've been invited"} to access the Excel Facility Services admin portal. Your account has been created for ${to.email}.\n\nSet your password using the link below. It expires in 7 days.\n\n${setupUrl}\n\nIf you weren't expecting this invitation, you can safely ignore this email.`;
+
+  const msg: sgMail.MailDataRequired = {
+    to: { email: to.email, name: to.name },
+    from: { email: FROM_EMAIL, name: FROM_NAME },
+    subject, html, text,
+    trackingSettings: { clickTracking: { enable: false, enableText: false } },
+  };
+
+  try {
+    await sgMail.send(msg);
+    console.log(`Admin invite email sent to ${to.email}`);
+  } catch (error: any) {
+    console.error("SendGrid admin invite email error:", error?.response?.body || error.message);
+    throw error;
+  }
+}
+
 export async function sendBlogApprovalRequestEmail(post: BlogPost, token: string): Promise<void> {
   if (!SENDGRID_API_KEY) { console.warn("SendGrid not configured — skipping blog approval email"); return; }
   const { to, cc } = await getBlogApprovalRecipients();

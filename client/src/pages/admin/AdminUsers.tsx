@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, Plus, Pencil, Trash2, Shield, X } from "lucide-react";
+import { Users, Plus, Pencil, Trash2, Shield, X, Mail } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { ADMIN_ROLES, ROLE_LABELS, ROLE_HIERARCHY, type AdminRole } from "@shared/schema";
@@ -66,17 +66,40 @@ export default function AdminUsers() {
   });
 
   const createMutation = useMutation({
-    mutationFn: async (data: typeof form) => {
+    mutationFn: async (data: { username: string; email: string; role: string }) => {
       const res = await apiRequest("POST", "/api/admin/users", data);
       return res.json();
     },
-    onSuccess: () => {
+    onSuccess: (data: { username: string; email: string; inviteSent?: boolean }) => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
-      toast({ title: "User created successfully" });
+      if (data?.inviteSent === false) {
+        toast({
+          title: "User created, but invite email failed",
+          description: `Couldn't send the invite to ${data.email}. Use Resend invite to try again.`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Invite sent",
+          description: `${data.email} will receive an email to set their password.`,
+        });
+      }
       resetForm();
     },
     onError: (err: Error) => {
       toast({ title: parseApiError(err, "Failed to create user"), variant: "destructive" });
+    },
+  });
+
+  const resendInviteMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest("POST", `/api/admin/users/${id}/resend-invite`);
+    },
+    onSuccess: () => {
+      toast({ title: "Invite resent", description: "A new setup link has been emailed." });
+    },
+    onError: (err: Error) => {
+      toast({ title: parseApiError(err, "Failed to resend invite"), variant: "destructive" });
     },
   });
 
@@ -131,11 +154,11 @@ export default function AdminUsers() {
       if (form.password) data.password = form.password;
       updateMutation.mutate({ id: editingUser.id, data });
     } else {
-      if (!form.username || !form.email || !form.password) {
+      if (!form.username || !form.email) {
         toast({ title: "Please fill all required fields", variant: "destructive" });
         return;
       }
-      createMutation.mutate(form);
+      createMutation.mutate({ username: form.username, email: form.email, role: form.role });
     }
   };
 
@@ -201,17 +224,25 @@ export default function AdminUsers() {
                       data-testid="input-user-email"
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="password">{editingUser ? "New Password (leave blank to keep)" : "Password *"}</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      value={form.password}
-                      onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
-                      placeholder={editingUser ? "Leave blank to keep current" : "password"}
-                      data-testid="input-user-password"
-                    />
-                  </div>
+                  {editingUser ? (
+                    <div>
+                      <Label htmlFor="password">New Password (leave blank to keep)</Label>
+                      <Input
+                        id="password"
+                        type="password"
+                        value={form.password}
+                        onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
+                        placeholder="Leave blank to keep current"
+                        data-testid="input-user-password"
+                      />
+                    </div>
+                  ) : (
+                    <div className="md:col-span-2">
+                      <div className="rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-100">
+                        The new user will receive an email with a secure link to set their own password (link expires in 7 days). No temporary password needed.
+                      </div>
+                    </div>
+                  )}
                   <div>
                     <Label htmlFor="role">Role *</Label>
                     <Select value={form.role} onValueChange={(val) => setForm((p) => ({ ...p, role: val }))}>
@@ -234,7 +265,7 @@ export default function AdminUsers() {
                     disabled={createMutation.isPending || updateMutation.isPending}
                     data-testid="button-submit-user"
                   >
-                    {(createMutation.isPending || updateMutation.isPending) ? "Saving..." : editingUser ? "Update User" : "Create User"}
+                    {(createMutation.isPending || updateMutation.isPending) ? "Saving..." : editingUser ? "Update User" : "Send Invite"}
                   </Button>
                   <Button type="button" variant="outline" onClick={resetForm} data-testid="button-cancel">
                     Cancel
@@ -281,6 +312,22 @@ export default function AdminUsers() {
                         </td>
                         <td className="py-3 text-right">
                           <div className="flex items-center justify-end gap-1">
+                            {canEditUser(user) && user.isActive && (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  if (confirm(`Send a new password setup link to ${user.email}?`)) {
+                                    resendInviteMutation.mutate(user.id);
+                                  }
+                                }}
+                                disabled={resendInviteMutation.isPending}
+                                title="Resend invite"
+                                data-testid={`button-resend-invite-${user.id}`}
+                              >
+                                <Mail className="w-4 h-4" />
+                              </Button>
+                            )}
                             {canEditUser(user) && (
                               <Button
                                 variant="ghost"

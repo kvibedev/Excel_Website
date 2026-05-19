@@ -11,7 +11,7 @@ import {
   users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, gt } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -29,6 +29,7 @@ export interface IStorage {
   setPasswordResetToken(id: number, token: string, expiresAt: Date): Promise<void>;
   getAdminByResetToken(token: string): Promise<AdminUser | undefined>;
   clearPasswordResetToken(id: number, newPasswordHash: string): Promise<void>;
+  consumePasswordResetToken(token: string, newPasswordHash: string): Promise<AdminUser | undefined>;
 
   getContacts(): Promise<Contact[]>;
   getContact(id: number): Promise<Contact | undefined>;
@@ -141,6 +142,21 @@ export class DatabaseStorage implements IStorage {
       .update(adminUsers)
       .set({ password: newPasswordHash, passwordResetToken: null, passwordResetExpiresAt: null })
       .where(eq(adminUsers.id, id));
+  }
+
+  async consumePasswordResetToken(token: string, newPasswordHash: string): Promise<AdminUser | undefined> {
+    const [updated] = await db
+      .update(adminUsers)
+      .set({ password: newPasswordHash, passwordResetToken: null, passwordResetExpiresAt: null })
+      .where(
+        and(
+          eq(adminUsers.passwordResetToken, token),
+          eq(adminUsers.isActive, true),
+          gt(adminUsers.passwordResetExpiresAt, new Date())
+        )
+      )
+      .returning();
+    return updated;
   }
 
   async getContacts(): Promise<Contact[]> {
