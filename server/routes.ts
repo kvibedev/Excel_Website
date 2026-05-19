@@ -318,20 +318,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const normalizedEmail = String(email).trim().toLowerCase();
+      const normalizedUsername = String(username).trim();
+      if (!normalizedUsername) {
+        return res.status(400).json({ error: "Username is required", field: "username" });
+      }
       const existingEmail = await storage.getAdminByEmail(normalizedEmail);
       if (existingEmail) {
-        return res.status(400).json({ error: "An account with this email already exists" });
+        return res.status(400).json({ error: "An account with this email already exists", field: "email" });
       }
-      const existingUsername = await storage.getAdminByUsername(username);
+      const existingUsername = await storage.getAdminByUsername(normalizedUsername);
       if (existingUsername) {
-        return res.status(400).json({ error: "An account with this username already exists" });
+        return res.status(400).json({ error: "An account with this username already exists", field: "username" });
       }
 
       // Create the account with an unusable random password — the user must
       // set their own via the invite link.
       const placeholder = crypto.randomBytes(32).toString("hex");
       const hashedPassword = await bcrypt.hash(placeholder, 10);
-      const admin = await storage.createAdminUser({ username, email: normalizedEmail, password: hashedPassword, role });
+      let admin;
+      try {
+        admin = await storage.createAdminUser({ username: normalizedUsername, email: normalizedEmail, password: hashedPassword, role });
+      } catch (err: any) {
+        if (err?.code === "23505" || /duplicate key|unique constraint/i.test(err?.message || "")) {
+          const field = /email/i.test(err?.detail || err?.message || "") ? "email" : "username";
+          return res.status(400).json({
+            error: field === "email"
+              ? "An account with this email already exists"
+              : "An account with this username already exists",
+            field,
+          });
+        }
+        throw err;
+      }
 
       const token = crypto.randomBytes(32).toString("hex");
       const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
@@ -423,9 +441,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : undefined;
+      const normalizedUsername = typeof username === "string" ? username.trim() : undefined;
+
       const updates: Partial<{ username: string; email: string; role: string; password: string }> = {};
-      if (username) updates.username = username;
-      if (email) updates.email = email;
+      if (normalizedUsername) updates.username = normalizedUsername;
+      if (normalizedEmail) updates.email = normalizedEmail;
       if (role) updates.role = role;
       if (password) updates.password = await bcrypt.hash(password, 10);
 
@@ -433,20 +454,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "No fields to update" });
       }
 
-      if (email && email !== target.email) {
-        const existingEmail = await storage.getAdminByEmail(email);
+      if (normalizedEmail && normalizedEmail !== target.email) {
+        const existingEmail = await storage.getAdminByEmail(normalizedEmail);
         if (existingEmail) {
-          return res.status(400).json({ error: "An account with this email already exists" });
+          return res.status(400).json({ error: "An account with this email already exists", field: "email" });
         }
       }
-      if (username && username !== target.username) {
-        const existingUsername = await storage.getAdminByUsername(username);
+      if (normalizedUsername && normalizedUsername !== target.username) {
+        const existingUsername = await storage.getAdminByUsername(normalizedUsername);
         if (existingUsername) {
-          return res.status(400).json({ error: "An account with this username already exists" });
+          return res.status(400).json({ error: "An account with this username already exists", field: "username" });
         }
       }
 
-      const updated = await storage.updateAdminUser(id, updates);
+      let updated;
+      try {
+        updated = await storage.updateAdminUser(id, updates);
+      } catch (err: any) {
+        if (err?.code === "23505" || /duplicate key|unique constraint/i.test(err?.message || "")) {
+          const field = /email/i.test(err?.detail || err?.message || "") ? "email" : "username";
+          return res.status(400).json({
+            error: field === "email"
+              ? "An account with this email already exists"
+              : "An account with this username already exists",
+            field,
+          });
+        }
+        throw err;
+      }
       if (!updated) {
         return res.status(404).json({ error: "User not found" });
       }

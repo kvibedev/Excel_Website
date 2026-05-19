@@ -30,15 +30,15 @@ const ROLE_BADGE_COLORS: Record<string, string> = {
   viewer: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
 };
 
-function parseApiError(err: Error, fallback: string): string {
+function parseApiError(err: Error, fallback: string): { message: string; field?: string } {
   try {
     const jsonStart = (err.message || "").indexOf("{");
     if (jsonStart !== -1) {
       const parsed = JSON.parse(err.message.slice(jsonStart));
-      if (parsed.error) return parsed.error;
+      if (parsed.error) return { message: parsed.error, field: parsed.field };
     }
   } catch {}
-  return fallback;
+  return { message: fallback };
 }
 
 export default function AdminUsers() {
@@ -48,6 +48,7 @@ export default function AdminUsers() {
   const [showForm, setShowForm] = useState(false);
   const [editingUser, setEditingUser] = useState<AdminUserData | null>(null);
   const [form, setForm] = useState({ username: "", email: "", password: "", role: "viewer" });
+  const [fieldErrors, setFieldErrors] = useState<{ username?: string; email?: string; password?: string; role?: string }>({});
 
   const myRole = (authData?.role || "viewer") as AdminRole;
   const myLevel = ROLE_HIERARCHY[myRole];
@@ -87,7 +88,9 @@ export default function AdminUsers() {
       resetForm();
     },
     onError: (err: Error) => {
-      toast({ title: parseApiError(err, "Failed to create user"), variant: "destructive" });
+      const { message, field } = parseApiError(err, "Failed to create user");
+      if (field) setFieldErrors((p) => ({ ...p, [field]: message }));
+      toast({ title: message, variant: "destructive" });
     },
   });
 
@@ -99,7 +102,7 @@ export default function AdminUsers() {
       toast({ title: "Invite resent", description: "A new setup link has been emailed." });
     },
     onError: (err: Error) => {
-      toast({ title: parseApiError(err, "Failed to resend invite"), variant: "destructive" });
+      toast({ title: parseApiError(err, "Failed to resend invite").message, variant: "destructive" });
     },
   });
 
@@ -115,7 +118,9 @@ export default function AdminUsers() {
       resetForm();
     },
     onError: (err: Error) => {
-      toast({ title: parseApiError(err, "Failed to update user"), variant: "destructive" });
+      const { message, field } = parseApiError(err, "Failed to update user");
+      if (field) setFieldErrors((p) => ({ ...p, [field]: message }));
+      toast({ title: message, variant: "destructive" });
     },
   });
 
@@ -128,12 +133,13 @@ export default function AdminUsers() {
       toast({ title: "User deactivated" });
     },
     onError: (err: Error) => {
-      toast({ title: parseApiError(err, "Failed to deactivate user"), variant: "destructive" });
+      toast({ title: parseApiError(err, "Failed to deactivate user").message, variant: "destructive" });
     },
   });
 
   const resetForm = () => {
     setForm({ username: "", email: "", password: "", role: "viewer" });
+    setFieldErrors({});
     setShowForm(false);
     setEditingUser(null);
   };
@@ -141,24 +147,32 @@ export default function AdminUsers() {
   const startEdit = (user: AdminUserData) => {
     setEditingUser(user);
     setForm({ username: user.username, email: user.email, password: "", role: user.role });
+    setFieldErrors({});
     setShowForm(true);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setFieldErrors({});
+    const trimmedUsername = form.username.trim();
+    const trimmedEmail = form.email.trim();
+    const localErrors: typeof fieldErrors = {};
+    if (!trimmedUsername) localErrors.username = "Username is required";
+    if (!editingUser && !trimmedEmail) localErrors.email = "Email is required";
+    if (trimmedEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) localErrors.email = "Enter a valid email address";
+    if (Object.keys(localErrors).length > 0) {
+      setFieldErrors(localErrors);
+      return;
+    }
     if (editingUser) {
       const data: Record<string, string> = {};
-      if (form.username !== editingUser.username) data.username = form.username;
-      if (form.email !== editingUser.email) data.email = form.email;
+      if (trimmedUsername !== editingUser.username) data.username = trimmedUsername;
+      if (trimmedEmail !== editingUser.email) data.email = trimmedEmail;
       if (form.role !== editingUser.role) data.role = form.role;
       if (form.password) data.password = form.password;
       updateMutation.mutate({ id: editingUser.id, data });
     } else {
-      if (!form.username || !form.email) {
-        toast({ title: "Please fill all required fields", variant: "destructive" });
-        return;
-      }
-      createMutation.mutate({ username: form.username, email: form.email, role: form.role });
+      createMutation.mutate({ username: trimmedUsername, email: trimmedEmail, role: form.role });
     }
   };
 
@@ -208,10 +222,20 @@ export default function AdminUsers() {
                     <Input
                       id="username"
                       value={form.username}
-                      onChange={(e) => setForm((p) => ({ ...p, username: e.target.value }))}
+                      onChange={(e) => {
+                        setForm((p) => ({ ...p, username: e.target.value }));
+                        if (fieldErrors.username) setFieldErrors((p) => ({ ...p, username: undefined }));
+                      }}
                       placeholder="username"
+                      aria-invalid={!!fieldErrors.username}
+                      className={fieldErrors.username ? "border-red-500 focus-visible:ring-red-500" : ""}
                       data-testid="input-user-username"
                     />
+                    {fieldErrors.username && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400" data-testid="error-username">
+                        {fieldErrors.username}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <Label htmlFor="email">Email *</Label>
@@ -219,10 +243,20 @@ export default function AdminUsers() {
                       id="email"
                       type="email"
                       value={form.email}
-                      onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                      onChange={(e) => {
+                        setForm((p) => ({ ...p, email: e.target.value }));
+                        if (fieldErrors.email) setFieldErrors((p) => ({ ...p, email: undefined }));
+                      }}
                       placeholder="user@example.com"
+                      aria-invalid={!!fieldErrors.email}
+                      className={fieldErrors.email ? "border-red-500 focus-visible:ring-red-500" : ""}
                       data-testid="input-user-email"
                     />
+                    {fieldErrors.email && (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400" data-testid="error-email">
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </div>
                   {editingUser ? (
                     <div>
