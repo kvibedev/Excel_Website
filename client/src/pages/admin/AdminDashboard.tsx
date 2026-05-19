@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Building2, BookOpen, CalendarClock, TrendingUp, Compass } from "lucide-react";
 import type { Contact, VendorRegistration, TopBlogPostStats, LeadSourceBreakdown, LeadSourceRow } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
@@ -57,10 +58,19 @@ export default function AdminDashboard() {
     enabled: !!authData?.authenticated,
   });
 
+  const [topPostsRange, setTopPostsRange] = useState<"7" | "30" | "90" | "all">("30");
+
+  const rangeLabels: Record<typeof topPostsRange, string> = {
+    "7": "last 7 days",
+    "30": "last 30 days",
+    "90": "last 90 days",
+    all: "all time",
+  };
+
   const { data: topPosts, isLoading: topPostsLoading } = useQuery<TopBlogPostStats[]>({
-    queryKey: ["/api/admin/blog/top-stats", { limit: 5, range: 30 }],
+    queryKey: ["/api/admin/blog/top-stats", { limit: 5, range: topPostsRange }],
     queryFn: async () => {
-      const res = await fetch("/api/admin/blog/top-stats?limit=5&range=30", { credentials: "include" });
+      const res = await fetch(`/api/admin/blog/top-stats?limit=5&range=${topPostsRange}`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to load top posts");
       return res.json();
     },
@@ -215,21 +225,31 @@ export default function AdminDashboard() {
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle className="flex justify-between items-center gap-2">
+          <CardTitle className="flex flex-wrap justify-between items-center gap-2">
             <span className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
-              Top blog posts (last 30 days)
+              Top blog posts ({rangeLabels[topPostsRange]})
             </span>
-            <Link href="/admin/blog">
-              <Button variant="ghost" size="sm" data-testid="link-view-all-blog-admin">View All</Button>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Tabs value={topPostsRange} onValueChange={(v) => setTopPostsRange(v as typeof topPostsRange)}>
+                <TabsList data-testid="tabs-top-posts-range">
+                  <TabsTrigger value="7" data-testid="tab-top-posts-range-7">7d</TabsTrigger>
+                  <TabsTrigger value="30" data-testid="tab-top-posts-range-30">30d</TabsTrigger>
+                  <TabsTrigger value="90" data-testid="tab-top-posts-range-90">90d</TabsTrigger>
+                  <TabsTrigger value="all" data-testid="tab-top-posts-range-all">All time</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Link href="/admin/blog">
+                <Button variant="ghost" size="sm" data-testid="link-view-all-blog-admin">View All</Button>
+              </Link>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
           {topPostsLoading ? (
             <p className="text-muted-foreground text-center py-4">Loading...</p>
           ) : !topPosts || topPosts.length === 0 ? (
-            <p className="text-muted-foreground text-center py-4" data-testid="text-no-top-posts">No blog views in the last 30 days</p>
+            <p className="text-muted-foreground text-center py-4" data-testid="text-no-top-posts">No blog views in the {rangeLabels[topPostsRange]}</p>
           ) : (
             <div className="space-y-2">
               {topPosts.map((p, idx) => (
