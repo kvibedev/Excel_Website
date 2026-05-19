@@ -7,6 +7,7 @@ import { Users, Building2, BookOpen, CalendarClock } from "lucide-react";
 import type { Contact, VendorRegistration } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
 import { useAdminAuth } from "./adminAuth";
+import BlogPerformancePanel from "@/components/admin/BlogPerformancePanel";
 
 interface DashboardStats {
   totalContacts: number;
@@ -93,6 +94,10 @@ export default function AdminDashboard() {
             <p className="text-xs text-muted-foreground">due today or overdue</p>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="mb-8">
+        <BlogPerformancePanel />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

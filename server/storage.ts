@@ -9,7 +9,7 @@ import {
   type FormEmailSetting, type InsertFormEmailSetting,
   type BlogApprovalHistory, type InsertBlogApprovalHistory,
   type BlogPostView, type InsertBlogPostView,
-  type BlogPostStats, type BlogPostStatsDetail,
+  type BlogPostStats, type BlogPostStatsDetail, type BlogOverviewStats,
   users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews
 } from "@shared/schema";
 import { db } from "./db";
@@ -72,6 +72,7 @@ export interface IStorage {
   getBlogPostView(id: number): Promise<BlogPostView | undefined>;
   getBlogPostStatsForAll(): Promise<BlogPostStats[]>;
   getBlogPostStatsDetail(postId: number, sinceDays: number | null): Promise<BlogPostStatsDetail>;
+  getBlogOverviewStats(sinceDays: number | null): Promise<BlogOverviewStats>;
 
   getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
   getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
@@ -400,6 +401,54 @@ export class DatabaseStorage implements IStorage {
       avgTimeOnPageMs: totals?.avgTimeOnPageMs ?? 0,
       series: seriesRows,
       topReferrers: referrerRows,
+    };
+  }
+
+  async getBlogOverviewStats(sinceDays: number | null): Promise<BlogOverviewStats> {
+    const sinceDate = sinceDays != null ? new Date(Date.now() - sinceDays * 24 * 60 * 60 * 1000) : null;
+    const whereClause = sinceDate ? gte(blogPostViews.createdAt, sinceDate) : undefined;
+
+    const [totals] = await db
+      .select({
+        totalViews: sql<number>`count(*)::int`,
+        uniqueVisitors: sql<number>`count(distinct ${blogPostViews.visitorId})::int`,
+        avgTimeOnPageMs: sql<number>`coalesce(avg(nullif(${blogPostViews.timeOnPageMs}, 0)), 0)::int`,
+      })
+      .from(blogPostViews)
+      .where(whereClause as any);
+
+    const seriesRows = await db
+      .select({
+        date: sql<string>`to_char(date_trunc('day', ${blogPostViews.createdAt}), 'YYYY-MM-DD')`,
+        views: sql<number>`count(*)::int`,
+      })
+      .from(blogPostViews)
+      .where(whereClause as any)
+      .groupBy(sql`date_trunc('day', ${blogPostViews.createdAt})`)
+      .orderBy(sql`date_trunc('day', ${blogPostViews.createdAt})`);
+
+    const topRows = await db
+      .select({
+        postId: blogPostViews.blogPostId,
+        title: blogPosts.title,
+        slug: blogPosts.slug,
+        views: sql<number>`count(*)::int`,
+        uniqueVisitors: sql<number>`count(distinct ${blogPostViews.visitorId})::int`,
+        avgTimeOnPageMs: sql<number>`coalesce(avg(nullif(${blogPostViews.timeOnPageMs}, 0)), 0)::int`,
+      })
+      .from(blogPostViews)
+      .innerJoin(blogPosts, eq(blogPosts.id, blogPostViews.blogPostId))
+      .where(whereClause as any)
+      .groupBy(blogPostViews.blogPostId, blogPosts.title, blogPosts.slug)
+      .orderBy(desc(sql`count(*)`))
+      .limit(5);
+
+    return {
+      totalViews: totals?.totalViews ?? 0,
+      uniqueVisitors: totals?.uniqueVisitors ?? 0,
+      avgTimeOnPageMs: totals?.avgTimeOnPageMs ?? 0,
+      series: seriesRows,
+      topPosts: topRows,
     };
   }
 

@@ -253,6 +253,21 @@ export type BlogPostStatsDetail = BlogPostStats & {
   topReferrers: { referrer: string; count: number }[];
 };
 
+export type BlogOverviewStats = {
+  totalViews: number;
+  uniqueVisitors: number;
+  avgTimeOnPageMs: number;
+  series: { date: string; views: number }[];
+  topPosts: {
+    postId: number;
+    title: string;
+    slug: string;
+    views: number;
+    uniqueVisitors: number;
+    avgTimeOnPageMs: number;
+  }[];
+};
+
 export const FORM_TYPES = ["contact", "vendor", "blog_approval"] as const;
 export type FormType = (typeof FORM_TYPES)[number];
 

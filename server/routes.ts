@@ -877,6 +877,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/blog/stats/overview", requireAuth, async (req, res) => {
+    try {
+      const rangeRaw = (req.query.range || "30").toString();
+      const range = rangeRaw === "all" ? null : (["7", "30", "90"].includes(rangeRaw) ? parseInt(rangeRaw) : 30);
+      const overview = await storage.getBlogOverviewStats(range);
+      res.json(overview);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog overview stats" });
+    }
+  });
+
   app.get("/api/admin/blog/:id(\\d+)/stats", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
