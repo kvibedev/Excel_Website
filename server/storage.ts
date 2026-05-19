@@ -10,10 +10,11 @@ import {
   type BlogApprovalHistory, type InsertBlogApprovalHistory,
   type BlogPostView, type InsertBlogPostView,
   type BlogPostStats, type BlogPostStatsDetail, type BlogOverviewStats,
-  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews
+  type ContactBlogAttribution, type InsertContactBlogAttribution, type ContactAttributedPost,
+  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews, contactBlogAttributions
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and, gt, gte, sql } from "drizzle-orm";
+import { eq, desc, and, gt, gte, sql, inArray } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -70,9 +71,14 @@ export interface IStorage {
   getOrCreateBlogPostView(input: InsertBlogPostView): Promise<BlogPostView>;
   updateBlogPostViewTime(id: number, visitorId: string, timeOnPageMs: number): Promise<boolean>;
   getBlogPostView(id: number): Promise<BlogPostView | undefined>;
+  getRecentBlogViewsForVisitor(visitorId: string, sinceDays: number): Promise<{ blogPostId: number; viewedAt: Date }[]>;
   getBlogPostStatsForAll(): Promise<BlogPostStats[]>;
   getBlogPostStatsDetail(postId: number, sinceDays: number | null): Promise<BlogPostStatsDetail>;
   getBlogOverviewStats(sinceDays: number | null): Promise<BlogOverviewStats>;
+
+  setContactVisitorId(id: number, visitorId: string): Promise<void>;
+  createContactBlogAttributions(entries: InsertContactBlogAttribution[]): Promise<void>;
+  getContactBlogAttributions(contactId: number): Promise<ContactAttributedPost[]>;
 
   getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
   getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
@@ -202,7 +208,47 @@ export class DatabaseStorage implements IStorage {
 
   async deleteContact(id: number): Promise<void> {
     await db.delete(contactNotes).where(eq(contactNotes.contactId, id));
+    await db.delete(contactBlogAttributions).where(eq(contactBlogAttributions.contactId, id));
     await db.delete(contacts).where(eq(contacts.id, id));
+  }
+
+  async setContactVisitorId(id: number, visitorId: string): Promise<void> {
+    await db.update(contacts).set({ visitorId }).where(eq(contacts.id, id));
+  }
+
+  async createContactBlogAttributions(entries: InsertContactBlogAttribution[]): Promise<void> {
+    if (entries.length === 0) return;
+    await db.insert(contactBlogAttributions).values(entries);
+  }
+
+  async getContactBlogAttributions(contactId: number): Promise<ContactAttributedPost[]> {
+    const rows = await db
+      .select({
+        blogPostId: contactBlogAttributions.blogPostId,
+        viewedAt: contactBlogAttributions.viewedAt,
+        title: blogPosts.title,
+        slug: blogPosts.slug,
+      })
+      .from(contactBlogAttributions)
+      .innerJoin(blogPosts, eq(contactBlogAttributions.blogPostId, blogPosts.id))
+      .where(eq(contactBlogAttributions.contactId, contactId))
+      .orderBy(desc(contactBlogAttributions.viewedAt));
+    return rows;
+  }
+
+  async getRecentBlogViewsForVisitor(visitorId: string, sinceDays: number): Promise<{ blogPostId: number; viewedAt: Date }[]> {
+    const since = new Date(Date.now() - sinceDays * 24 * 60 * 60 * 1000);
+    const rows = await db
+      .select({
+        blogPostId: blogPostViews.blogPostId,
+        viewedAt: sql<Date>`max(${blogPostViews.createdAt})`,
+      })
+      .from(blogPostViews)
+      .where(and(eq(blogPostViews.visitorId, visitorId), gte(blogPostViews.createdAt, since)))
+      .groupBy(blogPostViews.blogPostId)
+      .orderBy(desc(sql`max(${blogPostViews.createdAt})`))
+      .limit(10);
+    return rows.map((r) => ({ blogPostId: r.blogPostId, viewedAt: new Date(r.viewedAt as any) }));
   }
 
   async getContactNotes(contactId: number): Promise<ContactNote[]> {
@@ -311,6 +357,7 @@ export class DatabaseStorage implements IStorage {
   async deleteBlogPost(id: number): Promise<void> {
     await db.delete(blogApprovalHistory).where(eq(blogApprovalHistory.blogPostId, id));
     await db.delete(blogPostViews).where(eq(blogPostViews.blogPostId, id));
+    await db.delete(contactBlogAttributions).where(eq(contactBlogAttributions.blogPostId, id));
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
   }
 
@@ -355,7 +402,28 @@ export class DatabaseStorage implements IStorage {
       })
       .from(blogPostViews)
       .groupBy(blogPostViews.blogPostId);
-    return rows;
+
+    const leadRows = await db
+      .select({
+        postId: contactBlogAttributions.blogPostId,
+        leads: sql<number>`count(distinct ${contactBlogAttributions.contactId})::int`,
+      })
+      .from(contactBlogAttributions)
+      .groupBy(contactBlogAttributions.blogPostId);
+    const leadsByPost = new Map<number, number>();
+    for (const r of leadRows) leadsByPost.set(r.postId, r.leads);
+
+    const byPost = new Map<number, BlogPostStats>();
+    for (const r of rows) {
+      byPost.set(r.postId, { ...r, leads: leadsByPost.get(r.postId) ?? 0 });
+    }
+    // Include posts that have leads but no views yet
+    leadsByPost.forEach((leads, postId) => {
+      if (!byPost.has(postId)) {
+        byPost.set(postId, { postId, totalViews: 0, uniqueVisitors: 0, avgTimeOnPageMs: 0, leads });
+      }
+    });
+    return Array.from(byPost.values());
   }
 
   async getBlogPostStatsDetail(postId: number, sinceDays: number | null): Promise<BlogPostStatsDetail> {
@@ -394,11 +462,20 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(sql`count(*)`))
       .limit(10);
 
+    const leadsCondition = sinceDate
+      ? and(eq(contactBlogAttributions.blogPostId, postId), gte(contactBlogAttributions.createdAt, sinceDate))
+      : eq(contactBlogAttributions.blogPostId, postId);
+    const [leadsRow] = await db
+      .select({ leads: sql<number>`count(distinct ${contactBlogAttributions.contactId})::int` })
+      .from(contactBlogAttributions)
+      .where(leadsCondition);
+
     return {
       postId,
       totalViews: totals?.totalViews ?? 0,
       uniqueVisitors: totals?.uniqueVisitors ?? 0,
       avgTimeOnPageMs: totals?.avgTimeOnPageMs ?? 0,
+      leads: leadsRow?.leads ?? 0,
       series: seriesRows,
       topReferrers: referrerRows,
     };

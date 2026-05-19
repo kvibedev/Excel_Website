@@ -16,11 +16,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Users, Trash2, MessageSquare, Download, ChevronLeft, ChevronRight, UserCheck, Calendar } from "lucide-react";
+import { Users, Trash2, MessageSquare, Download, ChevronLeft, ChevronRight, UserCheck, Calendar, FileText, Link2 } from "lucide-react";
 import { useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { Contact, ContactNote } from "@shared/schema";
+import type { Contact, ContactNote, ContactAttributedPost } from "@shared/schema";
 import type { AdminRole } from "@shared/schema";
 import AdminLayout from "./AdminLayout";
 import { useAdminAuth, canAccess } from "./adminAuth";
@@ -62,6 +62,11 @@ export default function AdminContacts() {
 
   const { data: notes } = useQuery<ContactNote[]>({
     queryKey: ["/api/admin/contacts", selectedContact?.id, "notes"],
+    enabled: !!selectedContact,
+  });
+
+  const { data: attributions } = useQuery<ContactAttributedPost[]>({
+    queryKey: ["/api/admin/contacts", selectedContact?.id, "attributions"],
     enabled: !!selectedContact,
   });
 
@@ -336,6 +341,54 @@ export default function AdminContacts() {
                   <p className="bg-gray-50 p-3 rounded-lg mt-1">{selectedContact.message}</p>
                 </div>
               )}
+
+              <div className="border rounded-lg p-4 bg-emerald-50/40">
+                <h4 className="font-medium flex items-center gap-2 mb-3">
+                  <FileText className="w-4 h-4 text-[#063970]" />
+                  Lead Source
+                </h4>
+                <div className="mb-3">
+                  <label className="text-sm font-medium text-muted-foreground">Submitted from</label>
+                  {selectedContact.submittedFromPath ? (
+                    <p className="mt-1 font-mono text-sm break-all" data-testid={`text-submitted-from-${selectedContact.id}`}>
+                      {selectedContact.submittedFromPath}
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-sm text-muted-foreground">Unknown</p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground block mb-1">
+                    Attributed blog posts {attributions && attributions.length > 0 && `(${attributions.length})`}
+                  </label>
+                  {!attributions || attributions.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">No blog posts viewed before this submission.</p>
+                  ) : (
+                    <ul className="space-y-1 mt-1">
+                      {attributions.map((a) => (
+                        <li
+                          key={a.blogPostId}
+                          className="flex items-center justify-between gap-2 text-sm"
+                          data-testid={`attribution-${selectedContact.id}-${a.blogPostId}`}
+                        >
+                          <a
+                            href={`/resources/${a.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-[#0A5EB9] hover:underline truncate"
+                          >
+                            <Link2 className="w-3 h-3 flex-shrink-0" />
+                            <span className="truncate">{a.title}</span>
+                          </a>
+                          <span className="text-xs text-muted-foreground flex-shrink-0">
+                            {new Date(a.viewedAt).toLocaleDateString()}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
 
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Status</label>

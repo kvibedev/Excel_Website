@@ -564,6 +564,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const parsed = insertContactSchema.parse(req.body);
       const contact = await storage.createContact(parsed);
+
+      // Attribute the lead to blog posts the same anonymous visitor recently viewed.
+      try {
+        const cookies = parseCookies(req.headers.cookie);
+        const rawCookie = cookies[VISITOR_COOKIE];
+        if (rawCookie && /^[a-f0-9]{32,64}$/.test(rawCookie)) {
+          const visitorId = crypto.createHash("sha256").update(rawCookie).digest("hex").slice(0, 32);
+          await storage.setContactVisitorId(contact.id, visitorId);
+          const recent = await storage.getRecentBlogViewsForVisitor(visitorId, 30);
+          if (recent.length > 0) {
+            await storage.createContactBlogAttributions(
+              recent.slice(0, 5).map((v) => ({
+                contactId: contact.id,
+                blogPostId: v.blogPostId,
+                viewedAt: v.viewedAt,
+              }))
+            );
+          }
+        }
+      } catch (attribErr) {
+        console.error("Contact attribution failed:", attribErr);
+      }
+
       sendContactFormEmail(contact).catch(err => {
         console.error("Background email send failed:", err);
       });
@@ -685,6 +708,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: "Failed to delete contact" });
+    }
+  });
+
+  app.get("/api/admin/contacts/:id/attributions", requireAuth, async (req, res) => {
+    try {
+      const contactId = parseInt(req.params.id);
+      const attributions = await storage.getContactBlogAttributions(contactId);
+      res.json(attributions);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch attributions" });
     }
   });
 

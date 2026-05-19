@@ -161,6 +161,9 @@ export default function AdminBlog() {
                         <span className="text-muted-foreground">
                           Avg. time: <span className="font-semibold text-[#063970] tabular-nums" data-testid={`col-avgtime-${post.id}`}>{formatDuration(s?.avgTimeOnPageMs ?? 0)}</span>
                         </span>
+                        <span className="text-muted-foreground">
+                          Leads: <span className="font-semibold text-[#063970] tabular-nums" data-testid={`col-leads-${post.id}`}>{(s?.leads ?? 0).toLocaleString()}</span>
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">

@@ -73,6 +73,8 @@ export const contacts = pgTable("contacts", {
   status: text("status").default("new").notNull(),
   assignedTo: text("assigned_to"),
   followUpDate: timestamp("follow_up_date"),
+  submittedFromPath: text("submitted_from_path"),
+  visitorId: text("visitor_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -80,12 +82,36 @@ export const contacts = pgTable("contacts", {
 export const insertContactSchema = createInsertSchema(contacts).omit({
   id: true,
   status: true,
+  visitorId: true,
   createdAt: true,
   updatedAt: true,
 });
 
 export type InsertContact = z.infer<typeof insertContactSchema>;
 export type Contact = typeof contacts.$inferSelect;
+
+export const contactBlogAttributions = pgTable("contact_blog_attributions", {
+  id: serial("id").primaryKey(),
+  contactId: integer("contact_id").notNull().references(() => contacts.id),
+  blogPostId: integer("blog_post_id").notNull().references(() => blogPosts.id),
+  viewedAt: timestamp("viewed_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertContactBlogAttributionSchema = createInsertSchema(contactBlogAttributions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertContactBlogAttribution = z.infer<typeof insertContactBlogAttributionSchema>;
+export type ContactBlogAttribution = typeof contactBlogAttributions.$inferSelect;
+
+export type ContactAttributedPost = {
+  blogPostId: number;
+  title: string;
+  slug: string;
+  viewedAt: Date;
+};
 
 export const vendorRegistrations = pgTable("vendor_registrations", {
   id: serial("id").primaryKey(),
@@ -250,6 +276,7 @@ export type BlogPostStats = {
   totalViews: number;
   uniqueVisitors: number;
   avgTimeOnPageMs: number;
+  leads: number;
 };
 
 export type BlogPostStatsDetail = BlogPostStats & {

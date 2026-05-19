@@ -56,7 +56,7 @@ export default function BlogStatsPanel({ postId }: Props) {
         <div className="text-sm text-muted-foreground py-6 text-center">Loading stats…</div>
       ) : (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 bg-gray-50 rounded-md">
               <div className="text-xs text-muted-foreground">Views</div>
               <div className="text-2xl font-bold text-[#063970]" data-testid={`stat-views-${postId}`}>
@@ -73,6 +73,12 @@ export default function BlogStatsPanel({ postId }: Props) {
               <div className="text-xs text-muted-foreground">Avg. time on page</div>
               <div className="text-2xl font-bold text-[#063970]" data-testid={`stat-avgtime-${postId}`}>
                 {formatDuration(data.avgTimeOnPageMs)}
+              </div>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-md">
+              <div className="text-xs text-muted-foreground">Leads</div>
+              <div className="text-2xl font-bold text-[#063970]" data-testid={`stat-leads-${postId}`}>
+                {data.leads.toLocaleString()}
               </div>
             </div>
           </div>

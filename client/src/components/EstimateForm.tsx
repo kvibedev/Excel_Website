@@ -62,6 +62,9 @@ export default function EstimateForm() {
         serviceInterest: formData.service || null,
         areaOfInquiry: formData.areaOfInquiry || null,
         message: formData.message || null,
+        submittedFromPath: typeof window !== "undefined"
+          ? window.location.pathname + window.location.search
+          : null,
       });
       
       trackFormSubmission("contact", {
