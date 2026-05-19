@@ -24,7 +24,7 @@ const approvalStatusLabels: Record<string, { label: string; className: string }>
   changes_requested: { label: "Changes Requested", className: "bg-amber-500" },
 };
 
-type SortMode = "newest" | "views";
+type SortMode = "newest" | "views" | "leads";
 
 function formatDuration(ms: number): string {
   if (!ms || ms <= 0) return "—";
@@ -114,6 +114,10 @@ export default function AdminBlog() {
       const av = statsByPostId.get(a.id)?.totalViews ?? 0;
       const bv = statsByPostId.get(b.id)?.totalViews ?? 0;
       if (bv !== av) return bv - av;
+    } else if (sortMode === "leads") {
+      const al = statsByPostId.get(a.id)?.leads ?? 0;
+      const bl = statsByPostId.get(b.id)?.leads ?? 0;
+      if (bl !== al) return bl - al;
     }
     const aDate = a.publishedAt || a.createdAt;
     const bDate = b.publishedAt || b.createdAt;
@@ -154,6 +158,15 @@ export default function AdminBlog() {
             >
               <ArrowUpDown className="w-4 h-4 mr-1" />
               {sortMode === "views" ? "Sorted by Views" : "Sort by Views"}
+            </Button>
+            <Button
+              variant={sortMode === "leads" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSortMode(sortMode === "leads" ? "newest" : "leads")}
+              data-testid="button-sort-leads"
+            >
+              <ArrowUpDown className="w-4 h-4 mr-1" />
+              {sortMode === "leads" ? "Sorted by Leads" : "Sort by Leads"}
             </Button>
           </div>
         </CardHeader>
