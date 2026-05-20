@@ -202,12 +202,16 @@ export const blogPosts = pgTable("blog_posts", {
   secondaryKeywords: text("secondary_keywords"),
   status: text("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
+  scheduledAt: timestamp("scheduled_at"),
   approvalStatus: text("approval_status").default("none").notNull(),
   approvalToken: text("approval_token"),
   approvalTokenExpiresAt: timestamp("approval_token_expires_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const BLOG_STATUSES = ["draft", "scheduled", "published"] as const;
+export type BlogStatus = (typeof BLOG_STATUSES)[number];
 
 export const BLOG_APPROVAL_STATUSES = ["none", "pending", "approved", "changes_requested"] as const;
 export type BlogApprovalStatus = (typeof BLOG_APPROVAL_STATUSES)[number];

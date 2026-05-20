@@ -1071,6 +1071,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : status === "published"
           ? new Date()
           : undefined;
+      const scheduledAt =
+        status === "scheduled" && req.body.scheduledAt
+          ? new Date(req.body.scheduledAt)
+          : null;
+      if (status === "scheduled" && (!scheduledAt || scheduledAt.getTime() <= Date.now())) {
+        return res.status(400).json({ error: "Scheduled posts require a future publish date" });
+      }
       const author = req.body.author || req.session.adminUsername || "Excel Facility Services";
 
       const parsed = insertBlogPostSchema.parse({
@@ -1087,6 +1094,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         secondaryKeywords: req.body.secondaryKeywords,
         status,
         publishedAt,
+        scheduledAt,
       });
 
       const existing = await storage.getBlogPostBySlug(parsed.slug);
@@ -1106,7 +1114,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/blog", requireAtLeast("editor"), async (req, res) => {
     try {
-      const parsed = insertBlogPostSchema.parse(req.body);
+      const body = { ...req.body };
+      if (body.scheduledAt && typeof body.scheduledAt === "string") {
+        body.scheduledAt = new Date(body.scheduledAt);
+      }
+      if (body.status !== "scheduled") {
+        body.scheduledAt = null;
+      }
+      if (body.status === "scheduled") {
+        if (!body.scheduledAt || body.scheduledAt.getTime() <= Date.now()) {
+          return res.status(400).json({ error: "Scheduled posts require a future publish date" });
+        }
+      }
+      const parsed = insertBlogPostSchema.parse(body);
       const existing = await storage.getBlogPostBySlug(parsed.slug);
       if (existing) {
         return res.status(400).json({ error: "A post with this slug already exists" });
@@ -1139,9 +1159,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const updateSchema = insertBlogPostSchema.partial();
+      const body = { ...req.body };
+      if (body.scheduledAt && typeof body.scheduledAt === "string") {
+        body.scheduledAt = new Date(body.scheduledAt);
+      } else if (body.scheduledAt === "" || body.scheduledAt === null) {
+        body.scheduledAt = null;
+      }
+      if ("status" in body && body.status !== "scheduled") {
+        body.scheduledAt = null;
+      }
+      if (body.status === "scheduled") {
+        if (!body.scheduledAt || (body.scheduledAt as Date).getTime() <= Date.now()) {
+          return res.status(400).json({ error: "Scheduled posts require a future publish date" });
+        }
+      }
       let updates: Partial<typeof insertBlogPostSchema._type>;
       try {
-        updates = updateSchema.parse(req.body);
+        updates = updateSchema.parse(body);
       } catch (validationError) {
         if (validationError instanceof z.ZodError) {
           return res.status(400).json({ error: validationError.errors });

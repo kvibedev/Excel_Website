@@ -7,6 +7,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2, Clock, AlertTriangle, Bold, Italic, Underline, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Minus, Link as LinkIcon, Code } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -29,6 +37,24 @@ interface PostForm {
   metaDescription: string;
   secondaryKeywords: string;
   status: string;
+  scheduledAt: string;
+}
+
+const BLOG_CATEGORIES = [
+  "Company News",
+  "Cleaning Tips",
+  "Industry Insights",
+  "Sustainability",
+  "Case Studies",
+  "Press Releases",
+] as const;
+
+function toDatetimeLocalValue(value: string | Date | null | undefined): string {
+  if (!value) return "";
+  const d = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 function autoKeywordsFromTitleAndCategory(title: string, category: string): string {
@@ -102,6 +128,7 @@ export default function AdminBlogEditor() {
     metaDescription: "",
     secondaryKeywords: "",
     status: "draft",
+    scheduledAt: "",
   });
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [imageMode, setImageMode] = useState<"url" | "upload">("url");
@@ -281,6 +308,7 @@ export default function AdminBlogEditor() {
         metaDescription: existingPost.metaDescription || "",
         secondaryKeywords: existingPost.secondaryKeywords || "",
         status: existingPost.status,
+        scheduledAt: toDatetimeLocalValue(existingPost.scheduledAt),
       });
       setSlugManuallyEdited(true);
     }
@@ -450,13 +478,40 @@ export default function AdminBlogEditor() {
         return;
       }
     }
+    if (form.status === "scheduled") {
+      if (!form.scheduledAt) {
+        toast({
+          title: "Pick a publish date",
+          description: "Choose a future date and time, or switch to Save As Draft.",
+          variant: "destructive",
+        });
+        return;
+      }
+      const when = new Date(form.scheduledAt);
+      if (Number.isNaN(when.getTime()) || when.getTime() <= Date.now()) {
+        toast({
+          title: "Scheduled time must be in the future",
+          description: "Pick a date and time later than right now.",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
     const metaDescription = form.metaDescription.trim()
       ? form.metaDescription.trim()
       : (form.excerpt.trim() || "");
     const secondaryKeywords = form.secondaryKeywords.trim()
       ? form.secondaryKeywords.trim()
       : autoKeywordsFromTitleAndCategory(form.title, form.category);
-    const payload: PostForm = { ...form, metaDescription, secondaryKeywords };
+    const payload: PostForm = {
+      ...form,
+      metaDescription,
+      secondaryKeywords,
+      scheduledAt:
+        form.status === "scheduled" && form.scheduledAt
+          ? new Date(form.scheduledAt).toISOString()
+          : "",
+    };
     if (isEditing) {
       updateMutation.mutate(payload);
     } else {
@@ -465,11 +520,36 @@ export default function AdminBlogEditor() {
   };
 
   const handleCreateAndSendForApproval = () => {
-    const payload = { ...form };
-    if (!payload.title.trim() || !payload.slug.trim() || !payload.content.trim() || !payload.author.trim() || !payload.imageUrl.trim()) {
+    if (!form.title.trim() || !form.slug.trim() || !form.content.trim() || !form.author.trim() || !form.imageUrl.trim()) {
       toast({ title: "Missing required fields", description: "Complete required fields before sending for approval.", variant: "destructive" });
       return;
     }
+    if (form.status === "scheduled") {
+      if (!form.scheduledAt) {
+        toast({ title: "Pick a publish date", description: "Choose a future date and time, or switch to Save As Draft.", variant: "destructive" });
+        return;
+      }
+      const when = new Date(form.scheduledAt);
+      if (Number.isNaN(when.getTime()) || when.getTime() <= Date.now()) {
+        toast({ title: "Scheduled time must be in the future", description: "Pick a date and time later than right now.", variant: "destructive" });
+        return;
+      }
+    }
+    const metaDescription = form.metaDescription.trim()
+      ? form.metaDescription.trim()
+      : (form.excerpt.trim() || "");
+    const secondaryKeywords = form.secondaryKeywords.trim()
+      ? form.secondaryKeywords.trim()
+      : autoKeywordsFromTitleAndCategory(form.title, form.category);
+    const payload: PostForm = {
+      ...form,
+      metaDescription,
+      secondaryKeywords,
+      scheduledAt:
+        form.status === "scheduled" && form.scheduledAt
+          ? new Date(form.scheduledAt).toISOString()
+          : "",
+    };
     createAndSendForApprovalMutation.mutate(payload);
   };
 
@@ -577,7 +657,7 @@ export default function AdminBlogEditor() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className={isEditing ? "grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-6" : ""}>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-6">
           <div className="space-y-6 min-w-0">
             <Card>
               <CardHeader>
@@ -599,17 +679,6 @@ export default function AdminBlogEditor() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <Label htmlFor="slug">Slug *</Label>
-                    <Input
-                      id="slug"
-                      value={form.slug}
-                      onChange={(e) => handleSlugChange(e.target.value)}
-                      placeholder="post-url-slug"
-                      data-testid="input-slug"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1">URL-friendly identifier. Auto-generated from title.</p>
-                  </div>
-                  <div>
                     <Label htmlFor="author">Author *</Label>
                     <Input
                       id="author"
@@ -617,16 +686,6 @@ export default function AdminBlogEditor() {
                       onChange={(e) => setForm((p) => ({ ...p, author: e.target.value }))}
                       placeholder="Author name"
                       data-testid="input-author"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="category">Category</Label>
-                    <Input
-                      id="category"
-                      value={form.category}
-                      onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}
-                      placeholder="e.g. Cleaning Tips"
-                      data-testid="input-category"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -1038,59 +1097,181 @@ export default function AdminBlogEditor() {
             </Card>
 
 
+          </div>
+
+          <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
             <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                  <div className="flex items-center gap-3">
-                    <Switch
-                      id="publish-toggle"
-                      checked={form.status === "published"}
-                      onCheckedChange={(checked) =>
-                        setForm((p) => ({ ...p, status: checked ? "published" : "draft" }))
-                      }
-                      data-testid="toggle-publish"
-                    />
-                    <Label htmlFor="publish-toggle" className="cursor-pointer">
-                      {form.status === "published" ? "Published" : "Draft"}
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base">Publish Settings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <RadioGroup
+                  value={form.status === "published" ? "published" : form.status === "scheduled" ? "scheduled" : "draft"}
+                  onValueChange={(value) =>
+                    setForm((p) => ({
+                      ...p,
+                      status: value,
+                      scheduledAt: value === "scheduled" ? p.scheduledAt : "",
+                    }))
+                  }
+                  className="space-y-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="draft" id="status-draft" data-testid="radio-status-draft" />
+                    <Label htmlFor="status-draft" className="cursor-pointer font-normal">
+                      Save As Draft
                     </Label>
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {isEditing && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => sendForApprovalMutation.mutate()}
-                        disabled={!canSendForApproval || sendForApprovalMutation.isPending}
-                        data-testid="button-send-for-approval-inline"
-                      >
-                        <Send className="w-4 h-4 mr-2" />
-                        {approvalStatus === "pending" ? "Resend Review Link" : "Send for Approval"}
-                      </Button>
-                    )}
-                    {!isEditing && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={handleCreateAndSendForApproval}
-                        disabled={isPending}
-                        data-testid="button-create-send-for-approval"
-                      >
-                        <Send className="w-4 h-4 mr-2" />
-                        {createAndSendForApprovalMutation.isPending ? "Creating and Sending..." : "Create & Send for Approval"}
-                      </Button>
-                    )}
-                    <Button type="submit" disabled={isPending} data-testid="button-save">
-                      <Save className="w-4 h-4 mr-2" />
-                      {isPending ? "Saving..." : isEditing ? "Update Post" : "Create Post"}
-                    </Button>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="scheduled" id="status-scheduled" data-testid="radio-status-scheduled" />
+                    <Label htmlFor="status-scheduled" className="cursor-pointer font-normal">
+                      Schedule
+                    </Label>
                   </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="published" id="status-published" data-testid="radio-status-published" />
+                    <Label htmlFor="status-published" className="cursor-pointer font-normal">
+                      Publish Now
+                    </Label>
+                  </div>
+                </RadioGroup>
+
+                {form.status === "scheduled" && (
+                  <div className="space-y-1">
+                    <Label htmlFor="scheduledAt" className="text-xs">
+                      Publish on
+                    </Label>
+                    <Input
+                      id="scheduledAt"
+                      type="datetime-local"
+                      value={form.scheduledAt}
+                      onChange={(e) => setForm((p) => ({ ...p, scheduledAt: e.target.value }))}
+                      min={toDatetimeLocalValue(new Date())}
+                      data-testid="input-scheduled-at"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      The post will stay hidden until this time.
+                    </p>
+                  </div>
+                )}
+
+                <p className="text-xs text-muted-foreground">
+                  {form.status === "published"
+                    ? "Immediately visible on the public blog."
+                    : form.status === "scheduled"
+                      ? "Saved but hidden until the scheduled time."
+                      : "Saved privately. Not visible to visitors."}
+                </p>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isPending}
+                  data-testid="button-save"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  {isPending ? "Saving..." : isEditing ? "Save" : "Create Post"}
+                </Button>
+
+                {isEditing ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => sendForApprovalMutation.mutate()}
+                    disabled={!canSendForApproval || sendForApprovalMutation.isPending}
+                    data-testid="button-send-for-approval-inline"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    {approvalStatus === "pending" ? "Resend Review Link" : "Send for Approval"}
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={handleCreateAndSendForApproval}
+                    disabled={isPending}
+                    data-testid="button-create-send-for-approval"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    {createAndSendForApprovalMutation.isPending
+                      ? "Creating and Sending..."
+                      : "Create & Send for Approval"}
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base">Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="slug">URL Slug</Label>
+                  <Input
+                    id="slug"
+                    value={form.slug}
+                    onChange={(e) => handleSlugChange(e.target.value)}
+                    placeholder="post-url-slug"
+                    data-testid="input-slug"
+                  />
+                  {form.slug && (
+                    <p className="text-xs text-muted-foreground mt-1 break-all">
+                      /blog/{form.slug}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="category">Category</Label>
+                  <Select
+                    value={
+                      form.category && (BLOG_CATEGORIES as readonly string[]).includes(form.category)
+                        ? form.category
+                        : form.category
+                          ? "__custom__"
+                          : ""
+                    }
+                    onValueChange={(value) => {
+                      if (value === "__custom__") return;
+                      setForm((p) => ({ ...p, category: value }));
+                    }}
+                  >
+                    <SelectTrigger data-testid="select-category">
+                      <SelectValue placeholder="Choose a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {BLOG_CATEGORIES.map((c) => (
+                        <SelectItem key={c} value={c}>
+                          {c}
+                        </SelectItem>
+                      ))}
+                      {form.category && !(BLOG_CATEGORIES as readonly string[]).includes(form.category) && (
+                        <SelectItem value="__custom__">{form.category}</SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  {form.category && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Selected:{" "}
+                      <span className="font-medium text-foreground">{form.category}</span>{" "}
+                      <button
+                        type="button"
+                        onClick={() => setForm((p) => ({ ...p, category: "" }))}
+                        className="text-[#0A5EB9] hover:underline"
+                        data-testid="button-clear-category"
+                      >
+                        Remove
+                      </button>
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
-          </div>
 
-          {isEditing && (
-            <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+            {isEditing && (
+              <>
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 flex-wrap text-base">
@@ -1256,8 +1437,9 @@ export default function AdminBlogEditor() {
                   </CardContent>
                 </Card>
               )}
-            </aside>
-          )}
+              </>
+            )}
+          </aside>
           </div>
         </form>
       </div>
