@@ -40,6 +40,33 @@ function autoKeywordsFromTitleAndCategory(title: string, category: string): stri
   return parts.join(", ");
 }
 
+function stripMarkdown(md: string): string {
+  return md
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/<\/?[^>]+>/g, " ")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^>\s*/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/[*_~]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function autoExcerptFromContent(content: string, max = 160): string {
+  const cleaned = stripMarkdown(content);
+  if (!cleaned) return "";
+  const firstPara = cleaned.split(/\n{2,}/)[0]?.trim() || cleaned;
+  if (firstPara.length <= max) return firstPara;
+  const slice = firstPara.slice(0, max);
+  const lastSpace = slice.lastIndexOf(" ");
+  const base = lastSpace > max - 30 ? slice.slice(0, lastSpace) : slice;
+  return `${base.replace(/[.,;:!?-]+$/, "")}…`;
+}
+
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -643,7 +670,29 @@ export default function AdminBlogEditor() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <Label htmlFor="excerpt">Excerpt</Label>
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <Label htmlFor="excerpt">Excerpt</Label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = autoExcerptFromContent(form.content);
+                          if (!next) {
+                            toast({
+                              title: "Nothing to summarize",
+                              description: "Add some content first, then try Regenerate.",
+                              variant: "destructive",
+                            });
+                            return;
+                          }
+                          setForm((p) => ({ ...p, excerpt: next }));
+                        }}
+                        className="text-xs font-medium text-[#0A5EB9] hover:text-[#063970] hover:underline disabled:opacity-50"
+                        disabled={!form.content.trim()}
+                        data-testid="button-regenerate-excerpt"
+                      >
+                        Regenerate
+                      </button>
+                    </div>
                     <Textarea
                       id="excerpt"
                       value={form.excerpt}
@@ -652,6 +701,9 @@ export default function AdminBlogEditor() {
                       rows={3}
                       data-testid="input-excerpt"
                     />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {form.excerpt.length}/160 characters — used as the SEO meta description.
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -680,7 +732,30 @@ export default function AdminBlogEditor() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="metaDescription">Meta Description</Label>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <Label htmlFor="metaDescription">Meta Description</Label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const fromExcerpt = form.excerpt.trim();
+                        const next = (fromExcerpt || autoExcerptFromContent(form.content)).slice(0, 160);
+                        if (!next) {
+                          toast({
+                            title: "Nothing to summarize",
+                            description: "Add an excerpt or some content first, then try Regenerate.",
+                            variant: "destructive",
+                          });
+                          return;
+                        }
+                        setForm((p) => ({ ...p, metaDescription: next }));
+                      }}
+                      className="text-xs font-medium text-[#0A5EB9] hover:text-[#063970] hover:underline disabled:opacity-50"
+                      disabled={!form.excerpt.trim() && !form.content.trim()}
+                      data-testid="button-regenerate-meta-description"
+                    >
+                      Regenerate
+                    </button>
+                  </div>
                   <Textarea
                     id="metaDescription"
                     value={form.metaDescription}
@@ -705,7 +780,29 @@ export default function AdminBlogEditor() {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="secondaryKeywords">Secondary Keywords</Label>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <Label htmlFor="secondaryKeywords">Secondary Keywords</Label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const next = autoKeywordsFromTitleAndCategory(form.title, form.category);
+                        if (!next) {
+                          toast({
+                            title: "Nothing to generate from",
+                            description: "Add a title (and optionally a category) first.",
+                            variant: "destructive",
+                          });
+                          return;
+                        }
+                        setForm((p) => ({ ...p, secondaryKeywords: next }));
+                      }}
+                      className="text-xs font-medium text-[#0A5EB9] hover:text-[#063970] hover:underline disabled:opacity-50"
+                      disabled={!form.title.trim()}
+                      data-testid="button-regenerate-secondary-keywords"
+                    >
+                      Regenerate
+                    </button>
+                  </div>
                   <Input
                     id="secondaryKeywords"
                     value={form.secondaryKeywords}
