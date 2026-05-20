@@ -15,7 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2, Clock, AlertTriangle, Bold, Italic, Underline, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Minus, Link as LinkIcon, Code } from "lucide-react";
+import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2, Clock, AlertTriangle, Bold, Italic, Underline, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Minus, Link as LinkIcon, Code, ChevronDown, Plus } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import type { BlogCategory } from "@shared/schema";
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -135,6 +137,31 @@ export default function AdminBlogEditor() {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const [categoryPopoverOpen, setCategoryPopoverOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false);
+
+  const { data: blogCategories = [] } = useQuery<BlogCategory[]>({
+    queryKey: ["/api/blog-categories"],
+  });
+
+  const createCategoryMutation = useMutation({
+    mutationFn: async (name: string) => {
+      const res = await apiRequest("POST", "/api/admin/blog-categories", { name });
+      return (await res.json()) as BlogCategory;
+    },
+    onSuccess: (created) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/blog-categories"] });
+      setForm((p) => ({ ...p, category: created.name }));
+      setNewCategoryName("");
+      setIsCreatingCategory(false);
+      setCategoryPopoverOpen(false);
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not create category", description: error.message, variant: "destructive" });
+    },
+  });
 
   const applyMarkdown = (
     transform: (ctx: { selected: string; before: string; after: string }) => {
@@ -1225,47 +1252,146 @@ export default function AdminBlogEditor() {
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <Select
-                    value={
-                      form.category && (BLOG_CATEGORIES as readonly string[]).includes(form.category)
-                        ? form.category
-                        : form.category
-                          ? "__custom__"
-                          : ""
-                    }
-                    onValueChange={(value) => {
-                      if (value === "__custom__") return;
-                      setForm((p) => ({ ...p, category: value }));
+                  <Popover
+                    open={categoryPopoverOpen}
+                    onOpenChange={(open) => {
+                      setCategoryPopoverOpen(open);
+                      if (!open) {
+                        setIsCreatingCategory(false);
+                        setNewCategoryName("");
+                      }
                     }}
                   >
-                    <SelectTrigger data-testid="select-category">
-                      <SelectValue placeholder="Choose a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {BLOG_CATEGORIES.map((c) => (
-                        <SelectItem key={c} value={c}>
-                          {c}
-                        </SelectItem>
-                      ))}
-                      {form.category && !(BLOG_CATEGORIES as readonly string[]).includes(form.category) && (
-                        <SelectItem value="__custom__">{form.category}</SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
-                  {form.category && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Selected:{" "}
-                      <span className="font-medium text-foreground">{form.category}</span>{" "}
-                      <button
+                    <PopoverTrigger asChild>
+                      <Button
                         type="button"
-                        onClick={() => setForm((p) => ({ ...p, category: "" }))}
-                        className="text-[#0A5EB9] hover:underline"
-                        data-testid="button-clear-category"
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={categoryPopoverOpen}
+                        className="w-full justify-between font-normal"
+                        data-testid="button-category-trigger"
                       >
-                        Remove
-                      </button>
-                    </p>
-                  )}
+                        <span className={form.category ? "" : "text-muted-foreground"}>
+                          {form.category || "Choose a category"}
+                        </span>
+                        <ChevronDown className="w-4 h-4 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="p-0 w-[--radix-popover-trigger-width] min-w-[14rem]"
+                      align="start"
+                    >
+                      {isCreatingCategory ? (
+                        <div className="p-2 space-y-2">
+                          <Input
+                            autoFocus
+                            value={newCategoryName}
+                            onChange={(e) => setNewCategoryName(e.target.value)}
+                            placeholder="New category name"
+                            data-testid="input-new-category"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                const name = newCategoryName.trim();
+                                if (name) createCategoryMutation.mutate(name);
+                              } else if (e.key === "Escape") {
+                                e.preventDefault();
+                                setIsCreatingCategory(false);
+                                setNewCategoryName("");
+                              }
+                            }}
+                          />
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => {
+                                setIsCreatingCategory(false);
+                                setNewCategoryName("");
+                              }}
+                              data-testid="button-cancel-new-category"
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              type="button"
+                              size="sm"
+                              onClick={() => {
+                                const name = newCategoryName.trim();
+                                if (name) createCategoryMutation.mutate(name);
+                              }}
+                              disabled={!newCategoryName.trim() || createCategoryMutation.isPending}
+                              data-testid="button-save-new-category"
+                            >
+                              {createCategoryMutation.isPending ? "Adding..." : "Add"}
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="py-1 max-h-72 overflow-y-auto">
+                          <button
+                            type="button"
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm hover-elevate text-left"
+                            onClick={() => {
+                              setForm((p) => ({ ...p, category: "" }));
+                              setCategoryPopoverOpen(false);
+                            }}
+                            data-testid="option-category-none"
+                          >
+                            <Check
+                              className={`w-4 h-4 ${form.category ? "opacity-0" : "opacity-100"}`}
+                            />
+                            <span className="text-muted-foreground">— No category —</span>
+                          </button>
+                          {blogCategories.map((c) => {
+                            const selected = form.category === c.name;
+                            return (
+                              <button
+                                key={c.id}
+                                type="button"
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm hover-elevate text-left"
+                                onClick={() => {
+                                  setForm((p) => ({ ...p, category: c.name }));
+                                  setCategoryPopoverOpen(false);
+                                }}
+                                data-testid={`option-category-${c.id}`}
+                              >
+                                <Check className={`w-4 h-4 ${selected ? "opacity-100" : "opacity-0"}`} />
+                                <span>{c.name}</span>
+                              </button>
+                            );
+                          })}
+                          {form.category &&
+                            !blogCategories.some((c) => c.name === form.category) && (
+                              <button
+                                type="button"
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm hover-elevate text-left"
+                                onClick={() => setCategoryPopoverOpen(false)}
+                                data-testid="option-category-current"
+                              >
+                                <Check className="w-4 h-4 opacity-100" />
+                                <span>{form.category}</span>
+                              </button>
+                            )}
+                          <div className="border-t mt-1 pt-1">
+                            <button
+                              type="button"
+                              className="w-full flex items-center gap-2 px-3 py-2 text-sm hover-elevate text-left text-[#0A5EB9]"
+                              onClick={() => {
+                                setIsCreatingCategory(true);
+                                setNewCategoryName("");
+                              }}
+                              data-testid="button-create-new-category"
+                            >
+                              <Plus className="w-4 h-4" />
+                              <span>Create new category</span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </CardContent>
             </Card>

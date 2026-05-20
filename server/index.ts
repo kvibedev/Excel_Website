@@ -5,6 +5,7 @@ import { injectOGTags } from "./og-metadata";
 import { seedBlogPosts } from "./seed-blog";
 import { seedAdminUser } from "./seed-admin";
 import { seedFormEmailSettings } from "./seed-email-settings";
+import { seedBlogCategories } from "./seed-blog-categories";
 
 const app = express();
 app.use(express.json());
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
   await seedAdminUser().catch((err) => console.error("Admin seed error:", err));
   await seedBlogPosts().catch((err) => console.error("Blog seed error:", err));
   await seedFormEmailSettings().catch((err) => console.error("Email settings seed error:", err));
+  await seedBlogCategories().catch((err) => console.error("Blog categories seed error:", err));
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

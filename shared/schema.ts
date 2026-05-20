@@ -213,6 +213,31 @@ export const blogPosts = pgTable("blog_posts", {
 export const BLOG_STATUSES = ["draft", "scheduled", "published"] as const;
 export type BlogStatus = (typeof BLOG_STATUSES)[number];
 
+export const blogCategories = pgTable("blog_categories", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertBlogCategorySchema = createInsertSchema(blogCategories).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  name: z.string().trim().min(1, "Category name is required").max(60, "Keep it under 60 characters"),
+});
+
+export type InsertBlogCategory = z.infer<typeof insertBlogCategorySchema>;
+export type BlogCategory = typeof blogCategories.$inferSelect;
+
+export const DEFAULT_BLOG_CATEGORIES = [
+  "Company News",
+  "Cleaning Tips",
+  "Industry Insights",
+  "Sustainability",
+  "Case Studies",
+  "Press Releases",
+] as const;
+
 export const BLOG_APPROVAL_STATUSES = ["none", "pending", "approved", "changes_requested"] as const;
 export type BlogApprovalStatus = (typeof BLOG_APPROVAL_STATUSES)[number];
 

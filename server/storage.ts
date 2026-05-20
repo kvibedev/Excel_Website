@@ -6,13 +6,14 @@ import {
   type ContactNote, type InsertContactNote,
   type AdminUser, type InsertAdminUser,
   type BlogPost, type InsertBlogPost,
+  type BlogCategory, type InsertBlogCategory,
   type FormEmailSetting, type InsertFormEmailSetting,
   type BlogApprovalHistory, type InsertBlogApprovalHistory,
   type BlogPostView, type InsertBlogPostView,
   type BlogPostStats, type BlogPostStatsDetail, type BlogOverviewStats, type TopBlogPostStats,
   type LeadSourceBreakdown, type LeadSourceRow,
   type ContactBlogAttribution, type InsertContactBlogAttribution, type ContactAttributedPost,
-  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, formEmailSettings, blogApprovalHistory, blogPostViews, contactBlogAttributions
+  users, contacts, vendorRegistrations, vendorNotes, contactNotes, adminUsers, blogPosts, blogCategories, formEmailSettings, blogApprovalHistory, blogPostViews, contactBlogAttributions
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, gt, gte, sql, inArray } from "drizzle-orm";
@@ -82,6 +83,10 @@ export interface IStorage {
   createContactBlogAttributions(entries: InsertContactBlogAttribution[]): Promise<void>;
   getContactBlogAttributions(contactId: number): Promise<ContactAttributedPost[]>;
   getLeadSourceBreakdown(sinceDays: number | null): Promise<LeadSourceBreakdown>;
+
+  getBlogCategories(): Promise<BlogCategory[]>;
+  createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory>;
+  getBlogCategoryByName(name: string): Promise<BlogCategory | undefined>;
 
   getFormEmailSettings(formType: string): Promise<FormEmailSetting[]>;
   getAllFormEmailSettings(): Promise<FormEmailSetting[]>;
@@ -679,6 +684,20 @@ export class DatabaseStorage implements IStorage {
 
   async deleteFormEmailSetting(id: number): Promise<void> {
     await db.delete(formEmailSettings).where(eq(formEmailSettings.id, id));
+  }
+
+  async getBlogCategories(): Promise<BlogCategory[]> {
+    return await db.select().from(blogCategories).orderBy(blogCategories.name);
+  }
+
+  async getBlogCategoryByName(name: string): Promise<BlogCategory | undefined> {
+    const [row] = await db.select().from(blogCategories).where(eq(blogCategories.name, name));
+    return row;
+  }
+
+  async createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory> {
+    const [row] = await db.insert(blogCategories).values(category).returning();
+    return row;
   }
 }
 

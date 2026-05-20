@@ -6,7 +6,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { storage } from "./storage";
-import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
+import { insertContactSchema, insertVendorRegistrationSchema, insertVendorNoteSchema, insertContactNoteSchema, insertBlogPostSchema, insertBlogCategorySchema, insertFormEmailSettingSchema, ROLE_HIERARCHY, type AdminRole, type InsertBlogPost } from "@shared/schema";
 import { z } from "zod";
 import { sendContactFormEmail, sendVendorFormEmail, sendBlogApprovalRequestEmail, sendBlogApprovedEmail, sendBlogChangesRequestedEmail, sendBlogClientConfirmationEmail, getBlogApprovalRecipients, sendPasswordResetEmail, sendAdminInviteEmail } from "./email";
 import crypto from "crypto";
@@ -1060,6 +1060,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(sanitizeBlogPost(post));
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
+  app.get("/api/blog-categories", async (_req, res) => {
+    try {
+      const rows = await storage.getBlogCategories();
+      res.json(rows);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch categories" });
+    }
+  });
+
+  app.post("/api/admin/blog-categories", requireAtLeast("editor"), async (req, res) => {
+    try {
+      const parsed = insertBlogCategorySchema.parse(req.body);
+      const existing = await storage.getBlogCategoryByName(parsed.name);
+      if (existing) {
+        return res.json(existing);
+      }
+      const created = await storage.createBlogCategory(parsed);
+      res.json(created);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create category" });
     }
   });
 
