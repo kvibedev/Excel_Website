@@ -81,6 +81,15 @@ export default function AdminBlogEditor() {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const readServerError = async (res: Response) => {
+    try {
+      const data = await res.json();
+      return data?.error || data?.message || res.statusText;
+    } catch {
+      return res.statusText;
+    }
+  };
+
   const { data: existingPost, isLoading: postLoading } = useQuery<BlogPost>({
     queryKey: ["/api/admin/blog", params.id],
     enabled: isEditing && !!authData?.authenticated,
@@ -172,7 +181,9 @@ export default function AdminBlogEditor() {
 
   const createMutation = useMutation({
     mutationFn: async (data: PostForm) => {
-      return apiRequest("POST", "/api/blog", data);
+      const res = await apiRequest("POST", "/api/blog", data);
+      const body = await res.json();
+      return (body.post || body) as BlogPost;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
@@ -180,6 +191,52 @@ export default function AdminBlogEditor() {
       queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
       toast({ title: "Post created successfully" });
       setLocation("/admin/blog");
+    },
+    onError: () => {
+      toast({
+        title: "Failed to create post",
+        description: "Check that the slug is unique and all required fields are filled",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const createAndSendForApprovalMutation = useMutation({
+    mutationFn: async (data: PostForm) => {
+      const createRes = await apiRequest("POST", "/api/blog", data);
+      const createBody = await createRes.json();
+      const post = (createBody.post || createBody) as BlogPost;
+
+      const sendRes = await fetch(`/api/admin/blog/${post.id}/send-for-approval`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!sendRes.ok) {
+        return { post, approvalSent: false, approvalError: await readServerError(sendRes) };
+      }
+
+      return { post, approvalSent: true, approvalError: "" };
+    },
+    onSuccess: ({ post, approvalSent, approvalError }) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog", post.id] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog", post.id, "approval-history"] });
+
+      if (approvalSent) {
+        toast({ title: "Post created and sent", description: "The client has been emailed a review link." });
+        setLocation("/admin/blog");
+        return;
+      }
+
+      toast({
+        title: "Post created, approval not sent",
+        description: approvalError || "Open the post to send it for client review.",
+        variant: "destructive",
+      });
+      setLocation(`/admin/blog/${post.id}/edit`);
     },
     onError: () => {
       toast({
@@ -300,7 +357,16 @@ export default function AdminBlogEditor() {
     }
   };
 
-  const isPending = createMutation.isPending || updateMutation.isPending;
+  const handleCreateAndSendForApproval = () => {
+    const payload = { ...form };
+    if (!payload.title.trim() || !payload.slug.trim() || !payload.content.trim() || !payload.author.trim() || !payload.imageUrl.trim()) {
+      toast({ title: "Missing required fields", description: "Complete required fields before sending for approval.", variant: "destructive" });
+      return;
+    }
+    createAndSendForApprovalMutation.mutate(payload);
+  };
+
+  const isPending = createMutation.isPending || updateMutation.isPending || createAndSendForApprovalMutation.isPending;
 
   const approvalStatus = existingPost?.approvalStatus || "none";
   const decisionsCount = approvalHistory.filter(
@@ -682,6 +748,18 @@ export default function AdminBlogEditor() {
                       >
                         <Send className="w-4 h-4 mr-2" />
                         {approvalStatus === "pending" ? "Resend Review Link" : "Send for Approval"}
+                      </Button>
+                    )}
+                    {!isEditing && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleCreateAndSendForApproval}
+                        disabled={isPending}
+                        data-testid="button-create-send-for-approval"
+                      >
+                        <Send className="w-4 h-4 mr-2" />
+                        {createAndSendForApprovalMutation.isPending ? "Creating and Sending..." : "Create & Send for Approval"}
                       </Button>
                     )}
                     <Button type="submit" disabled={isPending} data-testid="button-save">

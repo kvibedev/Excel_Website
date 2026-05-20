@@ -1082,6 +1082,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         category: req.body.category,
         tags: req.body.tags,
         imageUrl: req.body.imageUrl,
+        videoUrl: req.body.videoUrl,
+        metaDescription: req.body.metaDescription,
+        secondaryKeywords: req.body.secondaryKeywords,
         status,
         publishedAt,
       });
