@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+import { FileText, ArrowLeft, Save, Upload, Link2, Loader2, X, Send, Check, MessageSquare, CheckCircle2, Clock, AlertTriangle, Bold, Italic, Underline, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Minus, Link as LinkIcon, Code } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -107,6 +107,86 @@ export default function AdminBlogEditor() {
   const [imageMode, setImageMode] = useState<"url" | "upload">("url");
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const applyMarkdown = (
+    transform: (ctx: { selected: string; before: string; after: string }) => {
+      text: string;
+      cursorOffset?: number;
+      leadingChars?: number;
+    },
+  ) => {
+    const ta = contentRef.current;
+    if (!ta) return;
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    setForm((prev) => {
+      const current = prev.content;
+      const before = current.slice(0, start);
+      const after = current.slice(end);
+      const selected = current.slice(start, end);
+      const { text: replacement, cursorOffset, leadingChars = 0 } = transform({
+        selected,
+        before,
+        after,
+      });
+      const next = before + replacement + after;
+      const newPos =
+        cursorOffset !== undefined
+          ? start + leadingChars + cursorOffset
+          : start + replacement.length;
+      requestAnimationFrame(() => {
+        ta.focus();
+        ta.setSelectionRange(newPos, newPos);
+      });
+      return { ...prev, content: next };
+    });
+  };
+
+  const wrapInline = (left: string, right: string = left, placeholder = "text") => {
+    applyMarkdown(({ selected }) => {
+      const inner = selected || placeholder;
+      return {
+        text: `${left}${inner}${right}`,
+        cursorOffset: selected
+          ? left.length + inner.length + right.length
+          : left.length + inner.length,
+      };
+    });
+  };
+
+  const applyLinePrefix = (prefix: string, placeholder = "") => {
+    applyMarkdown(({ selected }) => {
+      if (selected) {
+        const lines = selected.split("\n").map((l) => `${prefix}${l}`);
+        return { text: lines.join("\n") };
+      }
+      return {
+        text: `${prefix}${placeholder}`,
+        cursorOffset: prefix.length + placeholder.length,
+      };
+    });
+  };
+
+  const insertBlock = (block: string, cursorOffset?: number) => {
+    applyMarkdown(({ selected, before }) => {
+      const needsLeadingNl = before && !before.endsWith("\n") ? "\n" : "";
+      const body = selected ? selected : block;
+      return {
+        text: `${needsLeadingNl}${body}\n`,
+        cursorOffset: cursorOffset ?? body.length,
+        leadingChars: needsLeadingNl.length,
+      };
+    });
+  };
+
+  const insertLink = () => {
+    applyMarkdown(({ selected }) => {
+      const label = selected || "link text";
+      const text = `[${label}](https://)`;
+      return { text, cursorOffset: text.length - 1 };
+    });
+  };
 
   const readServerError = async (res: Response) => {
     try {
@@ -714,7 +794,145 @@ export default function AdminBlogEditor() {
                 <CardTitle>Content *</CardTitle>
               </CardHeader>
               <CardContent>
+                <div className="flex flex-wrap items-center gap-1 rounded-md border border-input bg-muted/40 p-1 mb-2">
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Bold"
+                    aria-label="Bold"
+                    onClick={() => wrapInline("**", "**", "bold text")}
+                    data-testid="button-format-bold"
+                  >
+                    <Bold className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Italic"
+                    aria-label="Italic"
+                    onClick={() => wrapInline("*", "*", "italic text")}
+                    data-testid="button-format-italic"
+                  >
+                    <Italic className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Underline"
+                    aria-label="Underline"
+                    onClick={() => wrapInline("<u>", "</u>", "underlined text")}
+                    data-testid="button-format-underline"
+                  >
+                    <Underline className="h-4 w-4" />
+                  </Button>
+                  <div className="mx-1 h-5 w-px bg-border" aria-hidden />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Heading 1"
+                    aria-label="Heading 1"
+                    onClick={() => applyLinePrefix("# ", "Heading")}
+                    data-testid="button-format-h1"
+                  >
+                    <Heading1 className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Heading 2"
+                    aria-label="Heading 2"
+                    onClick={() => applyLinePrefix("## ", "Heading")}
+                    data-testid="button-format-h2"
+                  >
+                    <Heading2 className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Heading 3"
+                    aria-label="Heading 3"
+                    onClick={() => applyLinePrefix("### ", "Heading")}
+                    data-testid="button-format-h3"
+                  >
+                    <Heading3 className="h-4 w-4" />
+                  </Button>
+                  <div className="mx-1 h-5 w-px bg-border" aria-hidden />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Bullet list"
+                    aria-label="Bullet list"
+                    onClick={() => applyLinePrefix("- ", "List item")}
+                    data-testid="button-format-bullet-list"
+                  >
+                    <List className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Numbered list"
+                    aria-label="Numbered list"
+                    onClick={() => applyLinePrefix("1. ", "List item")}
+                    data-testid="button-format-numbered-list"
+                  >
+                    <ListOrdered className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Quote"
+                    aria-label="Quote"
+                    onClick={() => applyLinePrefix("> ", "Quote")}
+                    data-testid="button-format-quote"
+                  >
+                    <Quote className="h-4 w-4" />
+                  </Button>
+                  <div className="mx-1 h-5 w-px bg-border" aria-hidden />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Link"
+                    aria-label="Link"
+                    onClick={insertLink}
+                    data-testid="button-format-link"
+                  >
+                    <LinkIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Inline code"
+                    aria-label="Inline code"
+                    onClick={() => wrapInline("`", "`", "code")}
+                    data-testid="button-format-code"
+                  >
+                    <Code className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    title="Divider"
+                    aria-label="Divider"
+                    onClick={() => insertBlock("---")}
+                    data-testid="button-format-divider"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                </div>
                 <Textarea
+                  ref={contentRef}
                   value={form.content}
                   onChange={(e) => setForm((p) => ({ ...p, content: e.target.value }))}
                   placeholder="Write your post content in markdown..."
@@ -722,7 +940,9 @@ export default function AdminBlogEditor() {
                   className="font-mono text-sm"
                   data-testid="input-content"
                 />
-                <p className="text-xs text-muted-foreground mt-2">Markdown supported</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Markdown supported. Select text and click a formatting button to wrap it, or click with no selection to insert at the cursor.
+                </p>
               </CardContent>
             </Card>
 
