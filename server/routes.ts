@@ -1063,6 +1063,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/blog", requireAtLeast("editor"), async (req, res) => {
+    try {
+      const status = req.body.status || (req.body.isPublished ? "published" : "draft");
+      const publishedAt = req.body.publishedAt
+        ? new Date(req.body.publishedAt)
+        : status === "published"
+          ? new Date()
+          : undefined;
+      const author = req.body.author || req.session.adminUsername || "Excel Facility Services";
+
+      const parsed = insertBlogPostSchema.parse({
+        title: req.body.title,
+        slug: req.body.slug,
+        excerpt: req.body.excerpt,
+        content: req.body.content,
+        author,
+        category: req.body.category,
+        tags: req.body.tags,
+        imageUrl: req.body.imageUrl,
+        status,
+        publishedAt,
+      });
+
+      const existing = await storage.getBlogPostBySlug(parsed.slug);
+      if (existing) {
+        return res.status(400).json({ error: "A post with this slug already exists" });
+      }
+
+      const post = await storage.createBlogPost(parsed);
+      res.json({ success: true, post });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create blog post" });
+    }
+  });
+
   app.post("/api/admin/blog", requireAtLeast("editor"), async (req, res) => {
     try {
       const parsed = insertBlogPostSchema.parse(req.body);

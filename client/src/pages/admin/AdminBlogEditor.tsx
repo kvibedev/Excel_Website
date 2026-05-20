@@ -172,7 +172,7 @@ export default function AdminBlogEditor() {
 
   const createMutation = useMutation({
     mutationFn: async (data: PostForm) => {
-      return apiRequest("POST", "/api/admin/blog", data);
+      return apiRequest("POST", "/api/blog", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
