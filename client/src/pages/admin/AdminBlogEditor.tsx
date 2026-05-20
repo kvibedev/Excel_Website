@@ -26,7 +26,18 @@ interface PostForm {
   tags: string;
   imageUrl: string;
   videoUrl: string;
+  metaDescription: string;
+  secondaryKeywords: string;
   status: string;
+}
+
+function autoKeywordsFromTitleAndCategory(title: string, category: string): string {
+  const parts: string[] = [];
+  const t = title.trim();
+  const c = category.trim();
+  if (t) parts.push(t);
+  if (c && c.toLowerCase() !== t.toLowerCase()) parts.push(c);
+  return parts.join(", ");
 }
 
 function slugify(text: string): string {
@@ -61,6 +72,8 @@ export default function AdminBlogEditor() {
     tags: "",
     imageUrl: "",
     videoUrl: "",
+    metaDescription: "",
+    secondaryKeywords: "",
     status: "draft",
   });
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
@@ -149,6 +162,8 @@ export default function AdminBlogEditor() {
         tags: existingPost.tags || "",
         imageUrl: existingPost.imageUrl || "",
         videoUrl: existingPost.videoUrl || "",
+        metaDescription: existingPost.metaDescription || "",
+        secondaryKeywords: existingPost.secondaryKeywords || "",
         status: existingPost.status,
       });
       setSlugManuallyEdited(true);
@@ -271,10 +286,17 @@ export default function AdminBlogEditor() {
         return;
       }
     }
+    const metaDescription = form.metaDescription.trim()
+      ? form.metaDescription.trim()
+      : (form.excerpt.trim() || "");
+    const secondaryKeywords = form.secondaryKeywords.trim()
+      ? form.secondaryKeywords.trim()
+      : autoKeywordsFromTitleAndCategory(form.title, form.category);
+    const payload: PostForm = { ...form, metaDescription, secondaryKeywords };
     if (isEditing) {
-      updateMutation.mutate(form);
+      updateMutation.mutate(payload);
     } else {
-      createMutation.mutate(form);
+      createMutation.mutate(payload);
     }
   };
 
@@ -583,6 +605,52 @@ export default function AdminBlogEditor() {
                   data-testid="input-content"
                 />
                 <p className="text-xs text-muted-foreground mt-2">Markdown supported</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>SEO</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="metaDescription">Meta Description</Label>
+                  <Textarea
+                    id="metaDescription"
+                    value={form.metaDescription}
+                    onChange={(e) =>
+                      setForm((p) => ({ ...p, metaDescription: e.target.value.slice(0, 160) }))
+                    }
+                    placeholder="Auto-filled from excerpt once you start writing..."
+                    rows={3}
+                    maxLength={160}
+                    data-testid="input-meta-description"
+                  />
+                  <div className="flex items-center justify-between mt-1 gap-2">
+                    <p className="text-xs text-muted-foreground">
+                      Shown in search results and social previews. If left blank, the excerpt is used.
+                    </p>
+                    <span
+                      className="text-xs text-muted-foreground whitespace-nowrap"
+                      data-testid="text-meta-description-counter"
+                    >
+                      {form.metaDescription.length}/160
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="secondaryKeywords">Secondary Keywords</Label>
+                  <Input
+                    id="secondaryKeywords"
+                    value={form.secondaryKeywords}
+                    onChange={(e) => setForm((p) => ({ ...p, secondaryKeywords: e.target.value }))}
+                    placeholder="Auto-generated from title and category"
+                    data-testid="input-secondary-keywords"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Comma-separated. If left blank, we auto-generate from the post title and category.
+                  </p>
+                </div>
               </CardContent>
             </Card>
 

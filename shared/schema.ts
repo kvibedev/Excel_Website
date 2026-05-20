@@ -198,6 +198,8 @@ export const blogPosts = pgTable("blog_posts", {
   tags: text("tags"),
   imageUrl: text("image_url"),
   videoUrl: text("video_url"),
+  metaDescription: text("meta_description"),
+  secondaryKeywords: text("secondary_keywords"),
   status: text("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
   approvalStatus: text("approval_status").default("none").notNull(),

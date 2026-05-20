@@ -1073,6 +1073,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (parsed.status === "published" && !parsed.publishedAt) {
         parsed.publishedAt = new Date();
       }
+      if (!parsed.metaDescription || !String(parsed.metaDescription).trim()) {
+        parsed.metaDescription = parsed.excerpt ? String(parsed.excerpt).trim().slice(0, 160) : null;
+      }
+      if (!parsed.secondaryKeywords || !String(parsed.secondaryKeywords).trim()) {
+        const parts: string[] = [];
+        const t = (parsed.title || "").trim();
+        const c = (parsed.category || "").trim();
+        if (t) parts.push(t);
+        if (c && c.toLowerCase() !== t.toLowerCase()) parts.push(c);
+        parsed.secondaryKeywords = parts.length ? parts.join(", ") : null;
+      }
       const post = await storage.createBlogPost(parsed);
       res.json(post);
     } catch (error) {
@@ -1111,6 +1122,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (updates.status === "published" && !updates.publishedAt && existing.status !== "published") {
         updates.publishedAt = new Date();
+      }
+
+      if ("metaDescription" in updates && (!updates.metaDescription || !String(updates.metaDescription).trim())) {
+        const excerpt = updates.excerpt !== undefined ? updates.excerpt : existing.excerpt;
+        updates.metaDescription = excerpt ? String(excerpt).trim().slice(0, 160) : null;
+      }
+      if ("secondaryKeywords" in updates && (!updates.secondaryKeywords || !String(updates.secondaryKeywords).trim())) {
+        const title = (updates.title !== undefined ? updates.title : existing.title) || "";
+        const category = (updates.category !== undefined ? updates.category : existing.category) || "";
+        const t = String(title).trim();
+        const c = String(category).trim();
+        const parts: string[] = [];
+        if (t) parts.push(t);
+        if (c && c.toLowerCase() !== t.toLowerCase()) parts.push(c);
+        updates.secondaryKeywords = parts.length ? parts.join(", ") : null;
       }
 
       const post = await storage.updateBlogPost(id, updates);
