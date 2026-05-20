@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { FileText, Plus, Trash2, Pencil, AlertTriangle, BarChart3, ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
+import { FileText, Plus, Trash2, Pencil, AlertTriangle, BarChart3, ChevronDown, ChevronUp, ArrowUpDown, Send, EyeOff } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -16,7 +16,10 @@ import BlogStatsPanel from "@/components/admin/BlogStatsPanel";
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-700",
   published: "bg-green-100 text-green-700",
+  scheduled: "bg-blue-100 text-blue-700",
 };
+
+type StatusFilter = "all" | "published" | "scheduled" | "draft";
 
 const approvalStatusLabels: Record<string, { label: string; className: string }> = {
   pending: { label: "Pending Review", className: "bg-blue-100 text-blue-700" },
@@ -43,6 +46,7 @@ export default function AdminBlog() {
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("newest");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const search = useSearch();
   const expandedFromQueryRef = useRef(false);
   const expandedRowRef = useRef<HTMLDivElement | null>(null);
@@ -82,16 +86,46 @@ export default function AdminBlog() {
     }
   }, [expandedId, posts]);
 
+  const invalidateBlogQueries = () => {
+    queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/admin/blog/stats"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+  };
+
   const deletePostMutation = useMutation({
     mutationFn: async (id: number) => {
       return apiRequest("DELETE", `/api/admin/blog/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog/stats"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+      invalidateBlogQueries();
       toast({ title: "Post deleted" });
+    },
+  });
+
+  const unpublishMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return apiRequest("PATCH", `/api/admin/blog/${id}`, { status: "draft" });
+    },
+    onSuccess: () => {
+      invalidateBlogQueries();
+      toast({ title: "Post unpublished", description: "Moved back to drafts." });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not unpublish", description: error.message, variant: "destructive" });
+    },
+  });
+
+  const sendForApprovalMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return apiRequest("POST", `/api/admin/blog/${id}/send-for-approval`);
+    },
+    onSuccess: () => {
+      invalidateBlogQueries();
+      toast({ title: "Sent for approval", description: "Review link emailed to the client." });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not send for approval", description: error.message, variant: "destructive" });
     },
   });
 
@@ -103,11 +137,24 @@ export default function AdminBlog() {
     );
   }
 
-  const filteredPosts = (posts || []).filter((post) =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (post.category?.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const allPosts = posts || [];
+  const counts = {
+    all: allPosts.length,
+    published: allPosts.filter((p) => p.status === "published").length,
+    scheduled: allPosts.filter((p) => p.status === "scheduled").length,
+    draft: allPosts.filter((p) => p.status === "draft").length,
+  };
+
+  const filteredPosts = allPosts.filter((post) => {
+    if (statusFilter !== "all" && post.status !== statusFilter) return false;
+    const term = searchTerm.toLowerCase();
+    if (!term) return true;
+    return (
+      post.title.toLowerCase().includes(term) ||
+      post.author.toLowerCase().includes(term) ||
+      (post.category?.toLowerCase().includes(term) ?? false)
+    );
+  });
 
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     if (sortMode === "views") {
@@ -134,7 +181,7 @@ export default function AdminBlog() {
               Blog Posts
             </h1>
             <p className="text-sm text-gray-500 mt-1">
-              {sortedPosts.length} shown &middot; {(posts || []).length} total
+              {counts.published} published &middot; {counts.scheduled} scheduled &middot; {counts.draft} drafts
             </p>
           </div>
           {!isReadOnly && (
@@ -145,6 +192,34 @@ export default function AdminBlog() {
               </Button>
             </Link>
           )}
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {([
+            { key: "all", label: "All" },
+            { key: "published", label: "Published" },
+            { key: "scheduled", label: "Scheduled" },
+            { key: "draft", label: "Drafts" },
+          ] as { key: StatusFilter; label: string }[]).map((opt) => {
+            const active = statusFilter === opt.key;
+            const count = counts[opt.key];
+            return (
+              <Button
+                key={opt.key}
+                type="button"
+                size="sm"
+                variant={active ? "default" : "outline"}
+                className="rounded-full"
+                onClick={() => setStatusFilter(opt.key)}
+                data-testid={`button-filter-${opt.key}`}
+              >
+                {opt.label}
+                <span className={`ml-1.5 text-xs ${active ? "opacity-80" : "text-muted-foreground"}`}>
+                  {count}
+                </span>
+              </Button>
+            );
+          })}
         </div>
 
         <Card>
@@ -257,10 +332,38 @@ export default function AdminBlog() {
                     </Button>
                     {!isReadOnly && (
                       <Link href={`/admin/blog/${post.id}/edit`}>
-                        <Button size="icon" variant="ghost" data-testid={`button-edit-post-${post.id}`}>
+                        <Button size="icon" variant="ghost" data-testid={`button-edit-post-${post.id}`} title="Edit">
                           <Pencil className="w-4 h-4" />
                         </Button>
                       </Link>
+                    )}
+                    {!isReadOnly && post.status !== "published" && post.approvalStatus !== "changes_requested" && (
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => sendForApprovalMutation.mutate(post.id)}
+                        disabled={sendForApprovalMutation.isPending}
+                        title={post.approvalStatus === "pending" ? "Resend review link" : "Send for approval"}
+                        data-testid={`button-send-for-approval-${post.id}`}
+                      >
+                        <Send className="w-4 h-4" />
+                      </Button>
+                    )}
+                    {!isReadOnly && post.status === "published" && (
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => {
+                          if (confirm("Unpublish this post? It will move back to drafts.")) {
+                            unpublishMutation.mutate(post.id);
+                          }
+                        }}
+                        disabled={unpublishMutation.isPending}
+                        title="Unpublish"
+                        data-testid={`button-unpublish-post-${post.id}`}
+                      >
+                        <EyeOff className="w-4 h-4" />
+                      </Button>
                     )}
                     {canDelete && (
                       <Button
