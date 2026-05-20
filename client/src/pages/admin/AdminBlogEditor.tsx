@@ -1392,6 +1392,20 @@ export default function AdminBlogEditor() {
                       )}
                     </PopoverContent>
                   </Popover>
+                  {form.category && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Selected:{" "}
+                      <span className="font-medium text-foreground">{form.category}</span>{" "}
+                      <button
+                        type="button"
+                        onClick={() => setForm((p) => ({ ...p, category: "" }))}
+                        className="text-red-600 hover:underline ml-1"
+                        data-testid="button-clear-category"
+                      >
+                        Remove
+                      </button>
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
