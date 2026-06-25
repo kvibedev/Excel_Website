@@ -90,7 +90,8 @@ export default function OurTeam() {
     {
       name: "Wendy Espinosa",
       title: "CMMS Manager",
-      image: wendyImage
+      image: wendyImage,
+      hidden: true
     },
     {
       name: "Zaira Cruz",
