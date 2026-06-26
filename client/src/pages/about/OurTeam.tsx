@@ -106,7 +106,8 @@ export default function OurTeam() {
     {
       name: "Thomas Cooper",
       title: "Senior Operations Manager",
-      image: thomasImage
+      image: thomasImage,
+      hidden: true
     },
     {
       name: "Juan Huaman",
@@ -131,7 +132,8 @@ export default function OurTeam() {
     {
       name: "Yoel Beltre",
       title: "Area Manager",
-      image: yoelImage
+      image: yoelImage,
+      hidden: true
     },
     {
       name: "Darrel Bynum",
