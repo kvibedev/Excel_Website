@@ -30,7 +30,7 @@ import {
   Sparkles,
   DoorOpen
 } from "lucide-react";
-import heroImage from "@assets/high-rise-window-washers-seoul-korea-2026-03-24-07-16-35-utc_1774631783713.jpg";
+import heroImage from "@assets/window-cleaners.png";
 import sectionImage from "@assets/window_washing_1_1774862922074.webp";
 import tailoredImage from "@assets/window_washing_2_1774862955142.webp";
 import officeBuildingImage from "@assets/generated_images/Office_building_industry_image_29a84846.png";
